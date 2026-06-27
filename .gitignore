@@ -1,1 +1,6 @@
+.DS_Store
 /data
+/synthetic_data
+
+# synthcity's internal cache for plugins 
+sdg/workspace/
