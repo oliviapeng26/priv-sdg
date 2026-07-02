@@ -62,8 +62,38 @@ PrivBayes has same architecture as BN, so any metric difference is purely the DP
 
 DPGAN has same architecture as CTGAN, so any metric difference is purely the DP cost.
 
+## Implementation (via Synthcity)
 
-# Synthetic Data Generation
+All methods use `Plugins().get(METHOD, ...)` with a `GenericDataLoader(df, target_column='income')` and generate N=21,523 rows (matching training set size). Only explicitly non-default parameters are listed — everything else is Synthcity defaults.
+
+| Method | Synthcity plugin | Explicit params |
+|---|---|---|
+| Bayesian Network | `bayesian_network` | — |
+| PrivBayes | `privbayes` | `epsilon=1.0` |
+| CTGAN | `ctgan` | — |
+| DPGAN | `dpgan` | `epsilon=1.0` |
+
+**Bayesian Network**
+- Uses `pgmpy` under the hood. Learns structure via the Chow-Liu algorithm (greedy tree maximising pairwise mutual information). Fits CPTs from data, samples by traversing the DAG.
+- Continuous columns are discretised for structure learning then un-discretised on generation (explains small floating-point offsets in output).
+- Runtime: 12.6s, 43.6 MB peak (local CPU)
+
+**PrivBayes**
+- Same Chow-Liu structure learning as BN, but the exponential mechanism selects which edges to include (DP structure learning). Laplace noise added to CPTs before sampling.
+- Runtime: 165.7s, 21.5 MB peak (local CPU) — overhead is DP noise calibration
+
+**CTGAN**
+- Continuous columns: VGM clustering then per-mode Gaussian normalisation (mode-specific normalisation). Categorical columns: conditional vector explicitly oversamples rare categories during training so the GAN doesn't ignore them.
+- Training: WGAN-GP loss, `n_iter=2000` max, `patience=5` early stopping. Stopped at **399 iterations**.
+- Runtime: 4039.8s (~67 min), 64.8 MB peak (local CPU)
+
+**DPGAN**
+- CTGAN architecture with DP-SGD on the discriminator's gradient updates (via Opacus). The generator is not directly noised — privacy comes from the discriminator never memorising individuals.
+- Same training loop: `n_iter=2000` max, `patience=5`. Stopped at **299 iterations**.
+- Requires `opacus<1.5` — Opacus 1.5.x introduced `nn.RMSNorm` which requires PyTorch ≥ 2.4.
+- Runtime: 6755.5s (~112 min), 134.0 MB peak (local CPU) — slower than CTGAN due to per-sample gradient clipping overhead
+
+## Synthetic Data Generation
 
 Uses the Adult Census training data at `data/adult_train.csv`. 
 
@@ -74,41 +104,45 @@ In sdg/, each `{method}.ipynb notebook `
   - Times wall-clock + peak memory via tracemalloc and appends a row of computational overhead to `sdg/computational_overhead.csv`
 
 
-# Note
+# Notes
 `bayesian_network.ipynb` and `privbayes.ipynb` ran locally on my Macbook's CPU. 
-`ctgan.ipynb` and `dpgan.ipynb` ran on Google Colab's T4 GPU. 
+`ctgan.ipynb` and `dpgan.ipynb` ran on my Macbook's CPU and Google Colab's T4 GPU. 
 
 ---
 
 ## Evaluation
 
 ## Evaluation Metrics
+CSV column names in `evaluation/{tool}.py` are listed as `metrics`.
 
 ### Fidelity
-- **synthcity**: 
-    - *eval_statistical* - JensenShannonDistance (per-column distribution comparison), MaximumMeanDiscrepancy (whole-dataset distribution comparison), AlphaPrecision (manifold/data pattern in high dimension space quality).
-- **SDMetrics**: 
-    - *CorrelationSimilarity* - compares correlation matrices of numerical column pairs. Tells you if pairwise relationships are preserved.
-    - *ContingencySimilarity* - compares joint frequency tables of categorical column pairs. captures whether the generator preserves multi-column categorical structure, not just individual columns.
-    - *KSComplement, TVComplement* - similarity of a real column vs. a synthetic column in terms of the column shapes - aka the marginal distribution or 1D histogram of the column. KSComplement for continuous, numerical data; TVComplement for discrete, categorical data.
+**SDMetrics**: 
+- *CorrelationSimilarity* - compares correlation matrices of numerical column pairs. Tells you if pairwise relationships are preserved.
+    - `CorrelationSimilarity`
+- *ContingencySimilarity* - compares joint frequency tables of categorical column pairs. captures whether the generator preserves multi-column categorical structure, not just individual columns.
+    - `ContingencySimilarity`
+- *KSComplement, TVComplement* - similarity of a real column vs. a synthetic column in terms of the column shapes - aka the marginal distribution or 1D histogram of the column. KSComplement for continuous, numerical data; TVComplement for discrete, categorical data.
+    - `KSComplement`, `TVComplement`
 
 ### Utility
-- **synthcity**: 
-    - *eval_performance (Train on Synthetic, Test on Real)* - PerformanceEvaluatorLinear/MLP/XGB, FeatureImportanceRankDistance
-    - *eval_detection (distinguish real from synthetic)* - detection_linear/MLP/XGB
-- **SDMetrics** (for cross-checking synthcity): 
-    - *ML Efficacy: Single Table* - BinaryLogisticRegression
-    - *Detection: Single Table* - LogisticDetection
+**synthcity**: 
+- *eval_performance (Train on Synthetic, Test on Real)* - PerformanceEvaluatorLinear/XGB, FeatureImportanceRankDistance
+    - `performance.linear_model.gt`, `performance.linear_model.syn_id`, `performance.linear_model.syn_ood`, `performance.xgb.gt`, `performance.xgb.syn_id`, `performance.xgb.syn_ood`, `performance.feat_rank_distance.corr`, `performance.feat_rank_distance.pvalue`
 
 ### Privacy
-- **SDMetrics**: 
-    - *DCRBaselineProtection* - measures distance between synthetic and closest real record
-    - *NewRowSynthesis* - whether each row in the synthetic data is novel, or exactly matches an original row in the real data
-- **TAPAs**: 
-    - *MIAttackReport, AIAttackReport* - membership- or attribute-inference attacks (modifiable via TM framework)
-        - reports accuracy, true_positive_rate, false_positive_rate, mia_advantage, privacy_gain, auc, effective_epsilon
-    - *ROCReport* - aggregates summaries by plotting a ROC (receiver operating characteristic) curve for each attack
-    - *EffectiveEpsilonReport* - effective epsilon of the worst privacy leakage across all simulated attacks
+**TAPAs**: 
+- *MIAttackReport, BinaryAIAttackReport* - membership- or attribute-inference attacks (modifiable via TM framework)
+    - `mia_auc`, `mia_advantage`, `mia_privacy_gain`, `mia_eff_epsilon`, `mia_tp`, `mia_fp`
+    - `aia_auc`, `aia_advantage`, `aia_privacy_gain`, `aia_eff_epsilon`
+- *ROCReport* - aggregates summaries by plotting a ROC (receiver operating characteristic) curve for each attack
+    - outputs plots saved to `results/tapas/{method}/`
+- *EffectiveEpsilonReport* - effective epsilon of the worst privacy leakage across all simulated attacks
+    - `eps_low_90`, `eps_high_90` (across all MIAs only)
+
+### Computational Overhead
+Measured in each synthetic method's notebook (across `.fit()` + `.generate()`). 
+- *Wall clock time (s)* - via `time`
+- *Peak memory (MB)* - via `tracemalloc` (Python-level memory allocations only)
 
 ---
 
