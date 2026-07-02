@@ -1,2 +1,6 @@
 script,runtime_sec,peak_memory_mb,methods_succeeded,methods_failed
 eval_sdmetrics,2.44,10.82,4,0
+eval_synthcity_bayesian_network,0.61,29.48,1,0
+eval_synthcity_privbayes,0.58,29.48,1,0
+eval_synthcity_ctgan,0.6,29.78,1,0
+eval_synthcity_dpgan,0.59,30.08,1,0
