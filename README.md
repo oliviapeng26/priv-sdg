@@ -139,6 +139,11 @@ CSV column names in `evaluation/{tool}.py` are listed as `metrics`.
 - *EffectiveEpsilonReport* - effective epsilon of the worst privacy leakage across all simulated attacks
     - `eps_low_90`, `eps_high_90` (across all MIAs only)
 
+**Note**: 
+- `eval_tapas.py`, `results/tapas`, `results/tapas_results.csv` are iteration 1 (naive 1 MIA, 1 AIA)
+- `evaluation/eval_tapas/eff_eps`, `results/tapas_results` are iteration 2 (computing effective epsilon for PrivBayes, DPGAN across MIAs)
+- `target_strategy/` are iteration 3 (final research direction to investigate effect of target selection strategy on effective epsilon computation)
+
 ### Computational Overhead
 Measured in each synthetic method's notebook (across `.fit()` + `.generate()`). 
 - *Wall clock time (s)* - via `time`

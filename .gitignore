@@ -4,3 +4,7 @@
 
 # synthcity's internal cache for plugins
 sdg/workspace/
+
+# tapas attack caches
+cache/
+__pycache__/
