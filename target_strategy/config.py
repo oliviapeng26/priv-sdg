@@ -25,7 +25,7 @@ ALL_COLS = CONTINUOUS_COLS + CATEGORICAL_COLS
 # ── Generator settings ─────────────────────────────────────────────────
 GENERATOR_NAME = "privbayes"
 FORMAL_EPSILON = 10.0   # DP budget for PrivBayes (matches original TAPAS and Chida papers)
-FORMAL_DELTA = 1e-5
+FORMAL_DELTA = 1e-5     # δ=1e-5 to match TAPAS original paper, note Chida et al. uses δ=0.
 
 # ── Experiment design ──────────────────────────────────────────────────
 BACKGROUND_SIZE = 499   # |d_{-t}|, the fixed background dataset
