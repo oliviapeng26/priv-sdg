@@ -1,0 +1,21 @@
+attack,num_train,num_test,wall_time_s,peak_memory_mb,auc,mia_advantage,privacy_gain,tp,fp,eff_epsilon_pointwise,eff_epsilon_pointwise_is_inf,eps_low_90,eps_high_90,eps_low_95,eps_high_95,eps_low_99,eps_high_99,method,dp,kind,formal_epsilon
+Groundhog,50,100,182.56,358.99,1.0,1.0,0.0,1.0,0.0,,True,2.390152810700866,inf,2.209964161957534,inf,1.8784765326733932,inf,bayesian_network,False,statistical,
+ShadowModelling(RandomQueries),50,100,72.52,1.01,1.0,1.0,0.0,1.0,0.0,,True,2.390152810700866,inf,2.209964161957534,inf,1.8784765326733932,inf,bayesian_network,False,statistical,
+"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",50,100,0.67,1.09,0.0,0.0,1.0,0.0,0.0,0.0,False,0.0,0.0857878942817194,0.0,0.1019075961552109,0.0,0.1393363848164646,bayesian_network,False,statistical,
+ProbabilityEstimation(KernelDensity()),50,100,0.57,0.94,0.0,0.0,1.0,0.0,0.0,0.0,False,0.0,0.0857878942817194,0.0,0.1019075961552109,0.0,0.1393363848164646,bayesian_network,False,statistical,
+"ClosestDistance(L_2, accuracy)",50,100,0.48,1.08,0.0,0.0,1.0,0.0,0.0,0.0,False,0.0,0.0857878942817194,0.0,0.1019075961552109,0.0,0.1393363848164646,bayesian_network,False,statistical,
+Groundhog,50,100,5495.68,1529.21,1.0,1.0,0.0,1.0,0.0,,True,2.390152810700866,inf,2.209964161957534,inf,1.8784765326733932,inf,privbayes,True,statistical,1.0
+ShadowModelling(RandomQueries),50,100,70.01,1.03,1.0,1.0,0.0,1.0,0.0,,True,2.390152810700866,inf,2.209964161957534,inf,1.8784765326733932,inf,privbayes,True,statistical,1.0
+"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",50,100,0.47,1.09,0.5,0.0,1.0,0.0,0.0,0.0,False,0.0,0.0857878942817194,0.0,0.1019075961552109,0.0,0.1393363848164646,privbayes,True,statistical,1.0
+ProbabilityEstimation(KernelDensity()),50,100,0.56,0.94,0.0,0.0,1.0,0.0,0.0,0.0,False,0.0,0.0857878942817194,0.0,0.1019075961552109,0.0,0.1393363848164646,privbayes,True,statistical,1.0
+"ClosestDistance(L_2, accuracy)",50,100,0.42,1.08,0.0,0.0,1.0,0.0,0.0,0.0,False,0.0,0.0857878942817194,0.0,0.1019075961552109,0.0,0.1393363848164646,privbayes,True,statistical,1.0
+Groundhog,50,100,1406.5,328.39,1.0,1.0,0.0,1.0,0.0,,True,2.390152810700866,inf,2.209964161957534,inf,1.8784765326733932,inf,ctgan,False,neural,
+ShadowModelling(RandomQueries),50,100,66.21,1.04,1.0,1.0,0.0,1.0,0.0,,True,2.390152810700866,inf,2.209964161957534,inf,1.8784765326733932,inf,ctgan,False,neural,
+"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",50,100,0.49,1.1,0.5,0.0,1.0,0.0,0.0,0.0,False,0.0,0.0857878942817194,0.0,0.1019075961552109,0.0,0.1393363848164646,ctgan,False,neural,
+ProbabilityEstimation(KernelDensity()),50,100,0.53,0.94,1.0,1.0,0.0,1.0,0.0,,True,2.390152810700866,inf,2.209964161957534,inf,1.8784765326733932,inf,ctgan,False,neural,
+"ClosestDistance(L_2, accuracy)",50,100,0.43,1.08,0.0,0.0,1.0,0.0,0.0,0.0,False,0.0,0.0857878942817194,0.0,0.1019075961552109,0.0,0.1393363848164646,ctgan,False,neural,
+Groundhog,50,100,7345.85,322.08,1.0,1.0,0.0,1.0,0.0,,True,2.390152810700866,inf,2.209964161957534,inf,1.8784765326733932,inf,dpgan,True,neural,1.0
+ShadowModelling(RandomQueries),50,100,68.51,1.04,1.0,1.0,0.0,1.0,0.0,,True,2.390152810700866,inf,2.209964161957534,inf,1.8784765326733932,inf,dpgan,True,neural,1.0
+"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",50,100,0.49,1.1,0.5,0.0,1.0,0.0,0.0,0.0,False,0.0,0.08578789428171946,0.0,0.10190759615521093,0.0,0.13933638481646463,dpgan,True,neural,1.0
+ProbabilityEstimation(KernelDensity()),50,100,0.53,0.94,1.0,1.0,0.0,1.0,0.0,,True,2.390152810700866,inf,2.209964161957534,inf,1.8784765326733932,inf,dpgan,True,neural,1.0
+"ClosestDistance(L_2, accuracy)",50,100,0.48,1.08,0.0,0.0,1.0,0.0,0.0,0.0,False,0.0,0.08578789428171946,0.0,0.10190759615521093,0.0,0.13933638481646463,dpgan,True,neural,1.0

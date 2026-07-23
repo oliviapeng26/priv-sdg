@@ -1,0 +1,27 @@
+2026-07-18 02:13:04,506 INFO === convergence check: methods=['ctgan', 'dpgan'], device=cuda, candidates=[50, 100, 200, 'default'] ===
+2026-07-18 02:13:49,134 INFO [ctgan n_iter=50] already recorded, skipping
+2026-07-18 02:13:49,140 INFO [ctgan n_iter=100] already recorded, skipping
+2026-07-18 02:13:49,145 INFO [ctgan n_iter=200] fitting on 21523 rows, device=cuda, kwargs={'device': 'cuda', 'n_iter': 200}
+2026-07-18 02:13:49,543 INFO TensorFlow version 2.20.0 available.
+2026-07-18 02:13:49,545 INFO JAX version 0.7.2 available.
+2026-07-18 02:24:52,829 INFO [ctgan n_iter=200] fit=653.98s gen=0.2s xgb_syn_id=0.8797 (gt=0.9199)
+2026-07-18 02:24:52,849 INFO [ctgan n_iter=default] fitting on 21523 rows, device=cuda, kwargs={'device': 'cuda'}
+2026-07-18 02:54:03,634 INFO [ctgan n_iter=default] fit=1744.27s gen=0.22s xgb_syn_id=0.8737 (gt=0.9199)
+2026-07-18 02:54:03,654 INFO [dpgan n_iter=50] fitting on 21523 rows, device=cuda, kwargs={'device': 'cuda', 'n_iter': 50, 'epsilon': 1.0}
+2026-07-18 02:58:00,783 INFO [dpgan n_iter=50] fit=230.58s gen=1.73s xgb_syn_id=0.4016 (gt=0.9199)
+2026-07-18 02:58:00,808 INFO [dpgan n_iter=100] fitting on 21523 rows, device=cuda, kwargs={'device': 'cuda', 'n_iter': 100, 'epsilon': 1.0}
+2026-07-18 03:05:36,270 INFO [dpgan n_iter=100] fit=451.8s gen=0.31s xgb_syn_id=0.5953 (gt=0.9199)
+2026-07-18 03:05:36,299 INFO [dpgan n_iter=200] fitting on 21523 rows, device=cuda, kwargs={'device': 'cuda', 'n_iter': 200, 'epsilon': 1.0}
+2026-07-18 03:20:27,549 INFO [dpgan n_iter=200] fit=887.24s gen=0.31s xgb_syn_id=0.5473 (gt=0.9199)
+2026-07-18 03:20:27,569 INFO [dpgan n_iter=default] fitting on 21523 rows, device=cuda, kwargs={'device': 'cuda', 'epsilon': 1.0}
+2026-07-18 04:07:47,315 INFO [dpgan n_iter=default] fit=2835.3s gen=0.19s xgb_syn_id=0.5359 (gt=0.9199)
+2026-07-18 04:07:47,333 INFO === TAPAS budget projection (fits = (num_train+num_test) x 2) ===
+2026-07-18 04:07:47,334 INFO   ctgan            n_iter=     50    166.9s/fit x 60 fits =  166.9 min [OVER 2h @ 10/20]  xgb_syn_id=0.8743
+2026-07-18 04:07:47,334 INFO   ctgan            n_iter=    100    301.3s/fit x 60 fits =  301.3 min [OVER 2h @ 10/20]  xgb_syn_id=0.8763
+2026-07-18 04:07:47,335 INFO   ctgan            n_iter=    200    654.2s/fit x 60 fits =  654.2 min [OVER 2h @ 10/20]  xgb_syn_id=0.8797
+2026-07-18 04:07:47,335 INFO   ctgan            n_iter=default   1744.5s/fit x 60 fits = 1744.5 min [OVER 2h @ 10/20]  xgb_syn_id=0.8737
+2026-07-18 04:07:47,336 INFO   dpgan            n_iter=     50    232.3s/fit x 60 fits =  232.3 min [OVER 2h @ 10/20]  xgb_syn_id=0.4016
+2026-07-18 04:07:47,336 INFO   dpgan            n_iter=    100    452.1s/fit x 60 fits =  452.1 min [OVER 2h @ 10/20]  xgb_syn_id=0.5953
+2026-07-18 04:07:47,337 INFO   dpgan            n_iter=    200    887.5s/fit x 60 fits =  887.5 min [OVER 2h @ 10/20]  xgb_syn_id=0.5473
+2026-07-18 04:07:47,337 INFO   dpgan            n_iter=default   2835.5s/fit x 60 fits = 2835.5 min [OVER 2h @ 10/20]  xgb_syn_id=0.5359
+2026-07-18 04:07:47,337 INFO === Done. Results at /content/drive/MyDrive/VRI/experimentation/benchmark_tapas/results/convergence_check.csv ===
