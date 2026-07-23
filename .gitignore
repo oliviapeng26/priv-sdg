@@ -4,6 +4,7 @@
 
 # synthcity's internal cache for plugins
 sdg/workspace/
+workspace/
 
 # tapas attack caches
 cache/
