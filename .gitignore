@@ -2,10 +2,15 @@
 /data
 /synthetic_data
 
-# synthcity's internal cache for plugins
+# synthcity's internal cache for plugins (regenerable; never commit)
 sdg/workspace/
 workspace/
+workspace_*/
+**/workspace_*/
 
 # tapas attack caches
 cache/
 __pycache__/
+
+# aim bin-count sweep: per-setting synthetic CSVs (the results CSV/log/PNG are kept)
+sdg/aim_tuning/synthetic/
