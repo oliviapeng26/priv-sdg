@@ -1,5 +1,0 @@
-method,rows_generated,wall_time_s,peak_memory_mb
-bayesian_network,21523,12.6,43.61
-privbayes,21523,165.71,21.52
-ctgan,21523,4039.77,64.8
-dpgan,21523,6755.5,133.98
