@@ -157,6 +157,17 @@ class SynthcityGenerator(Generator):
     epsilon is passed to the plugin ONLY when method is a DP method -- non-DP
     plugins (bayesian_network, ctgan) raise on an unexpected `epsilon` kwarg.
     plugin_kwargs carries the GANs' n_iter cap and device (see config.py).
+
+    NO FIXED random_state HERE, DELIBERATELY. Synthcity plugins do accept one,
+    but TAPAS calls this class 2 x (num_train + num_test) times per attack, on
+    D+/D- pairs that differ in exactly one record. A constant random_state
+    would hand D+ and D- common random numbers, collapsing the generator's own
+    sampling variance and inflating attack success -- a change to the threat
+    model, not a reproducibility fix. The privacy run is reproducible where it
+    matters (background + target draw, seeds.TAPAS_BG_SEED/TAPAS_TARGET_SEED);
+    the per-simulation generator randomness is meant to be free. Utility and
+    fidelity, where a fixed generator seed IS the right thing, are seeded
+    per-run in sdg/generate_runs.py.
     """
     def __init__(self, method: str, description: DataDescription,
                  epsilon: float = FORMAL_EPSILON, plugin_kwargs: dict = None):

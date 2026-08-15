@@ -71,8 +71,13 @@ def main():
         print(f"[error] {COMBINED} not found -- run aggregate.py first.")
         return
     df = pd.read_csv(COMBINED)
-    if df.empty or "xgb_syn_id" not in df or "mean_advantage" not in df:
-        print("[error] combined summary missing required columns; is the privacy run complete?")
+    if df.empty or "tstr_xgboost_auc_mean" not in df or "mean_advantage" not in df:
+        print("[error] combined summary missing required columns.")
+        print("        privacy axis -> benchmark_tapas/scripts/run_*.py")
+        print("        utility axis -> evaluation/eval_utility.py, then aggregate.py")
+        return
+    if df["tstr_xgboost_auc_mean"].isna().all():
+        print("[error] utility column is all-NaN -- run evaluation/eval_utility.py, then aggregate.py.")
         return
 
     fig, ax = plt.subplots(figsize=(7.6, 5.8))
@@ -81,17 +86,24 @@ def main():
     ax.axhline(0.0, ls="--", lw=1, color=TEAL, zorder=1)
     ax.text(0.01, 0.0, " privacy leakage floor (AUC = 0.0)", transform=ax.get_yaxis_transform(),
             va="bottom", ha="left", fontsize=8, color=TEAL)
-    if df["xgb_gt"].notna().any():
-        gt = float(df["xgb_gt"].dropna().iloc[0])
+    if "trtr_xgboost_auc_mean" in df and df["trtr_xgboost_auc_mean"].notna().any():
+        gt = float(df["trtr_xgboost_auc_mean"].dropna().iloc[0])
         ax.axvline(gt, ls=":", lw=1, color=TEAL, zorder=1)
-        ax.text(gt, 0.07, f" utility ceiling from real data (TSTR = {gt:.2f})", rotation=90,
+        ax.text(gt, 0.07, f" utility ceiling from real data (TRTR = {gt:.2f})", rotation=90,
                 transform=ax.get_xaxis_transform(), va="bottom", ha="right",
                 fontsize=8, color=TEAL)
 
     for _, r in df.iterrows():
         color = DP_COLOR[bool(r["dp"])]
         n_succeed = int(r["n_attacks_succeed"]) if "n_attacks_succeed" in r else None
-        ax.scatter(r["xgb_syn_id"], r["mean_advantage"],
+        # x error bar = across-seed std of TSTR (seeds.RUN_SEEDS). It is load-bearing:
+        # at eps=1.0 PrivBayes spans ~0.11 AUC across seeds, wide enough to overlap
+        # its non-DP sibling, so a bare point would overstate the separation.
+        xerr = r.get("tstr_xgboost_auc_std", float("nan"))
+        if pd.notna(xerr):
+            ax.errorbar(r["tstr_xgboost_auc_mean"], r["mean_advantage"], xerr=xerr,
+                        fmt="none", ecolor=color, elinewidth=1.2, capsize=3, zorder=2)
+        ax.scatter(r["tstr_xgboost_auc_mean"], r["mean_advantage"],
                    marker=SHAPE.get(r["kind"], "o"), s=200,
                    facecolors=color, edgecolors="black", linewidths=0.8, zorder=3)
         tag = f"\n({n_succeed}/5 attacks)" if n_succeed is not None else ""
@@ -99,11 +111,11 @@ def main():
         name = str(r["label"]).split(" (")[0]
         dx, dy, ha, va = LABEL_PLACE.get(r["method"], (12, 9, "left", "bottom"))
         ax.annotate(f"{name}{tag}",
-                    (r["xgb_syn_id"], r["mean_advantage"]),
+                    (r["tstr_xgboost_auc_mean"], r["mean_advantage"]),
                     textcoords="offset points", xytext=(dx, dy), fontsize=8.5,
                     ha=ha, va=va, color="#222222")
 
-    ax.set_xlabel("TSTR XGBoost (Utility)")
+    ax.set_xlabel("TSTR XGBoost AUC, mean $\\pm$ s.d. over runs (Utility)")
     ax.set_ylabel("Mean membership advantage (Privacy leakage)")
     ax.set_ylim(-0.05, 0.75)
     ax.margins(x=0.18)

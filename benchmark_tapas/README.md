@@ -69,7 +69,7 @@ benchmark_tapas/
     ├── per_method/           # one dir per generator: effeps_{m}.csv, effective_epsilon_*.csv, ROC PNG, log
     ├── tables/               # summary_{privacy,utility,combined}.csv + benchmark_privacy_per_attack.csv
     ├── figures/              # privacy_utility_tradeoff.png, attack_auc_heatmap.png
-    └── convergence/          # convergence_check.csv + log
+    └── convergence/          # convergence_check_tstr.csv + _LEGACY
 ```
 
 `common.py` is a near-verbatim copy of `target_strategy/common.py` with three
@@ -148,8 +148,15 @@ python benchmark_tapas/analysis/tradeoff.py        # → results/privacy_utility
 python benchmark_tapas/analysis/attack_heatmap.py  # → results/attack_auc_heatmap.png        (AUC by attack × method)
 ```
 
-Utility/fidelity are **not** recomputed here — `aggregate.py` reads the existing
-`results/synthcity_results.csv` (TSTR) and `results/sdmetrics_results.csv`.
+Utility/fidelity are **not** recomputed here — `aggregate.py` reads
+`results/utility_summary.csv` (in-house TSTR/TRTR/retention, from
+`evaluation/eval_utility.py`) and `results/fidelity_summary.csv` (from
+`evaluation/eval_fidelity.py`). Both are means ± std over `seeds.RUN_SEEDS`, so
+the tradeoff scatter carries x error bars. Missing inputs degrade to NaN columns
+rather than failing, so the privacy half can be aggregated on its own.
+
+These replaced `results/synthcity_results.csv`, which was deleted: its TSTR was
+scored on an internal split of the generators' own training data.
 
 **On the privacy axis:** worst-case AUC saturates at 1.0 for all four generators
 (Groundhog/ShadowModelling separate every generator, DP or not — ε-invariant), so

@@ -19,6 +19,7 @@ timeout (~30-60 min of inactivity), so keep the tab open + machine awake until
 DPGAN's ~92-min Groundhog checkpoints (see README).
 """
 
+import sys
 from pathlib import Path
 
 # -- Paths ---------------------------------------------------------------
@@ -33,14 +34,23 @@ RESULTS_DIR = BENCHMARK_DIR / "results"
 # results/ is organised into subfolders by artefact type:
 FIGURES_DIR     = RESULTS_DIR / "figures"       # tradeoff + heatmap PNGs
 TABLES_DIR      = RESULTS_DIR / "tables"        # summary_*.csv + benchmark_privacy_per_attack.csv
-CONVERGENCE_DIR = RESULTS_DIR / "convergence"   # convergence_check.csv + log
+CONVERGENCE_DIR = RESULTS_DIR / "convergence"   # convergence_check_tstr.csv (+ _LEGACY)
 PER_METHOD_DIR  = RESULTS_DIR / "per_method"    # per-generator effeps CSVs, ROC PNG, log
 
-# Existing utility/fidelity tables (already computed) that aggregate.py reads.
-SYNTHCITY_RESULTS = REPO_ROOT / "results" / "synthcity_results.csv"
-SDMETRICS_RESULTS = REPO_ROOT / "results" / "sdmetrics_results.csv"
+# Utility/fidelity tables that aggregate.py reads. Both are the multi-run,
+# in-house tables: utility from evaluation/eval_utility.py (TSTR scored on the
+# held-out test split) and fidelity from evaluation/eval_fidelity.py, each
+# aggregated over seeds.RUN_SEEDS so every column carries a _mean and a _std.
+#
+# These replace results/synthcity_results.csv, which has been deleted: its
+# performance.* metrics were scored on an internal split of the generators'
+# OWN training data (see evaluation_LEGACY/eval_synthcity_LEGACY.py). Fidelity moved to
+# multi-run table at the same time so the two halves of summary_utility.csv are
+# not a 5-run mean next to a single draw.
+UTILITY_RESULTS = REPO_ROOT / "results" / "utility_summary.csv"
+FIDELITY_RESULTS = REPO_ROOT / "results" / "fidelity_summary.csv"
 
-# -- Dataset schema (matches common.py / eval_synthcity.py / target_strategy) --
+# -- Dataset schema (matches common.py / evaluation/eval_utility.py / target_strategy) --
 CONTINUOUS_COLS = [
     "age", "education_num", "capital_gain", "capital_loss", "hours_per_week",
 ]
@@ -51,11 +61,17 @@ CATEGORICAL_COLS = [
 TARGET_COL = "income"
 
 # -- Threat-model design (shared, fixed across all 4 methods) -------------
+# The two seeds come from the repo-root seeds.py (single source of truth for
+# every fixed seed in the pipeline); the values are unchanged from what this
+# benchmark already ran with, so the cached threat models stay valid.
+sys.path.insert(0, str(REPO_ROOT))
+from seeds import TAPAS_BG_SEED, TAPAS_TARGET_SEED
+
 FORMAL_EPSILON = 1.0    # DP budget for privbayes/dpgan (benchmark setting)
-BACKGROUND_SIZE = 499   # |d_{-t}|, fixed background sampled once (seed=42)
+BACKGROUND_SIZE = 499   # |d_{-t}|, fixed background sampled once
 NUM_SYNTHETIC = 500     # records per simulated synthetic dataset (499+1)
-BACKGROUND_SEED = 42
-TARGET_SEED = 43
+BACKGROUND_SEED = TAPAS_BG_SEED
+TARGET_SEED = TAPAS_TARGET_SEED
 
 # -- Per-method configuration --------------------------------------------
 # dp:            passes epsilon=FORMAL_EPSILON to the plugin iff True (non-DP
