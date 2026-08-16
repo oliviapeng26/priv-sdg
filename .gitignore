@@ -14,3 +14,12 @@ __pycache__/
 
 # aim bin-count sweep: per-setting synthetic CSVs (the results CSV/log/PNG are kept)
 sdg/aim_tuning/synthetic/
+
+# per-run script logs. Rewritten on every invocation and carrying nothing the
+# result CSVs don't already record, so they only ever show up as noise in
+# git status. The *_LEGACY logs already committed stay tracked - this does not
+# untrack them.
+sdg/generate_runs_log.txt
+evaluation/eval_fidelity_log.txt
+evaluation/eval_utility_log.txt
+benchmark_tapas/results/convergence/convergence_check_tstr_log.txt
