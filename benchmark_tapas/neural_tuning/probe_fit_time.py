@@ -5,7 +5,7 @@ background, so we can project the audit budget before committing a full run.
 Why this exists: convergence_check.py timed fits on the FULL 21,523 rows, but
 TAPAS retrains each shadow generator on a 500-row background -- far faster. The
 audit's first attack (Groundhog) generates ALL the shared shadow fits
-((num_train+num_test)x2 of them) and only checkpoints them AFTER the entire Groundhog finishes,
+(num_train + num_test of them) and only checkpoints them AFTER the entire Groundhog finishes,
 so the first attack (Groundhog) must complete within one interactive session or it
 restarts every time and never lands. Colab free-tier sessions cap at ~12 h, but the
 binding limit is the idle timeout (~30-60 min of inactivity) -- so Groundhog's
@@ -75,7 +75,13 @@ def probe(method, member, description):
     s_per_fit = float(np.mean(times))
     s_sd = float(np.std(times, ddof=1)) if len(times) > 1 else float('nan')
     num_train, num_test = cfg["num_train"], cfg["num_test"]
-    groundhog_fits = (num_train + num_test) * 2          # first attack does all shared fits
+    # NOTE (2026-08-16): num_train + num_test, NOT x2. Verified against a completed
+    # audit -- benchmark_tapas/cache/bayesian_network/threat_model.pkl memoised
+    # exactly 50 training + 100 testing datasets at num_train=50/num_test=100.
+    # TAPAS's num_samples IS the dataset count: SwapMIALabeller halves it into pairs
+    # and then emits both worlds, returning num_samples datasets, one generator fit
+    # each. The old x2 double-counted the D+/D- pair and inflated every projection.
+    groundhog_fits = num_train + num_test                 # first attack does all shared fits
     groundhog_min = groundhog_fits * s_per_fit / 60.0
     fits_in_session = groundhog_min <= SESSION_BUDGET_MIN
 

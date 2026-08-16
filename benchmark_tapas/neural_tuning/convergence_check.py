@@ -10,7 +10,7 @@ caps, over several seeds, and records (a) wall-clock fit+generate time and
      AUC artificially, making it look private when it just leaked nothing; see
      README caveat).
   2. Measure seconds-per-fit so we can project the TAPAS shadow-model budget:
-     fits = (num_train + num_test) x 2, and decide whether the neural counts
+     fits = (num_train + num_test), and decide whether the neural counts
      fit inside one ~2 hr Colab T4 session.
 
 UTILITY IS NOW IN-HOUSE (2026-08-15). This script used to call synthcity's
@@ -218,11 +218,17 @@ def project_budget(summary):
     """Print the TAPAS shadow-model budget projection from measured fit times."""
     if summary.empty:
         return
-    log.info("=== TAPAS budget projection (fits = (num_train+num_test) x 2) ===")
+    log.info("=== TAPAS budget projection (fits = (num_train + num_test)) ===")
     for _, r in summary.iterrows():
         method = r["method"]
         cfg = METHOD_CONFIG.get(method, {"num_train": 10, "num_test": 20})
-        fits = (cfg["num_train"] + cfg["num_test"]) * 2
+    # NOTE (2026-08-16): num_train + num_test, NOT x2. Verified against a completed
+    # audit -- benchmark_tapas/cache/bayesian_network/threat_model.pkl memoised
+    # exactly 50 training + 100 testing datasets at num_train=50/num_test=100.
+    # TAPAS's num_samples IS the dataset count: SwapMIALabeller halves it into pairs
+    # and then emits both worlds, returning num_samples datasets, one generator fit
+    # each. The old x2 double-counted the D+/D- pair and inflated every projection.
+        fits = cfg["num_train"] + cfg["num_test"]
         per_fit = r["fit_time_s"] + r["generate_time_s"]
         total_min = fits * per_fit / 60.0
         fits_2hr = "FITS" if total_min <= 120 else "OVER"
