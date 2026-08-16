@@ -13,7 +13,8 @@ duration is really "how long you must keep the tab open + machine awake". SESSIO
 below is that keep-alive window, not a hard quota.
 
 The probe is purely about time/feasibility, not statistical adequacy.
-It does 3 real fit+generate cycles on a 500-row background, takes the median s/fit, and multiplies out:
+It does 5 real fit+generate cycles on a 500-row background, takes the mean s/fit
+(matching the 5-seed design used elsewhere in the pipeline), and multiplies out:
 - Groundhog time = (num_train + num_test) × 2 × s/fit — the make-or-break first attack.
 - FITS / OVER the keep-alive window (SESSION_BUDGET_MIN).
 - The largest counts that would still fit the Google Colab T4 GPU time budget
@@ -34,7 +35,8 @@ import common
 from config import METHOD_CONFIG, FORMAL_EPSILON, NUM_SYNTHETIC
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-K = 3                     # fit+generate cycles to time (median reported)
+K = 5                     # fit+generate cycles to time (mean reported, matching the
+                          # 5-seed design used for generation/fidelity/utility)
 SESSION_BUDGET_MIN = 120  # keep-alive window you'll babysit the 1st attack (not a hard cap;
                           # Colab sessions cap ~12h, idle timeout ~30-60 min of inactivity)
 METHODS = sys.argv[1:] or ["ctgan", "dpgan"]
@@ -70,7 +72,8 @@ def probe(method, member, description):
         times.append(dt)
         log.info(f"  [{method}] cycle {i+1}/{K}: {dt:.1f}s")
 
-    s_per_fit = float(np.median(times))
+    s_per_fit = float(np.mean(times))
+    s_sd = float(np.std(times, ddof=1)) if len(times) > 1 else float('nan')
     num_train, num_test = cfg["num_train"], cfg["num_test"]
     groundhog_fits = (num_train + num_test) * 2          # first attack does all shared fits
     groundhog_min = groundhog_fits * s_per_fit / 60.0
@@ -82,7 +85,7 @@ def probe(method, member, description):
     max_train = max_pairs // 3
     max_test = max_pairs - max_train
 
-    log.info(f"[{method}] median {s_per_fit:.1f}s/fit  ->  Groundhog "
+    log.info(f"[{method}] mean {s_per_fit:.2f}s/fit (sd {s_sd:.2f}, n={K})  ->  Groundhog "
              f"({num_train}/{num_test}) = {groundhog_fits} fits = {groundhog_min:.1f} min "
              f"[{'FITS' if fits_in_session else 'OVER'} the {SESSION_BUDGET_MIN}-min session]")
     if fits_in_session:
@@ -92,6 +95,7 @@ def probe(method, member, description):
         need = int((SESSION_BUDGET_MIN * 60) / (2 * s_per_fit) / 3)
         log.info(f"[{method}] to fit one session, drop counts to ~{need}/{need*2}, "
                  f"or lower n_iter / split across sessions (resumable per attack).")
+    log.info(f"[{method}] PASTE INTO analysis.ipynb ->  '{method}': {s_per_fit:.2f},")
 
 
 def main():

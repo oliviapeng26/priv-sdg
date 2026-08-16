@@ -87,8 +87,28 @@ TARGET_SEED = TAPAS_TARGET_SEED
 #   DPGAN  utility jumps 50=.40 (undertrained) -> 100=.60, then 200=.55, full=.54
 #          (noisy DP plateau ~.55). 100 = lowest n_iter that reaches convergence;
 #          under fixed eps=1 more steps spread the noise thinner and don't help.
+# Both GANs capped at 50 (DPGAN was 100 until 2026-08-16). Three reasons, and the
+# leak-free convergence sweep supports all three:
+#
+#   CTGAN   n_iter is pure training length (no DP). 50/100/200 all score ~0.865
+#           against a 0.874 ceiling, so 50 is where utility has converged.
+#   DPGAN   n_iter is NOT just training length -- opacus calibrates the per-step
+#           noise so the budget over n_iter epochs equals eps=1.0 (gan.py passes
+#           `epochs=self.generator_n_iter` to make_private_with_epsilon). Each cap
+#           is a different mechanism, so there is no converged ceiling to approach.
+#           The three caps are indistinguishable (pairwise differences <= 0.022,
+#           inside their s.d.), and the default's 5 draws span [0.354, 0.632],
+#           containing every cap mean. Utility gives no basis to prefer one, so we
+#           take the cheapest.
+#   BOTH    matching the two makes CTGAN vs DPGAN a clean DP ablation: same
+#           architecture, same training length, DP the only difference. (The
+#           statistical pair is NOT such an ablation -- BN and PrivBayes use
+#           different encoders and structure learning; see the README correction.)
+#
+# sdg/generate_runs.py caps generation at the same value, so the model we report
+# utility for and the model we audit share a configuration.
 CTGAN_N_ITER = 50
-DPGAN_N_ITER = 100
+DPGAN_N_ITER = 50
 
 METHOD_CONFIG = {
     "bayesian_network": {

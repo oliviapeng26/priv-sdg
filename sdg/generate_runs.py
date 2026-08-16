@@ -85,6 +85,21 @@ ALL_METHODS = list(METHOD_SPEC)
 DP_METHODS = {"privbayes", "dpgan"}       # take an `epsilon` kwarg
 NEURAL_METHODS = {"ctgan", "dpgan"}       # take a `device` kwarg
 
+# Both GANs are capped here, NOT left at the synthcity default of 2000.
+#
+# MUST MATCH benchmark_tapas/config.py's CTGAN_N_ITER / DPGAN_N_ITER. That file
+# controls the generators TAPAS re-fits during the privacy audit; this one controls
+# the generators we measure utility and fidelity on. If the two drift apart we are
+# back to reporting utility for one model and privacy for another -- the exact
+# confound this cap removes. (Deliberately duplicated rather than imported: sdg/
+# should not depend on the privacy experiment's config.)
+#
+# Justification for the value lives in benchmark_tapas/config.py. In short: CTGAN's
+# utility has converged by 50, and for DPGAN n_iter is a parameter of the DP
+# mechanism rather than a training length, with all tested caps statistically
+# indistinguishable -- so 50 is chosen as the cheapest.
+GAN_N_ITER = 50
+
 CONTINUOUS_COLS = ["age", "education_num", "capital_gain", "capital_loss", "hours_per_week"]
 CATEGORICAL_COLS = ["workclass", "marital_status", "occupation", "relationship",
                     "race", "sex", "native_country", "income"]
@@ -161,6 +176,7 @@ def generate_synthcity(method: str, train_data: pd.DataFrame, seed: int,
         kwargs["epsilon"] = FORMAL_EPSILON
     if method in NEURAL_METHODS:
         kwargs["device"] = device
+        kwargs["n_iter"] = GAN_N_ITER
 
     log.info(f"  plugin={METHOD_SPEC[method]}, kwargs={kwargs}")
     plugin = Plugins().get(METHOD_SPEC[method], **kwargs)
@@ -206,12 +222,21 @@ def generate_aim(train_data: pd.DataFrame, seed: int) -> pd.DataFrame:
 
 
 def record_cost(row: dict) -> None:
-    """Upsert one (method, seed) row into results/computational_cost.csv."""
+    """Upsert one (method, seed, stage) row into results/computational_cost.csv.
+
+    Keyed on stage as well as method+seed -- the eval scripts write fidelity and
+    utility rows into this same file, so matching on method+seed alone would
+    delete their rows every time a generation run was repeated.
+    """
     df = pd.DataFrame([row])
     if COST_CSV.exists():
         existing = pd.read_csv(COST_CSV)
-        mask = ~((existing["method"] == row["method"]) & (existing["seed"] == row["seed"]))
-        df = pd.concat([existing[mask], df], ignore_index=True)
+        if {"method", "seed", "stage"}.issubset(existing.columns):
+            mask = ~((existing["method"] == row["method"])
+                     & (existing["seed"] == row["seed"])
+                     & (existing["stage"] == row["stage"]))
+            existing = existing[mask]
+        df = pd.concat([existing, df], ignore_index=True)
     df.to_csv(COST_CSV, index=False)
 
 
