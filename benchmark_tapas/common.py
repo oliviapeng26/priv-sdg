@@ -159,7 +159,7 @@ class SynthcityGenerator(Generator):
     plugin_kwargs carries the GANs' n_iter cap and device (see config.py).
 
     NO FIXED random_state HERE, DELIBERATELY. Synthcity plugins do accept one,
-    but TAPAS calls this class 2 x (num_train + num_test) times per attack, on
+    but TAPAS calls this class (num_train + num_test) times per attack, on
     D+/D- pairs that differ in exactly one record. A constant random_state
     would hand D+ and D- common random numbers, collapsing the generator's own
     sampling variance and inflating attack success -- a change to the threat
