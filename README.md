@@ -315,6 +315,26 @@ Legacy single-draw timings are at `sdg/computational_overhead.csv`, measured in 
 
 ---
 
+## Future work — multi-seed privacy
+
+Utility and fidelity run over 5 seeds; **privacy stays single-seed**.
+
+The reason is that the privacy budget is better spent elsewhere first. Every generator
+returned `eps_low_95 = 2.209964` at `num_train=50 / num_test=100` — identical to six
+decimals, which is a sample-size ceiling rather than four agreeing measurements. With
+100 test samples the smallest resolvable false-positive rate is 1/100, so the bound
+cannot go higher however much a generator leaks.
+
+Raising the counts addresses that; more seeds does not. The literature runs far larger
+(TAPAS Exp 2 and Chida et al. both use 1000/2500), and at the per-fit times measured on
+the workstation that is ~27 h for all four generators — against ~81 h for three seeds at
+those counts. So it is a genuine either/or, and the bound comes first.
+
+`benchmark_tapas/scripts/run_pilot_counts.py` tests the assumption for ~1 h before
+committing. Multi-seed privacy is deferred to future work.
+
+---
+
 ## Known issues (deferred, not fixed)
 
 **`sdg/aim_tuning/aim_tuning.py` still uses the leaky TSTR.** Its `xgb_syn_id` / `xgb_gt` / `linear_syn_id` columns and the TSTR panel of `aim_tuning_utility.png` come from synthcity's `Metrics.evaluate`, with the same internal-split leak fixed everywhere else. Its *fidelity* columns and marginal-selection counts are unaffected, and those are what the bins=32 conclusion rests on — so the choice probably stands, but the utility numbers shouldn't be quoted as they are. Fix = swap in `compute_tstr`/`compute_trtr` from `evaluation/eval_utility.py` and re-run the sweep. Full note in that script's header.
