@@ -2,6 +2,11 @@
 /data
 /synthetic_data
 
+# virtualenvs (the GPU workstation uses venv/ rather than conda)
+venv/
+.venv/
+env/
+
 # synthcity's internal cache for plugins (regenerable; never commit)
 sdg/workspace/
 workspace/
