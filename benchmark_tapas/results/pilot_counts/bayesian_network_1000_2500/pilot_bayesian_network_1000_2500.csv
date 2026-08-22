@@ -1,0 +1,6 @@
+attack,num_train,num_test,wall_time_s,peak_memory_mb,auc,mia_advantage,privacy_gain,tp,fp,eff_epsilon_pointwise,eff_epsilon_pointwise_is_inf,eps_low_90,eps_high_90,eps_low_95,eps_high_95,eps_low_99,eps_high_99,method
+Groundhog,1000,2500,2513.0,1713.95,1.0,1.0,0.0,1.0,0.0,,True,5.7185756236524705,inf,5.54607879562869,inf,5.232538378746676,inf,bayesian_network
+ShadowModelling(RandomQueries),1000,2500,1261.92,22.36,1.0,1.0,0.0,1.0,0.0,,True,5.7185756236524705,inf,5.54607879562869,inf,5.232538378746676,inf,bayesian_network
+"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",1000,2500,10.06,1.17,0.0,0.0,1.0,0.0,0.0,0.0,False,0.0,0.0032790039593720297,0.0,0.00389513478673413,0.0,0.005325746264200256,bayesian_network
+ProbabilityEstimation(KernelDensity()),1000,2500,10.77,1.02,0.0,0.0,1.0,0.0,0.0,0.0,False,0.0,0.0032790039593720297,0.0,0.00389513478673413,0.0,0.005325746264200256,bayesian_network
+"ClosestDistance(L_2, accuracy)",1000,2500,10.31,1.16,0.0,0.0,1.0,0.0,0.0,0.0,False,0.0,0.0032790039593720297,0.0,0.00389513478673413,0.0,0.005325746264200256,bayesian_network

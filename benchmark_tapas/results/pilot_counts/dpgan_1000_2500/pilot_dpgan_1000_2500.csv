@@ -1,0 +1,6 @@
+attack,num_train,num_test,wall_time_s,peak_memory_mb,auc,mia_advantage,privacy_gain,tp,fp,eff_epsilon_pointwise,eff_epsilon_pointwise_is_inf,eps_low_90,eps_high_90,eps_low_95,eps_high_95,eps_low_99,eps_high_99,method
+Groundhog,1000,2500,14633.47,1662.0,1.0,1.0,0.0,1.0,0.0,,True,5.7185756236524705,inf,5.54607879562869,inf,5.232538378746676,inf,dpgan
+ShadowModelling(RandomQueries),1000,2500,1289.18,22.37,1.0,1.0,0.0,1.0,0.0,,True,5.7185756236524705,inf,5.54607879562869,inf,5.232538378746676,inf,dpgan
+"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",1000,2500,11.06,1.19,0.5,0.0,1.0,0.0,0.0,0.0,False,0.0,0.0032790039593720297,0.0,0.00389513478673413,0.0,0.005325746264200256,dpgan
+ProbabilityEstimation(KernelDensity()),1000,2500,11.18,1.02,1.0,1.0,0.0,1.0,0.0,,True,5.7185756236524705,inf,5.54607879562869,inf,5.232538378746676,inf,dpgan
+"ClosestDistance(L_2, accuracy)",1000,2500,10.32,1.16,0.0,0.0,1.0,0.0,0.0,0.0,False,0.0,0.0032790039593720297,0.0,0.00389513478673413,0.0,0.005325746264200256,dpgan
