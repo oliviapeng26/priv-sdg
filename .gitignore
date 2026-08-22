@@ -32,3 +32,5 @@ evaluation/eval_fidelity_log.txt
 evaluation/eval_utility_log.txt
 benchmark_tapas/results/convergence/convergence_check_tstr_log.txt
 benchmark_tapas/results/pilot_counts/pilot_counts_log.txt
+benchmark_tapas/results/pilot_counts/extra_counts_log.txt
+benchmark_tapas/results/pilot_counts/extra_counts_nohup.out

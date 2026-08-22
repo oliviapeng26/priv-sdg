@@ -23,15 +23,36 @@ THE FIXED VALUES ARE THE ONES THE REPO ALREADY USED
     and every committed table in results/ — for no scientific gain, since the
     numeric value of a seed is arbitrary. Treat them as frozen.
 
-DELIBERATE EXCEPTION — the TAPAS generator is NOT given a fixed seed
-    TAPAS re-fits the generator from scratch once per simulated dataset
-    (2 x (num_train + num_test) fits per attack), on D+ and D- pairs that differ
-    in exactly one record. Pinning random_state to a constant across those fits
-    would give D+ and D- common random numbers, collapsing the generator's own
-    sampling variance and inflating attack accuracy — a methodological change,
-    not a reproducibility fix. So `SynthcityGenerator` stays seedless; what is
-    seeded on the privacy side is the *setup* (background sample, target choice),
-    which is exactly TAPAS_BG_SEED / TAPAS_TARGET_SEED below.
+THE TAPAS GENERATOR GETS A *VARYING* SEED — NOT A FIXED ONE, AND NOT NONE
+    TAPAS re-fits the generator from scratch once per simulated dataset, on D+/D-
+    pairs differing in exactly one record. Pinning random_state to a constant
+    across those fits gives D+ and D- common random numbers, collapsing the
+    generator's own sampling variance — a methodological change, not a
+    reproducibility fix.
+
+    `SynthcityGenerator` originally passed no random_state at all, on the
+    assumption that this left the generator free-running. IT DID NOT. Synthcity's
+    `Plugin.__init__` defaults `random_state: int = 0`, and `Plugin.fit()` calls
+    `enable_reproducible_results(self.random_state)`, which reseeds numpy, torch
+    and `random` globally. Every fit therefore ran at seed 0 on an identical input
+    (ExactDataKnowledge hands the same background to every simulation), so every
+    simulation produced a byte-identical synthetic dataset. Verified 2026-08-22
+    against all six caches: the 1000/2500 DPGAN pilot's 3500 fits yielded exactly
+    two distinct datasets, one per class, each duplicated 1250 times. That is what
+    forced TPR=1 / FPR=0 and the identical eff-epsilon across generators — an
+    effective sample size of 2, not a property of the threat model.
+
+    The fix is an incrementing per-fit seed: fit i runs at
+    TAPAS_GENERATOR_SEED_BASE + i. Consecutive fits — including the two halves of
+    a D+/D- pair — never share a draw, so the sampling variance is real while the
+    audit stays reproducible end to end.
+
+    `Plugin.generate()` reseeds only when explicitly passed random_state, which
+    SynthcityGenerator does not do, so sampling continues from the post-fit RNG
+    state and inherits the per-fit variation.
+
+    NOTE: this is the PRIVACY path only. sdg/generate_runs.py already passes a
+    varying random_state per run across RUN_SEEDS, so utility and fidelity stand.
 """
 
 import random
@@ -43,6 +64,20 @@ import numpy as np
 DATA_SPLIT_SEED = 42       # 80/20 train/test split (data_preprocessing.ipynb)
 TAPAS_BG_SEED = 42         # 499-record background sample (benchmark_tapas)
 TAPAS_TARGET_SEED = 43     # random target/alternate selection (benchmark_tapas)
+TAPAS_GENERATOR_SEED_BASE = 1000   # per-fit generator seed in the TAPAS audit: fit i runs
+                                   # at TAPAS_GENERATOR_SEED_BASE + i, so no two simulations
+                                   # (and no D+/D- pair) ever share a draw
+
+# ── Raw-score extraction (benchmark_tapas/scripts/extract_scores.py) ──
+# These are NOT frozen the way the three above are: they seed a read-only
+# re-analysis of already-generated data, so changing them re-shuffles which
+# cached D+/D- pairs are read and re-draws the attacks' internal randomness,
+# but cannot invalidate any cache, dataset or committed table.
+SCORE_SUBSET_SEED = 44     # which memoised D+/D- pairs to keep when a cache holds
+                           # more than the benchmark's 50/100 (only DPGAN, at 1000/2500)
+SCORE_ATTACK_SEED = 45     # attack-internal randomness: RandomForest trees and the
+                           # RandomTargetedQueryFeature draw. Applied identically before
+                           # every generator so all four are probed by the SAME attack.
 
 # ── Varied across runs (for mean ± std) ──
 NUM_RUNS = 5

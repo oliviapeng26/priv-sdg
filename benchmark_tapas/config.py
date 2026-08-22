@@ -36,6 +36,7 @@ FIGURES_DIR     = RESULTS_DIR / "figures"       # tradeoff + heatmap PNGs
 TABLES_DIR      = RESULTS_DIR / "tables"        # summary_*.csv + benchmark_privacy_per_attack.csv
 CONVERGENCE_DIR = RESULTS_DIR / "convergence"   # convergence_check_tstr.csv (+ _LEGACY)
 PER_METHOD_DIR  = RESULTS_DIR / "per_method"    # per-generator effeps CSVs, ROC PNG, log
+SCORES_DIR      = RESULTS_DIR / "scores"        # raw per-dataset attack scores (pre-threshold)
 
 # Utility/fidelity tables that aggregate.py reads. Both are the multi-run,
 # in-house tables: utility from evaluation/eval_utility.py (TSTR scored on the

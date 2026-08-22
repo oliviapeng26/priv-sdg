@@ -59,12 +59,13 @@ from sklearn.neighbors import KernelDensity
 # config.py sits next to this file (benchmark_tapas/); make it importable
 # whether we're run from scripts/ or from benchmark_tapas/ directly.
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from seeds import TAPAS_GENERATOR_SEED_BASE
 from config import (
     TRAIN_CSV, TEST_CSV,
     CONTINUOUS_COLS, CATEGORICAL_COLS, TARGET_COL,
     FORMAL_EPSILON, BACKGROUND_SIZE, NUM_SYNTHETIC,
     BACKGROUND_SEED, TARGET_SEED,
-    DP_METHODS, METHOD_CONFIG, TABLES_DIR,
+    DP_METHODS, METHOD_CONFIG, TABLES_DIR, SCORES_DIR,
     method_cache_dir, method_results_dir,
     slug,
 )
@@ -158,30 +159,51 @@ class SynthcityGenerator(Generator):
     plugins (bayesian_network, ctgan) raise on an unexpected `epsilon` kwarg.
     plugin_kwargs carries the GANs' n_iter cap and device (see config.py).
 
-    NO FIXED random_state HERE, DELIBERATELY. Synthcity plugins do accept one,
-    but TAPAS calls this class (num_train + num_test) times per attack, on
-    D+/D- pairs that differ in exactly one record. A constant random_state
-    would hand D+ and D- common random numbers, collapsing the generator's own
-    sampling variance and inflating attack success -- a change to the threat
-    model, not a reproducibility fix. The privacy run is reproducible where it
-    matters (background + target draw, seeds.TAPAS_BG_SEED/TAPAS_TARGET_SEED);
-    the per-simulation generator randomness is meant to be free. Utility and
-    fidelity, where a fixed generator seed IS the right thing, are seeded
-    per-run in sdg/generate_runs.py.
+    A VARYING random_state, ONE PER FIT. This class is called
+    (num_train + num_test) times per attack, on D+/D- pairs differing in exactly
+    one record, and each call must be an independent draw or the audit has no
+    sampling variance to measure.
+
+    This code used to pass no random_state at all, believing that left the
+    generator free-running. It did not. Synthcity's `Plugin.__init__` defaults
+    `random_state: int = 0` and `Plugin.fit()` calls
+    `enable_reproducible_results(self.random_state)`, reseeding numpy/torch/random
+    globally. Since ExactDataKnowledge hands every simulation the SAME background,
+    every fit was a deterministic function of identical input: all D+ simulations
+    produced one byte-identical synthetic dataset, all D- another. Confirmed
+    2026-08-22 across all six caches -- the 1000/2500 DPGAN pilot's 3500 fits
+    yielded 2 distinct datasets. That, not the threat model, is why every
+    generator returned TPR=1, FPR=0 and the same eff-epsilon.
+
+    So fit i now runs at seeds.TAPAS_GENERATOR_SEED_BASE + i. Consecutive fits --
+    including the two halves of one D+/D- pair -- never share a draw, so the
+    variance is real, while the audit remains reproducible end to end. The counter
+    survives pickling (see __getstate__), so a resumed run continues the sequence
+    rather than replaying seeds already used.
+
+    `generate()` deliberately does NOT pass random_state: synthcity reseeds there
+    only when one is given, so sampling continues from the post-fit RNG state and
+    inherits the per-fit variation.
     """
     def __init__(self, method: str, description: DataDescription,
-                 epsilon: float = FORMAL_EPSILON, plugin_kwargs: dict = None):
+                 epsilon: float = FORMAL_EPSILON, plugin_kwargs: dict = None,
+                 seed_base: int = TAPAS_GENERATOR_SEED_BASE):
         super().__init__()
         self.method = method
         self.description = description
         self.epsilon = epsilon
         self.plugin_kwargs = plugin_kwargs or {}
+        self.seed_base = seed_base
+        self._fit_counter = 0
         self._plugin = None
 
     def _plugin_args(self) -> dict:
         args = dict(self.plugin_kwargs)
         if self.method in DP_METHODS:
             args["epsilon"] = self.epsilon
+        # Distinct per fit. Read before the counter is incremented in fit(), so
+        # the i-th fit of this generator runs at seed_base + i.
+        args["random_state"] = self.seed_base + self._fit_counter
         return args
 
     def fit(self, dataset, **kwargs):
@@ -195,6 +217,7 @@ class SynthcityGenerator(Generator):
         loader = GenericDataLoader(df, target_column=TARGET_COL)
         self._plugin = Plugins().get(self.method, **self._plugin_args())
         self._plugin.fit(loader)
+        self._fit_counter += 1
         self.trained = True
 
     def generate(self, num_samples, random_state=None):
@@ -217,6 +240,8 @@ class SynthcityGenerator(Generator):
         # the generator from scratch per simulated dataset, so a reloaded
         # generator just re-fits on next use, and the threat model's already
         # memoised synthetic datasets (the expensive part) are unaffected.
+        # _fit_counter and seed_base are deliberately NOT reset: a resumed run
+        # must continue the seed sequence, not replay seeds it has already used.
         state = self.__dict__.copy()
         state["_plugin"] = None
         state["trained"] = False
@@ -421,6 +446,36 @@ def save_roc_report(summaries_by_attack: dict, results_dir: Path, label: str):
     )
 
 
+def _score_rows(method: str, attack, summary) -> list:
+    """Flatten one attack summary into per-test-dataset raw-score records.
+
+    `summary.scores` is the CONTINUOUS score (attack.attack_score), `summary.predictions`
+    the binary decision it was thresholded into. The two binarisation paths differ:
+    TrainableThresholdAttack (ClosestDistance / LocalNeighbourhood / ProbabilityEstimation)
+    learns `attack._threshold` as argmax(tpr-fpr) over the training ROC, while the
+    shadow-modelling attacks (Groundhog, ShadowModelling) have no TAPAS-level threshold
+    at all -- sklearn simply takes the larger class probability. The latter are recorded
+    at 0.5, which is their true cutoff but a fixed one, not a learned one.
+
+    Score scales are NOT comparable across attacks: RF probabilities are [0,1],
+    ClosestDistance is a negated L2 distance, ProbabilityEstimation is a KDE log-density.
+    """
+    threshold = getattr(attack, "_threshold", None)
+    threshold = 0.5 if threshold is None else float(threshold)
+    return [
+        {
+            "generator": method,
+            "attack": attack.label,
+            "target_id": summary.target_id,
+            "ground_truth": int(truth),
+            "raw_score": float(score),
+            "binary_prediction": int(pred),
+            "threshold": threshold,
+        }
+        for truth, pred, score in zip(summary.labels, summary.predictions, summary.scores)
+    ]
+
+
 # -- Per-method driver (keeps the 4 scripts thin) ------------------------
 
 def run_method(method: str, extra_plugin_kwargs: dict = None):
@@ -456,7 +511,7 @@ def run_method(method: str, extra_plugin_kwargs: dict = None):
 
     attacks = build_attacks(target_record, background_dataset)
 
-    rows, summaries = [], {}
+    rows, summaries, score_rows, no_scores = [], {}, [], []
     for attack in attacks:
         result, summary = run_attack(
             attack, threat_model,
@@ -470,9 +525,27 @@ def run_method(method: str, extra_plugin_kwargs: dict = None):
         rows.append(result)
         if summary is not None:
             summaries[attack.label] = summary
+            score_rows.extend(_score_rows(method, attack, summary))
+        else:
+            # run_attack short-circuited on its per-attack JSON cache, which stores
+            # only aggregates. The scores cannot be recovered without re-running the
+            # attack -- cheap, since the fits are memoised (see scripts/extract_scores.py).
+            no_scores.append(attack.label)
         threat_model.save(str(cache_dir / "threat_model"))
 
     save_roc_report(summaries, results_dir, method)
+
+    # Raw pre-threshold scores: the continuous value each attack computed for each
+    # simulated dataset, before it was collapsed to a member/non-member decision.
+    if score_rows:
+        SCORES_DIR.mkdir(parents=True, exist_ok=True)
+        scores_path = SCORES_DIR / f"raw_scores_{method}.csv"
+        pd.DataFrame(score_rows).to_csv(scores_path, index=False)
+        log.info(f"Saved {len(score_rows)} raw attack scores to {scores_path}")
+    if no_scores:
+        log.warning(f"No raw scores for {no_scores} -- served from the per-attack JSON "
+                    f"cache, which does not store them. Re-run those attacks (or use "
+                    f"scripts/extract_scores.py) if the scores are needed.")
 
     out = pd.DataFrame(rows)
     out.to_csv(results_dir / f"effeps_{method}.csv", index=False)
