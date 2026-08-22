@@ -59,7 +59,6 @@ from sklearn.neighbors import KernelDensity
 # config.py sits next to this file (benchmark_tapas/); make it importable
 # whether we're run from scripts/ or from benchmark_tapas/ directly.
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from seeds import TAPAS_GENERATOR_SEED_BASE
 from config import (
     TRAIN_CSV, TEST_CSV,
     CONTINUOUS_COLS, CATEGORICAL_COLS, TARGET_COL,
@@ -69,6 +68,9 @@ from config import (
     method_cache_dir, method_results_dir,
     slug,
 )
+# Must come after `config`: importing config is what puts REPO_ROOT on sys.path,
+# so `seeds` is not importable before that line has run.
+from seeds import TAPAS_GENERATOR_SEED_BASE
 
 log = logging.getLogger("benchmark_tapas")
 
