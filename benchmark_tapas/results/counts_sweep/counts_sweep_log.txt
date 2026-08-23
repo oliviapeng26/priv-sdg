@@ -1,0 +1,9 @@
+2026-08-23 21:55:50,176 INFO     guard train/D+: 20/20 distinct (100.0%) OK
+2026-08-23 21:55:50,193 INFO     guard train/D-: 20/20 distinct (100.0%) OK
+2026-08-23 21:55:50,206 INFO     guard test/D+: 20/20 distinct (100.0%) OK
+2026-08-23 21:55:50,218 INFO     guard test/D-: 20/20 distinct (100.0%) OK
+2026-08-23 21:56:22,873 INFO     exported 1000 train datasets (500,000 rows) -> synthetic_train.csv.gz [21.9 MB]
+2026-08-23 21:56:38,039 INFO     exported 2500 test datasets (1,250,000 rows) -> synthetic_test.csv.gz [54.7 MB]
+2026-08-23 21:57:26,032 INFO     wrote scalers.csv (min/max to invert the scaling)
+2026-08-23 21:57:26,398 INFO     exported 50 train datasets (25,000 rows) -> synthetic_train.csv.gz [1.1 MB]
+2026-08-23 21:57:27,037 INFO     exported 100 test datasets (50,000 rows) -> synthetic_test.csv.gz [2.2 MB]
