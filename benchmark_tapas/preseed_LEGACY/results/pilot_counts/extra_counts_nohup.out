@@ -1,0 +1,273 @@
+2026-08-22 22:36:08,687 INFO === extra count settings from the pilot caches ===
+2026-08-22 22:36:08,687 INFO cells: ['bayesian_network 200/500', 'bayesian_network 500/1000', 'dpgan 50/100', 'dpgan 200/500', 'dpgan 500/1000']
+2026-08-22 22:36:08,745 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-22 22:36:08,746 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-22 22:36:08,746 INFO === bayesian_network (dp=False, plugin_kwargs={}) ===
+2026-08-22 22:36:08,747 INFO --- bayesian_network @ 200/500 (fits=700, all reused from the pilot cache) ---
+2026-08-22 22:36:08,751 INFO     loading cache_pilot_bayesian_network_1000_2500 (read-only, never saved back)
+2026-08-22 22:36:08,751 INFO Loading cached threat model from /Users/PengOlivia/Desktop/Uni/USYD VRI/priv-sdg/benchmark_tapas/cache_pilot_bayesian_network_1000_2500/threat_model.pkl
+2026-08-22 22:36:09,400 INFO     truncated 1000/2500 -> 200/500 (dropped 800 train, 2000 test)
+2026-08-22 22:36:09,400 INFO   [Groundhog] training on 200 simulated datasets...
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/numpy/lib/function_base.py:2897: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/numpy/lib/function_base.py:2898: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+2026-08-22 22:36:11,567 INFO   [Groundhog] testing on 500 simulated datasets...
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/numpy/lib/function_base.py:2897: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/numpy/lib/function_base.py:2898: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/numpy/lib/function_base.py:2897: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/numpy/lib/function_base.py:2898: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+Using attack Groundhog with threshold 0.0 (using negatives TN/FN).
+2026-08-22 22:36:21,674 INFO   [Groundhog] done -- eps_low_95=3.929  auc=1.000  (12.22s, 227.25 MB)
+2026-08-22 22:36:21,679 INFO   [ShadowModelling(RandomQueries)] training on 200 simulated datasets...
+2026-08-22 22:37:17,249 INFO   [ShadowModelling(RandomQueries)] testing on 500 simulated datasets...
+Using attack ShadowModelling(RandomQueries) with threshold 0.0 (using negatives TN/FN).
+2026-08-22 22:41:58,955 INFO   [ShadowModelling(RandomQueries)] done -- eps_low_95=3.929  auc=1.000  (337.26s, 4.83 MB)
+2026-08-22 22:41:58,963 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] training on 200 simulated datasets...
+2026-08-22 22:41:59,477 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] testing on 500 simulated datasets...
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/tapas/report/report.py:579: RuntimeWarning: divide by zero encountered in log
+  max(0, np.log(ci_tpr.low / ci_fpr.high)) if ci_fpr.high > 0 else np.inf
+Using attack LocalNeighbourhood(L_2, 0.250411558405805, accuracy) with threshold 0.002.
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/tapas/report/attack_summary.py:262: RuntimeWarning: invalid value encountered in divide
+  return np.log(max(np.max(tp / fp), np.max((1 - fp) / (1 - tp))))
+2026-08-22 22:42:02,352 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] done -- eps_low_95=0.000  auc=0.000  (3.37s, 1.12 MB)
+2026-08-22 22:42:02,361 INFO   [ProbabilityEstimation(KernelDensity())] training on 200 simulated datasets...
+2026-08-22 22:42:02,845 INFO   [ProbabilityEstimation(KernelDensity())] testing on 500 simulated datasets...
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/tapas/report/report.py:579: RuntimeWarning: divide by zero encountered in log
+  max(0, np.log(ci_tpr.low / ci_fpr.high)) if ci_fpr.high > 0 else np.inf
+Using attack ProbabilityEstimation(KernelDensity()) with threshold -84.49196372363411.
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/tapas/report/attack_summary.py:262: RuntimeWarning: invalid value encountered in divide
+  return np.log(max(np.max(tp / fp), np.max((1 - fp) / (1 - tp))))
+2026-08-22 22:42:04,997 INFO   [ProbabilityEstimation(KernelDensity())] done -- eps_low_95=0.000  auc=0.000  (2.63s, 0.98 MB)
+2026-08-22 22:42:05,000 INFO   [ClosestDistance(L_2, accuracy)] training on 200 simulated datasets...
+2026-08-22 22:42:05,466 INFO   [ClosestDistance(L_2, accuracy)] testing on 500 simulated datasets...
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/tapas/report/report.py:579: RuntimeWarning: divide by zero encountered in log
+  max(0, np.log(ci_tpr.low / ci_fpr.high)) if ci_fpr.high > 0 else np.inf
+Using attack ClosestDistance(L_2, accuracy) with threshold -0.20846148227703712.
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/tapas/report/attack_summary.py:262: RuntimeWarning: invalid value encountered in divide
+  return np.log(max(np.max(tp / fp), np.max((1 - fp) / (1 - tp))))
+2026-08-22 22:42:08,339 INFO   [ClosestDistance(L_2, accuracy)] done -- eps_low_95=0.000  auc=0.000  (3.32s, 1.1 MB)
+2026-08-22 22:42:08,343 INFO     max eps_low_95 = 3.9288 (Groundhog)   max TPR = 1.000  max FPR = 0.000   (359s)   -> /Users/PengOlivia/Desktop/Uni/USYD VRI/priv-sdg/benchmark_tapas/results/pilot_counts/bayesian_network_200_500/pilot_bayesian_network_200_500.csv
+2026-08-22 22:42:08,365 INFO --- bayesian_network @ 500/1000 (fits=1500, all reused from the pilot cache) ---
+2026-08-22 22:42:08,367 INFO     loading cache_pilot_bayesian_network_1000_2500 (read-only, never saved back)
+2026-08-22 22:42:08,367 INFO Loading cached threat model from /Users/PengOlivia/Desktop/Uni/USYD VRI/priv-sdg/benchmark_tapas/cache_pilot_bayesian_network_1000_2500/threat_model.pkl
+2026-08-22 22:42:08,964 INFO     truncated 1000/2500 -> 500/1000 (dropped 500 train, 1500 test)
+2026-08-22 22:42:08,964 INFO   [Groundhog] training on 500 simulated datasets...
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/numpy/lib/function_base.py:2897: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/numpy/lib/function_base.py:2898: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+2026-08-22 22:42:13,797 INFO   [Groundhog] testing on 1000 simulated datasets...
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/numpy/lib/function_base.py:2897: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/numpy/lib/function_base.py:2898: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/numpy/lib/function_base.py:2897: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/numpy/lib/function_base.py:2898: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+Using attack Groundhog with threshold 0.0 (using negatives TN/FN).
+2026-08-22 22:42:32,146 INFO   [Groundhog] done -- eps_low_95=4.627  auc=1.000  (23.09s, 455.39 MB)
+/Users/PengOlivia/Desktop/Uni/USYD VRI/priv-sdg/benchmark_tapas/scripts/run_extra_counts.py:312: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  frame = pd.concat([pd.read_csv(EXTRA_CSV), frame], ignore_index=True)
+2026-08-22 22:42:32,151 INFO   [ShadowModelling(RandomQueries)] training on 500 simulated datasets...
+2026-08-22 22:44:51,493 INFO   [ShadowModelling(RandomQueries)] testing on 1000 simulated datasets...
+Using attack ShadowModelling(RandomQueries) with threshold 0.0 (using negatives TN/FN).
+2026-08-22 22:54:15,238 INFO   [ShadowModelling(RandomQueries)] done -- eps_low_95=4.627  auc=1.000  (703.07s, 9.54 MB)
+/Users/PengOlivia/Desktop/Uni/USYD VRI/priv-sdg/benchmark_tapas/scripts/run_extra_counts.py:312: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  frame = pd.concat([pd.read_csv(EXTRA_CSV), frame], ignore_index=True)
+2026-08-22 22:54:15,245 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] training on 500 simulated datasets...
+2026-08-22 22:54:16,739 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] testing on 1000 simulated datasets...
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/tapas/report/report.py:579: RuntimeWarning: divide by zero encountered in log
+  max(0, np.log(ci_tpr.low / ci_fpr.high)) if ci_fpr.high > 0 else np.inf
+Using attack LocalNeighbourhood(L_2, 0.250411558405805, accuracy) with threshold 0.002.
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/tapas/report/attack_summary.py:262: RuntimeWarning: invalid value encountered in divide
+  return np.log(max(np.max(tp / fp), np.max((1 - fp) / (1 - tp))))
+2026-08-22 22:54:23,316 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] done -- eps_low_95=0.000  auc=0.000  (8.05s, 1.13 MB)
+2026-08-22 22:54:23,320 INFO   [ProbabilityEstimation(KernelDensity())] training on 500 simulated datasets...
+2026-08-22 22:54:24,462 INFO   [ProbabilityEstimation(KernelDensity())] testing on 1000 simulated datasets...
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/tapas/report/report.py:579: RuntimeWarning: divide by zero encountered in log
+  max(0, np.log(ci_tpr.low / ci_fpr.high)) if ci_fpr.high > 0 else np.inf
+Using attack ProbabilityEstimation(KernelDensity()) with threshold -84.49196372363411.
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/tapas/report/attack_summary.py:262: RuntimeWarning: invalid value encountered in divide
+  return np.log(max(np.max(tp / fp), np.max((1 - fp) / (1 - tp))))
+2026-08-22 22:54:29,010 INFO   [ProbabilityEstimation(KernelDensity())] done -- eps_low_95=0.000  auc=0.000  (5.68s, 0.97 MB)
+2026-08-22 22:54:29,013 INFO   [ClosestDistance(L_2, accuracy)] training on 500 simulated datasets...
+2026-08-22 22:54:30,324 INFO   [ClosestDistance(L_2, accuracy)] testing on 1000 simulated datasets...
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/tapas/report/report.py:579: RuntimeWarning: divide by zero encountered in log
+  max(0, np.log(ci_tpr.low / ci_fpr.high)) if ci_fpr.high > 0 else np.inf
+Using attack ClosestDistance(L_2, accuracy) with threshold -0.20846148227703712.
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/tapas/report/attack_summary.py:262: RuntimeWarning: invalid value encountered in divide
+  return np.log(max(np.max(tp / fp), np.max((1 - fp) / (1 - tp))))
+2026-08-22 22:54:36,447 INFO   [ClosestDistance(L_2, accuracy)] done -- eps_low_95=0.000  auc=0.000  (7.42s, 1.11 MB)
+2026-08-22 22:54:36,456 INFO     max eps_low_95 = 4.6269 (Groundhog)   max TPR = 1.000  max FPR = 0.000   (747s)   -> /Users/PengOlivia/Desktop/Uni/USYD VRI/priv-sdg/benchmark_tapas/results/pilot_counts/bayesian_network_500_1000/pilot_bayesian_network_500_1000.csv
+2026-08-22 22:54:37,452 INFO === dpgan (dp=True, plugin_kwargs={'n_iter': 50, 'device': 'cpu'}) ===
+2026-08-22 22:54:37,452 INFO --- dpgan @ 50/100 (fits=150, all reused from the pilot cache) ---
+2026-08-22 22:54:37,454 INFO     loading cache_pilot_dpgan_1000_2500 (read-only, never saved back)
+2026-08-22 22:54:37,454 INFO Loading cached threat model from /Users/PengOlivia/Desktop/Uni/USYD VRI/priv-sdg/benchmark_tapas/cache_pilot_dpgan_1000_2500/threat_model.pkl
+2026-08-22 22:54:38,121 INFO     truncated 1000/2500 -> 50/100 (dropped 950 train, 2400 test)
+2026-08-22 22:54:38,122 INFO   [Groundhog] training on 50 simulated datasets...
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/numpy/lib/function_base.py:2897: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/numpy/lib/function_base.py:2898: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+2026-08-22 22:54:38,914 INFO   [Groundhog] testing on 100 simulated datasets...
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/numpy/lib/function_base.py:2897: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/numpy/lib/function_base.py:2898: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/numpy/lib/function_base.py:2897: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/numpy/lib/function_base.py:2898: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+Using attack Groundhog with threshold 0.0 (using negatives TN/FN).
+2026-08-22 22:54:40,826 INFO   [Groundhog] done -- eps_low_95=2.210  auc=1.000  (2.69s, 45.46 MB)
+/Users/PengOlivia/Desktop/Uni/USYD VRI/priv-sdg/benchmark_tapas/scripts/run_extra_counts.py:312: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  frame = pd.concat([pd.read_csv(EXTRA_CSV), frame], ignore_index=True)
+2026-08-22 22:54:40,831 INFO   [ShadowModelling(RandomQueries)] training on 50 simulated datasets...
+2026-08-22 22:54:55,361 INFO   [ShadowModelling(RandomQueries)] testing on 100 simulated datasets...
+Using attack ShadowModelling(RandomQueries) with threshold 0.0 (using negatives TN/FN).
+2026-08-22 22:55:52,349 INFO   [ShadowModelling(RandomQueries)] done -- eps_low_95=2.210  auc=1.000  (71.51s, 1.1 MB)
+/Users/PengOlivia/Desktop/Uni/USYD VRI/priv-sdg/benchmark_tapas/scripts/run_extra_counts.py:312: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  frame = pd.concat([pd.read_csv(EXTRA_CSV), frame], ignore_index=True)
+2026-08-22 22:55:52,353 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] training on 50 simulated datasets...
+2026-08-22 22:55:52,465 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] testing on 100 simulated datasets...
+Using attack LocalNeighbourhood(L_2, 0.250411558405805, accuracy) with threshold 0.0.
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/tapas/report/attack_summary.py:262: RuntimeWarning: invalid value encountered in divide
+  return np.log(max(np.max(tp / fp), np.max((1 - fp) / (1 - tp))))
+2026-08-22 22:55:53,029 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] done -- eps_low_95=0.000  auc=0.500  (0.65s, 1.1 MB)
+2026-08-22 22:55:53,035 INFO   [ProbabilityEstimation(KernelDensity())] training on 50 simulated datasets...
+2026-08-22 22:55:53,189 INFO   [ProbabilityEstimation(KernelDensity())] testing on 100 simulated datasets...
+Using attack ProbabilityEstimation(KernelDensity()) with threshold -88.42922642270774 (using negatives TN/FN).
+2026-08-22 22:55:53,687 INFO   [ProbabilityEstimation(KernelDensity())] done -- eps_low_95=2.210  auc=1.000  (0.64s, 0.94 MB)
+/Users/PengOlivia/Desktop/Uni/USYD VRI/priv-sdg/benchmark_tapas/scripts/run_extra_counts.py:312: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  frame = pd.concat([pd.read_csv(EXTRA_CSV), frame], ignore_index=True)
+2026-08-22 22:55:53,691 INFO   [ClosestDistance(L_2, accuracy)] training on 50 simulated datasets...
+2026-08-22 22:55:53,835 INFO   [ClosestDistance(L_2, accuracy)] testing on 100 simulated datasets...
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/tapas/report/report.py:579: RuntimeWarning: divide by zero encountered in log
+  max(0, np.log(ci_tpr.low / ci_fpr.high)) if ci_fpr.high > 0 else np.inf
+Using attack ClosestDistance(L_2, accuracy) with threshold -2.8736252076067643.
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/tapas/report/attack_summary.py:262: RuntimeWarning: invalid value encountered in divide
+  return np.log(max(np.max(tp / fp), np.max((1 - fp) / (1 - tp))))
+2026-08-22 22:55:54,461 INFO   [ClosestDistance(L_2, accuracy)] done -- eps_low_95=0.000  auc=0.000  (0.76s, 1.08 MB)
+2026-08-22 22:55:54,467 INFO     max eps_low_95 = 2.2100 (Groundhog)   max TPR = 1.000  max FPR = 0.000   (76s)   -> /Users/PengOlivia/Desktop/Uni/USYD VRI/priv-sdg/benchmark_tapas/results/pilot_counts/dpgan_50_100/pilot_dpgan_50_100.csv
+2026-08-22 22:55:54,470 INFO --- dpgan @ 200/500 (fits=700, all reused from the pilot cache) ---
+2026-08-22 22:55:54,472 INFO     loading cache_pilot_dpgan_1000_2500 (read-only, never saved back)
+2026-08-22 22:55:54,472 INFO Loading cached threat model from /Users/PengOlivia/Desktop/Uni/USYD VRI/priv-sdg/benchmark_tapas/cache_pilot_dpgan_1000_2500/threat_model.pkl
+2026-08-22 22:55:55,124 INFO     truncated 1000/2500 -> 200/500 (dropped 800 train, 2000 test)
+2026-08-22 22:55:55,124 INFO   [Groundhog] training on 200 simulated datasets...
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/numpy/lib/function_base.py:2897: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/numpy/lib/function_base.py:2898: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+2026-08-22 22:55:57,287 INFO   [Groundhog] testing on 500 simulated datasets...
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/numpy/lib/function_base.py:2897: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/numpy/lib/function_base.py:2898: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/numpy/lib/function_base.py:2897: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/numpy/lib/function_base.py:2898: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+Using attack Groundhog with threshold 0.0 (using negatives TN/FN).
+2026-08-22 22:56:06,801 INFO   [Groundhog] done -- eps_low_95=3.929  auc=1.000  (11.63s, 226.52 MB)
+/Users/PengOlivia/Desktop/Uni/USYD VRI/priv-sdg/benchmark_tapas/scripts/run_extra_counts.py:312: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  frame = pd.concat([pd.read_csv(EXTRA_CSV), frame], ignore_index=True)
+2026-08-22 22:56:06,809 INFO   [ShadowModelling(RandomQueries)] training on 200 simulated datasets...
+2026-08-22 22:57:05,382 INFO   [ShadowModelling(RandomQueries)] testing on 500 simulated datasets...
+Using attack ShadowModelling(RandomQueries) with threshold 0.0 (using negatives TN/FN).
+2026-08-22 23:01:52,909 INFO   [ShadowModelling(RandomQueries)] done -- eps_low_95=3.929  auc=1.000  (346.08s, 4.82 MB)
+/Users/PengOlivia/Desktop/Uni/USYD VRI/priv-sdg/benchmark_tapas/scripts/run_extra_counts.py:312: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  frame = pd.concat([pd.read_csv(EXTRA_CSV), frame], ignore_index=True)
+2026-08-22 23:01:52,921 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] training on 200 simulated datasets...
+2026-08-22 23:01:53,417 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] testing on 500 simulated datasets...
+Using attack LocalNeighbourhood(L_2, 0.250411558405805, accuracy) with threshold 0.0.
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/tapas/report/attack_summary.py:262: RuntimeWarning: invalid value encountered in divide
+  return np.log(max(np.max(tp / fp), np.max((1 - fp) / (1 - tp))))
+2026-08-22 23:01:56,430 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] done -- eps_low_95=0.000  auc=0.500  (3.49s, 1.11 MB)
+2026-08-22 23:01:56,438 INFO   [ProbabilityEstimation(KernelDensity())] training on 200 simulated datasets...
+2026-08-22 23:01:56,926 INFO   [ProbabilityEstimation(KernelDensity())] testing on 500 simulated datasets...
+Using attack ProbabilityEstimation(KernelDensity()) with threshold -88.42922642270774 (using negatives TN/FN).
+2026-08-22 23:01:59,147 INFO   [ProbabilityEstimation(KernelDensity())] done -- eps_low_95=3.929  auc=1.000  (2.7s, 0.95 MB)
+/Users/PengOlivia/Desktop/Uni/USYD VRI/priv-sdg/benchmark_tapas/scripts/run_extra_counts.py:312: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  frame = pd.concat([pd.read_csv(EXTRA_CSV), frame], ignore_index=True)
+2026-08-22 23:01:59,151 INFO   [ClosestDistance(L_2, accuracy)] training on 200 simulated datasets...
+2026-08-22 23:01:59,770 INFO   [ClosestDistance(L_2, accuracy)] testing on 500 simulated datasets...
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/tapas/report/report.py:579: RuntimeWarning: divide by zero encountered in log
+  max(0, np.log(ci_tpr.low / ci_fpr.high)) if ci_fpr.high > 0 else np.inf
+Using attack ClosestDistance(L_2, accuracy) with threshold -2.8736252076067643.
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/tapas/report/attack_summary.py:262: RuntimeWarning: invalid value encountered in divide
+  return np.log(max(np.max(tp / fp), np.max((1 - fp) / (1 - tp))))
+2026-08-22 23:02:02,490 INFO   [ClosestDistance(L_2, accuracy)] done -- eps_low_95=0.000  auc=0.000  (3.32s, 1.1 MB)
+2026-08-22 23:02:02,498 INFO     max eps_low_95 = 3.9288 (Groundhog)   max TPR = 1.000  max FPR = 0.000   (367s)   -> /Users/PengOlivia/Desktop/Uni/USYD VRI/priv-sdg/benchmark_tapas/results/pilot_counts/dpgan_200_500/pilot_dpgan_200_500.csv
+2026-08-22 23:02:02,522 INFO --- dpgan @ 500/1000 (fits=1500, all reused from the pilot cache) ---
+2026-08-22 23:02:02,524 INFO     loading cache_pilot_dpgan_1000_2500 (read-only, never saved back)
+2026-08-22 23:02:02,524 INFO Loading cached threat model from /Users/PengOlivia/Desktop/Uni/USYD VRI/priv-sdg/benchmark_tapas/cache_pilot_dpgan_1000_2500/threat_model.pkl
+2026-08-22 23:02:03,196 INFO     truncated 1000/2500 -> 500/1000 (dropped 500 train, 1500 test)
+2026-08-22 23:02:03,197 INFO   [Groundhog] training on 500 simulated datasets...
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/numpy/lib/function_base.py:2897: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/numpy/lib/function_base.py:2898: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+2026-08-22 23:02:08,146 INFO   [Groundhog] testing on 1000 simulated datasets...
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/numpy/lib/function_base.py:2897: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/numpy/lib/function_base.py:2898: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/numpy/lib/function_base.py:2897: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/numpy/lib/function_base.py:2898: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+Using attack Groundhog with threshold 0.0 (using negatives TN/FN).
+2026-08-22 23:02:26,743 INFO   [Groundhog] done -- eps_low_95=4.627  auc=1.000  (23.45s, 455.39 MB)
+/Users/PengOlivia/Desktop/Uni/USYD VRI/priv-sdg/benchmark_tapas/scripts/run_extra_counts.py:312: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  frame = pd.concat([pd.read_csv(EXTRA_CSV), frame], ignore_index=True)
+2026-08-22 23:02:26,751 INFO   [ShadowModelling(RandomQueries)] training on 500 simulated datasets...
+2026-08-22 23:04:47,821 INFO   [ShadowModelling(RandomQueries)] testing on 1000 simulated datasets...
+Using attack ShadowModelling(RandomQueries) with threshold 0.0 (using negatives TN/FN).
+2026-08-22 23:14:21,767 INFO   [ShadowModelling(RandomQueries)] done -- eps_low_95=4.627  auc=1.000  (715.0s, 9.53 MB)
+/Users/PengOlivia/Desktop/Uni/USYD VRI/priv-sdg/benchmark_tapas/scripts/run_extra_counts.py:312: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  frame = pd.concat([pd.read_csv(EXTRA_CSV), frame], ignore_index=True)
+2026-08-22 23:14:21,782 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] training on 500 simulated datasets...
+2026-08-22 23:14:23,554 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] testing on 1000 simulated datasets...
+Using attack LocalNeighbourhood(L_2, 0.250411558405805, accuracy) with threshold 0.0.
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/tapas/report/attack_summary.py:262: RuntimeWarning: invalid value encountered in divide
+  return np.log(max(np.max(tp / fp), np.max((1 - fp) / (1 - tp))))
+2026-08-22 23:14:30,528 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] done -- eps_low_95=0.000  auc=0.500  (8.73s, 1.13 MB)
+2026-08-22 23:14:30,535 INFO   [ProbabilityEstimation(KernelDensity())] training on 500 simulated datasets...
+2026-08-22 23:14:31,702 INFO   [ProbabilityEstimation(KernelDensity())] testing on 1000 simulated datasets...
+Using attack ProbabilityEstimation(KernelDensity()) with threshold -88.42922642270774 (using negatives TN/FN).
+2026-08-22 23:14:36,270 INFO   [ProbabilityEstimation(KernelDensity())] done -- eps_low_95=4.627  auc=1.000  (5.73s, 0.97 MB)
+/Users/PengOlivia/Desktop/Uni/USYD VRI/priv-sdg/benchmark_tapas/scripts/run_extra_counts.py:312: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  frame = pd.concat([pd.read_csv(EXTRA_CSV), frame], ignore_index=True)
+2026-08-22 23:14:36,276 INFO   [ClosestDistance(L_2, accuracy)] training on 500 simulated datasets...
+2026-08-22 23:14:37,879 INFO   [ClosestDistance(L_2, accuracy)] testing on 1000 simulated datasets...
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/tapas/report/report.py:579: RuntimeWarning: divide by zero encountered in log
+  max(0, np.log(ci_tpr.low / ci_fpr.high)) if ci_fpr.high > 0 else np.inf
+Using attack ClosestDistance(L_2, accuracy) with threshold -2.8736252076067643.
+/opt/anaconda3/envs/priv-sdg/lib/python3.10/site-packages/tapas/report/attack_summary.py:262: RuntimeWarning: invalid value encountered in divide
+  return np.log(max(np.max(tp / fp), np.max((1 - fp) / (1 - tp))))
+2026-08-22 23:14:44,222 INFO   [ClosestDistance(L_2, accuracy)] done -- eps_low_95=0.000  auc=0.000  (7.92s, 1.11 MB)
+2026-08-22 23:14:44,228 INFO     max eps_low_95 = 4.6269 (Groundhog)   max TPR = 1.000  max FPR = 0.000   (761s)   -> /Users/PengOlivia/Desktop/Uni/USYD VRI/priv-sdg/benchmark_tapas/results/pilot_counts/dpgan_500_1000/pilot_dpgan_500_1000.csv
+2026-08-22 23:14:44,281 INFO === done in 38.6 min -> /Users/PengOlivia/Desktop/Uni/USYD VRI/priv-sdg/benchmark_tapas/results/pilot_counts/extra_counts.csv ===
+
+=== new points (existing 50/100 and 1000/2500 not shown) ===
+
+  bayesian_network
+          counts   fits  max eps_low_95  max TPR  max FPR
+      200/500       700          3.9288    1.000    0.000
+      500/1000     1500          4.6269    1.000    0.000
+
+  dpgan
+          counts   fits  max eps_low_95  max TPR  max FPR
+       50/100       150          2.2100    1.000    0.000
+      200/500       700          3.9288    1.000    0.000
+      500/1000     1500          4.6269    1.000    0.000
+
+  Plot all four count settings together with:
+    python benchmark_tapas/analysis/eff_eps_vs_counts.py
+

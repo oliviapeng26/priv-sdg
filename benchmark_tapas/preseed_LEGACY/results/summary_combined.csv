@@ -1,0 +1,5 @@
+method,label,dp,kind,worst_case_auc,mean_auc,mean_advantage,n_attacks_succeed,worst_case_eff_eps_low95,worst_case_eff_eps_high95,formal_epsilon,eff_eps_gap
+bayesian_network,BN (no-DP),False,statistical,1.0,0.4,0.4,2,2.209964161957534,inf,,
+privbayes,PrivBayes (DP),True,statistical,1.0,0.5,0.4,2,2.209964161957534,inf,1.0,1.2099641619575339
+ctgan,CTGAN (no-DP),False,neural,1.0,0.7,0.6,3,2.209964161957534,inf,,
+dpgan,DPGAN (DP),True,neural,1.0,0.7,0.6,3,2.209964161957534,inf,1.0,1.2099641619575339

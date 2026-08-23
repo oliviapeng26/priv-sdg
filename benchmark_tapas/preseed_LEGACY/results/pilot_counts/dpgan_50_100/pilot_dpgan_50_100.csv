@@ -1,0 +1,6 @@
+attack,num_train,num_test,wall_time_s,peak_memory_mb,auc,mia_advantage,privacy_gain,tp,fp,eff_epsilon_pointwise,eff_epsilon_pointwise_is_inf,eps_low_90,eps_high_90,eps_low_95,eps_high_95,eps_low_99,eps_high_99,method,dp,kind,formal_epsilon,fits,tpr,fpr,source,timestamp
+Groundhog,50,100,2.69,45.46,1.0,1.0,0.0,1.0,0.0,,True,2.390152810700866,inf,2.209964161957534,inf,1.8784765326733932,inf,dpgan,True,neural,1.0,150,1.0,0.0,pilot_cache_reuse,2026-08-22T22:54:40
+ShadowModelling(RandomQueries),50,100,71.51,1.1,1.0,1.0,0.0,1.0,0.0,,True,2.390152810700866,inf,2.209964161957534,inf,1.8784765326733932,inf,dpgan,True,neural,1.0,150,1.0,0.0,pilot_cache_reuse,2026-08-22T22:55:52
+"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",50,100,0.65,1.1,0.5,0.0,1.0,0.0,0.0,0.0,False,0.0,0.08578789428171946,0.0,0.10190759615521093,0.0,0.13933638481646463,dpgan,True,neural,1.0,150,0.0,0.0,pilot_cache_reuse,2026-08-22T22:55:53
+ProbabilityEstimation(KernelDensity()),50,100,0.64,0.94,1.0,1.0,0.0,1.0,0.0,,True,2.390152810700866,inf,2.209964161957534,inf,1.8784765326733932,inf,dpgan,True,neural,1.0,150,1.0,0.0,pilot_cache_reuse,2026-08-22T22:55:53
+"ClosestDistance(L_2, accuracy)",50,100,0.76,1.08,0.0,0.0,1.0,0.0,0.0,0.0,False,0.0,0.08578789428171946,0.0,0.10190759615521093,0.0,0.13933638481646463,dpgan,True,neural,1.0,150,0.0,0.0,pilot_cache_reuse,2026-08-22T22:55:54

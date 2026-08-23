@@ -1,0 +1,11 @@
+method,num_train,num_test,fits,max_eps_low_95,max_tpr,max_fpr,max_auc,n_attacks,n_attacks_at_max_auc,dp,kind
+bayesian_network,50,100,150,2.209964161957534,1.0,0.0,1.0,5,2,False,statistical
+bayesian_network,200,500,700,3.9288354416874625,1.0,0.0,1.0,5,2,False,statistical
+bayesian_network,500,1000,1500,4.626863393867601,1.0,0.0,1.0,5,2,False,statistical
+bayesian_network,1000,2500,3500,5.54607879562869,1.0,0.0,1.0,5,2,False,statistical
+ctgan,50,100,150,2.209964161957534,1.0,0.0,1.0,5,3,False,neural
+dpgan,50,100,150,2.209964161957534,1.0,0.0,1.0,5,3,True,neural
+dpgan,200,500,700,3.9288354416874625,1.0,0.0,1.0,5,3,True,neural
+dpgan,500,1000,1500,4.626863393867601,1.0,0.0,1.0,5,3,True,neural
+dpgan,1000,2500,3500,5.54607879562869,1.0,0.0,1.0,5,3,True,neural
+privbayes,50,100,150,2.209964161957534,1.0,0.0,1.0,5,2,True,statistical
