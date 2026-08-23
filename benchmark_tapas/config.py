@@ -38,7 +38,7 @@ CONVERGENCE_DIR = RESULTS_DIR / "convergence"   # convergence_check_tstr.csv (+ 
 PER_METHOD_DIR  = RESULTS_DIR / "per_method"    # per-generator effeps CSVs, ROC PNG, log
 SCORES_DIR      = RESULTS_DIR / "scores"        # raw per-dataset attack scores (pre-threshold)
 
-# Utility/fidelity tables that aggregate.py reads. Both are the multi-run,
+# Utility/fidelity tables that privacy_analysis.ipynb reads. Both are the multi-run,
 # in-house tables: utility from evaluation/eval_utility.py (TSTR scored on the
 # held-out test split) and fidelity from evaluation/eval_fidelity.py, each
 # aggregated over seeds.RUN_SEEDS so every column carries a _mean and a _std.
