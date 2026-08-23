@@ -1,9 +1,0 @@
-2026-08-22 22:56:46,735 INFO === raw score extraction ===
-2026-08-22 22:56:46,735 INFO methods=['dpgan']  counts=50/100  subset_seed=44  attack_seed=45
-2026-08-22 22:56:46,735 INFO --- dpgan ---
-2026-08-22 22:56:46,735 INFO   loading cache_pilot_dpgan_1000_2500/threat_model.pkl
-2026-08-22 22:56:47,231 INFO     train pool: 1000 -> 50 datasets (25 of 500 pairs, seed=44)
-2026-08-22 22:56:47,244 INFO     test pool: 2500 -> 100 datasets (50 of 1250 pairs, seed=44)
-2026-08-22 22:56:48,609 INFO     [ClosestDistance(L_2, accuracy)] auc=0.000  adv=0.000  n=100  thr=inf  (1.3s)
-2026-08-22 22:56:48,609 INFO comparability OK -- all 1 methods share target/alternate/background ('79d815db827c', '8c835d99b048', 'f2334a77b94a')
-2026-08-22 22:56:48,611 INFO wrote 100 rows to /Users/PengOlivia/Desktop/Uni/USYD VRI/priv-sdg/benchmark_tapas/results/scores/smoke.csv  (2s total)

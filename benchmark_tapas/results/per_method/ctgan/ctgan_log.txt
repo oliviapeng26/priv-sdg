@@ -21,3 +21,102 @@
 2026-07-19 12:32:22,063 INFO Saved per-attack results to /Users/PengOlivia/Desktop/Uni/USYD VRI/priv-sdg/benchmark_tapas/results/ctgan/effeps_ctgan.csv
 2026-07-19 12:32:22,068 INFO Updated combined table at /Users/PengOlivia/Desktop/Uni/USYD VRI/priv-sdg/benchmark_tapas/results/benchmark_privacy_per_attack.csv
 2026-07-19 12:32:22,068 INFO === Done: ctgan ===
+2026-08-23 02:15:39,349 INFO CTGAN device: cuda (torch.cuda.is_available()=True)
+2026-08-23 02:15:39,350 INFO === TAPAS privacy benchmark: ctgan (dp=False, num_train=50, num_test=100, plugin_kwargs={'n_iter': 50, 'device': 'cuda'}) ===
+2026-08-23 02:15:39,386 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-23 02:15:39,388 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-23 02:15:39,388 INFO Building new threat model for ctgan (no cache found)
+2026-08-23 02:15:39,390 INFO   [Groundhog] training on 50 simulated datasets...
+2026-08-23 02:15:57,367 INFO JAX version 0.6.2 available.
+2026-08-23 02:18:42,501 INFO   [Groundhog] testing on 100 simulated datasets...
+2026-08-23 02:23:36,520 INFO   [Groundhog] done -- eps_low_95=0.000  auc=0.592  (476.81s, 327.27 MB)
+2026-08-23 02:23:36,531 INFO   [ShadowModelling(RandomQueries)] training on 50 simulated datasets...
+2026-08-23 02:23:46,517 INFO   [ShadowModelling(RandomQueries)] testing on 100 simulated datasets...
+2026-08-23 02:24:26,864 INFO   [ShadowModelling(RandomQueries)] done -- eps_low_95=0.000  auc=0.466  (50.28s, 0.98 MB)
+2026-08-23 02:24:26,874 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] training on 50 simulated datasets...
+2026-08-23 02:24:26,957 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] testing on 100 simulated datasets...
+2026-08-23 02:24:27,331 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] done -- eps_low_95=0.000  auc=0.478  (0.44s, 1.1 MB)
+2026-08-23 02:24:27,346 INFO   [ProbabilityEstimation(KernelDensity())] training on 50 simulated datasets...
+2026-08-23 02:24:27,454 INFO   [ProbabilityEstimation(KernelDensity())] testing on 100 simulated datasets...
+2026-08-23 02:24:27,872 INFO   [ProbabilityEstimation(KernelDensity())] done -- eps_low_95=0.000  auc=0.431  (0.48s, 0.94 MB)
+2026-08-23 02:24:27,882 INFO   [ClosestDistance(L_2, accuracy)] training on 50 simulated datasets...
+2026-08-23 02:24:27,965 INFO   [ClosestDistance(L_2, accuracy)] testing on 100 simulated datasets...
+2026-08-23 02:24:28,403 INFO   [ClosestDistance(L_2, accuracy)] done -- eps_low_95=0.000  auc=0.468  (0.44s, 1.08 MB)
+2026-08-23 02:24:28,427 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,428 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,429 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,429 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,429 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,429 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,429 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,430 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,430 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,430 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,430 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,431 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,431 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,433 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,434 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,434 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,438 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,438 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,438 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,439 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,439 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,439 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,440 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,441 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,442 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,442 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,442 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,442 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,443 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,445 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,445 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,446 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,446 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,447 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,448 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,449 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,450 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,461 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,461 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,462 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,462 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,462 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,462 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,462 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,462 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,463 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,463 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,463 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,464 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,464 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,465 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,465 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,465 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,467 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,467 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,467 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,467 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,468 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,468 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,469 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,469 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,471 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,471 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,471 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,471 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,472 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,474 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,474 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,475 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,475 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,476 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,476 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,476 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,476 WARNING findfont: Generic family 'sans-serif' not found because none of the following families were found: Tahoma
+2026-08-23 02:24:28,478 INFO Saved 500 raw attack scores to /home/open0051/priv-sdg/benchmark_tapas/results/scores/raw_scores_ctgan.csv
+2026-08-23 02:24:28,479 INFO Saved per-attack results to /home/open0051/priv-sdg/benchmark_tapas/results/per_method/ctgan/effeps_ctgan.csv
+2026-08-23 02:24:28,480 INFO Updated combined table at /home/open0051/priv-sdg/benchmark_tapas/results/tables/benchmark_privacy_per_attack.csv
+2026-08-23 02:24:28,480 INFO === Done: ctgan ===

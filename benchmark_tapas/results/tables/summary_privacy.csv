@@ -1,5 +1,5 @@
-method,label,dp,kind,n_attacks,worst_case_auc,worst_auc_attack,mean_auc,mean_advantage,n_attacks_succeed,worst_case_eff_eps_low95,worst_case_eff_eps_high95,n_pointwise_inf,formal_epsilon,eff_eps_gap,num_train,num_test
-bayesian_network,BN (no-DP),False,statistical,5,1.0,Groundhog,0.4,0.4,2,2.209964161957534,inf,2,,,50,100
-privbayes,PrivBayes (DP),True,statistical,5,1.0,Groundhog,0.5,0.4,2,2.209964161957534,inf,2,1.0,1.2099641619575339,50,100
-ctgan,CTGAN (no-DP),False,neural,5,1.0,Groundhog,0.7,0.6,3,2.209964161957534,inf,3,,,50,100
-dpgan,DPGAN (DP),True,neural,5,1.0,Groundhog,0.7,0.6,3,2.209964161957534,inf,3,1.0,1.2099641619575339,50,100
+method,label,dp,kind,n_attacks,worst_case_auc,worst_auc_attack,mean_auc,mean_advantage,n_attacks_significant,min_mannwhitney_p,worst_case_eff_eps_low95,formal_epsilon,num_train,num_test,auc_null_band_halfwidth
+bayesian_network,BN (no-DP),False,statistical,5,0.6098000000000001,Groundhog,0.56944,0.16399999999999998,0,0.05852701698171875,0.0,,50,100,0.11372504854545751
+privbayes,PrivBayes (DP),True,statistical,5,0.5398000000000001,ShadowModelling(RandomQueries),0.51424,-0.012,0,0.4947580852427589,0.0,1.0,50,100,0.11372504854545751
+ctgan,CTGAN (no-DP),False,neural,5,0.5922,Groundhog,0.48675999999999997,0.039999999999999966,0,0.11235316236288911,0.0,,50,100,0.11372504854545751
+dpgan,DPGAN (DP),True,neural,5,0.5496,ShadowModelling(RandomQueries),0.4897600000000001,-0.003999999999999998,0,0.051474326918464264,0.0,1.0,50,100,0.11372504854545751

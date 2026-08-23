@@ -1,0 +1,501 @@
+generator,attack,target_id,ground_truth,raw_score,binary_prediction,threshold
+bayesian_network,Groundhog,12435,1,0.29,0,0.5
+bayesian_network,Groundhog,12435,0,0.4,0,0.5
+bayesian_network,Groundhog,12435,1,0.44,0,0.5
+bayesian_network,Groundhog,12435,0,0.38,0,0.5
+bayesian_network,Groundhog,12435,1,0.51,1,0.5
+bayesian_network,Groundhog,12435,0,0.38,0,0.5
+bayesian_network,Groundhog,12435,1,0.4,0,0.5
+bayesian_network,Groundhog,12435,0,0.45,0,0.5
+bayesian_network,Groundhog,12435,1,0.45,0,0.5
+bayesian_network,Groundhog,12435,0,0.43,0,0.5
+bayesian_network,Groundhog,12435,1,0.4,0,0.5
+bayesian_network,Groundhog,12435,0,0.36,0,0.5
+bayesian_network,Groundhog,12435,1,0.51,1,0.5
+bayesian_network,Groundhog,12435,0,0.5,0,0.5
+bayesian_network,Groundhog,12435,1,0.57,1,0.5
+bayesian_network,Groundhog,12435,0,0.51,1,0.5
+bayesian_network,Groundhog,12435,1,0.5,0,0.5
+bayesian_network,Groundhog,12435,0,0.46,0,0.5
+bayesian_network,Groundhog,12435,1,0.43,0,0.5
+bayesian_network,Groundhog,12435,0,0.51,1,0.5
+bayesian_network,Groundhog,12435,1,0.56,1,0.5
+bayesian_network,Groundhog,12435,0,0.48,0,0.5
+bayesian_network,Groundhog,12435,1,0.52,1,0.5
+bayesian_network,Groundhog,12435,0,0.46,0,0.5
+bayesian_network,Groundhog,12435,1,0.45,0,0.5
+bayesian_network,Groundhog,12435,0,0.37,0,0.5
+bayesian_network,Groundhog,12435,1,0.55,1,0.5
+bayesian_network,Groundhog,12435,0,0.37,0,0.5
+bayesian_network,Groundhog,12435,1,0.48,0,0.5
+bayesian_network,Groundhog,12435,0,0.47,0,0.5
+bayesian_network,Groundhog,12435,1,0.38,0,0.5
+bayesian_network,Groundhog,12435,0,0.42,0,0.5
+bayesian_network,Groundhog,12435,1,0.59,1,0.5
+bayesian_network,Groundhog,12435,0,0.54,1,0.5
+bayesian_network,Groundhog,12435,1,0.47,0,0.5
+bayesian_network,Groundhog,12435,0,0.33,0,0.5
+bayesian_network,Groundhog,12435,1,0.38,0,0.5
+bayesian_network,Groundhog,12435,0,0.41,0,0.5
+bayesian_network,Groundhog,12435,1,0.37,0,0.5
+bayesian_network,Groundhog,12435,0,0.44,0,0.5
+bayesian_network,Groundhog,12435,1,0.52,1,0.5
+bayesian_network,Groundhog,12435,0,0.48,0,0.5
+bayesian_network,Groundhog,12435,1,0.56,1,0.5
+bayesian_network,Groundhog,12435,0,0.45,0,0.5
+bayesian_network,Groundhog,12435,1,0.51,1,0.5
+bayesian_network,Groundhog,12435,0,0.47,0,0.5
+bayesian_network,Groundhog,12435,1,0.49,0,0.5
+bayesian_network,Groundhog,12435,0,0.35,0,0.5
+bayesian_network,Groundhog,12435,1,0.56,1,0.5
+bayesian_network,Groundhog,12435,0,0.57,1,0.5
+bayesian_network,Groundhog,12435,1,0.33,0,0.5
+bayesian_network,Groundhog,12435,0,0.53,1,0.5
+bayesian_network,Groundhog,12435,1,0.33,0,0.5
+bayesian_network,Groundhog,12435,0,0.41,0,0.5
+bayesian_network,Groundhog,12435,1,0.44,0,0.5
+bayesian_network,Groundhog,12435,0,0.45,0,0.5
+bayesian_network,Groundhog,12435,1,0.57,1,0.5
+bayesian_network,Groundhog,12435,0,0.49,0,0.5
+bayesian_network,Groundhog,12435,1,0.45,0,0.5
+bayesian_network,Groundhog,12435,0,0.42,0,0.5
+bayesian_network,Groundhog,12435,1,0.48,0,0.5
+bayesian_network,Groundhog,12435,0,0.41,0,0.5
+bayesian_network,Groundhog,12435,1,0.44,0,0.5
+bayesian_network,Groundhog,12435,0,0.4,0,0.5
+bayesian_network,Groundhog,12435,1,0.53,1,0.5
+bayesian_network,Groundhog,12435,0,0.46,0,0.5
+bayesian_network,Groundhog,12435,1,0.54,1,0.5
+bayesian_network,Groundhog,12435,0,0.48,0,0.5
+bayesian_network,Groundhog,12435,1,0.48,0,0.5
+bayesian_network,Groundhog,12435,0,0.45,0,0.5
+bayesian_network,Groundhog,12435,1,0.57,1,0.5
+bayesian_network,Groundhog,12435,0,0.51,1,0.5
+bayesian_network,Groundhog,12435,1,0.51,1,0.5
+bayesian_network,Groundhog,12435,0,0.41,0,0.5
+bayesian_network,Groundhog,12435,1,0.38,0,0.5
+bayesian_network,Groundhog,12435,0,0.43,0,0.5
+bayesian_network,Groundhog,12435,1,0.43,0,0.5
+bayesian_network,Groundhog,12435,0,0.37,0,0.5
+bayesian_network,Groundhog,12435,1,0.38,0,0.5
+bayesian_network,Groundhog,12435,0,0.53,1,0.5
+bayesian_network,Groundhog,12435,1,0.49,0,0.5
+bayesian_network,Groundhog,12435,0,0.42,0,0.5
+bayesian_network,Groundhog,12435,1,0.52,1,0.5
+bayesian_network,Groundhog,12435,0,0.42,0,0.5
+bayesian_network,Groundhog,12435,1,0.51,1,0.5
+bayesian_network,Groundhog,12435,0,0.48,0,0.5
+bayesian_network,Groundhog,12435,1,0.54,1,0.5
+bayesian_network,Groundhog,12435,0,0.46,0,0.5
+bayesian_network,Groundhog,12435,1,0.45,0,0.5
+bayesian_network,Groundhog,12435,0,0.38,0,0.5
+bayesian_network,Groundhog,12435,1,0.43,0,0.5
+bayesian_network,Groundhog,12435,0,0.46,0,0.5
+bayesian_network,Groundhog,12435,1,0.35,0,0.5
+bayesian_network,Groundhog,12435,0,0.47,0,0.5
+bayesian_network,Groundhog,12435,1,0.47,0,0.5
+bayesian_network,Groundhog,12435,0,0.43,0,0.5
+bayesian_network,Groundhog,12435,1,0.36,0,0.5
+bayesian_network,Groundhog,12435,0,0.49,0,0.5
+bayesian_network,Groundhog,12435,1,0.43,0,0.5
+bayesian_network,Groundhog,12435,0,0.43,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.4,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.47,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.58,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.62,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.54,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.45,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.66,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.55,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.65,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.48,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.63,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.39,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.62,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.46,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.47,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.4,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.54,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.47,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.32,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.4,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.41,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.55,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.37,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.53,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.66,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.45,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.53,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.4,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.51,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.34,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.3,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.52,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.72,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.24,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.49,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.37,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.68,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.53,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.26,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.42,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.48,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.68,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.56,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.52,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.54,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.49,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.59,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.49,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.39,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.65,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.51,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.48,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.61,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.52,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.33,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.56,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.57,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.42,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.56,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.43,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.34,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.47,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.51,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.56,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.42,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.37,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.63,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.68,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.45,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.45,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.51,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.48,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.58,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.38,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.34,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.47,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.64,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.42,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.54,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.27,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.73,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.49,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.53,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.44,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.69,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.59,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.7,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.58,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.66,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.49,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.44,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.57,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.44,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.41,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.38,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.57,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.52,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.53,1,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,1,0.25,0,0.5
+bayesian_network,ShadowModelling(RandomQueries),12435,0,0.55,1,0.5
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.004,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.004,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.004,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.004,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.004,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.004,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.006,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.004,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.008,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.004,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.004,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.006,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.008,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.006,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.004,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.004,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,1,0.002
+bayesian_network,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.002
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.53103458951185,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.56855688076189,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.50759413211958,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.49311529135831,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.51451083849135,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.48259552642664,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.56888330074483,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.5265653024611,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.51279949543668,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.51345950428433,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.35940570534085,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.60124783923565,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.47102474232832,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.56446456474694,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.56691069228319,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.59568061240216,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.5413793082148,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.4422116748958,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.56334946261398,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.47534022449213,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.5369219005393,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.4560036285763,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.58054797179321,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.56830015840292,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.49504258901224,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.50354436871285,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.54346448858928,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.57494139453185,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.48863856623308,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.47080176239265,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.56687427920832,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.4458427195606,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.43467261631554,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.69467765885273,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.59540087664627,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.44032490260976,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.48298853808434,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.35517413557163,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.60023597963468,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.52728352174657,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.57750563348016,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.48067904344379,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.44739759735619,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.61364620601493,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.54749160369056,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.46729763139537,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.56917794755125,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.43327279695737,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.51193704163937,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.43109921478607,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.43430004903134,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.61163640822026,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.48124097088709,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.5323052813899,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.47489893937258,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.55140137828413,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.61107953088487,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.4260516043133,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.63691868743147,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.59306440565905,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.52646567968694,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.74643953090381,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.47199681032366,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.45227149970759,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.54207765447022,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.56978573229296,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.49778594350849,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.48085384067993,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.59659163733139,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.46026775988103,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.63693037621258,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.5235505547762,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.62864058685703,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.53710278349135,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.43370684627689,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.53524039170465,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.51351873958441,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.54786738053808,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.6025937247226,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.70619805281396,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.4062971840724,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.43295303392198,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.33256982952847,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.52776735365784,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.54228287375417,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.56387661724621,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.51787506596477,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.52698824216307,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.53189317865296,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.57098345127494,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.56893540683339,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.49844260045894,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.66440020151661,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.60373825984796,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.66626105009394,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.47855071601867,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.4499027015511,1,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.5894939870466,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,1,-84.56803729965463,0,-84.54567909174295
+bayesian_network,ProbabilityEstimation(KernelDensity()),12435,0,-84.53014585011758,1,-84.54567909174295
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.2096222631847646,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.21844311508252026,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.3990239045641536,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.20580929346712598,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.20379341731622522,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.38520936044928544,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.1490096218496863,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.13869505286464953,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.2066680707808335,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.20536837503877678,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.243782484540435,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.23923864651639812,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.2632642783693077,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.39124660960385943,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.2341380156450991,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.30063440513669004,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.26661265071242124,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.28021174808292626,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.2563978901200929,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.256573996591344,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.35810037940777006,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.2825057991481546,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.495339190388811,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.24960540443033763,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.23231869924576015,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.29986532253533366,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.2110196879463105,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.20939913672377652,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.24837343560312256,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.2209309572895276,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-1.4224877538349325,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.3560776176222643,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.22740454244493905,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.28742435397362165,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.3456685536120174,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.11646005596396199,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.14447475817363387,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.161728100134283,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.2747983382093423,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.27125162578908474,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.2572719313477532,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.08678031610598501,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.25292300620880337,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-1.4201588826076819,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.3032786012602685,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.24992886642263581,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.20986161591635133,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.17105733044635305,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.39213952363731125,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.2059105729597117,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.21465928526968392,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.23168376738941665,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.1847301329662228,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.3690028931553339,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.22495471303195744,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.294109414561173,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.20630126651749014,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.280728368362658,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.2056487236049601,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.4168430594322521,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.2155904850978797,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.5315013677338608,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.2056905721040838,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.2751162992962379,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.2543046717039873,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.26030987552126644,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.44006169978794807,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.0621195476965812,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.21709161473873853,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.23037115469576205,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.2358159994206132,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.1496956097766004,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.22551165178351193,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.2626017058744489,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.08522854681860312,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.2702405620026435,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.20851684502596146,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.2962364484892806,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.10107870313402711,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.400041319578571,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.2623829548998727,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.28344181851343697,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.193501801245058,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.32293860191725354,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.13789890094259458,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.14224772197521923,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.2466187841842967,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.20554960864393224,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.22723349903290002,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.2320715482667988,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.27623283503927115,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.41009089872692117,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.40845779123468834,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.23378155231197612,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.49606296060045685,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.2742601685855544,0,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.046565723669253246,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.228414605680778,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,1,-0.22785848772611939,1,-0.27231601510024045
+bayesian_network,"ClosestDistance(L_2, accuracy)",12435,0,-0.34407930052291474,0,-0.27231601510024045
