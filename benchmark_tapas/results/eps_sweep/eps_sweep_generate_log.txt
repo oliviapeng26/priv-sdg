@@ -1,0 +1,53 @@
+2026-08-28 23:23:48,664 INFO === eps sweep generation: eps=[0.1, 10.0, 100.0], seeds=[100, 101, 102, 103, 104], n_iter=50, device=cuda (torch.cuda.is_available()=True) ===
+2026-08-28 23:23:48,682 INFO Loaded training split: (21523, 13)
+2026-08-28 23:23:52,630 INFO JAX version 0.6.2 available.
+2026-08-28 23:23:53,055 INFO synthcity warmed up in 4.4s (untimed)
+2026-08-28 23:23:53,055 INFO --- eps=0.1 ---
+2026-08-28 23:23:53,055 INFO   run 0/4, seed 100
+2026-08-28 23:23:53,064 INFO   plugin=dpgan, kwargs={'random_state': 100, 'epsilon': 0.1, 'device': 'cuda', 'n_iter': 50}
+2026-08-28 23:25:14,461 INFO   21523 rows | 81.34s | 48.51 MB peak | device=cuda -> synthetic_data/eps_sweep/eps0.1/dpgan_seed100.csv
+2026-08-28 23:25:14,461 INFO   run 1/4, seed 101
+2026-08-28 23:25:14,470 INFO   plugin=dpgan, kwargs={'random_state': 101, 'epsilon': 0.1, 'device': 'cuda', 'n_iter': 50}
+2026-08-28 23:26:34,868 INFO   21523 rows | 80.34s | 47.41 MB peak | device=cuda -> synthetic_data/eps_sweep/eps0.1/dpgan_seed101.csv
+2026-08-28 23:26:34,868 INFO   run 2/4, seed 102
+2026-08-28 23:26:34,876 INFO   plugin=dpgan, kwargs={'random_state': 102, 'epsilon': 0.1, 'device': 'cuda', 'n_iter': 50}
+2026-08-28 23:27:53,550 INFO   21523 rows | 78.61s | 47.37 MB peak | device=cuda -> synthetic_data/eps_sweep/eps0.1/dpgan_seed102.csv
+2026-08-28 23:27:53,551 INFO   run 3/4, seed 103
+2026-08-28 23:27:53,559 INFO   plugin=dpgan, kwargs={'random_state': 103, 'epsilon': 0.1, 'device': 'cuda', 'n_iter': 50}
+2026-08-28 23:29:13,164 INFO   21523 rows | 79.54s | 47.34 MB peak | device=cuda -> synthetic_data/eps_sweep/eps0.1/dpgan_seed103.csv
+2026-08-28 23:29:13,164 INFO   run 4/4, seed 104
+2026-08-28 23:29:13,172 INFO   plugin=dpgan, kwargs={'random_state': 104, 'epsilon': 0.1, 'device': 'cuda', 'n_iter': 50}
+2026-08-28 23:30:32,499 INFO   21523 rows | 79.27s | 47.38 MB peak | device=cuda -> synthetic_data/eps_sweep/eps0.1/dpgan_seed104.csv
+2026-08-28 23:30:32,499 INFO --- eps=10 ---
+2026-08-28 23:30:32,499 INFO   run 0/4, seed 100
+2026-08-28 23:30:32,507 INFO   plugin=dpgan, kwargs={'random_state': 100, 'epsilon': 10.0, 'device': 'cuda', 'n_iter': 50}
+2026-08-28 23:31:57,357 INFO   21523 rows | 84.8s | 101.85 MB peak | device=cuda -> synthetic_data/eps_sweep/eps10/dpgan_seed100.csv
+2026-08-28 23:31:57,357 INFO   run 1/4, seed 101
+2026-08-28 23:31:57,366 INFO   plugin=dpgan, kwargs={'random_state': 101, 'epsilon': 10.0, 'device': 'cuda', 'n_iter': 50}
+2026-08-28 23:33:22,011 INFO   21523 rows | 84.59s | 101.84 MB peak | device=cuda -> synthetic_data/eps_sweep/eps10/dpgan_seed101.csv
+2026-08-28 23:33:22,011 INFO   run 2/4, seed 102
+2026-08-28 23:33:22,019 INFO   plugin=dpgan, kwargs={'random_state': 102, 'epsilon': 10.0, 'device': 'cuda', 'n_iter': 50}
+2026-08-28 23:34:45,223 INFO   21523 rows | 83.15s | 101.79 MB peak | device=cuda -> synthetic_data/eps_sweep/eps10/dpgan_seed102.csv
+2026-08-28 23:34:45,224 INFO   run 3/4, seed 103
+2026-08-28 23:34:45,232 INFO   plugin=dpgan, kwargs={'random_state': 103, 'epsilon': 10.0, 'device': 'cuda', 'n_iter': 50}
+2026-08-28 23:36:09,288 INFO   21523 rows | 84.0s | 101.84 MB peak | device=cuda -> synthetic_data/eps_sweep/eps10/dpgan_seed103.csv
+2026-08-28 23:36:09,289 INFO   run 4/4, seed 104
+2026-08-28 23:36:09,297 INFO   plugin=dpgan, kwargs={'random_state': 104, 'epsilon': 10.0, 'device': 'cuda', 'n_iter': 50}
+2026-08-28 23:37:31,819 INFO   21523 rows | 82.48s | 101.86 MB peak | device=cuda -> synthetic_data/eps_sweep/eps10/dpgan_seed104.csv
+2026-08-28 23:37:31,819 INFO --- eps=100 ---
+2026-08-28 23:37:31,819 INFO   run 0/4, seed 100
+2026-08-28 23:37:31,828 INFO   plugin=dpgan, kwargs={'random_state': 100, 'epsilon': 100.0, 'device': 'cuda', 'n_iter': 50}
+2026-08-28 23:39:29,204 INFO   21523 rows | 117.33s | 621.31 MB peak | device=cuda -> synthetic_data/eps_sweep/eps100/dpgan_seed100.csv
+2026-08-28 23:39:29,204 INFO   run 1/4, seed 101
+2026-08-28 23:39:29,213 INFO   plugin=dpgan, kwargs={'random_state': 101, 'epsilon': 100.0, 'device': 'cuda', 'n_iter': 50}
+2026-08-28 23:41:24,390 INFO   21523 rows | 115.13s | 621.29 MB peak | device=cuda -> synthetic_data/eps_sweep/eps100/dpgan_seed101.csv
+2026-08-28 23:41:24,390 INFO   run 2/4, seed 102
+2026-08-28 23:41:24,399 INFO   plugin=dpgan, kwargs={'random_state': 102, 'epsilon': 100.0, 'device': 'cuda', 'n_iter': 50}
+2026-08-28 23:43:17,182 INFO   21523 rows | 112.73s | 619.45 MB peak | device=cuda -> synthetic_data/eps_sweep/eps100/dpgan_seed102.csv
+2026-08-28 23:43:17,183 INFO   run 3/4, seed 103
+2026-08-28 23:43:17,191 INFO   plugin=dpgan, kwargs={'random_state': 103, 'epsilon': 100.0, 'device': 'cuda', 'n_iter': 50}
+2026-08-28 23:45:08,100 INFO   21523 rows | 110.85s | 621.35 MB peak | device=cuda -> synthetic_data/eps_sweep/eps100/dpgan_seed103.csv
+2026-08-28 23:45:08,101 INFO   run 4/4, seed 104
+2026-08-28 23:45:08,109 INFO   plugin=dpgan, kwargs={'random_state': 104, 'epsilon': 100.0, 'device': 'cuda', 'n_iter': 50}
+2026-08-28 23:47:04,648 INFO   21523 rows | 116.49s | 621.4 MB peak | device=cuda -> synthetic_data/eps_sweep/eps100/dpgan_seed104.csv
+2026-08-28 23:47:04,648 INFO === Done: 15 run(s) generated under synthetic_data/eps_sweep/ ===

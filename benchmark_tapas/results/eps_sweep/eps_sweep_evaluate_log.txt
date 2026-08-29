@@ -1,0 +1,38 @@
+2026-08-28 23:51:09,874 INFO === eps sweep evaluation: eps=[0.1, 1.0, 10.0, 100.0], seeds=[100, 101, 102, 103, 104] ===
+2026-08-28 23:51:10,116 INFO Split seed 42 verified. Train (21523, 13), held-out test (5381, 13) -- TSTR and TRTR both score on these 5381 records.
+2026-08-28 23:51:10,121 INFO Feature layout: 87 columns, fitted on real data only
+2026-08-28 23:51:16,137 INFO TRTR (real -> real): xgboost=0.9274, logistic_regression=0.9020
+2026-08-28 23:51:16,139 INFO --- eps=0.1 ---
+2026-08-28 23:51:17,077 INFO   seed 100: TSTR xgb=0.3903 lr=0.2675 | KSComplement=0.2600, TVComplement=0.2576, CorrelationSimilarity=0.9474, ContingencySimilarity=0.0656
+2026-08-28 23:51:18,141 INFO   seed 101: TSTR xgb=0.6772 lr=0.5193 | KSComplement=0.2008, TVComplement=0.1661, CorrelationSimilarity=0.9588, ContingencySimilarity=0.0417
+2026-08-28 23:51:19,060 INFO   seed 102: TSTR xgb=0.5262 lr=0.5041 | KSComplement=0.2014, TVComplement=0.1650, CorrelationSimilarity=0.9491, ContingencySimilarity=0.0543
+2026-08-28 23:51:19,993 INFO   seed 103: TSTR xgb=0.4514 lr=0.5486 | KSComplement=0.2267, TVComplement=0.1490, CorrelationSimilarity=0.9564, ContingencySimilarity=0.0432
+2026-08-28 23:51:21,060 INFO   seed 104: TSTR xgb=0.5966 lr=0.5087 | KSComplement=0.2335, TVComplement=0.1415, CorrelationSimilarity=0.9683, ContingencySimilarity=0.0321
+2026-08-28 23:51:21,061 INFO --- eps=1 ---
+2026-08-28 23:51:21,633 INFO   seed 100: TSTR xgb=0.5862 lr=0.4067 | KSComplement=0.2022, TVComplement=0.2541, CorrelationSimilarity=0.9460, ContingencySimilarity=0.0974
+2026-08-28 23:51:22,465 INFO   seed 101: TSTR xgb=0.3853 lr=0.3108 | KSComplement=0.4027, TVComplement=0.2631, CorrelationSimilarity=0.9668, ContingencySimilarity=0.0778
+2026-08-28 23:51:23,413 INFO   seed 102: TSTR xgb=0.4435 lr=0.6267 | KSComplement=0.1764, TVComplement=0.2014, CorrelationSimilarity=0.9458, ContingencySimilarity=0.0570
+2026-08-28 23:51:24,105 INFO   seed 103: TSTR xgb=0.5979 lr=0.7009 | KSComplement=0.3702, TVComplement=0.2343, CorrelationSimilarity=0.9732, ContingencySimilarity=0.0842
+2026-08-28 23:51:24,741 INFO   seed 104: TSTR xgb=0.5307 lr=0.7476 | KSComplement=0.2926, TVComplement=0.2872, CorrelationSimilarity=0.9513, ContingencySimilarity=0.1155
+2026-08-28 23:51:24,741 INFO --- eps=10 ---
+2026-08-28 23:51:25,493 INFO   seed 100: TSTR xgb=0.4385 lr=0.5191 | KSComplement=0.3790, TVComplement=0.2644, CorrelationSimilarity=0.9454, ContingencySimilarity=0.0948
+2026-08-28 23:51:26,373 INFO   seed 101: TSTR xgb=0.3938 lr=0.6855 | KSComplement=0.2729, TVComplement=0.1580, CorrelationSimilarity=0.9594, ContingencySimilarity=0.0456
+2026-08-28 23:51:27,193 INFO   seed 102: TSTR xgb=0.4119 lr=0.2993 | KSComplement=0.2196, TVComplement=0.2118, CorrelationSimilarity=0.9788, ContingencySimilarity=0.0553
+2026-08-28 23:51:27,919 INFO   seed 103: TSTR xgb=0.4187 lr=0.7400 | KSComplement=0.3943, TVComplement=0.3757, CorrelationSimilarity=0.9473, ContingencySimilarity=0.1335
+2026-08-28 23:51:28,977 INFO   seed 104: TSTR xgb=0.5134 lr=0.7827 | KSComplement=0.3404, TVComplement=0.2697, CorrelationSimilarity=0.9629, ContingencySimilarity=0.0855
+2026-08-28 23:51:28,977 INFO --- eps=100 ---
+2026-08-28 23:51:29,657 INFO   seed 100: TSTR xgb=0.5093 lr=0.3836 | KSComplement=0.1383, TVComplement=0.2072, CorrelationSimilarity=0.9585, ContingencySimilarity=0.0722
+2026-08-28 23:51:30,769 INFO   seed 101: TSTR xgb=0.6687 lr=0.3104 | KSComplement=0.2873, TVComplement=0.1739, CorrelationSimilarity=0.9490, ContingencySimilarity=0.0505
+2026-08-28 23:51:31,640 INFO   seed 102: TSTR xgb=0.4924 lr=0.3534 | KSComplement=0.2180, TVComplement=0.1708, CorrelationSimilarity=0.9505, ContingencySimilarity=0.0554
+2026-08-28 23:51:32,541 INFO   seed 103: TSTR xgb=0.5124 lr=0.5441 | KSComplement=0.4212, TVComplement=0.2271, CorrelationSimilarity=0.9474, ContingencySimilarity=0.0573
+2026-08-28 23:51:33,417 INFO   seed 104: TSTR xgb=0.4721 lr=0.5563 | KSComplement=0.3346, TVComplement=0.2632, CorrelationSimilarity=0.9433, ContingencySimilarity=0.0716
+2026-08-28 23:51:33,422 INFO Wrote benchmark_tapas/results/eps_sweep/utility_fidelity_per_run.csv (20 rows) and benchmark_tapas/results/eps_sweep/utility_fidelity_summary.csv
+2026-08-28 23:51:33,424 INFO --check: eps=1.0 vs committed dpgan summary, 8 metrics, max |delta| = 1.110e-16
+2026-08-28 23:51:33,424 INFO     tstr_xgboost_auc                   sweep=0.508713  committed=0.508713
+2026-08-28 23:51:33,424 INFO     tstr_logistic_regression_auc       sweep=0.558549  committed=0.558549
+2026-08-28 23:51:33,424 INFO     trtr_xgboost_auc                   sweep=0.927391  committed=0.927391
+2026-08-28 23:51:33,424 INFO     trtr_logistic_regression_auc       sweep=0.901993  committed=0.901993
+2026-08-28 23:51:33,424 INFO     KSComplement                       sweep=0.288809  committed=0.288809
+2026-08-28 23:51:33,424 INFO     TVComplement                       sweep=0.248015  committed=0.248015
+2026-08-28 23:51:33,424 INFO     CorrelationSimilarity              sweep=0.956610  committed=0.956610
+2026-08-28 23:51:33,424 INFO     ContingencySimilarity              sweep=0.086399  committed=0.086399

@@ -1,0 +1,7 @@
+2026-08-28 23:55:21,346 WARNING eps=0.1: no privacy table at benchmark_tapas/results/eps_sweep/privacy/eps0.1/effeps_dpgan_eps0.1.csv -- privacy columns left NaN
+2026-08-28 23:55:21,349 WARNING eps=10: no privacy table at benchmark_tapas/results/eps_sweep/privacy/eps10/effeps_dpgan_eps10.csv -- privacy columns left NaN
+2026-08-28 23:55:21,350 WARNING eps=100: no privacy table at benchmark_tapas/results/eps_sweep/privacy/eps100/effeps_dpgan_eps100.csv -- privacy columns left NaN
+2026-08-28 23:55:21,351 INFO Wrote benchmark_tapas/results/eps_sweep/eps_sweep_summary.csv (4 rows x 72 columns)
+2026-08-28 23:55:21,352 INFO Wrote benchmark_tapas/results/eps_sweep/eps_sweep_privacy_per_attack.csv (5 rows)
+2026-08-29 23:46:12,336 INFO Wrote benchmark_tapas/results/eps_sweep/eps_sweep_summary.csv (4 rows x 72 columns)
+2026-08-29 23:46:12,338 INFO Wrote benchmark_tapas/results/eps_sweep/eps_sweep_privacy_per_attack.csv (20 rows)
