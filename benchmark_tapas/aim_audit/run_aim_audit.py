@@ -40,11 +40,12 @@ WHY 1000/2500, AND WHY THE PLAN SAID 200/500
     3500; the only extra cost is one ~5 min attack pass at the smaller stage.
 
 CHECKPOINTING, WHICH MATTERS MORE HERE THAN ANYWHERE ELSE
-    run_eps_sweep.py saves the threat model only after BOTH pools finish. For
-    DPGAN that risked 8 h of unsaved work; here the test pool alone is ~8.7 h, so
-    a reboot late in the run would discard most of the night. This script saves
-    after the training pool as well, capping the loss at whichever pool is in
-    flight. Both pools are resumable on re-run.
+    run_eps_sweep.py saves the threat model only after BOTH pools finish, which
+    risked 8 h of unsaved work for DPGAN. That would have been far worse here:
+    this audit's generator crashes the process every ~112 fits (grow_pools), so
+    a single unsaved stretch would never have completed at all. Pools are grown
+    in CHECKPOINT_EVERY-fit chunks with a save after each, so no crash costs more
+    than one chunk and every restart resumes from disk.
 
 WHAT IS AND IS NOT HELD FIXED
     fixed:   background, target/alternate, attack battery + its internal
@@ -61,18 +62,49 @@ WHAT IS AND IS NOT HELD FIXED
     AIM is not bit-reproducible at any seed (opendp CSPRNG). See aim_generator.py.
 
 OUTPUTS
-    cache/aim_audit/threat_model.pkl                 pools, resumable
-    cache/aim_audit/datasets/synthetic_{split}.csv.gz  every simulation, gzipped
-    cache/aim_audit/attacks/result_*.json            per-attack cache (resumable)
-    results/aim_audit/effeps_aim_200_500.csv         per-attack metrics
-    results/aim_audit/effective_epsilon_*.csv        TAPAS's own per-attack report
-    results/aim_audit/raw_scores_aim_200_500.csv     pre-threshold scores
-    results/aim_audit/meta.json                      timings + guard fractions
+    shared across stages (the pool is grown, never rebuilt):
+      cache/aim_audit/threat_model.pkl                    pools, resumable
+      cache/aim_audit/datasets/synthetic_{split}.csv.gz   every simulation, gzipped
+      results/aim_audit/aim_audit_log.txt                 one log for all stages
+    per stage, so a later stage never overwrites an earlier one's results:
+      cache/aim_audit/attacks_{nt}_{nte}/result_*.json    per-attack cache
+      results/aim_audit/{nt}_{nte}/effeps_aim_{nt}_{nte}.csv       per-attack metrics
+      results/aim_audit/{nt}_{nte}/raw_scores_aim_{nt}_{nte}.csv   pre-threshold scores
+      results/aim_audit/{nt}_{nte}/effective_epsilon_*.csv         TAPAS's own report
+      results/aim_audit/{nt}_{nte}/meta.json                       timings + guard
 
-Run from the repo root, env active:
-  python benchmark_tapas/aim_audit/run_aim_audit.py --probe 6                  # time 6 fits, exit
-  python benchmark_tapas/aim_audit/run_aim_audit.py --num-train 200 --num-test 500
-  python benchmark_tapas/aim_audit/run_aim_audit.py                            # 1000/2500, ~12 h
+RUN IT IN THE RESTART LOOP, NOT DIRECTLY
+    The script builds at most MAX_NEW_FITS per process and exits EXIT_INCOMPLETE
+    while the pools are unfinished (see grow_pools for why). Exit 0 means that
+    stage is done.
+
+    The loop below also retries an UNEXPECTED exit, up to three times in a row.
+    That matters because the jax failure kills the process outright rather than
+    returning EXIT_INCOMPLETE: 75 fits should stay clear of it, but if one slips
+    through, the chunk is already checkpointed and a retry resumes from disk. Three
+    consecutive failures means something real is wrong, and the loop stops.
+
+      screen -S aimaudit
+      cd ~/priv-sdg && source venv/bin/activate
+      run_stage () {
+        fails=0
+        while true; do
+          python -u benchmark_tapas/aim_audit/run_aim_audit.py --num-train $1 --num-test $2
+          rc=$?
+          [ $rc -eq 0 ] && return 0
+          if [ $rc -eq 3 ]; then fails=0; continue; fi
+          fails=$((fails + 1)); echo "!! exit $rc (consecutive failure $fails)"
+          [ $fails -ge 3 ] && return $rc
+        done
+      }
+      run_stage 50 100 && echo "=== 50/100 DONE ===" && run_stage 200 500
+
+    Staging like that is near-free: the pool is shared, so 50/100 then 200/500 is
+    700 fits total rather than 850, and the smaller stage's results are complete
+    and readable while the larger one is still running.
+
+Also:
+  python benchmark_tapas/aim_audit/run_aim_audit.py --probe 6   # time 6 fits, exit
 """
 
 import argparse
@@ -106,11 +138,33 @@ NUM_TRAIN, NUM_TEST = 1000, 2500
 # there are no plugin_kwargs because AIM is not a Synthcity plugin.
 AIM_CONFIG = {"dp": True, "kind": "statistical", "plugin_kwargs": {}}
 
+# Fits per process before exiting for a fresh one. The first attempt died during
+# fit 113, so this is set a third below that rather than just under it -- the
+# threshold is jax's mapping space, which is not something to tune finely against.
+# 75 fits is ~10 min at the 8.1 s/fit measured on the workstation, so ~47 restarts
+# for the full 3500 and ~6% overhead from process startup. See grow_pools().
+MAX_NEW_FITS = 75
+CHECKPOINT_EVERY = 75   # one save per process: a crash costs at most ~10 min of fits
+EXIT_INCOMPLETE = 3     # "pools not finished, restart me" -- not an error
+
+# The POOL cache is shared across stages on purpose: TAPAS only ever grows it, so
+# running 50/100 and then 200/500 costs 700 fits in total, not 850. Everything a
+# stage WRITES is namespaced by its counts instead -- TAPAS's per-attack
+# effective_epsilon_*.csv and meta.json are not keyed by counts, so a later stage
+# would otherwise overwrite an earlier one's results while you were reading them.
 CACHE_ROOT = CACHE_DIR / "aim_audit"
-ATTACK_CACHE = CACHE_ROOT / "attacks"
 RESULTS_ROOT = RESULTS_DIR / "aim_audit"
-for d in (CACHE_ROOT, ATTACK_CACHE, RESULTS_ROOT):
+for d in (CACHE_ROOT, RESULTS_ROOT):
     d.mkdir(parents=True, exist_ok=True)
+
+
+def stage_dirs(num_train: int, num_test: int):
+    """(results, attack cache) for one stage, both keyed by its counts."""
+    results = RESULTS_ROOT / f"{num_train}_{num_test}"
+    attacks = CACHE_ROOT / f"attacks_{num_train}_{num_test}"
+    for d in (results, attacks):
+        d.mkdir(parents=True, exist_ok=True)
+    return results, attacks
 
 logging.basicConfig(
     level=logging.INFO,
@@ -206,6 +260,63 @@ def export_pools(threat_model) -> None:
                  f"[{path.stat().st_size / 1e6:.1f} MB]")
 
 
+# -- Pool growth, in capped chunks ----------------------------------------
+
+def grow_pools(threat_model, num_train: int, num_test: int) -> int:
+    """Grow both pools toward their targets, checkpointing every CHECKPOINT_EVERY
+    fits and stopping after MAX_NEW_FITS new fits in this process.
+
+    WHY THIS IS CHUNKED RATHER THAN TWO BIG CALLS
+        The first attempt at this audit called generate_training_samples(1000)
+        and _generate_samples(2500) once each. It died after 112 fits with
+
+            LLVM compilation error: Cannot allocate memory
+
+        on a box with 88 GB free and no swap in use, so this is not RAM. AIM
+        selects a different set of marginals every round, so the graphical model
+        changes shape and jax JIT-compiles fresh kernels each time -- roughly 208
+        compilations per fit, ~23,000 by fit 112. Each one needs executable
+        mappings, and the process exhausts its mapping space long before it
+        exhausts memory. Nothing in this repo can stop jax from recompiling; the
+        only reliable reset is a new process.
+
+        So: cap the fits per process, checkpoint often, and let a shell loop
+        restart. TAPAS's memoisation makes that free -- _generate_samples only
+        ever generates the shortfall, so a restarted process resumes exactly
+        where the last one stopped rather than redoing work.
+
+        The 6-fit probe and the 10/20 smoke test both passed because neither got
+        anywhere near the threshold. Any future generator that JIT-compiles per
+        fit will need the same treatment.
+
+    Returns the remaining fit budget: <= 0 means this process stopped early and
+    the caller should exit EXIT_INCOMPLETE so the wrapper restarts it.
+    """
+    budget = MAX_NEW_FITS
+
+    for training, target, name in ((True, num_train, "train"), (False, num_test, "test")):
+        while True:
+            have = len(threat_model._memory[training][0])
+            if have >= target:
+                break
+            if budget <= 0:
+                return 0
+            step = min(target, have + CHECKPOINT_EVERY, have + budget)
+            t0 = time.time()
+            if training:
+                threat_model.generate_training_samples(step)
+            else:
+                threat_model._generate_samples(step, training=False)
+            grown = len(threat_model._memory[training][0])
+            budget -= grown - have
+            threat_model.save(str(CACHE_ROOT / "threat_model"))
+            log.info(f"    {name} pool {grown}/{target} checkpointed "
+                     f"(+{grown - have} fits, {time.time() - t0:.0f}s, "
+                     f"{budget} left in this process)")
+
+    return budget
+
+
 # -- Shared setup ---------------------------------------------------------
 
 def build_world():
@@ -285,6 +396,7 @@ def run_audit(num_train: int, num_test: int) -> int:
     log.info(f"    cache {CACHE_ROOT.relative_to(REPO_ROOT)}   "
              f"total fits = {num_train + num_test}")
 
+    results_dir, attack_cache = stage_dirs(num_train, num_test)
     _, background, target, alternate, generator = build_world()
     threat_model = build_or_load_threat_model(background, target, alternate, generator)
 
@@ -293,23 +405,22 @@ def run_audit(num_train: int, num_test: int) -> int:
     np.random.seed(SCORE_ATTACK_SEED)
     attacks = common.build_attacks(target, background)
 
-    # Two checkpoints rather than one: at AIM's per-fit cost the test pool alone
-    # is most of a night, and an unsaved crash there would cost the whole run.
     t_pool = time.time()
     n_before = len(threat_model._memory[True][0]) + len(threat_model._memory[False][0])
 
-    threat_model.generate_training_samples(num_train)
-    threat_model.save(str(CACHE_ROOT / "threat_model"))
-    log.info(f"    train pool done: {len(threat_model._memory[True][0])} datasets, "
-             f"checkpointed ({time.time() - t_pool:.0f}s)")
+    budget = grow_pools(threat_model, num_train, num_test)
 
-    threat_model._generate_samples(num_test, training=False)
-    threat_model.save(str(CACHE_ROOT / "threat_model"))
     pool_s = round(time.time() - t_pool, 1)
     n_after = len(threat_model._memory[True][0]) + len(threat_model._memory[False][0])
-    log.info(f"    pools: {len(threat_model._memory[True][0])} train / "
-             f"{len(threat_model._memory[False][0])} test  "
+    log.info(f"    pools: {len(threat_model._memory[True][0])}/{num_train} train, "
+             f"{len(threat_model._memory[False][0])}/{num_test} test  "
              f"(+{n_after - n_before} new fits, {pool_s:.0f}s)")
+
+    if budget <= 0:
+        log.info(f"=== fit budget for this process spent. Pools are checkpointed; "
+                 f"exit {EXIT_INCOMPLETE} so the wrapper starts a fresh process "
+                 f"(see MAX_NEW_FITS in the module docstring). ===")
+        return EXIT_INCOMPLETE
 
     # Guard BEFORE the attacks, so a broken pool is caught before hours of scoring.
     fractions = assert_distinct(threat_model)
@@ -319,7 +430,7 @@ def run_audit(num_train: int, num_test: int) -> int:
     for attack in attacks:
         result, summary = common.run_attack(
             attack, threat_model, num_train=num_train, num_test=num_test,
-            cache_dir=ATTACK_CACHE, results_dir=RESULTS_ROOT,
+            cache_dir=attack_cache, results_dir=results_dir,
         )
         result.update(method=METHOD, dp=AIM_CONFIG["dp"], kind=AIM_CONFIG["kind"],
                       num_train=num_train, num_test=num_test,
@@ -335,9 +446,9 @@ def run_audit(num_train: int, num_test: int) -> int:
         threat_model.save(str(CACHE_ROOT / "threat_model"))
 
     out = pd.DataFrame(rows)
-    out.to_csv(RESULTS_ROOT / f"effeps_{METHOD}_{num_train}_{num_test}.csv", index=False)
+    out.to_csv(results_dir / f"effeps_{METHOD}_{num_train}_{num_test}.csv", index=False)
     if score_rows:
-        path = RESULTS_ROOT / f"raw_scores_{METHOD}_{num_train}_{num_test}.csv"
+        path = results_dir / f"raw_scores_{METHOD}_{num_train}_{num_test}.csv"
         pd.DataFrame(score_rows).to_csv(path, index=False)
         log.info(f"    wrote {len(score_rows)} raw scores -> {path.name}")
     if no_scores:
@@ -358,7 +469,7 @@ def run_audit(num_train: int, num_test: int) -> int:
                 "to tell a fresh run from a resumed one. AIM is not bit-reproducible "
                 "(opendp CSPRNG), so a re-run draws different simulations.",
     }
-    (RESULTS_ROOT / "meta.json").write_text(json.dumps(meta, indent=2))
+    (results_dir / "meta.json").write_text(json.dumps(meta, indent=2))
 
     if "eps_low_95" in out.columns and out["eps_low_95"].notna().any():
         best = out.loc[out["eps_low_95"].idxmax()]
@@ -367,18 +478,25 @@ def run_audit(num_train: int, num_test: int) -> int:
                  f"via {best['attack']} ===")
     else:
         log.warning(f"=== done, but no usable eps_low_95 across the 5 attacks. "
-                    f"Results are written; inspect {RESULTS_ROOT.relative_to(REPO_ROOT)} ===")
+                    f"Results are written; inspect {results_dir.relative_to(REPO_ROOT)} ===")
     return 0
 
 
 def main() -> int:
+    global MAX_NEW_FITS, CHECKPOINT_EVERY
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--probe", type=int, metavar="N",
                         help="time N real fit+generate cycles and exit (no caching)")
     parser.add_argument("--num-train", type=int, default=NUM_TRAIN)
     parser.add_argument("--num-test", type=int, default=NUM_TEST)
+    parser.add_argument("--max-new-fits", type=int, default=MAX_NEW_FITS,
+                        help=f"fits per process before exiting {EXIT_INCOMPLETE} for a "
+                             f"fresh one (default {MAX_NEW_FITS}; see grow_pools)")
     args = parser.parse_args()
+
+    MAX_NEW_FITS = args.max_new_fits
+    CHECKPOINT_EVERY = min(CHECKPOINT_EVERY, MAX_NEW_FITS)
 
     if args.probe:
         return probe(args.probe)
