@@ -44,14 +44,14 @@ CHUNKED, LIKE THE AIM AUDIT
     in the restart loop below.
 
 OUTPUTS
-    cache/dpctgan_eps1/threat_model.pkl                       pool, resumable
-    cache/dpctgan_eps1/datasets/synthetic_{split}.csv.gz      every simulation
-    cache/dpctgan_eps1/attacks/result_*.json                  per-attack cache
-    results/eps_sweep/spike_diagnosis/dpctgan/effeps_dpctgan_1000_2500.csv
-    results/eps_sweep/spike_diagnosis/dpctgan/raw_scores_dpctgan_1000_2500.csv
-    results/eps_sweep/spike_diagnosis/dpctgan/effective_epsilon_*.csv
-    results/eps_sweep/spike_diagnosis/dpctgan/meta.json
-    results/eps_sweep/spike_diagnosis/dpctgan/dpctgan_audit_log.txt
+    cache/dpctgan_eps{eps}/threat_model.pkl                   pool, resumable
+    cache/dpctgan_eps{eps}/datasets/synthetic_{split}.csv.gz  every simulation
+    cache/dpctgan_eps{eps}/attacks/result_*.json              per-attack cache
+    results/eps_sweep/spike_diagnosis/dpctgan/eps{eps}/effeps_dpctgan_1000_2500.csv
+    results/eps_sweep/spike_diagnosis/dpctgan/eps{eps}/raw_scores_dpctgan_1000_2500.csv
+    results/eps_sweep/spike_diagnosis/dpctgan/eps{eps}/effective_epsilon_*.csv
+    results/eps_sweep/spike_diagnosis/dpctgan/eps{eps}/meta.json
+    results/eps_sweep/spike_diagnosis/dpctgan/dpctgan_audit_log.txt   (shared)
 
 Run from the repo root, env active:
   python benchmark_tapas/scripts/eps_sweep/spike_diagnosis/run_dpctgan_audit.py --probe 3
@@ -108,19 +108,37 @@ MAX_NEW_FITS = 400        # fits per process; a crash costs at most this many
 CHECKPOINT_EVERY = 100
 EXIT_INCOMPLETE = 3       # "pools not finished, restart me" -- not an error
 
-CACHE_ROOT = CACHE_DIR / "dpctgan_eps1"
-ATTACK_CACHE = CACHE_ROOT / "attacks"
-RESULTS_ROOT = RESULTS_DIR / "eps_sweep" / "spike_diagnosis" / "dpctgan"
-for d in (CACHE_ROOT, ATTACK_CACHE, RESULTS_ROOT):
-    d.mkdir(parents=True, exist_ok=True)
+# One shared log across arms; everything else is namespaced by eps, so a sweep
+# never overwrites a finished arm's results.
+DPCTGAN_DIR = RESULTS_DIR / "eps_sweep" / "spike_diagnosis" / "dpctgan"
+DPCTGAN_DIR.mkdir(parents=True, exist_ok=True)
+
+# Set by set_paths() once --epsilon is known. Module-level so the helpers below can
+# read them at call time without threading them through every signature.
+CACHE_ROOT = ATTACK_CACHE = RESULTS_ROOT = None
 
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s %(levelname)s %(message)s",
-    handlers=[logging.FileHandler(RESULTS_ROOT / "dpctgan_audit_log.txt"),
+    handlers=[logging.FileHandler(DPCTGAN_DIR / "dpctgan_audit_log.txt"),
               logging.StreamHandler()],
 )
 log = logging.getLogger("dpctgan_audit")
+
+
+def eps_slug(eps: float) -> str:
+    """Matches run_eps_sweep.eps_slug: 1.0 -> 'eps1', 0.1 -> 'eps0.1'."""
+    return f"eps{eps:g}"
+
+
+def set_paths(epsilon: float) -> None:
+    """Point the cache and results at this budget's own directories."""
+    global CACHE_ROOT, ATTACK_CACHE, RESULTS_ROOT
+    CACHE_ROOT = CACHE_DIR / f"dpctgan_{eps_slug(epsilon)}"
+    ATTACK_CACHE = CACHE_ROOT / "attacks"
+    RESULTS_ROOT = DPCTGAN_DIR / eps_slug(epsilon)
+    for d in (CACHE_ROOT, ATTACK_CACHE, RESULTS_ROOT):
+        d.mkdir(parents=True, exist_ok=True)
 
 
 class DegeneratePool(RuntimeError):
@@ -203,13 +221,13 @@ def export_pools(threat_model) -> None:
 
 # -- Shared setup ---------------------------------------------------------
 
-def build_world(cuda: bool):
+def build_world(cuda: bool, epsilon: float):
     """The fixed audit world, identical to every other method's."""
     train_dataset, _, description = common.load_adult_datasets()
     background, background_idx = common.sample_background(train_dataset)
     target, alternate = common.select_random_target(train_dataset, background_idx)
     scalers = common._fit_scalers(pd.read_csv(TRAIN_CSV))
-    generator = DPCTGANGenerator(description, scalers, epsilon=EPSILON, cuda=cuda)
+    generator = DPCTGANGenerator(description, scalers, epsilon=epsilon, cuda=cuda)
     return description, background, target, alternate, generator
 
 
@@ -259,18 +277,18 @@ def grow_pools(threat_model, num_train: int, num_test: int) -> int:
 
 # -- Probe ----------------------------------------------------------------
 
-def probe(n_fits: int, cuda: bool) -> int:
+def probe(n_fits: int, cuda: bool, epsilon: float) -> int:
     """Fit a few times on the real audit background and report what DP happened.
 
     The number that matters is epochs_run: DP-CTGAN breaks out of training silently
     once the budget is spent, so a small number here means the audit would be
     measuring an untrained network.
     """
-    _, background, target, _, generator = build_world(cuda)
+    _, background, target, _, generator = build_world(cuda, epsilon)
     member = background.copy()
     member.add_records(target, in_place=True)
     log.info(f"=== probe: {n_fits} fits on {len(member.data)} rows, "
-             f"eps={EPSILON}, sigma={SIGMA}, batch_size={BATCH_SIZE}, "
+             f"eps={epsilon}, sigma={SIGMA}, batch_size={BATCH_SIZE}, "
              f"epochs cap={EPOCHS} ===")
     log.info(f"    sample rate = batch_size / n = {BATCH_SIZE}/{len(member.data)} "
              f"= {BATCH_SIZE / len(member.data):.2f}  (1.0 means no subsampling "
@@ -300,14 +318,14 @@ def probe(n_fits: int, cuda: bool) -> int:
 
 # -- Audit ----------------------------------------------------------------
 
-def run_audit(num_train: int, num_test: int, cuda: bool) -> int:
-    log.info(f"=== TAPAS privacy audit: dpctgan (SmartNoise) eps={EPSILON}, "
+def run_audit(num_train: int, num_test: int, cuda: bool, epsilon: float) -> int:
+    log.info(f"=== TAPAS privacy audit: dpctgan (SmartNoise) eps={epsilon}, "
              f"sigma={SIGMA}, epochs<={EPOCHS}, batch={BATCH_SIZE}, "
              f"num_train={num_train}, num_test={num_test} ===")
     log.info(f"    reference: synthcity DPGAN at eps=1.0 and these counts scored "
              f"eps_low_95 = 1.761 [1.761, 2.780] via Groundhog")
 
-    _, background, target, alternate, generator = build_world(cuda)
+    _, background, target, alternate, generator = build_world(cuda, epsilon)
     threat_model = build_or_load_threat_model(background, target, alternate, generator)
 
     np.random.seed(SCORE_ATTACK_SEED)
@@ -338,7 +356,7 @@ def run_audit(num_train: int, num_test: int, cuda: bool) -> int:
         )
         result.update(method=METHOD, dp=DPCTGAN_CONFIG["dp"], kind=DPCTGAN_CONFIG["kind"],
                       num_train=num_train, num_test=num_test,
-                      formal_epsilon=EPSILON, sigma=SIGMA,
+                      formal_epsilon=epsilon, sigma=SIGMA,
                       epochs_cap=EPOCHS, batch_size=BATCH_SIZE,
                       library="smartnoise")
         result["tn"] = 1.0 - result["fp"]
@@ -358,7 +376,7 @@ def run_audit(num_train: int, num_test: int, cuda: bool) -> int:
         log.info(f"    wrote {len(score_rows)} raw scores -> {path.name}")
 
     meta = {
-        "method": METHOD, "library": "smartnoise", "formal_epsilon": EPSILON,
+        "method": METHOD, "library": "smartnoise", "formal_epsilon": epsilon,
         "sigma": SIGMA, "epochs_cap": EPOCHS, "batch_size": BATCH_SIZE,
         "num_train": num_train, "num_test": num_test, "num_synthetic": NUM_SYNTHETIC,
         "last_epochs_run": generator.last_epochs_run,
@@ -391,17 +409,23 @@ def main() -> int:
                     help="fit N times, report epochs run and eps spent, then exit")
     ap.add_argument("--num-train", type=int, default=NUM_TRAIN)
     ap.add_argument("--num-test", type=int, default=NUM_TEST)
+    ap.add_argument("--epsilon", type=float, default=EPSILON,
+                    help=f"budget to audit (default {EPSILON}). Caches and results are "
+                         f"namespaced per eps, so arms never overwrite each other.")
     args = ap.parse_args()
+
+    set_paths(args.epsilon)
 
     import torch
     cuda = torch.cuda.is_available()
     log.info(f"device: {'cuda' if cuda else 'cpu'} "
-             f"(torch.cuda.is_available()={cuda})")
+             f"(torch.cuda.is_available()={cuda}) | eps={args.epsilon:g} | "
+             f"cache {CACHE_ROOT.name} | results {RESULTS_ROOT.relative_to(REPO_ROOT)}")
 
     if args.probe:
-        return probe(args.probe, cuda)
+        return probe(args.probe, cuda, args.epsilon)
     try:
-        return run_audit(args.num_train, args.num_test, cuda)
+        return run_audit(args.num_train, args.num_test, cuda, args.epsilon)
     except DegeneratePool as exc:
         log.error(f"DISTINCTNESS GUARD FAILED:\n{exc}")
         return 1
