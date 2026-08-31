@@ -71,14 +71,14 @@ THE MEASUREMENT
     measured null rather than an assumed one.
 
 OUTPUTS
-    cache/dpgan_signal_eps{eps}/threat_model.pkl    pool, resumable
-    results/eps_sweep/signal_scan.csv               one row per eps
-    results/eps_sweep/signal_scan_log.txt
+    cache/dpgan_signal_eps{eps}/threat_model.pkl              pool, resumable
+    results/eps_sweep/spike_diagnosis/signal_scan.csv         one row per eps
+    results/eps_sweep/spike_diagnosis/signal_scan_log.txt
 
 Run from the repo root, env active:
-  python benchmark_tapas/scripts/eps_sweep_signal_scan.py
-  python benchmark_tapas/scripts/eps_sweep_signal_scan.py --epsilons 1.0
-  python benchmark_tapas/scripts/eps_sweep_signal_scan.py --n 200 --epsilons 0.3 3.0
+  python benchmark_tapas/scripts/eps_sweep/spike_diagnosis/eps_sweep_signal_scan.py
+  python benchmark_tapas/scripts/eps_sweep/spike_diagnosis/eps_sweep_signal_scan.py --epsilons 1.0
+  python benchmark_tapas/scripts/eps_sweep/spike_diagnosis/eps_sweep_signal_scan.py --n 200 --epsilons 0.3 3.0
 
 Cost: N fits per eps at the 4.4-8 s/fit DPGAN manages on a 500-row background, so
 ~30-55 min per eps and ~1.5-2.5 h for the default three. Resumable -- an interrupted
@@ -96,7 +96,10 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-BENCHMARK_DIR = Path(__file__).resolve().parent.parent
+# benchmark_tapas/, found by walking up to config.py rather than counting parents --
+# these scripts live in a subfolder now and may move again.
+BENCHMARK_DIR = next(p for p in Path(__file__).resolve().parents
+                     if (p / "config.py").exists())
 REPO_ROOT = BENCHMARK_DIR.parent
 sys.path.insert(0, str(BENCHMARK_DIR))
 sys.path.insert(0, str(REPO_ROOT))
@@ -114,7 +117,7 @@ N_DATASETS = 400            # enough to separate 0.51 from 0.89; not an audit
 CHECKPOINT_EVERY = 100      # a crash costs at most this many fits
 CV_FOLDS = 5
 
-SWEEP_DIR = RESULTS_DIR / "eps_sweep"
+SWEEP_DIR = RESULTS_DIR / "eps_sweep" / "spike_diagnosis"
 SWEEP_DIR.mkdir(parents=True, exist_ok=True)
 SCAN_CSV = SWEEP_DIR / "signal_scan.csv"
 

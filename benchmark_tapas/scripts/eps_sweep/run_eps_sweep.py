@@ -81,7 +81,8 @@ OUTPUTS
     results/eps_sweep/privacy/eps{eps}/effeps_dpgan_eps{eps}.csv
     results/eps_sweep/privacy/eps{eps}/effective_epsilon_*.csv
     results/eps_sweep/privacy/eps{eps}/meta.json    timings + guard fractions
-    results/eps_sweep/raw_scores_dpgan_eps{eps}.csv raw pre-threshold scores
+    results/eps_sweep/privacy/raw_scores_dpgan_eps{eps}.csv
+                                                    raw pre-threshold scores
 
 Run from the repo root, venv active:
   python benchmark_tapas/scripts/run_eps_sweep.py
@@ -104,7 +105,10 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-BENCHMARK_DIR = Path(__file__).resolve().parent.parent
+# benchmark_tapas/, found by walking up to config.py rather than counting parents --
+# these scripts live in a subfolder now and may move again.
+BENCHMARK_DIR = next(p for p in Path(__file__).resolve().parents
+                     if (p / "config.py").exists())
 REPO_ROOT = BENCHMARK_DIR.parent
 sys.path.insert(0, str(BENCHMARK_DIR))
 sys.path.insert(0, str(REPO_ROOT))
@@ -128,7 +132,7 @@ PRIVACY_DIR.mkdir(parents=True, exist_ok=True)
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s %(levelname)s %(message)s",
-    handlers=[logging.FileHandler(SWEEP_DIR / "eps_sweep_privacy_log.txt"),
+    handlers=[logging.FileHandler(PRIVACY_DIR / "eps_sweep_privacy_log.txt"),
               logging.StreamHandler()],
 )
 log = logging.getLogger("eps_sweep_privacy")
@@ -359,7 +363,7 @@ def run_one_epsilon(epsilon: float, device_kwargs: dict, allow_degenerate: bool)
     out = pd.DataFrame(rows)
     out.to_csv(results_dir / f"effeps_{METHOD}_{label}.csv", index=False)
     if score_rows:
-        path = SWEEP_DIR / f"raw_scores_{METHOD}_{label}.csv"
+        path = PRIVACY_DIR / f"raw_scores_{METHOD}_{label}.csv"
         pd.DataFrame(score_rows).to_csv(path, index=False)
         log.info(f"    wrote {len(score_rows)} raw scores -> {path.name}")
     if no_scores:

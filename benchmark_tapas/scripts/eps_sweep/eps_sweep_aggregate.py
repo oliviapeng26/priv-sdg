@@ -41,7 +41,7 @@ DEGRADES RATHER THAN FAILS
 
 Outputs:
     benchmark_tapas/results/eps_sweep/eps_sweep_summary.csv        one row per eps
-    benchmark_tapas/results/eps_sweep/eps_sweep_privacy_per_attack.csv   long form
+    benchmark_tapas/results/eps_sweep/privacy/eps_sweep_privacy_per_attack.csv  long form
 
 Run from the repo root, after the other three phases:
   python benchmark_tapas/scripts/eps_sweep_aggregate.py
@@ -56,7 +56,10 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-BENCHMARK_DIR = Path(__file__).resolve().parent.parent
+# benchmark_tapas/, found by walking up to config.py rather than counting parents --
+# these scripts live in a subfolder now and may move again.
+BENCHMARK_DIR = next(p for p in Path(__file__).resolve().parents
+                     if (p / "config.py").exists())
 REPO_ROOT = BENCHMARK_DIR.parent
 sys.path.insert(0, str(BENCHMARK_DIR))
 sys.path.insert(0, str(REPO_ROOT))
@@ -76,13 +79,14 @@ SIGMA_CSV = SWEEP_DIR / "noise_multipliers.csv"
 UTIL_SUMMARY_CSV = SWEEP_DIR / "utility_fidelity_summary.csv"
 COST_CSV = SWEEP_DIR / "generation_cost.csv"
 SUMMARY_CSV = SWEEP_DIR / "eps_sweep_summary.csv"
-PER_ATTACK_CSV = SWEEP_DIR / "eps_sweep_privacy_per_attack.csv"
+PER_ATTACK_CSV = PRIVACY_DIR / "eps_sweep_privacy_per_attack.csv"
 
 FIDELITY_METRICS = ["KSComplement", "TVComplement",
                     "CorrelationSimilarity", "ContingencySimilarity"]
 UTILITY_MODELS = ["xgboost", "logistic_regression"]
 
 SWEEP_DIR.mkdir(parents=True, exist_ok=True)
+PRIVACY_DIR.mkdir(parents=True, exist_ok=True)
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s %(levelname)s %(message)s",

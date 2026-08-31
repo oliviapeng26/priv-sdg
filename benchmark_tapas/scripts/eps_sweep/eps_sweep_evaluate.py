@@ -55,7 +55,10 @@ from pathlib import Path
 
 import pandas as pd
 
-BENCHMARK_DIR = Path(__file__).resolve().parent.parent
+# benchmark_tapas/, found by walking up to config.py rather than counting parents --
+# these scripts live in a subfolder now and may move again.
+BENCHMARK_DIR = next(p for p in Path(__file__).resolve().parents
+                     if (p / "config.py").exists())
 REPO_ROOT = BENCHMARK_DIR.parent
 sys.path.insert(0, str(BENCHMARK_DIR))
 sys.path.insert(0, str(REPO_ROOT))
