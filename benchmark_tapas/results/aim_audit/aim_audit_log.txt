@@ -1,0 +1,579 @@
+2026-08-30 01:39:13,281 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=1000, num_test=2500) ===
+2026-08-30 01:39:13,281 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 3500
+2026-08-30 01:39:13,316 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 01:39:13,317 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 01:39:13,331 INFO Building new threat model for aim (no cache found)
+2026-08-30 01:39:13,855 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 01:39:13,855 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 17:17:49,072 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=50, num_test=100) ===
+2026-08-30 17:17:49,072 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 150
+2026-08-30 17:17:49,106 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 17:17:49,108 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 17:17:49,122 INFO Building new threat model for aim (no cache found)
+2026-08-30 17:17:49,554 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 17:17:49,554 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 17:24:51,841 INFO     train pool 50/50 checkpointed (+50 fits, 423s, 25 left in this process)
+2026-08-30 17:28:30,269 INFO     test pool 26/100 checkpointed (+26 fits, 218s, -1 left in this process)
+2026-08-30 17:28:30,270 INFO     pools: 50/50 train, 26/100 test  (+76 new fits, 641s)
+2026-08-30 17:28:30,270 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 17:28:34,012 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=50, num_test=100) ===
+2026-08-30 17:28:34,012 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 150
+2026-08-30 17:28:34,046 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 17:28:34,048 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 17:28:34,061 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 17:28:34,495 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 17:28:34,495 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 17:38:54,410 INFO     test pool 100/100 checkpointed (+74 fits, 620s, 1 left in this process)
+2026-08-30 17:38:54,410 INFO     pools: 50/50 train, 100/100 test  (+74 new fits, 620s)
+2026-08-30 17:38:54,431 INFO     guard train/D+: 25/25 distinct (100.0%)
+2026-08-30 17:38:54,451 INFO     guard train/D-: 25/25 distinct (100.0%)
+2026-08-30 17:38:54,491 INFO     guard test/D+: 50/50 distinct (100.0%)
+2026-08-30 17:38:54,531 INFO     guard test/D-: 50/50 distinct (100.0%)
+2026-08-30 17:38:54,694 INFO     exported 50 train datasets -> synthetic_train.csv.gz [0.3 MB]
+2026-08-30 17:38:54,992 INFO     exported 100 test datasets -> synthetic_test.csv.gz [0.6 MB]
+2026-08-30 17:38:54,993 INFO   [Groundhog] training on 50 simulated datasets...
+2026-08-30 17:38:55,446 INFO   [Groundhog] testing on 100 simulated datasets...
+2026-08-30 17:38:56,626 INFO   [Groundhog] done -- eps_low_95=0.000  auc=0.537  (1.57s, 45.36 MB)
+2026-08-30 17:38:56,641 INFO   [ShadowModelling(RandomQueries)] training on 50 simulated datasets...
+2026-08-30 17:39:04,138 INFO   [ShadowModelling(RandomQueries)] testing on 100 simulated datasets...
+2026-08-30 17:39:34,349 INFO   [ShadowModelling(RandomQueries)] done -- eps_low_95=0.000  auc=0.501  (37.65s, 1.08 MB)
+2026-08-30 17:39:34,359 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] training on 50 simulated datasets...
+2026-08-30 17:39:34,519 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] testing on 100 simulated datasets...
+2026-08-30 17:39:35,236 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] done -- eps_low_95=0.000  auc=0.514  (0.84s, 1.11 MB)
+2026-08-30 17:39:35,252 INFO   [ProbabilityEstimation(KernelDensity())] training on 50 simulated datasets...
+2026-08-30 17:39:35,353 INFO   [ProbabilityEstimation(KernelDensity())] testing on 100 simulated datasets...
+2026-08-30 17:39:35,765 INFO   [ProbabilityEstimation(KernelDensity())] done -- eps_low_95=0.000  auc=0.546  (0.46s, 0.95 MB)
+2026-08-30 17:39:35,775 INFO   [ClosestDistance(L_2, accuracy)] training on 50 simulated datasets...
+2026-08-30 17:39:35,943 INFO   [ClosestDistance(L_2, accuracy)] testing on 100 simulated datasets...
+2026-08-30 17:39:36,705 INFO   [ClosestDistance(L_2, accuracy)] done -- eps_low_95=0.000  auc=0.502  (0.85s, 1.08 MB)
+2026-08-30 17:39:36,716 INFO     wrote 500 raw scores -> raw_scores_aim_50_100.csv
+2026-08-30 17:39:36,717 INFO === done: worst-case eps_low_95=0.000 [0.000, 0.102] via Groundhog ===
+2026-08-30 17:39:40,499 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=200, num_test=500) ===
+2026-08-30 17:39:40,499 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 700
+2026-08-30 17:39:40,533 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 17:39:40,535 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 17:39:40,548 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 17:39:40,988 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 17:39:40,988 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 17:50:22,102 INFO     train pool 126/200 checkpointed (+76 fits, 642s, -1 left in this process)
+2026-08-30 17:50:22,102 INFO     pools: 126/200 train, 100/500 test  (+76 new fits, 642s)
+2026-08-30 17:50:22,102 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 17:50:26,001 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=200, num_test=500) ===
+2026-08-30 17:50:26,002 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 700
+2026-08-30 17:50:26,036 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 17:50:26,037 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 17:50:26,051 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 17:50:26,497 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 17:50:26,497 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 18:00:50,672 INFO     train pool 200/200 checkpointed (+74 fits, 625s, 1 left in this process)
+2026-08-30 18:01:11,083 INFO     test pool 102/500 checkpointed (+2 fits, 20s, -1 left in this process)
+2026-08-30 18:01:11,083 INFO     pools: 200/200 train, 102/500 test  (+76 new fits, 645s)
+2026-08-30 18:01:11,083 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 18:01:14,832 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=200, num_test=500) ===
+2026-08-30 18:01:14,832 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 700
+2026-08-30 18:01:14,868 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 18:01:14,869 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 18:01:14,883 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 18:01:15,339 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 18:01:15,339 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 18:11:32,447 INFO     test pool 178/500 checkpointed (+76 fits, 618s, -1 left in this process)
+2026-08-30 18:11:32,447 INFO     pools: 200/200 train, 178/500 test  (+76 new fits, 618s)
+2026-08-30 18:11:32,447 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 18:11:36,088 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=200, num_test=500) ===
+2026-08-30 18:11:36,088 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 700
+2026-08-30 18:11:36,122 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 18:11:36,124 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 18:11:36,137 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 18:11:36,597 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 18:11:36,597 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 18:21:44,969 INFO     test pool 254/500 checkpointed (+76 fits, 609s, -1 left in this process)
+2026-08-30 18:21:44,969 INFO     pools: 200/200 train, 254/500 test  (+76 new fits, 609s)
+2026-08-30 18:21:44,969 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 18:21:48,565 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=200, num_test=500) ===
+2026-08-30 18:21:48,565 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 700
+2026-08-30 18:21:48,599 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 18:21:48,600 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 18:21:48,614 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 18:21:49,080 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 18:21:49,081 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 18:32:55,304 INFO     test pool 330/500 checkpointed (+76 fits, 667s, -1 left in this process)
+2026-08-30 18:32:55,304 INFO     pools: 200/200 train, 330/500 test  (+76 new fits, 667s)
+2026-08-30 18:32:55,304 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 18:32:59,314 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=200, num_test=500) ===
+2026-08-30 18:32:59,314 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 700
+2026-08-30 18:32:59,348 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 18:32:59,350 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 18:32:59,363 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 18:32:59,835 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 18:32:59,835 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 18:43:45,381 INFO     test pool 406/500 checkpointed (+76 fits, 646s, -1 left in this process)
+2026-08-30 18:43:45,381 INFO     pools: 200/200 train, 406/500 test  (+76 new fits, 646s)
+2026-08-30 18:43:45,381 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 18:43:49,253 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=200, num_test=500) ===
+2026-08-30 18:43:49,253 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 700
+2026-08-30 18:43:49,288 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 18:43:49,289 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 18:43:49,303 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 18:43:49,777 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 18:43:49,777 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 18:53:56,108 INFO     test pool 482/500 checkpointed (+76 fits, 607s, -1 left in this process)
+2026-08-30 18:53:56,109 INFO     pools: 200/200 train, 482/500 test  (+76 new fits, 607s)
+2026-08-30 18:53:56,109 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 18:53:59,802 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=200, num_test=500) ===
+2026-08-30 18:53:59,802 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 700
+2026-08-30 18:53:59,836 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 18:53:59,838 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 18:53:59,851 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 18:54:00,326 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 18:54:00,326 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 18:56:29,499 INFO     test pool 500/500 checkpointed (+18 fits, 150s, 57 left in this process)
+2026-08-30 18:56:29,499 INFO     pools: 200/200 train, 500/500 test  (+18 new fits, 150s)
+2026-08-30 18:56:29,579 INFO     guard train/D+: 100/100 distinct (100.0%)
+2026-08-30 18:56:29,656 INFO     guard train/D-: 100/100 distinct (100.0%)
+2026-08-30 18:56:29,849 INFO     guard test/D+: 250/250 distinct (100.0%)
+2026-08-30 18:56:30,041 INFO     guard test/D-: 250/250 distinct (100.0%)
+2026-08-30 18:56:30,642 INFO     exported 200 train datasets -> synthetic_train.csv.gz [1.1 MB]
+2026-08-30 18:56:32,151 INFO     exported 500 test datasets -> synthetic_test.csv.gz [2.8 MB]
+2026-08-30 18:56:32,156 INFO   [Groundhog] training on 200 simulated datasets...
+2026-08-30 18:56:33,789 INFO   [Groundhog] testing on 500 simulated datasets...
+2026-08-30 18:56:39,962 INFO   [Groundhog] done -- eps_low_95=0.000  auc=0.513  (7.67s, 225.76 MB)
+2026-08-30 18:56:40,013 INFO   [ShadowModelling(RandomQueries)] training on 200 simulated datasets...
+2026-08-30 18:57:09,413 INFO   [ShadowModelling(RandomQueries)] testing on 500 simulated datasets...
+2026-08-30 18:59:39,680 INFO   [ShadowModelling(RandomQueries)] done -- eps_low_95=0.000  auc=0.532  (179.55s, 4.79 MB)
+2026-08-30 18:59:39,731 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] training on 200 simulated datasets...
+2026-08-30 18:59:40,113 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] testing on 500 simulated datasets...
+2026-08-30 18:59:42,242 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] done -- eps_low_95=0.000  auc=0.496  (2.46s, 1.12 MB)
+2026-08-30 18:59:42,299 INFO   [ProbabilityEstimation(KernelDensity())] training on 200 simulated datasets...
+2026-08-30 18:59:42,645 INFO   [ProbabilityEstimation(KernelDensity())] testing on 500 simulated datasets...
+2026-08-30 18:59:44,608 INFO   [ProbabilityEstimation(KernelDensity())] done -- eps_low_95=0.000  auc=0.529  (2.12s, 0.97 MB)
+2026-08-30 18:59:44,669 INFO   [ClosestDistance(L_2, accuracy)] training on 200 simulated datasets...
+2026-08-30 18:59:45,071 INFO   [ClosestDistance(L_2, accuracy)] testing on 500 simulated datasets...
+2026-08-30 18:59:47,281 INFO   [ClosestDistance(L_2, accuracy)] done -- eps_low_95=0.000  auc=0.485  (2.4s, 1.1 MB)
+2026-08-30 18:59:47,333 INFO     wrote 2500 raw scores -> raw_scores_aim_200_500.csv
+2026-08-30 18:59:47,333 INFO === done: worst-case eps_low_95=0.000 [0.000, 0.019] via Groundhog ===
+2026-08-30 19:17:51,117 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=500, num_test=1000) ===
+2026-08-30 19:17:51,117 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 1500
+2026-08-30 19:17:51,152 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 19:17:51,153 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 19:17:51,167 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 19:17:51,658 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 19:17:51,658 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 19:28:16,062 INFO     train pool 276/500 checkpointed (+76 fits, 625s, -1 left in this process)
+2026-08-30 19:28:16,062 INFO     pools: 276/500 train, 500/1000 test  (+76 new fits, 625s)
+2026-08-30 19:28:16,062 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 19:28:19,753 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=500, num_test=1000) ===
+2026-08-30 19:28:19,753 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 1500
+2026-08-30 19:28:19,787 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 19:28:19,788 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 19:28:19,802 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 19:28:20,290 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 19:28:20,290 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 19:38:20,021 INFO     train pool 352/500 checkpointed (+76 fits, 600s, -1 left in this process)
+2026-08-30 19:38:20,021 INFO     pools: 352/500 train, 500/1000 test  (+76 new fits, 600s)
+2026-08-30 19:38:20,021 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 19:38:24,444 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=500, num_test=1000) ===
+2026-08-30 19:38:24,444 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 1500
+2026-08-30 19:38:24,478 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 19:38:24,480 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 19:38:24,493 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 19:38:24,997 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 19:38:24,998 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 19:48:59,334 INFO     train pool 428/500 checkpointed (+76 fits, 635s, -1 left in this process)
+2026-08-30 19:48:59,334 INFO     pools: 428/500 train, 500/1000 test  (+76 new fits, 635s)
+2026-08-30 19:48:59,334 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 19:49:03,176 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=500, num_test=1000) ===
+2026-08-30 19:49:03,176 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 1500
+2026-08-30 19:49:03,211 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 19:49:03,212 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 19:49:03,226 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 19:49:03,726 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 19:49:03,726 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 19:59:02,470 INFO     train pool 500/500 checkpointed (+72 fits, 599s, 3 left in this process)
+2026-08-30 19:59:35,637 INFO     test pool 504/1000 checkpointed (+4 fits, 33s, -1 left in this process)
+2026-08-30 19:59:35,637 INFO     pools: 500/500 train, 504/1000 test  (+76 new fits, 632s)
+2026-08-30 19:59:35,637 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 19:59:39,741 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=500, num_test=1000) ===
+2026-08-30 19:59:39,741 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 1500
+2026-08-30 19:59:39,775 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 19:59:39,776 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 19:59:39,790 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 19:59:40,309 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 19:59:40,309 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 20:10:05,047 INFO     test pool 580/1000 checkpointed (+76 fits, 625s, -1 left in this process)
+2026-08-30 20:10:05,048 INFO     pools: 500/500 train, 580/1000 test  (+76 new fits, 625s)
+2026-08-30 20:10:05,048 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 20:10:08,770 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=500, num_test=1000) ===
+2026-08-30 20:10:08,771 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 1500
+2026-08-30 20:10:08,805 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 20:10:08,806 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 20:10:08,820 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 20:10:09,346 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 20:10:09,346 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 20:20:39,995 INFO     test pool 656/1000 checkpointed (+76 fits, 631s, -1 left in this process)
+2026-08-30 20:20:39,995 INFO     pools: 500/500 train, 656/1000 test  (+76 new fits, 631s)
+2026-08-30 20:20:39,995 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 20:20:43,891 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=500, num_test=1000) ===
+2026-08-30 20:20:43,891 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 1500
+2026-08-30 20:20:43,925 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 20:20:43,926 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 20:20:43,940 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 20:20:44,512 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 20:20:44,512 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 20:30:41,966 INFO     test pool 732/1000 checkpointed (+76 fits, 598s, -1 left in this process)
+2026-08-30 20:30:41,966 INFO     pools: 500/500 train, 732/1000 test  (+76 new fits, 598s)
+2026-08-30 20:30:41,966 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 20:30:45,416 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=500, num_test=1000) ===
+2026-08-30 20:30:45,416 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 1500
+2026-08-30 20:30:45,451 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 20:30:45,452 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 20:30:45,466 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 20:30:46,088 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 20:30:46,088 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 20:41:13,975 INFO     test pool 808/1000 checkpointed (+76 fits, 628s, -1 left in this process)
+2026-08-30 20:41:13,975 INFO     pools: 500/500 train, 808/1000 test  (+76 new fits, 628s)
+2026-08-30 20:41:13,975 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 20:41:17,873 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=500, num_test=1000) ===
+2026-08-30 20:41:17,873 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 1500
+2026-08-30 20:41:17,908 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 20:41:17,909 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 20:41:17,923 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 20:41:18,511 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 20:41:18,511 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 20:51:42,589 INFO     test pool 884/1000 checkpointed (+76 fits, 625s, -1 left in this process)
+2026-08-30 20:51:42,589 INFO     pools: 500/500 train, 884/1000 test  (+76 new fits, 624s)
+2026-08-30 20:51:42,589 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 20:51:46,163 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=500, num_test=1000) ===
+2026-08-30 20:51:46,163 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 1500
+2026-08-30 20:51:46,199 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 20:51:46,200 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 20:51:46,214 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 20:51:46,822 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 20:51:46,822 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 21:02:37,781 INFO     test pool 960/1000 checkpointed (+76 fits, 651s, -1 left in this process)
+2026-08-30 21:02:37,781 INFO     pools: 500/500 train, 960/1000 test  (+76 new fits, 651s)
+2026-08-30 21:02:37,781 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 21:02:42,048 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=500, num_test=1000) ===
+2026-08-30 21:02:42,048 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 1500
+2026-08-30 21:02:42,083 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 21:02:42,084 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 21:02:42,098 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 21:02:42,691 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 21:02:42,691 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 21:07:59,284 INFO     test pool 1000/1000 checkpointed (+40 fits, 317s, 35 left in this process)
+2026-08-30 21:07:59,284 INFO     pools: 500/500 train, 1000/1000 test  (+40 new fits, 317s)
+2026-08-30 21:07:59,480 INFO     guard train/D+: 250/250 distinct (100.0%)
+2026-08-30 21:07:59,675 INFO     guard train/D-: 250/250 distinct (100.0%)
+2026-08-30 21:08:00,326 INFO     guard test/D+: 500/500 distinct (100.0%)
+2026-08-30 21:08:00,712 INFO     guard test/D-: 500/500 distinct (100.0%)
+2026-08-30 21:08:02,208 INFO     exported 500 train datasets -> synthetic_train.csv.gz [2.8 MB]
+2026-08-30 21:08:05,218 INFO     exported 1000 test datasets -> synthetic_test.csv.gz [5.6 MB]
+2026-08-30 21:08:05,227 INFO   [Groundhog] training on 500 simulated datasets...
+2026-08-30 21:08:08,750 INFO   [Groundhog] testing on 1000 simulated datasets...
+2026-08-30 21:08:21,218 INFO   [Groundhog] done -- eps_low_95=0.000  auc=0.531  (15.82s, 453.51 MB)
+2026-08-30 21:08:21,328 INFO   [ShadowModelling(RandomQueries)] training on 500 simulated datasets...
+2026-08-30 21:09:36,692 INFO   [ShadowModelling(RandomQueries)] testing on 1000 simulated datasets...
+2026-08-30 21:14:45,969 INFO   [ShadowModelling(RandomQueries)] done -- eps_low_95=0.000  auc=0.505  (384.5s, 9.54 MB)
+2026-08-30 21:14:46,079 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] training on 500 simulated datasets...
+2026-08-30 21:14:47,192 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] testing on 1000 simulated datasets...
+2026-08-30 21:14:52,197 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] done -- eps_low_95=0.000  auc=0.499  (6.06s, 1.14 MB)
+2026-08-30 21:14:52,316 INFO   [ProbabilityEstimation(KernelDensity())] training on 500 simulated datasets...
+2026-08-30 21:14:53,178 INFO   [ProbabilityEstimation(KernelDensity())] testing on 1000 simulated datasets...
+2026-08-30 21:14:57,186 INFO   [ProbabilityEstimation(KernelDensity())] done -- eps_low_95=0.000  auc=0.511  (4.47s, 0.99 MB)
+2026-08-30 21:14:57,297 INFO   [ClosestDistance(L_2, accuracy)] training on 500 simulated datasets...
+2026-08-30 21:14:58,402 INFO   [ClosestDistance(L_2, accuracy)] testing on 1000 simulated datasets...
+2026-08-30 21:15:03,392 INFO   [ClosestDistance(L_2, accuracy)] done -- eps_low_95=0.000  auc=0.487  (5.69s, 1.12 MB)
+2026-08-30 21:15:03,509 INFO     wrote 5000 raw scores -> raw_scores_aim_500_1000.csv
+2026-08-30 21:15:03,509 INFO === done: worst-case eps_low_95=0.000 [0.000, 0.021] via Groundhog ===
+2026-08-30 21:15:06,003 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=1000, num_test=2500) ===
+2026-08-30 21:15:06,004 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 3500
+2026-08-30 21:15:06,039 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 21:15:06,040 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 21:15:06,055 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 21:15:06,656 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 21:15:06,656 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 21:25:38,040 INFO     train pool 576/1000 checkpointed (+76 fits, 632s, -1 left in this process)
+2026-08-30 21:25:38,041 INFO     pools: 576/1000 train, 1000/2500 test  (+76 new fits, 632s)
+2026-08-30 21:25:38,041 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 21:25:41,913 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=1000, num_test=2500) ===
+2026-08-30 21:25:41,913 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 3500
+2026-08-30 21:25:41,948 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 21:25:41,950 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 21:25:41,964 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 21:25:42,591 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 21:25:42,591 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 21:36:15,513 INFO     train pool 652/1000 checkpointed (+76 fits, 633s, -1 left in this process)
+2026-08-30 21:36:15,513 INFO     pools: 652/1000 train, 1000/2500 test  (+76 new fits, 633s)
+2026-08-30 21:36:15,513 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 21:36:19,066 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=1000, num_test=2500) ===
+2026-08-30 21:36:19,066 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 3500
+2026-08-30 21:36:19,102 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 21:36:19,103 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 21:36:19,118 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 21:36:19,749 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 21:36:19,749 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 21:46:56,811 INFO     train pool 728/1000 checkpointed (+76 fits, 638s, -1 left in this process)
+2026-08-30 21:46:56,811 INFO     pools: 728/1000 train, 1000/2500 test  (+76 new fits, 638s)
+2026-08-30 21:46:56,811 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 21:47:00,352 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=1000, num_test=2500) ===
+2026-08-30 21:47:00,352 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 3500
+2026-08-30 21:47:00,388 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 21:47:00,389 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 21:47:00,403 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 21:47:01,029 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 21:47:01,029 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 21:57:14,444 INFO     train pool 804/1000 checkpointed (+76 fits, 614s, -1 left in this process)
+2026-08-30 21:57:14,444 INFO     pools: 804/1000 train, 1000/2500 test  (+76 new fits, 614s)
+2026-08-30 21:57:14,444 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 21:57:17,826 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=1000, num_test=2500) ===
+2026-08-30 21:57:17,826 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 3500
+2026-08-30 21:57:17,861 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 21:57:17,862 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 21:57:17,876 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 21:57:18,515 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 21:57:18,515 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 22:07:38,162 INFO     train pool 880/1000 checkpointed (+76 fits, 620s, -1 left in this process)
+2026-08-30 22:07:38,163 INFO     pools: 880/1000 train, 1000/2500 test  (+76 new fits, 620s)
+2026-08-30 22:07:38,163 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 22:07:41,722 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=1000, num_test=2500) ===
+2026-08-30 22:07:41,722 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 3500
+2026-08-30 22:07:41,758 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 22:07:41,759 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 22:07:41,773 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 22:07:42,429 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 22:07:42,429 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 22:17:50,103 INFO     train pool 956/1000 checkpointed (+76 fits, 608s, -1 left in this process)
+2026-08-30 22:17:50,103 INFO     pools: 956/1000 train, 1000/2500 test  (+76 new fits, 608s)
+2026-08-30 22:17:50,103 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 22:17:53,547 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=1000, num_test=2500) ===
+2026-08-30 22:17:53,547 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 3500
+2026-08-30 22:17:53,584 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 22:17:53,585 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 22:17:53,600 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 22:17:54,256 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 22:17:54,256 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 22:24:01,118 INFO     train pool 1000/1000 checkpointed (+44 fits, 367s, 31 left in this process)
+2026-08-30 22:28:19,139 INFO     test pool 1032/2500 checkpointed (+32 fits, 258s, -1 left in this process)
+2026-08-30 22:28:19,139 INFO     pools: 1000/1000 train, 1032/2500 test  (+76 new fits, 625s)
+2026-08-30 22:28:19,139 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 22:28:22,758 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=1000, num_test=2500) ===
+2026-08-30 22:28:22,758 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 3500
+2026-08-30 22:28:22,792 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 22:28:22,794 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 22:28:22,807 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 22:28:23,454 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 22:28:23,454 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 22:38:54,072 INFO     test pool 1108/2500 checkpointed (+76 fits, 631s, -1 left in this process)
+2026-08-30 22:38:54,072 INFO     pools: 1000/1000 train, 1108/2500 test  (+76 new fits, 631s)
+2026-08-30 22:38:54,072 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 22:38:57,997 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=1000, num_test=2500) ===
+2026-08-30 22:38:57,997 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 3500
+2026-08-30 22:38:58,032 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 22:38:58,033 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 22:38:58,047 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 22:38:58,696 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 22:38:58,696 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 22:49:30,662 INFO     test pool 1184/2500 checkpointed (+76 fits, 632s, -1 left in this process)
+2026-08-30 22:49:30,662 INFO     pools: 1000/1000 train, 1184/2500 test  (+76 new fits, 632s)
+2026-08-30 22:49:30,662 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 22:49:34,086 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=1000, num_test=2500) ===
+2026-08-30 22:49:34,087 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 3500
+2026-08-30 22:49:34,121 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 22:49:34,122 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 22:49:34,136 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 22:49:34,791 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 22:49:34,791 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 23:00:17,891 INFO     test pool 1260/2500 checkpointed (+76 fits, 644s, -1 left in this process)
+2026-08-30 23:00:17,891 INFO     pools: 1000/1000 train, 1260/2500 test  (+76 new fits, 644s)
+2026-08-30 23:00:17,891 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 23:00:21,813 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=1000, num_test=2500) ===
+2026-08-30 23:00:21,813 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 3500
+2026-08-30 23:00:21,848 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 23:00:21,849 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 23:00:21,863 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 23:00:22,525 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 23:00:22,525 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 23:11:03,880 INFO     test pool 1336/2500 checkpointed (+76 fits, 642s, -1 left in this process)
+2026-08-30 23:11:03,880 INFO     pools: 1000/1000 train, 1336/2500 test  (+76 new fits, 642s)
+2026-08-30 23:11:03,880 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 23:11:08,108 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=1000, num_test=2500) ===
+2026-08-30 23:11:08,108 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 3500
+2026-08-30 23:11:08,143 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 23:11:08,144 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 23:11:08,158 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 23:11:08,824 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 23:11:08,824 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 23:21:25,954 INFO     test pool 1412/2500 checkpointed (+76 fits, 618s, -1 left in this process)
+2026-08-30 23:21:25,954 INFO     pools: 1000/1000 train, 1412/2500 test  (+76 new fits, 618s)
+2026-08-30 23:21:25,954 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 23:21:29,793 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=1000, num_test=2500) ===
+2026-08-30 23:21:29,793 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 3500
+2026-08-30 23:21:29,828 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 23:21:29,829 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 23:21:29,843 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 23:21:30,516 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 23:21:30,516 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 23:32:00,777 INFO     test pool 1488/2500 checkpointed (+76 fits, 631s, -1 left in this process)
+2026-08-30 23:32:00,777 INFO     pools: 1000/1000 train, 1488/2500 test  (+76 new fits, 631s)
+2026-08-30 23:32:00,777 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 23:32:04,548 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=1000, num_test=2500) ===
+2026-08-30 23:32:04,548 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 3500
+2026-08-30 23:32:04,583 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 23:32:04,584 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 23:32:04,598 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 23:32:05,299 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 23:32:05,299 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 23:42:28,975 INFO     test pool 1564/2500 checkpointed (+76 fits, 624s, -1 left in this process)
+2026-08-30 23:42:28,975 INFO     pools: 1000/1000 train, 1564/2500 test  (+76 new fits, 624s)
+2026-08-30 23:42:28,975 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 23:42:32,753 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=1000, num_test=2500) ===
+2026-08-30 23:42:32,753 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 3500
+2026-08-30 23:42:32,787 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 23:42:32,788 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 23:42:32,802 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 23:42:33,510 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 23:42:33,510 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-30 23:52:46,555 INFO     test pool 1640/2500 checkpointed (+76 fits, 613s, -1 left in this process)
+2026-08-30 23:52:46,555 INFO     pools: 1000/1000 train, 1640/2500 test  (+76 new fits, 614s)
+2026-08-30 23:52:46,555 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-30 23:52:50,564 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=1000, num_test=2500) ===
+2026-08-30 23:52:50,564 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 3500
+2026-08-30 23:52:50,598 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 23:52:50,600 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 23:52:50,613 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-30 23:52:51,327 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-30 23:52:51,327 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-31 00:03:16,094 INFO     test pool 1716/2500 checkpointed (+76 fits, 625s, -1 left in this process)
+2026-08-31 00:03:16,094 INFO     pools: 1000/1000 train, 1716/2500 test  (+76 new fits, 625s)
+2026-08-31 00:03:16,094 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-31 00:03:19,918 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=1000, num_test=2500) ===
+2026-08-31 00:03:19,918 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 3500
+2026-08-31 00:03:19,952 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-31 00:03:19,954 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-31 00:03:19,967 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-31 00:03:20,689 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-31 00:03:20,689 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-31 00:13:51,557 INFO     test pool 1792/2500 checkpointed (+76 fits, 631s, -1 left in this process)
+2026-08-31 00:13:51,557 INFO     pools: 1000/1000 train, 1792/2500 test  (+76 new fits, 631s)
+2026-08-31 00:13:51,557 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-31 00:13:55,501 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=1000, num_test=2500) ===
+2026-08-31 00:13:55,501 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 3500
+2026-08-31 00:13:55,535 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-31 00:13:55,536 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-31 00:13:55,550 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-31 00:13:56,277 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-31 00:13:56,277 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-31 00:24:23,394 INFO     test pool 1868/2500 checkpointed (+76 fits, 628s, -1 left in this process)
+2026-08-31 00:24:23,394 INFO     pools: 1000/1000 train, 1868/2500 test  (+76 new fits, 628s)
+2026-08-31 00:24:23,394 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-31 00:24:27,429 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=1000, num_test=2500) ===
+2026-08-31 00:24:27,429 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 3500
+2026-08-31 00:24:27,464 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-31 00:24:27,465 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-31 00:24:27,479 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-31 00:24:28,214 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-31 00:24:28,215 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-31 00:35:11,186 INFO     test pool 1944/2500 checkpointed (+76 fits, 643s, -1 left in this process)
+2026-08-31 00:35:11,186 INFO     pools: 1000/1000 train, 1944/2500 test  (+76 new fits, 643s)
+2026-08-31 00:35:11,186 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-31 00:35:15,092 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=1000, num_test=2500) ===
+2026-08-31 00:35:15,092 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 3500
+2026-08-31 00:35:15,126 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-31 00:35:15,128 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-31 00:35:15,142 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-31 00:35:15,934 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-31 00:35:15,934 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-31 00:45:38,851 INFO     test pool 2020/2500 checkpointed (+76 fits, 623s, -1 left in this process)
+2026-08-31 00:45:38,852 INFO     pools: 1000/1000 train, 2020/2500 test  (+76 new fits, 623s)
+2026-08-31 00:45:38,852 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-31 00:45:42,938 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=1000, num_test=2500) ===
+2026-08-31 00:45:42,938 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 3500
+2026-08-31 00:45:42,972 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-31 00:45:42,974 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-31 00:45:42,987 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-31 00:45:43,785 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-31 00:45:43,785 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-31 00:56:06,008 INFO     test pool 2096/2500 checkpointed (+76 fits, 623s, -1 left in this process)
+2026-08-31 00:56:06,008 INFO     pools: 1000/1000 train, 2096/2500 test  (+76 new fits, 623s)
+2026-08-31 00:56:06,008 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-31 00:56:09,997 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=1000, num_test=2500) ===
+2026-08-31 00:56:09,997 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 3500
+2026-08-31 00:56:10,032 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-31 00:56:10,033 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-31 00:56:10,047 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-31 00:56:10,851 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-31 00:56:10,851 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-31 01:06:39,322 INFO     test pool 2172/2500 checkpointed (+76 fits, 629s, -1 left in this process)
+2026-08-31 01:06:39,322 INFO     pools: 1000/1000 train, 2172/2500 test  (+76 new fits, 629s)
+2026-08-31 01:06:39,322 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-31 01:06:43,201 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=1000, num_test=2500) ===
+2026-08-31 01:06:43,201 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 3500
+2026-08-31 01:06:43,236 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-31 01:06:43,237 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-31 01:06:43,251 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-31 01:06:44,064 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-31 01:06:44,064 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-31 01:17:03,113 INFO     test pool 2248/2500 checkpointed (+76 fits, 620s, -1 left in this process)
+2026-08-31 01:17:03,113 INFO     pools: 1000/1000 train, 2248/2500 test  (+76 new fits, 620s)
+2026-08-31 01:17:03,113 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-31 01:17:06,872 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=1000, num_test=2500) ===
+2026-08-31 01:17:06,872 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 3500
+2026-08-31 01:17:06,906 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-31 01:17:06,908 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-31 01:17:06,921 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-31 01:17:07,741 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-31 01:17:07,741 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-31 01:27:47,518 INFO     test pool 2324/2500 checkpointed (+76 fits, 640s, -1 left in this process)
+2026-08-31 01:27:47,518 INFO     pools: 1000/1000 train, 2324/2500 test  (+76 new fits, 640s)
+2026-08-31 01:27:47,518 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-31 01:27:51,540 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=1000, num_test=2500) ===
+2026-08-31 01:27:51,540 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 3500
+2026-08-31 01:27:51,575 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-31 01:27:51,576 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-31 01:27:51,590 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-31 01:27:52,414 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-31 01:27:52,414 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-31 01:38:28,431 INFO     test pool 2400/2500 checkpointed (+76 fits, 636s, -1 left in this process)
+2026-08-31 01:38:28,431 INFO     pools: 1000/1000 train, 2400/2500 test  (+76 new fits, 636s)
+2026-08-31 01:38:28,431 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-31 01:38:32,407 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=1000, num_test=2500) ===
+2026-08-31 01:38:32,407 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 3500
+2026-08-31 01:38:32,441 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-31 01:38:32,442 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-31 01:38:32,456 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-31 01:38:33,288 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-31 01:38:33,288 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-31 01:49:12,903 INFO     test pool 2476/2500 checkpointed (+76 fits, 640s, -1 left in this process)
+2026-08-31 01:49:12,903 INFO     pools: 1000/1000 train, 2476/2500 test  (+76 new fits, 640s)
+2026-08-31 01:49:12,903 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-08-31 01:49:17,133 INFO === TAPAS privacy audit: aim (dp=True, kind=statistical, eps=1.0, delta=1e-09, num_train=1000, num_test=2500) ===
+2026-08-31 01:49:17,133 INFO     cache benchmark_tapas/cache/aim_audit   total fits = 3500
+2026-08-31 01:49:17,167 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-31 01:49:17,168 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-31 01:49:17,182 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/aim_audit/threat_model.pkl
+2026-08-31 01:49:18,013 INFO Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+2026-08-31 01:49:18,014 WARNING An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+2026-08-31 01:52:49,182 INFO     test pool 2500/2500 checkpointed (+24 fits, 212s, 51 left in this process)
+2026-08-31 01:52:49,182 INFO     pools: 1000/1000 train, 2500/2500 test  (+24 new fits, 212s)
+2026-08-31 01:52:49,820 INFO     guard train/D+: 500/500 distinct (100.0%)
+2026-08-31 01:52:50,205 INFO     guard train/D-: 500/500 distinct (100.0%)
+2026-08-31 01:52:51,436 INFO     guard test/D+: 1250/1250 distinct (100.0%)
+2026-08-31 01:52:52,396 INFO     guard test/D-: 1250/1250 distinct (100.0%)
+2026-08-31 01:52:55,358 INFO     exported 1000 train datasets -> synthetic_train.csv.gz [5.6 MB]
+2026-08-31 01:53:03,068 INFO     exported 2500 test datasets -> synthetic_test.csv.gz [14.0 MB]
+2026-08-31 01:53:03,090 INFO   [Groundhog] training on 1000 simulated datasets...
+2026-08-31 01:53:09,507 INFO   [Groundhog] testing on 2500 simulated datasets...
+2026-08-31 01:53:37,174 INFO   [Groundhog] done -- eps_low_95=0.000  auc=0.523  (33.83s, 1128.44 MB)
+2026-08-31 01:53:37,427 INFO   [ShadowModelling(RandomQueries)] training on 1000 simulated datasets...
+2026-08-31 01:56:15,935 INFO   [ShadowModelling(RandomQueries)] testing on 2500 simulated datasets...
+2026-08-31 02:09:28,652 INFO   [ShadowModelling(RandomQueries)] done -- eps_low_95=0.000  auc=0.523  (951.06s, 23.55 MB)
+2026-08-31 02:09:28,905 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] training on 1000 simulated datasets...
+2026-08-31 02:09:30,977 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] testing on 2500 simulated datasets...
+2026-08-31 02:09:42,611 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] done -- eps_low_95=0.000  auc=0.513  (13.63s, 1.19 MB)
+2026-08-31 02:09:42,874 INFO   [ProbabilityEstimation(KernelDensity())] training on 1000 simulated datasets...
+2026-08-31 02:09:44,639 INFO   [ProbabilityEstimation(KernelDensity())] testing on 2500 simulated datasets...
+2026-08-31 02:09:54,820 INFO   [ProbabilityEstimation(KernelDensity())] done -- eps_low_95=0.000  auc=0.532  (10.88s, 1.05 MB)
+2026-08-31 02:09:55,078 INFO   [ClosestDistance(L_2, accuracy)] training on 1000 simulated datasets...
+2026-08-31 02:09:57,124 INFO   [ClosestDistance(L_2, accuracy)] testing on 2500 simulated datasets...
+2026-08-31 02:10:08,930 INFO   [ClosestDistance(L_2, accuracy)] done -- eps_low_95=0.000  auc=0.517  (12.86s, 1.16 MB)
+2026-08-31 02:10:09,204 INFO     wrote 12500 raw scores -> raw_scores_aim_1000_2500.csv
+2026-08-31 02:10:09,205 INFO === done: worst-case eps_low_95=0.000 [0.000, 0.004] via Groundhog ===

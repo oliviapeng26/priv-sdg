@@ -1,0 +1,19 @@
+{
+  "method": "aim",
+  "formal_epsilon": 1.0,
+  "delta": 1e-09,
+  "num_train": 1000,
+  "num_test": 2500,
+  "num_synthetic": 500,
+  "pool_wall_clock_s": 211.6,
+  "attack_wall_clock_s": 1022.26,
+  "new_fits_this_run": 24,
+  "distinct_fractions": {
+    "train/D+": 1.0,
+    "train/D-": 1.0,
+    "test/D+": 1.0,
+    "test/D-": 1.0
+  },
+  "attacks_without_raw_scores": [],
+  "note": "pool_wall_clock_s covers this invocation only; see new_fits_this_run to tell a fresh run from a resumed one. AIM is not bit-reproducible (opendp CSPRNG), so a re-run draws different simulations."
+}
