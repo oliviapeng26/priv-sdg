@@ -132,7 +132,8 @@ class DPCTGANGenerator(Generator):
         estimated. They come from the codebook bin edges, not from the data.
         """
         from snsynth.transform import (TableTransformer, MinMaxTransformer,
-                                       LabelTransformer)
+                                       LabelTransformer, OneHotEncoder,
+                                       ChainTransformer)
         parts = []
         for col in columns:
             if col in CONTINUOUS_COLS:
@@ -141,7 +142,12 @@ class DPCTGANGenerator(Generator):
                                                upper=float(edges[-1]),
                                                epsilon=0.0))
             else:
-                parts.append(LabelTransformer())
+                # Chained, not bare. LabelTransformer alone hands the network an
+                # integer code, so the generator's output comes back as a float and
+                # its inverse does categories[np.float32] -> TypeError. The GAN-family
+                # synthesisers expect categoricals one-hot encoded: label -> integer
+                # code -> one-hot on the way in, and the inverse unwinds both.
+                parts.append(ChainTransformer([LabelTransformer(), OneHotEncoder()]))
         return TableTransformer(parts)
 
     # -- TAPAS Generator interface ---------------------------------------
