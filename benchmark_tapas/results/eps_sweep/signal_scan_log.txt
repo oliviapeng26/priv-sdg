@@ -1,0 +1,36 @@
+2026-08-30 20:28:14,868 INFO === signal scan: eps=[1.0], n=400 per eps, device=cuda ===
+2026-08-30 20:28:14,868 INFO     reference, from the audit pools already measured: eps=0.1 -> 0.569, eps=1.0 -> 0.892, eps=10 -> 0.519, eps=100 -> 0.512
+2026-08-30 20:28:14,868 INFO === eps=1: 400 datasets, plugin_kwargs={'n_iter': 50} ===
+2026-08-30 20:28:14,903 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 20:28:14,905 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 20:28:14,905 INFO Building new threat model for dpgan (no cache found)
+2026-08-30 20:28:17,517 INFO JAX version 0.6.2 available.
+2026-08-30 20:34:27,048 INFO     pool 100/400 checkpointed (372s elapsed)
+2026-08-30 20:40:23,528 INFO     pool 200/400 checkpointed (729s elapsed)
+2026-08-30 20:46:29,160 INFO     pool 300/400 checkpointed (1094s elapsed)
+2026-08-30 20:52:48,670 INFO     pool 400/400 checkpointed (1474s elapsed)
+2026-08-30 20:52:50,471 INFO     in-pool membership signal: AUC 0.874 +- 0.014   (permuted-label baseline 0.501 +- 0.030)
+2026-08-30 20:52:50,472 INFO     200 D+ / 200 D-, 76 features, pool 24.6 min
+2026-08-30 21:24:15,155 INFO === signal scan: eps=[0.3, 3.0], n=400 per eps, device=cuda ===
+2026-08-30 21:24:15,155 INFO     reference, from the audit pools already measured: eps=0.1 -> 0.569, eps=1.0 -> 0.892, eps=10 -> 0.519, eps=100 -> 0.512
+2026-08-30 21:24:15,155 INFO === eps=0.3: 400 datasets, plugin_kwargs={'n_iter': 50} ===
+2026-08-30 21:24:15,189 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 21:24:15,191 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 21:24:15,191 INFO Building new threat model for dpgan (no cache found)
+2026-08-30 21:24:17,766 INFO JAX version 0.6.2 available.
+2026-08-30 21:31:41,205 INFO     pool 100/400 checkpointed (446s elapsed)
+2026-08-30 21:38:46,062 INFO     pool 200/400 checkpointed (871s elapsed)
+2026-08-30 21:46:02,268 INFO     pool 300/400 checkpointed (1307s elapsed)
+2026-08-30 21:53:36,308 INFO     pool 400/400 checkpointed (1761s elapsed)
+2026-08-30 21:53:38,103 INFO     in-pool membership signal: AUC 0.757 +- 0.048   (permuted-label baseline 0.554 +- 0.045)
+2026-08-30 21:53:38,103 INFO     200 D+ / 200 D-, 76 features, pool 29.4 min
+2026-08-30 21:53:38,106 INFO === eps=3: 400 datasets, plugin_kwargs={'n_iter': 50} ===
+2026-08-30 21:53:38,138 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-30 21:53:38,139 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-30 21:53:38,139 INFO Building new threat model for dpgan (no cache found)
+2026-08-30 22:01:36,107 INFO     pool 100/400 checkpointed (478s elapsed)
+2026-08-30 22:09:25,374 INFO     pool 200/400 checkpointed (947s elapsed)
+2026-08-30 22:17:20,338 INFO     pool 300/400 checkpointed (1422s elapsed)
+2026-08-30 22:25:31,210 INFO     pool 400/400 checkpointed (1913s elapsed)
+2026-08-30 22:25:33,040 INFO     in-pool membership signal: AUC 0.615 +- 0.032   (permuted-label baseline 0.424 +- 0.034)
+2026-08-30 22:25:33,041 INFO     200 D+ / 200 D-, 76 features, pool 31.9 min
