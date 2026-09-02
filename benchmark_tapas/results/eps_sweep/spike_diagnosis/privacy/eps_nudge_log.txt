@@ -1,0 +1,72 @@
+2026-08-31 18:27:37,544 INFO === eps nudge: [0.999] at 1000/2500, device=cuda ===
+2026-08-31 18:27:37,544 INFO     writing to benchmark_tapas/results/eps_sweep/spike_diagnosis/privacy
+2026-08-31 18:27:37,544 INFO     reference: the committed eps=1.0 arm scored eps_low_95 = 1.761 [1.761, 2.780] via Groundhog
+2026-08-31 18:27:37,544 INFO     projected ~4 h per eps at 4.2 s/fit x 3500 fits
+2026-08-31 18:27:37,545 INFO === dpgan eps=0.999 (num_train=1000, num_test=2500, plugin_kwargs={'n_iter': 50, 'device': 'cuda'}) ===
+2026-08-31 18:27:37,545 INFO     cache benchmark_tapas/cache/dpgan_eps0.999   total fits = 3500
+2026-08-31 18:27:37,579 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-31 18:27:37,581 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-31 18:27:37,581 INFO Building new threat model for dpgan (no cache found)
+2026-08-31 18:27:37,581 INFO     resuming at fit 0 (next seed 1000), generator eps=0.999
+2026-08-31 18:27:40,258 INFO JAX version 0.6.2 available.
+2026-08-31 18:27:57,160 INFO === eps nudge: [1.001] at 1000/2500, device=cuda ===
+2026-08-31 18:27:57,160 INFO     writing to benchmark_tapas/results/eps_sweep/spike_diagnosis/privacy
+2026-08-31 18:27:57,160 INFO     reference: the committed eps=1.0 arm scored eps_low_95 = 1.761 [1.761, 2.780] via Groundhog
+2026-08-31 18:27:57,160 INFO     projected ~4 h per eps at 4.2 s/fit x 3500 fits
+2026-08-31 18:27:57,160 INFO === dpgan eps=1.001 (num_train=1000, num_test=2500, plugin_kwargs={'n_iter': 50, 'device': 'cuda'}) ===
+2026-08-31 18:27:57,160 INFO     cache benchmark_tapas/cache/dpgan_eps1.001   total fits = 3500
+2026-08-31 18:27:57,196 INFO Sampled fixed background of 499 records (seed=42)
+2026-08-31 18:27:57,197 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-08-31 18:27:57,197 INFO Building new threat model for dpgan (no cache found)
+2026-08-31 18:27:57,197 INFO     resuming at fit 0 (next seed 1000), generator eps=1.001
+2026-08-31 18:27:59,813 INFO JAX version 0.6.2 available.
+2026-08-31 23:13:02,261 INFO     pools: 1000 train / 2500 test  (+3500 new fits, 17105s)
+2026-08-31 23:13:03,136 INFO     guard train/D+: 500/500 distinct (100.0%)
+2026-08-31 23:13:03,529 INFO     guard train/D-: 500/500 distinct (100.0%)
+2026-08-31 23:13:04,722 INFO     guard test/D+: 1250/1250 distinct (100.0%)
+2026-08-31 23:13:05,947 INFO     guard test/D-: 1250/1250 distinct (100.0%)
+2026-08-31 23:13:10,954 INFO     exported 1000 train datasets (500,000 rows) -> synthetic_train.csv.gz [24.0 MB]
+2026-08-31 23:13:23,350 INFO     exported 2500 test datasets (1,250,000 rows) -> synthetic_test.csv.gz [60.0 MB]
+2026-08-31 23:13:23,369 INFO   [Groundhog] training on 1000 simulated datasets...
+2026-08-31 23:13:30,314 INFO   [Groundhog] testing on 2500 simulated datasets...
+2026-08-31 23:13:46,424 INFO     pools: 1000 train / 2500 test  (+3500 new fits, 17169s)
+2026-08-31 23:13:47,316 INFO     guard train/D+: 500/500 distinct (100.0%)
+2026-08-31 23:13:47,712 INFO     guard train/D-: 500/500 distinct (100.0%)
+2026-08-31 23:13:48,915 INFO     guard test/D+: 1250/1250 distinct (100.0%)
+2026-08-31 23:13:50,136 INFO     guard test/D-: 1250/1250 distinct (100.0%)
+2026-08-31 23:13:55,186 INFO     exported 1000 train datasets (500,000 rows) -> synthetic_train.csv.gz [24.0 MB]
+2026-08-31 23:14:00,507 INFO   [Groundhog] done -- eps_low_95=1.989  auc=0.851  (36.77s, 1128.28 MB)
+2026-08-31 23:14:00,993 INFO   [ShadowModelling(RandomQueries)] training on 1000 simulated datasets...
+2026-08-31 23:14:08,528 INFO     exported 2500 test datasets (1,250,000 rows) -> synthetic_test.csv.gz [60.0 MB]
+2026-08-31 23:14:08,547 INFO   [Groundhog] training on 1000 simulated datasets...
+2026-08-31 23:14:15,573 INFO   [Groundhog] testing on 2500 simulated datasets...
+2026-08-31 23:14:46,713 INFO   [Groundhog] done -- eps_low_95=2.303  auc=0.838  (37.8s, 1128.3 MB)
+2026-08-31 23:14:47,198 INFO   [ShadowModelling(RandomQueries)] training on 1000 simulated datasets...
+2026-08-31 23:16:49,366 INFO   [ShadowModelling(RandomQueries)] testing on 2500 simulated datasets...
+2026-08-31 23:17:31,733 INFO   [ShadowModelling(RandomQueries)] testing on 2500 simulated datasets...
+2026-08-31 23:31:04,244 INFO   [ShadowModelling(RandomQueries)] done -- eps_low_95=0.240  auc=0.619  (1023.03s, 22.36 MB)
+2026-08-31 23:31:04,732 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] training on 1000 simulated datasets...
+2026-08-31 23:31:07,574 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] testing on 2500 simulated datasets...
+2026-08-31 23:31:17,651 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] done -- eps_low_95=0.000  auc=0.500  (12.91s, 1.17 MB)
+2026-08-31 23:31:17,956 INFO   [ProbabilityEstimation(KernelDensity())] training on 1000 simulated datasets...
+2026-08-31 23:31:19,734 INFO   [ProbabilityEstimation(KernelDensity())] testing on 2500 simulated datasets...
+2026-08-31 23:31:29,443 INFO   [ShadowModelling(RandomQueries)] done -- eps_low_95=0.467  auc=0.635  (1002.04s, 22.36 MB)
+2026-08-31 23:31:29,726 INFO   [ProbabilityEstimation(KernelDensity())] done -- eps_low_95=0.000  auc=0.525  (10.7s, 1.02 MB)
+2026-08-31 23:31:29,924 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] training on 1000 simulated datasets...
+2026-08-31 23:31:32,417 INFO   [ClosestDistance(L_2, accuracy)] training on 1000 simulated datasets...
+2026-08-31 23:31:32,592 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] testing on 2500 simulated datasets...
+2026-08-31 23:31:35,882 INFO   [ClosestDistance(L_2, accuracy)] testing on 2500 simulated datasets...
+2026-08-31 23:31:52,843 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] done -- eps_low_95=0.000  auc=0.500  (22.9s, 1.17 MB)
+2026-08-31 23:31:53,161 INFO   [ProbabilityEstimation(KernelDensity())] training on 1000 simulated datasets...
+2026-08-31 23:31:53,264 INFO   [ClosestDistance(L_2, accuracy)] done -- eps_low_95=0.000  auc=0.505  (18.8s, 1.16 MB)
+2026-08-31 23:31:54,849 INFO     wrote 12500 raw scores -> raw_scores_dpgan_eps1.001.csv
+2026-08-31 23:31:54,849 INFO === eps=1.001 done: worst-case eps_low_95=1.989 [1.989, 2.993] via Groundhog (5.06 h) ===
+2026-08-31 23:31:54,850 INFO === done in 5.07 h ===
+2026-08-31 23:31:54,956 INFO   [ProbabilityEstimation(KernelDensity())] testing on 2500 simulated datasets...
+2026-08-31 23:32:04,880 INFO   [ProbabilityEstimation(KernelDensity())] done -- eps_low_95=0.000  auc=0.524  (10.66s, 1.03 MB)
+2026-08-31 23:32:06,199 INFO   [ClosestDistance(L_2, accuracy)] training on 1000 simulated datasets...
+2026-08-31 23:32:08,395 INFO   [ClosestDistance(L_2, accuracy)] testing on 2500 simulated datasets...
+2026-08-31 23:32:19,264 INFO   [ClosestDistance(L_2, accuracy)] done -- eps_low_95=0.000  auc=0.507  (11.97s, 1.16 MB)
+2026-08-31 23:32:20,598 INFO     wrote 12500 raw scores -> raw_scores_dpgan_eps0.999.csv
+2026-08-31 23:32:20,598 INFO === eps=0.999 done: worst-case eps_low_95=2.303 [2.303, 4.009] via Groundhog (5.07 h) ===
+2026-08-31 23:32:20,598 INFO === done in 5.08 h ===

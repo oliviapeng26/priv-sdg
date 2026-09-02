@@ -1,0 +1,24 @@
+{
+  "formal_epsilon": 1.001,
+  "replacement_epsilon": 2.002,
+  "method": "dpgan",
+  "num_train": 1000,
+  "num_test": 2500,
+  "plugin_kwargs": {
+    "n_iter": "50",
+    "device": "cuda"
+  },
+  "pool_wall_clock_s": 17105.1,
+  "attack_wall_clock_s": 1102.21,
+  "total_wall_clock_s": 18207.309999999998,
+  "new_fits_this_run": 3500,
+  "distinct_fractions": {
+    "train/D+": 1.0,
+    "train/D-": 1.0,
+    "test/D+": 1.0,
+    "test/D-": 1.0
+  },
+  "degenerate_pool": false,
+  "attacks_without_raw_scores": [],
+  "note": "pool_wall_clock_s and total_wall_clock_s cover this invocation only; see new_fits_this_run to tell a fresh arm from a resumed one"
+}
