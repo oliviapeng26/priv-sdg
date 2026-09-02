@@ -1,0 +1,5 @@
+num_train,num_test,formal_epsilon,delta,eps_eff_low_95,eps_eff_high_95,attack,max_auc,max_advantage
+50,100,1.0,1e-09,0.0,0.3449478409092321,ShadowModelling,0.5464,0.08
+200,500,1.0,1e-09,0.0,0.0579504573381816,ClosestDistance,0.532288,0.028
+500,1000,1.0,1e-09,0.0,0.0243334407869311,ShadowModelling,0.530502,0.0479999999999999
+1000,2500,1.0,1e-09,0.0,0.0179292727340191,ClosestDistance,0.5320723199999999,0.036
