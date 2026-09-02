@@ -1,0 +1,24 @@
+{
+  "method": "dpctgan",
+  "library": "smartnoise",
+  "formal_epsilon": 10.0,
+  "sigma": 5,
+  "epochs_cap": 300,
+  "batch_size": 500,
+  "num_train": 1000,
+  "num_test": 2500,
+  "num_synthetic": 500,
+  "last_epochs_run": null,
+  "last_epsilon_spent": null,
+  "pool_wall_clock_s": 200.6,
+  "new_fits_this_run": 300,
+  "attack_wall_clock_s": 1116.93,
+  "distinct_fractions": {
+    "train/D+": 1.0,
+    "train/D-": 1.0,
+    "test/D+": 1.0,
+    "test/D-": 1.0
+  },
+  "attacks_without_raw_scores": [],
+  "note": "epsilon is a STOPPING RULE in SmartNoise (fixed sigma, break when the accountant says the budget is spent), not a noise calibration as in synthcity. delta is derived internally as 1/(n*sqrt(n)). See dpctgan_generator.py."
+}

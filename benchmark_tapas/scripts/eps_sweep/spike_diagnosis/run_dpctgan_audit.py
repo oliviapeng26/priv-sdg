@@ -379,8 +379,13 @@ def run_audit(num_train: int, num_test: int, cuda: bool, epsilon: float) -> int:
         "method": METHOD, "library": "smartnoise", "formal_epsilon": epsilon,
         "sigma": SIGMA, "epochs_cap": EPOCHS, "batch_size": BATCH_SIZE,
         "num_train": num_train, "num_test": num_test, "num_synthetic": NUM_SYNTHETIC,
-        "last_epochs_run": generator.last_epochs_run,
-        "last_epsilon_spent": generator.last_epsilon_spent,
+        # Read off the THREAT MODEL's generator, not the local one: on a resumed
+        # process the pool is already complete, so the local object never fits and
+        # its diagnostics stay None. The pickled one carries the last fit's values.
+        "last_epochs_run": getattr(threat_model.atk_know_gen.generator,
+                                   "last_epochs_run", None),
+        "last_epsilon_spent": getattr(threat_model.atk_know_gen.generator,
+                                      "last_epsilon_spent", None),
         "pool_wall_clock_s": pool_s, "new_fits_this_run": n_after - n_before,
         "attack_wall_clock_s": float(out["wall_time_s"].sum()),
         "distinct_fractions": fractions,
