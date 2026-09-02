@@ -89,6 +89,11 @@ REPO_ROOT = BENCHMARK_DIR.parent
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(BENCHMARK_DIR))
 sys.path.insert(0, str(REPO_ROOT))
+# DPCTGANGenerator moved to benchmark_tapas/dp-ctgan/ when the counts and epoch_cap
+# sweeps started sharing it. Imported from there rather than re-copied: the epoch_cap
+# sweep is read against THIS script's committed epoch_cap=300 arm, so the two must be
+# fitting the same generator for that comparison to mean anything.
+sys.path.insert(0, str(BENCHMARK_DIR / "dp-ctgan"))
 
 import tapas.threat_models as tm                                 # noqa: E402
 import common                                                    # noqa: E402

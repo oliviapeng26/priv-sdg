@@ -1,9 +1,10 @@
 # AIM audit
 
 Adds AIM as a fifth method: generation, fidelity, utility, and a TAPAS MIA
-privacy audit at 1000/2500. Self-contained — nothing outside this folder is
-modified, and `config.METHOD_CONFIG` keeps the four-method shape every committed
-result was produced under.
+privacy audit at 1000/2500, now swept across ε ∈ {0.1, 1.0, 10, 100}.
+Self-contained — nothing outside this folder is modified, and
+`config.METHOD_CONFIG` keeps the four-method shape every committed result was
+produced under.
 
 AIM is taken exactly as `sdg/aim.py` already runs it. `epsilon`, `delta`,
 `degree`, `max_cells`, `max_model_size`, `rounds` and `BIN_EDGES` are imported
@@ -43,6 +44,36 @@ python benchmark_tapas/aim_audit/run_aim_audit.py
 Steps 1–2 fold AIM into `results/{utility,fidelity}_summary.csv` automatically —
 `"aim"` is already in both scripts' `ALL_METHODS`. So the utility half is banked
 before the privacy run starts and does not depend on it.
+
+## The epsilon sweep
+
+ε ∈ {0.1, 1.0, 10, 100} at 1000/2500 — the same budgets the DPGAN eps sweep and the
+DP-CTGAN spike diagnosis ran at, so the three DP generators read on one axis.
+`--epsilon` is the only thing that moves; δ stays at 1e-9 and every other AIM
+hyperparameter stays imported from `sdg/aim.py`.
+
+Unlike DP-CTGAN, AIM's ε is a genuine **calibration** rather than a stopping rule:
+the budget is converted to ρ-zCDP and the Gaussian noise scaled so exactly that
+budget is spent over the 208 rounds. ε=0.1 is a *noisier* AIM, not a shorter one, so
+the arms are comparable to each other in a way the DP-CTGAN arms are not.
+
+```bash
+for e in 0.1 10 100; do run_stage 1000 2500 --epsilon $e || break; done
+```
+
+**ε=1.0 is already done** — it is the existing counts sweep in
+`results/aim_audit/{50_100,200_500,500_1000,1000_2500}/`, which
+`privacy_analysis.ipynb` reads. So ε=1.0 keeps those unnamespaced paths and its pool
+at `cache/aim_audit`; every other budget gets `cache/aim_audit_eps{e}` and
+`results/aim_audit/eps{e}/{nt}_{nte}/`. The asymmetry is deliberate: making the tree
+uniform would mean moving committed results a notebook reads and orphaning a ~12 h
+pool.
+
+**Cost: ~12 h per arm, ~35 h for the three new ones.** Pools cannot be shared across
+budgets — a different ε is a different mechanism — so each arm fits 3500 from
+scratch. AIM's round count does not depend on ε, so per-fit cost is roughly flat
+across arms; if a low-ε probe comes back much slower, something other than noise
+scaling has changed.
 
 ## Counts
 

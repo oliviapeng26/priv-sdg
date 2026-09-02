@@ -1,7 +1,17 @@
 #!/usr/bin/env python3
-"""[3a] SmartNoise DP-CTGAN wrapped as a TAPAS Generator.
+"""SmartNoise DP-CTGAN wrapped as a TAPAS Generator.
 
-WHY THIS EXISTS
+THE ONE COPY. Both audit scripts import this class rather than restating it:
+benchmark_tapas/dp-ctgan/run_dpctgan_audit.py (the counts sweep and the epoch_cap
+sweep) and benchmark_tapas/scripts/eps_sweep/spike_diagnosis/run_dpctgan_audit.py
+(the completed eps sweep). That matters more than tidiness here -- the epoch_cap
+sweep is read against the committed epoch_cap=300 arm the spike diagnosis produced,
+so if the two scripts fitted different generators the comparison would be void.
+
+Structurally this mirrors aim_audit/aim_generator.py, which already wraps a
+SmartNoise synthesiser for TAPAS. Same shape, same scaling round trip.
+
+WHY IT EXISTS AT ALL
     Every diagnosis so far shares one component with the result being questioned:
     synthcity's DPGAN produced the data. Component [0] swapped out the attacks and
     [1] swaps out the bound, but neither touches the generator. This does.
@@ -37,12 +47,15 @@ EPSILON DOES NOT MEAN THE SAME THING HERE -- READ THIS BEFORE COMPARING
     ran, and that number should be checked before committing to a full audit.
 
 WHAT IS FIXED, AND ON WHOSE AUTHORITY
-    Every DP-CTGAN parameter stays at the SmartNoise default except two:
+    Every DP-CTGAN parameter stays at the SmartNoise default except three:
       epsilon = 1.0   the budget under test
+      epochs  = 300   the SmartNoise default, and the default here; the epoch_cap
+                      sweep is the one experiment that moves it, and it moves
+                      nothing else
       verbose = False a logging flag, not a mechanism parameter; the default would
                       print per-epoch output across 3500 fits
-    In particular sigma stays at 5, epochs at 300, batch_size at 500,
-    max_per_sample_grad_norm at 1.0, pac at 1.
+    In particular sigma stays at 5, batch_size at 500, max_per_sample_grad_norm at
+    1.0, pac at 1.
 
 THE SCALING ROUND TRIP, AND WHY preprocessor_eps IS ZERO
     TAPAS min-max scales the continuous columns to [0,1] against the training split.
@@ -80,7 +93,7 @@ from aim import BIN_EDGES                                        # noqa: E402
 EPSILON = 1.0
 # SmartNoise defaults, listed explicitly so the write-up can state them.
 SIGMA = 5
-EPOCHS = 300
+EPOCHS = 300            # the DEFAULT epoch cap; overridable per instance, see below
 BATCH_SIZE = 500
 MAX_PER_SAMPLE_GRAD_NORM = 1.0
 
@@ -94,12 +107,17 @@ class DPCTGANGenerator(Generator):
     """
 
     def __init__(self, description, scalers: dict, epsilon: float = EPSILON,
-                 cuda: bool = True):
+                 cuda: bool = True, epochs: int = EPOCHS):
         super().__init__()
         self.description = description
         self.scalers = scalers          # {column: (min, max)} from common._fit_scalers
         self.epsilon = epsilon
         self.cuda = cuda
+        # The epoch CAP, not a schedule. Which of the two binds -- the cap or the
+        # budget -- is the question the epoch_cap sweep exists to answer, and
+        # last_epochs_run below is the answer for any single fit. Everything else
+        # stays at the SmartNoise default; this is the only knob.
+        self.epochs = epochs
         self._synth = None
         self._fit_counter = 0
         # Diagnostics from the most recent fit, read by --probe: how many epochs
@@ -161,7 +179,7 @@ class DPCTGANGenerator(Generator):
         synth = DPCTGAN(
             epsilon=self.epsilon,
             sigma=SIGMA,
-            epochs=EPOCHS,
+            epochs=self.epochs,
             batch_size=BATCH_SIZE,
             max_per_sample_grad_norm=MAX_PER_SAMPLE_GRAD_NORM,
             cuda=self.cuda,

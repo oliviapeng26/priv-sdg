@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""TAPAS MIA audit of AIM at num_train=1000 / num_test=2500.
+"""TAPAS MIA audit of AIM: the epsilon sweep at num_train=1000 / num_test=2500.
 
 Structurally this is run_counts_sweep.py with one stage and a different
 generator. Everything load-bearing is reused from benchmark_tapas/common.py --
@@ -12,6 +12,37 @@ Nothing outside benchmark_tapas/aim_audit/ is modified. The AIM entry that would
 otherwise go in config.METHOD_CONFIG is inlined below instead, so the existing
 four-method config keeps exactly the shape every committed result was produced
 under.
+
+THE EPSILON SWEEP
+    eps in {0.1, 1.0, 10, 100} at 1000/2500, matching the budgets the DPGAN eps
+    sweep (results/eps_sweep/) and the DP-CTGAN spike diagnosis were run at, so the
+    three DP generators can be read on one axis. --epsilon selects the arm; it is
+    passed straight to AIMGenerator, which passes it to AIMSynthesizer, and NOTHING
+    else moves -- delta stays at 1e-9, rounds/degree/max_cells/max_model_size and
+    the bin edges all stay imported from sdg/aim.py.
+
+    Unlike DP-CTGAN, AIM's epsilon is a genuine calibration rather than a stopping
+    rule: the (eps, delta) budget is converted to rho-zCDP and the Gaussian noise is
+    scaled so that exactly that budget is spent over the 208 rounds. So eps=0.1 is a
+    noisier AIM, not a shorter one, and the arms are directly comparable to each
+    other in a way the DP-CTGAN arms are not.
+
+    WHERE eps=1.0 LIVES, AND WHY IT IS NOT REGENERATED
+        The eps=1.0 arm is ALREADY DONE -- it is the whole existing counts sweep in
+        results/aim_audit/{50_100,200_500,500_1000,1000_2500}/, and
+        privacy_analysis.ipynb reads those paths. So eps=1.0 keeps them, along with
+        its pool at cache/aim_audit, and only the new budgets are namespaced:
+        cache/aim_audit_eps{e} and results/aim_audit/eps{e}/{nt}_{nte}/.
+
+        The layout is asymmetric on purpose. Making it uniform would mean moving
+        committed results that a notebook reads, and orphaning a pool that cost ~12 h
+        to build, in exchange for a tidier tree. Not worth it.
+
+    COST. Each new arm is a fresh 3500-fit pool -- the pools cannot be shared across
+    budgets, since epsilon changes the mechanism -- so at the measured 12.1 s/fit
+    that is ~12 h per arm, ~35 h for the three new ones. Run them one per night in
+    the restart loop below, and note that AIM's per-fit cost is roughly flat in
+    epsilon (the round count is fixed), so the estimate holds for all three.
 
 WHY 1000/2500, AND WHY THE PLAN SAID 200/500
     The counts were chosen on a projected cost of ~90 s/fit, reasoning that AIM's
@@ -50,8 +81,11 @@ CHECKPOINTING, WHICH MATTERS MORE HERE THAN ANYWHERE ELSE
 WHAT IS AND IS NOT HELD FIXED
     fixed:   background, target/alternate, attack battery + its internal
              randomness, num_synthetic (500 records per simulation), and AIM's
-             entire configuration -- imported from sdg/aim.py, not restated
-    varies:  nothing. This is a single-point audit, not a sweep.
+             entire configuration EXCEPT epsilon -- delta, rounds, degree,
+             max_cells, max_model_size and BIN_EDGES are imported from sdg/aim.py,
+             not restated
+    varies:  epsilon (--epsilon) and the counts (--num-train/--num-test). One
+             process runs one (epsilon, counts) stage.
 
     AIM runs at delta=1e-9 regardless of dataset size, while synthcity's DPGAN
     derives delta = 1/len(X) (= 2e-3 on a 500-row background) and PrivBayes is
@@ -62,16 +96,20 @@ WHAT IS AND IS NOT HELD FIXED
     AIM is not bit-reproducible at any seed (opendp CSPRNG). See aim_generator.py.
 
 OUTPUTS
-    shared across stages (the pool is grown, never rebuilt):
-      cache/aim_audit/threat_model.pkl                    pools, resumable
-      cache/aim_audit/datasets/synthetic_{split}.csv.gz   every simulation, gzipped
-      results/aim_audit/aim_audit_log.txt                 one log for all stages
+    shared across the stages of ONE epsilon arm (the pool is grown, never rebuilt):
+      cache/{cache_root}/threat_model.pkl                  pools, resumable
+      cache/{cache_root}/datasets/synthetic_{split}.csv.gz every simulation, gzipped
+      results/aim_audit/aim_audit_log.txt                  one log for every arm
     per stage, so a later stage never overwrites an earlier one's results:
-      cache/aim_audit/attacks_{nt}_{nte}/result_*.json    per-attack cache
-      results/aim_audit/{nt}_{nte}/effeps_aim_{nt}_{nte}.csv       per-attack metrics
-      results/aim_audit/{nt}_{nte}/raw_scores_aim_{nt}_{nte}.csv   pre-threshold scores
-      results/aim_audit/{nt}_{nte}/effective_epsilon_*.csv         TAPAS's own report
-      results/aim_audit/{nt}_{nte}/meta.json                       timings + guard
+      cache/{cache_root}/attacks_{nt}_{nte}/result_*.json  per-attack cache
+      {results}/effeps_aim_{nt}_{nte}.csv                  per-attack metrics
+      {results}/raw_scores_aim_{nt}_{nte}.csv              pre-threshold scores
+      {results}/effective_epsilon_*.csv                    TAPAS's own report
+      {results}/meta.json                                  timings + guard
+
+    where cache_root is  aim_audit  and {results} is  results/aim_audit/{nt}_{nte}/
+    at eps=1.0, and  aim_audit_eps{e}  /  results/aim_audit/eps{e}/{nt}_{nte}/  at
+    every other budget -- see WHERE eps=1.0 LIVES above.
 
 RUN IT IN THE RESTART LOOP, NOT DIRECTLY
     The script builds at most MAX_NEW_FITS per process and exits EXIT_INCOMPLETE
@@ -99,12 +137,31 @@ RUN IT IN THE RESTART LOOP, NOT DIRECTLY
       }
       run_stage 50 100 && echo "=== 50/100 DONE ===" && run_stage 200 500
 
+    The epsilon sweep, one arm per night (each is a fresh ~12 h pool):
+
+      run_stage () {            # $1 num_train  $2 num_test  $3.. extra flags
+        fails=0
+        while true; do
+          python -u benchmark_tapas/aim_audit/run_aim_audit.py \
+                 --num-train $1 --num-test $2 "${@:3}"
+          rc=$?
+          [ $rc -eq 0 ] && return 0
+          if [ $rc -eq 3 ]; then fails=0; continue; fi
+          fails=$((fails + 1)); echo "!! exit $rc (consecutive failure $fails)"
+          [ $fails -ge 3 ] && return $rc
+        done
+      }
+      for e in 0.1 10 100; do              # 1.0 is already done, see above
+        run_stage 1000 2500 --epsilon $e || break
+      done
+
     Staging like that is near-free: the pool is shared, so 50/100 then 200/500 is
     700 fits total rather than 850, and the smaller stage's results are complete
     and readable while the larger one is still running.
 
 Also:
-  python benchmark_tapas/aim_audit/run_aim_audit.py --probe 6   # time 6 fits, exit
+  python benchmark_tapas/aim_audit/run_aim_audit.py --probe 6                 # time 6 fits
+  python benchmark_tapas/aim_audit/run_aim_audit.py --probe 6 --epsilon 0.1   # noisiest arm
 """
 
 import argparse
@@ -147,15 +204,46 @@ MAX_NEW_FITS = 75
 CHECKPOINT_EVERY = 75   # one save per process: a crash costs at most ~10 min of fits
 EXIT_INCOMPLETE = 3     # "pools not finished, restart me" -- not an error
 
-# The POOL cache is shared across stages on purpose: TAPAS only ever grows it, so
-# running 50/100 and then 200/500 costs 700 fits in total, not 850. Everything a
-# stage WRITES is namespaced by its counts instead -- TAPAS's per-attack
+# One shared log across every arm; RESULTS_ROOT below is namespaced per epsilon, so
+# a sweep never overwrites a finished arm's results.
+AIM_DIR = RESULTS_DIR / "aim_audit"
+AIM_DIR.mkdir(parents=True, exist_ok=True)
+
+# The POOL cache is shared across the COUNTS stages of one epsilon arm, on purpose:
+# TAPAS only ever grows it, so running 50/100 and then 200/500 costs 700 fits in
+# total, not 850. It is NOT shared across epsilon -- a different budget is a
+# different mechanism, so each arm fits its own pool from scratch. Everything a
+# stage WRITES is namespaced by its counts as well -- TAPAS's per-attack
 # effective_epsilon_*.csv and meta.json are not keyed by counts, so a later stage
 # would otherwise overwrite an earlier one's results while you were reading them.
-CACHE_ROOT = CACHE_DIR / "aim_audit"
-RESULTS_ROOT = RESULTS_DIR / "aim_audit"
-for d in (CACHE_ROOT, RESULTS_ROOT):
-    d.mkdir(parents=True, exist_ok=True)
+#
+# Set by set_paths() once --epsilon is known. Module-level so the helpers below can
+# read them at call time without threading them through every signature.
+CACHE_ROOT = RESULTS_ROOT = None
+
+
+def set_paths(epsilon: float) -> None:
+    """Point the pool cache and the results tree at this budget's own directories.
+
+    eps=1.0 keeps the original unnamespaced paths, because that is where its ~12 h
+    pool and its four committed counts stages already are and where
+    privacy_analysis.ipynb reads them. See WHERE eps=1.0 LIVES in the module
+    docstring for why the asymmetry is preferred to migrating them.
+    """
+    global CACHE_ROOT, RESULTS_ROOT
+    if epsilon == EPSILON:
+        CACHE_ROOT = CACHE_DIR / "aim_audit"
+        RESULTS_ROOT = AIM_DIR
+    else:
+        CACHE_ROOT = CACHE_DIR / f"aim_audit_{eps_slug(epsilon)}"
+        RESULTS_ROOT = AIM_DIR / eps_slug(epsilon)
+    for d in (CACHE_ROOT, RESULTS_ROOT):
+        d.mkdir(parents=True, exist_ok=True)
+
+
+def eps_slug(eps: float) -> str:
+    """Matches run_eps_sweep.eps_slug: 1.0 -> 'eps1', 0.1 -> 'eps0.1'."""
+    return f"eps{eps:g}"
 
 
 def stage_dirs(num_train: int, num_test: int):
@@ -169,7 +257,7 @@ def stage_dirs(num_train: int, num_test: int):
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s %(levelname)s %(message)s",
-    handlers=[logging.FileHandler(RESULTS_ROOT / "aim_audit_log.txt"),
+    handlers=[logging.FileHandler(AIM_DIR / "aim_audit_log.txt"),
               logging.StreamHandler()],
 )
 log = logging.getLogger("aim_audit")
@@ -319,18 +407,44 @@ def grow_pools(threat_model, num_train: int, num_test: int) -> int:
 
 # -- Shared setup ---------------------------------------------------------
 
-def build_world():
+def build_world(epsilon: float = EPSILON):
     """The fixed audit world: scalers, background, target/alternate, generator.
 
     Identical to what common.run_method builds for the other four methods, so the
-    AIM row is comparable to theirs cell for cell.
+    AIM row is comparable to theirs cell for cell. `epsilon` is the ONLY thing an
+    arm changes; delta and every other AIM hyperparameter stay imported.
     """
     train_dataset, _, description = common.load_adult_datasets()
     background, background_idx = common.sample_background(train_dataset)
     target, alternate = common.select_random_target(train_dataset, background_idx)
     scalers = common._fit_scalers(pd.read_csv(TRAIN_CSV))
-    generator = AIMGenerator(description, scalers, epsilon=EPSILON, delta=DELTA)
+    generator = AIMGenerator(description, scalers, epsilon=epsilon, delta=DELTA)
     return description, background, target, alternate, generator
+
+
+class CacheMismatch(RuntimeError):
+    """The cached pool was grown at a different epsilon."""
+
+
+def assert_generator_matches(threat_model, epsilon: float) -> None:
+    """Abort if the cached pool was grown at a different budget.
+
+    build_or_load_threat_model unpickles the generator along with the pool and uses
+    THAT object for every subsequent fit, so a mis-pointed cache would keep fitting
+    at the old epsilon while this run labelled the results with the new one.
+    set_paths keys the cache directory by epsilon precisely so this cannot happen --
+    this is the belt to that braces, and it costs nothing.
+    """
+    generator = getattr(threat_model.atk_know_gen, "generator", None)
+    got = getattr(generator, "epsilon", None) if generator is not None else None
+    if got is not None and float(got) != float(epsilon):
+        raise CacheMismatch(
+            f"{CACHE_ROOT} was grown at epsilon={got}, but epsilon={epsilon} was "
+            f"requested.\n"
+            f"  The pool, not this invocation, decides what was actually fitted, so "
+            f"continuing would label one budget's simulations as another's.\n"
+            f"  Either point at the right cache or delete this one and re-fit."
+        )
 
 
 def build_or_load_threat_model(background, target, alternate, generator):
@@ -359,16 +473,20 @@ def build_or_load_threat_model(background, target, alternate, generator):
 
 # -- Probe ----------------------------------------------------------------
 
-def probe(n_fits: int) -> int:
+def probe(n_fits: int, epsilon: float) -> int:
     """Time real fit+generate cycles on the 500-row background, then exit.
 
-    This is the number the whole schedule turns on: 700 fits at the measured
-    s/fit is the audit's cost. Nothing is cached or written.
+    This is the number the whole schedule turns on: 3500 fits at the measured s/fit
+    is one epsilon arm's cost. AIM's round count does not depend on the budget, so
+    the per-fit time should be roughly flat across arms -- if a low-epsilon arm comes
+    back much slower, something other than noise scaling has changed. Nothing is
+    cached or written.
     """
-    _, background, target, _, generator = build_world()
+    _, background, target, _, generator = build_world(epsilon)
     member = background.copy()
     member.add_records(target, in_place=True)
-    log.info(f"=== probe: {n_fits} fit+generate cycles on {len(member.data)} rows ===")
+    log.info(f"=== probe: {n_fits} fit+generate cycles on {len(member.data)} rows, "
+             f"eps={epsilon:g}, delta={DELTA} ===")
 
     times = []
     for i in range(n_fits):
@@ -389,16 +507,18 @@ def probe(n_fits: int) -> int:
 
 # -- Audit ----------------------------------------------------------------
 
-def run_audit(num_train: int, num_test: int) -> int:
+def run_audit(num_train: int, num_test: int, epsilon: float = EPSILON) -> int:
     log.info(f"=== TAPAS privacy audit: aim (dp={AIM_CONFIG['dp']}, "
-             f"kind={AIM_CONFIG['kind']}, eps={EPSILON}, delta={DELTA}, "
+             f"kind={AIM_CONFIG['kind']}, eps={epsilon:g}, delta={DELTA}, "
              f"num_train={num_train}, num_test={num_test}) ===")
     log.info(f"    cache {CACHE_ROOT.relative_to(REPO_ROOT)}   "
+             f"results {RESULTS_ROOT.relative_to(REPO_ROOT)}   "
              f"total fits = {num_train + num_test}")
 
     results_dir, attack_cache = stage_dirs(num_train, num_test)
-    _, background, target, alternate, generator = build_world()
+    _, background, target, alternate, generator = build_world(epsilon)
     threat_model = build_or_load_threat_model(background, target, alternate, generator)
+    assert_generator_matches(threat_model, epsilon)
 
     # Same seed before build_attacks as every other method in the benchmark, so
     # AIM is probed by the same forests and the same 1500 random queries.
@@ -434,7 +554,7 @@ def run_audit(num_train: int, num_test: int) -> int:
         )
         result.update(method=METHOD, dp=AIM_CONFIG["dp"], kind=AIM_CONFIG["kind"],
                       num_train=num_train, num_test=num_test,
-                      formal_epsilon=EPSILON, delta=DELTA)
+                      formal_epsilon=epsilon, delta=DELTA)
         # TAPAS's MIAttackSummary exposes the positive rates only.
         result["tn"] = 1.0 - result["fp"]
         result["fn"] = 1.0 - result["tp"]
@@ -457,7 +577,7 @@ def run_audit(num_train: int, num_test: int) -> int:
                     f"recompute (cheap: the fits are memoised).")
 
     meta = {
-        "method": METHOD, "formal_epsilon": EPSILON, "delta": DELTA,
+        "method": METHOD, "formal_epsilon": epsilon, "delta": DELTA,
         "num_train": num_train, "num_test": num_test,
         "num_synthetic": NUM_SYNTHETIC,
         "pool_wall_clock_s": pool_s,
@@ -490,6 +610,10 @@ def main() -> int:
                         help="time N real fit+generate cycles and exit (no caching)")
     parser.add_argument("--num-train", type=int, default=NUM_TRAIN)
     parser.add_argument("--num-test", type=int, default=NUM_TEST)
+    parser.add_argument("--epsilon", type=float, default=EPSILON,
+                        help=f"budget to audit (default {EPSILON}). Caches and results "
+                             f"are namespaced per eps, so arms never overwrite each "
+                             f"other; {EPSILON} keeps the original unnamespaced paths.")
     parser.add_argument("--max-new-fits", type=int, default=MAX_NEW_FITS,
                         help=f"fits per process before exiting {EXIT_INCOMPLETE} for a "
                              f"fresh one (default {MAX_NEW_FITS}; see grow_pools)")
@@ -497,13 +621,19 @@ def main() -> int:
 
     MAX_NEW_FITS = args.max_new_fits
     CHECKPOINT_EVERY = min(CHECKPOINT_EVERY, MAX_NEW_FITS)
+    set_paths(args.epsilon)
+    log.info(f"eps={args.epsilon:g} | cache {CACHE_ROOT.name} | "
+             f"results {RESULTS_ROOT.relative_to(REPO_ROOT)}")
 
     if args.probe:
-        return probe(args.probe)
+        return probe(args.probe, args.epsilon)
     try:
-        return run_audit(args.num_train, args.num_test)
+        return run_audit(args.num_train, args.num_test, args.epsilon)
     except DegeneratePool as exc:
         log.error(f"DISTINCTNESS GUARD FAILED:\n{exc}")
+        return 1
+    except CacheMismatch as exc:
+        log.error(f"CACHE CONFIGURATION MISMATCH:\n{exc}")
         return 1
 
 
