@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Seeded, repeated synthetic data generation for all five methods.
+"""Seeded, repeated synthetic data generation for the four Synthcity methods.
 
 Replaces the per-method sdg/*.ipynb notebooks (now *_LEGACY.ipynb). Same
 plugins, same hyperparameters -- what is new is that each method is fitted and
@@ -24,8 +24,7 @@ DEVICE
     ones (ctgan, dpgan) take `device` and get the detected CUDA device; note
     synthcity's own default is already `DEVICE` (cuda when available), but it
     is passed explicitly here so the value recorded in the cost CSV is the one
-    actually used rather than an assumption. AIM runs on jax, so its device is
-    read from the jax backend.
+    actually used rather than an assumption.
 
     So on the GPU workstation a full run legitimately reports a mix of cpu and
     cuda rows. That is the intended setup, not a misconfiguration: the neural
@@ -35,18 +34,25 @@ DEVICE
 
 PEAK MEMORY CAVEAT
     tracemalloc sees Python-level allocations only. It does not see torch CUDA
-    buffers, jax buffers, or memory allocated inside C extensions, so
-    peak_memory_mb understates the real footprint for ctgan/dpgan (torch) and
-    aim (jax), and is only comparable in a like-for-like sense within the
-    statistical methods. Wall clock is the trustworthy cross-method column.
+    buffers or memory allocated inside C extensions, so peak_memory_mb
+    understates the real footprint for ctgan/dpgan (torch), and is only
+    comparable in a like-for-like sense within the statistical methods. Wall clock is the trustworthy cross-method column.
     This is the same caveat the legacy sdg/computational_overhead_LEGACY.csv carried.
 
 Run from repo root:
-  python sdg/generate_runs.py                          # all 5 methods x 5 seeds
+  python sdg/generate_runs.py                          # all 4 methods x 5 seeds
   python sdg/generate_runs.py bayesian_network         # one method
   python sdg/generate_runs.py ctgan dpgan              # the GPU half
   python sdg/generate_runs.py privbayes --runs 2       # partial
-  python sdg/generate_runs.py aim --regenerate         # ignore cached CSVs
+  python sdg/generate_runs.py ctgan --regenerate       # ignore cached CSVs
+
+THE SMARTNOISE METHODS LIVE IN sdg/generate_smartnoise.py
+    aim used to be a fifth method here. It moved out when dpctgan joined it: both
+    are smartnoise-synth rather than Synthcity plugins, neither goes through
+    Plugin.fit/generate, and their outputs are keyed by epsilon
+    (synthetic_data/smartnoise/{method}/eps{eps}/seed{seed}.csv) so a budget sweep
+    cannot overwrite an arm. evaluation/eval_{fidelity,utility}.py score all six
+    methods and know which tree each one lives in.
 
 Resumable: an existing synthetic_data/runs/{method}_seed{seed}.csv is reused and
 the run skipped, so an interrupted session picks up where it stopped. --regenerate
@@ -61,25 +67,22 @@ import tracemalloc
 import traceback
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 SDG_DIR = REPO_ROOT / "sdg"
 sys.path.insert(0, str(REPO_ROOT))
-sys.path.insert(0, str(SDG_DIR))          # sibling import of aim.py
 
 from seeds import RUN_SEEDS, NUM_RUNS, set_all_seeds
 
-FORMAL_EPSILON = 1.0      # DP budget, unchanged from the legacy notebooks / aim.py
+FORMAL_EPSILON = 1.0      # DP budget, unchanged from the legacy notebooks
 
-# method -> (synthcity plugin name, or None when the method is not a plugin)
+# method -> synthcity plugin name
 METHOD_SPEC = {
     "bayesian_network": "bayesian_network",
     "privbayes":        "privbayes",
     "ctgan":            "ctgan",
     "dpgan":            "dpgan",
-    "aim":              None,             # SmartNoise, see sdg/aim.py
 }
 ALL_METHODS = list(METHOD_SPEC)
 DP_METHODS = {"privbayes", "dpgan"}       # take an `epsilon` kwarg
@@ -144,12 +147,6 @@ def device_for(method: str) -> str:
             return "cuda" if torch.cuda.is_available() else "cpu"
         except ImportError:
             return "cpu"
-    if method == "aim":
-        try:
-            import jax
-            return jax.default_backend()
-        except Exception:
-            return "cpu"
     return "cpu"      # bayesian_network / privbayes: no GPU path exists
 
 
@@ -182,43 +179,6 @@ def generate_synthcity(method: str, train_data: pd.DataFrame, seed: int,
     plugin = Plugins().get(METHOD_SPEC[method], **kwargs)
     plugin.fit(GenericDataLoader(df, target_column=TARGET_COL))
     return plugin.generate(count=len(df), random_state=seed).dataframe()
-
-
-def generate_aim(train_data: pd.DataFrame, seed: int) -> pd.DataFrame:
-    """Fit + sample AIM at a fixed seed, reusing sdg/aim.py's discretisation.
-
-    BIN_EDGES / encode / decode are imported rather than copied so the bin
-    layout cannot drift -- those fixed public-codebook edges are what keeps
-    preprocessor_eps at 0 and the full eps=1.0 on AIM.
-
-    AIM is not bit-reproducible even at a fixed seed: its Gaussian measurements
-    come from opendp's CSPRNG, which has no seeding hook by design. The seed
-    controls marginal selection, mbi's rounding and the decode-time draw. For
-    this script's purpose that is harmless -- across-run spread is what we are
-    measuring -- but it means an aim run cannot be reproduced from its seed.
-    """
-    from aim import (BIN_EDGES, encode, decode, EPSILON, DELTA,
-                     DEGREE, MAX_CELLS, MAX_MODEL_SIZE, ROUNDS)
-    from snsynth.aim import AIMSynthesizer
-
-    rng = np.random.default_rng(seed)     # decode-only: uniform draw inside each bin
-
-    discrete = train_data.copy()
-    for col in CONTINUOUS_COLS:
-        discrete[col] = encode(train_data[col], BIN_EDGES[col])
-
-    synth = AIMSynthesizer(
-        epsilon=EPSILON, delta=DELTA, rounds=ROUNDS, degree=DEGREE,
-        max_cells=MAX_CELLS, max_model_size=MAX_MODEL_SIZE, verbose=True,
-    )
-    synth.fit(discrete, categorical_columns=list(discrete.columns), preprocessor_eps=0.0)
-    sampled = synth.sample(len(train_data))
-
-    synthetic = sampled[train_data.columns.tolist()].copy()
-    for col in CONTINUOUS_COLS:
-        synthetic[col] = decode(synthetic[col].astype(int), BIN_EDGES[col], rng)
-    synthetic[CATEGORICAL_COLS] = synthetic[CATEGORICAL_COLS].astype(str)
-    return synthetic
 
 
 def record_cost(row: dict) -> None:
@@ -259,8 +219,7 @@ def generate_one(method: str, train_data: pd.DataFrame, seed: int,
     # sdg/computational_overhead_LEGACY.csv.
     tracemalloc.start()
     t0 = time.perf_counter()
-    synthetic = (generate_aim(train_data, seed) if method == "aim"
-                 else generate_synthcity(method, train_data, seed, device))
+    synthetic = generate_synthcity(method, train_data, seed, device)
     wall_clock_s = round(time.perf_counter() - t0, 2)
     _, peak_bytes = tracemalloc.get_traced_memory()
     tracemalloc.stop()
@@ -308,21 +267,14 @@ def main() -> int:
     # run of a session pays synthcity's import cost inside its timed block --
     # measured at 40.1s vs ~7.3s for the other four BN runs, a 5x inflation that
     # lands entirely on run 0 and corrupts both the mean and the std.
-    if any(m != "aim" for m in methods):
-        t0 = time.perf_counter()
-        from synthcity.plugins import Plugins
-        # Building the registry AND instantiating each plugin once: both the
-        # module import and the first Plugins().get() carry one-off cost (plugin
-        # discovery, pgmpy/torch lazy imports) that would otherwise land inside
-        # run 0's timed block.
-        for m in methods:
-            if METHOD_SPEC[m] is not None:
-                Plugins().get(METHOD_SPEC[m])
-        log.info(f"synthcity warmed up in {time.perf_counter() - t0:.1f}s (untimed)")
-    if "aim" in methods:
-        t0 = time.perf_counter()
-        import snsynth.aim  # noqa: F401
-        log.info(f"snsynth imported in {time.perf_counter() - t0:.1f}s (untimed warm-up)")
+    t0 = time.perf_counter()
+    from synthcity.plugins import Plugins
+    # Building the registry AND instantiating each plugin once: both the module
+    # import and the first Plugins().get() carry one-off cost (plugin discovery,
+    # pgmpy/torch lazy imports) that would otherwise land inside run 0's timed block.
+    for m in methods:
+        Plugins().get(METHOD_SPEC[m])
+    log.info(f"synthcity warmed up in {time.perf_counter() - t0:.1f}s (untimed)")
 
     fitted = 0
     for method in methods:

@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """SDMetrics fidelity, scored per run over the seeded generation runs.
 
-Reads the per-run synthetic CSVs written by sdg/generate_runs.py and scores
+Reads the per-run synthetic CSVs written by sdg/generate_runs.py
+(the four Synthcity methods) and sdg/generate_smartnoise.py (aim,
+dpctgan) and scores
 each against the training data. Fidelity metrics and their definitions are
 UNCHANGED from the single-draw evaluation_LEGACY/eval_sdmetrics_LEGACY.py -- the only
 difference is that each method is now scored once per seed, so the results
@@ -40,7 +42,8 @@ sys.path.insert(0, str(REPO_ROOT))
 
 from seeds import RUN_SEEDS, NUM_RUNS
 
-ALL_METHODS = ["bayesian_network", "privbayes", "ctgan", "dpgan", "aim"]
+ALL_METHODS = ["bayesian_network", "privbayes", "ctgan", "dpgan",
+               "aim", "dpctgan"]
 
 CONTINUOUS_COLS = ["age", "education_num", "capital_gain", "capital_loss", "hours_per_week"]
 CATEGORICAL_COLS = ["workclass", "marital_status", "occupation", "relationship",
@@ -48,6 +51,15 @@ CATEGORICAL_COLS = ["workclass", "marital_status", "occupation", "relationship",
 
 DATA_DIR = REPO_ROOT / "data"
 RUNS_DIR = REPO_ROOT / "synthetic_data" / "runs"
+
+# Where each method's per-seed CSVs live. The four Synthcity methods come from
+# sdg/generate_runs.py's flat tree; aim and dpctgan come from
+# sdg/generate_smartnoise.py, whose outputs are keyed by epsilon so a budget sweep
+# cannot overwrite an earlier arm. --epsilon selects which arm to score and is
+# ignored by the Synthcity methods, which have exactly one.
+SMARTNOISE_METHODS = {"aim", "dpctgan"}
+SMARTNOISE_DIR = REPO_ROOT / "synthetic_data" / "smartnoise"
+DEFAULT_EPSILON = 1.0
 RESULTS_DIR = REPO_ROOT / "results"
 EVAL_DIR = REPO_ROOT / "evaluation"
 
@@ -81,9 +93,21 @@ def load_train_df() -> pd.DataFrame:
     return df
 
 
-def load_run(method: str, seed: int):
+def eps_slug(eps: float) -> str:
+    """Must match sdg/generate_smartnoise.eps_slug -- same %g, same directories."""
+    return f"eps{eps:g}"
+
+
+def run_path(method: str, seed: int, epsilon: float) -> Path:
+    """Where this run's CSV lives, per the method's generator script."""
+    if method in SMARTNOISE_METHODS:
+        return SMARTNOISE_DIR / method / eps_slug(epsilon) / f"seed{seed}.csv"
+    return RUNS_DIR / f"{method}_seed{seed}.csv"
+
+
+def load_run(method: str, seed: int, epsilon: float = DEFAULT_EPSILON):
     """The synthetic CSV for one run, or None if it hasn't been generated."""
-    path = RUNS_DIR / f"{method}_seed{seed}.csv"
+    path = run_path(method, seed, epsilon)
     if not path.exists():
         return None
     df = pd.read_csv(path)
@@ -152,6 +176,10 @@ def main() -> int:
                         help=f"methods to score (default: all of {ALL_METHODS})")
     parser.add_argument("--runs", type=int, default=NUM_RUNS,
                         help=f"how many of the {NUM_RUNS} run seeds to score (default: all)")
+    parser.add_argument("--epsilon", type=float, default=DEFAULT_EPSILON,
+                        help=f"which epsilon arm of the SmartNoise methods "
+                             f"({sorted(SMARTNOISE_METHODS)}) to score "
+                             f"(default: {DEFAULT_EPSILON}); ignored for the rest")
     args = parser.parse_args()
 
     methods = args.methods or ALL_METHODS
@@ -160,7 +188,8 @@ def main() -> int:
         parser.error(f"unknown method(s): {sorted(unknown)}. Known: {ALL_METHODS}")
     run_seeds = RUN_SEEDS[:args.runs]
 
-    log.info(f"=== eval_fidelity: methods={methods}, seeds={run_seeds} ===")
+    log.info(f"=== eval_fidelity: methods={methods}, seeds={run_seeds}, "
+             f"eps={args.epsilon:g} (SmartNoise methods only) ===")
     train_df = load_train_df()
     log.info(f"Scoring against training data {train_df.shape}")
 
@@ -172,9 +201,10 @@ def main() -> int:
     for method in methods:
         log.info(f"--- {method} ---")
         for run_idx, seed in enumerate(run_seeds):
-            synthetic = load_run(method, seed)
+            synthetic = load_run(method, seed, args.epsilon)
             if synthetic is None:
-                missing.append(f"{method}_seed{seed}")
+                missing.append(str(run_path(method, seed, args.epsilon)
+                                   .relative_to(REPO_ROOT)))
                 continue
             try:
                 tracemalloc.start()
@@ -199,7 +229,8 @@ def main() -> int:
         log.warning(f"{len(missing)} run(s) not generated yet, skipped: "
                     f"{missing[:6]}{' ...' if len(missing) > 6 else ''}")
     if not rows:
-        log.warning("No runs scored -- run sdg/generate_runs.py first.")
+        log.warning("No runs scored -- run sdg/generate_runs.py / "
+                    "sdg/generate_smartnoise.py first.")
         return 1
 
     per_run = pd.DataFrame(rows)

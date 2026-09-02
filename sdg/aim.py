@@ -152,6 +152,61 @@ def decode(codes: pd.Series, edges: np.ndarray, rng: np.random.Generator) -> pd.
     return pd.Series(np.floor(rng.uniform(lo, hi)), index=codes.index, dtype=float)
 
 
+def fit_sample(train_data: pd.DataFrame, seed: int, epsilon: float = EPSILON,
+               delta: float = DELTA, verbose: bool = True) -> pd.DataFrame:
+    """One AIM draw: encode -> fit -> sample -> decode, in the original schema.
+
+    THE ONE COPY OF THIS ROUND TRIP. sdg/generate_runs.py and
+    sdg/generate_smartnoise.py both call it rather than restating it, so the bin
+    layout, the preprocessor_eps=0.0 argument and the AIM hyperparameters cannot
+    drift between the run that utility/fidelity are reported on and any other. It
+    lives here because BIN_EDGES / encode / decode already do, and they are the
+    load-bearing part: fixed public-codebook edges are what keep preprocessor_eps at
+    0 and leave the whole budget on AIM itself.
+
+    Deliberately does NO I/O, no timing and no global seeding -- callers own their
+    cost tables and their own set_all_seeds(seed) call, and this stays a pure
+    function of (train_data, seed, epsilon, delta).
+
+    `seed` reaches only the decode-time uniform draw inside each bin. Marginal
+    selection and mbi's rounding read the global numpy RNG the caller seeded; the
+    Gaussian measurements come from opendp's CSPRNG and cannot be seeded at all, so
+    an AIM draw is not reproducible from its seed. See REPRODUCIBILITY above.
+    """
+    from snsynth.aim import AIMSynthesizer
+
+    rng = np.random.default_rng(seed)     # decode-only: uniform draw inside each bin
+
+    # --- discretise: all 13 columns become categorical for AIM ---
+    discrete = train_data.copy()
+    for col in CONTINUOUS_COLS:
+        discrete[col] = encode(train_data[col], BIN_EDGES[col])
+        if verbose:
+            # Occupancy, not just bin count: a codebook bin no row lands in is budget
+            # spent measuring an empty cell, which is how the aim_tuning sweep read.
+            print(f"  {col}: {len(BIN_EDGES[col]) - 1} bins, "
+                  f"{discrete[col].nunique()} occupied")
+
+    synth = AIMSynthesizer(
+        epsilon=epsilon, delta=delta, rounds=ROUNDS, degree=DEGREE,
+        max_cells=MAX_CELLS, max_model_size=MAX_MODEL_SIZE, verbose=verbose,
+    )
+    # preprocessor_eps=0.0: every column reaching snsynth is already discrete, so the
+    # transformer is pure label encoding and consumes none of the budget.
+    synth.fit(discrete, categorical_columns=list(discrete.columns), preprocessor_eps=0.0)
+    sampled = synth.sample(len(train_data))
+
+    # snsynth returns the columns in its own order; checked rather than assumed
+    # before the reorder below silently produces a KeyError or a mislabelled frame.
+    assert set(sampled.columns) == set(train_data.columns), \
+        f"column mismatch: {set(train_data.columns) ^ set(sampled.columns)}"
+    synthetic = sampled[train_data.columns.tolist()].copy()   # original column order
+    for col in CONTINUOUS_COLS:
+        synthetic[col] = decode(synthetic[col].astype(int), BIN_EDGES[col], rng)
+    synthetic[CATEGORICAL_COLS] = synthetic[CATEGORICAL_COLS].astype(str)
+    return synthetic
+
+
 def main() -> int:
     OUT_DIR.mkdir(exist_ok=True)
     # Seeds marginal selection + mbi's randomised rounding, NOT the Gaussian noise.
