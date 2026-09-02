@@ -30,6 +30,7 @@ sdg/aim_tuning/synthetic/
 sdg/generate_runs_log.txt
 evaluation/eval_fidelity_log.txt
 evaluation/eval_utility_log.txt
+results/smartnoise/generate_smartnoise_log.txt
 benchmark_tapas/results/convergence/convergence_check_tstr_log.txt
 benchmark_tapas/results/pilot_counts/pilot_counts_log.txt
 benchmark_tapas/results/pilot_counts/extra_counts_log.txt
