@@ -1,0 +1,11 @@
+method,formal_epsilon,seed,stage,wall_clock_s,peak_memory_mb,device,epochs_run,epsilon_spent
+dpctgan,1.0,100,generation,17.94,102.59,cuda,23.0,1.003794118442838
+dpctgan,1.0,101,generation,16.81,102.51,cuda,23.0,1.003794118442838
+dpctgan,1.0,102,generation,16.92,102.51,cuda,23.0,1.003794118442838
+dpctgan,1.0,103,generation,16.45,102.51,cuda,23.0,1.003794118442838
+dpctgan,1.0,104,generation,16.43,102.51,cuda,23.0,1.003794118442838
+aim,1.0,100,generation,180.74,159.23,cpu,,
+aim,1.0,101,generation,125.89,90.46,cpu,,
+aim,1.0,102,generation,100.46,70.47,cpu,,
+aim,1.0,103,generation,97.98,55.13,cpu,,
+aim,1.0,104,generation,76.91,50.27,cpu,,
