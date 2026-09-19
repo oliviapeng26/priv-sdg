@@ -25,10 +25,19 @@ Outputs:
     evaluation/results/utility_per_run.csv    one row per (method, run)
     evaluation/results/utility_summary.csv    mean/std per method
 
+    With --epsilon other than 1.0 (the SmartNoise budget sweep) the two files above
+    are NOT touched -- they are rewritten from scratch on every run, so scoring two
+    methods at another budget would replace the six-method eps=1 table. The sweep goes to
+    evaluation/results/smartnoise/utility_{per_run,summary}_{generator}_eps{eps}.csv
+    instead (one pair per generator), with an `epsilon` column, and the aim/dpctgan cost rows are not written to
+    computational_cost.csv (it has no eps key).
+
 Run from repo root, after sdg/generate_runs.py:
   python evaluation/eval_utility.py                     # every method with run CSVs
   python evaluation/eval_utility.py bayesian_network    # one method
   python evaluation/eval_utility.py --runs 2            # first 2 seeds only
+  python evaluation/eval_utility.py --epsilon 10        # aim + dpctgan at eps=10 (sweep files)
+  python evaluation/eval_utility.py --generator dpctgan --epsilon 100   # one generator, one eps
 
 Cheap and CPU-only -- it never imports torch or synthcity, so it can be re-run
 freely against run CSVs generated on another machine. `compute_tstr` /
@@ -78,6 +87,8 @@ EVAL_DIR = REPO_ROOT / "evaluation"
 PER_RUN_CSV = RESULTS_DIR / "utility_per_run.csv"
 SUMMARY_CSV = RESULTS_DIR / "utility_summary.csv"
 COST_CSV = RESULTS_DIR / "computational_cost.csv"   # shared with sdg/generate_runs.py
+
+SWEEP_DIR = RESULTS_DIR / "smartnoise"   # eps-keyed outputs for --epsilon != DEFAULT_EPSILON
 
 EXPECTED_TRAIN_N = 21_523
 EXPECTED_TEST_N = 5_381
@@ -290,7 +301,7 @@ def record_cost(row: dict) -> None:
 
 def summarise(per_run: pd.DataFrame) -> pd.DataFrame:
     """One row per method: mean and std of every metric across runs."""
-    metric_cols = [c for c in per_run.columns if c not in ("method", "run_idx", "seed")]
+    metric_cols = [c for c in per_run.columns if c not in ("method", "run_idx", "seed", "epsilon")]
     rows = []
     for method, g in per_run.groupby("method", sort=False):
         row = {"method": method, "n_runs": len(g)}
@@ -305,6 +316,11 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("methods", nargs="*", default=None,
                         help=f"methods to score (default: all of {ALL_METHODS})")
+    parser.add_argument("--generator", nargs="+", choices=sorted(SMARTNOISE_METHODS),
+                        default=None, metavar="GEN",
+                        help=f"SmartNoise generator(s) to score, from "
+                             f"{sorted(SMARTNOISE_METHODS)}; same as naming them as "
+                             f"positional methods (default with --epsilon: both)")
     parser.add_argument("--runs", type=int, default=NUM_RUNS,
                         help=f"how many of the {NUM_RUNS} run seeds to score (default: all)")
     parser.add_argument("--epsilon", type=float, default=DEFAULT_EPSILON,
@@ -313,7 +329,22 @@ def main() -> int:
                              f"(default: {DEFAULT_EPSILON}); ignored for the rest")
     args = parser.parse_args()
 
-    methods = args.methods or ALL_METHODS
+    if args.generator:
+        if args.methods:
+            parser.error("give the generator(s) either positionally or via --generator, not both")
+        args.methods = args.generator
+    is_sweep = args.epsilon != DEFAULT_EPSILON
+    if is_sweep:
+        # The Synthcity methods have one arm and ignore --epsilon, so rescoring them
+        # here would just write eps=1 numbers under another budget's label.
+        allowed = [m for m in ALL_METHODS if m in SMARTNOISE_METHODS]
+        methods = args.methods or allowed
+        not_smartnoise = set(methods) - SMARTNOISE_METHODS
+        if not_smartnoise:
+            parser.error(f"--epsilon {args.epsilon:g} only applies to {allowed}; "
+                         f"got {sorted(not_smartnoise)}")
+    else:
+        methods = args.methods or ALL_METHODS
     unknown = set(methods) - set(ALL_METHODS)
     if unknown:
         parser.error(f"unknown method(s): {sorted(unknown)}. Known: {ALL_METHODS}")
@@ -364,10 +395,13 @@ def main() -> int:
                 retention = compute_retention(tstr, trtr)
                 # TSTR only: the TRTR baseline is computed once per seed above and
                 # is not per-method, so charging it to a method would double-count.
-                record_cost({"method": method, "seed": seed, "stage": "utility",
-                             "wall_clock_s": wall_clock_s,
-                             "peak_memory_mb": round(peak_bytes / 1e6, 2),
-                             "device": "cpu"})   # xgboost/sklearn, CPU only
+                # Skipped off the default arm: computational_cost.csv has no eps key,
+                # so a sweep row would overwrite the eps=1 row for the same seed.
+                if not is_sweep:
+                    record_cost({"method": method, "seed": seed, "stage": "utility",
+                                 "wall_clock_s": wall_clock_s,
+                                 "peak_memory_mb": round(peak_bytes / 1e6, 2),
+                                 "device": "cpu"})   # xgboost/sklearn, CPU only
 
                 row = {"method": method, "run_idx": run_idx, "seed": seed}
                 for model in UTILITY_MODELS:
@@ -394,12 +428,26 @@ def main() -> int:
     per_run = per_run.sort_values(
         ["method", "run_idx"], key=lambda s: s.map(order) if s.name == "method" else s
     ).reset_index(drop=True)
-    per_run.to_csv(PER_RUN_CSV, index=False)
-
     summary = summarise(per_run)
-    summary.to_csv(SUMMARY_CSV, index=False)
-    log.info(f"Wrote {PER_RUN_CSV.relative_to(REPO_ROOT)} ({len(per_run)} rows) and "
-             f"{SUMMARY_CSV.relative_to(REPO_ROOT)}")
+    if is_sweep:
+        # One pair of files per (generator, eps), so scoring one generator never
+        # rewrites another's numbers.
+        SWEEP_DIR.mkdir(parents=True, exist_ok=True)
+        per_run.insert(1, "epsilon", args.epsilon)
+        summary.insert(1, "epsilon", args.epsilon)
+        for method in per_run["method"].unique():
+            tag = f"{method}_{eps_slug(args.epsilon)}"
+            per_run_csv = SWEEP_DIR / f"utility_per_run_{tag}.csv"
+            summary_csv = SWEEP_DIR / f"utility_summary_{tag}.csv"
+            per_run[per_run["method"] == method].to_csv(per_run_csv, index=False)
+            summary[summary["method"] == method].to_csv(summary_csv, index=False)
+            log.info(f"Wrote {per_run_csv.relative_to(REPO_ROOT)} and "
+                     f"{summary_csv.relative_to(REPO_ROOT)}")
+    else:
+        per_run.to_csv(PER_RUN_CSV, index=False)
+        summary.to_csv(SUMMARY_CSV, index=False)
+        log.info(f"Wrote {PER_RUN_CSV.relative_to(REPO_ROOT)} ({len(per_run)} rows) and "
+                 f"{SUMMARY_CSV.relative_to(REPO_ROOT)}")
 
     show = ["method", "n_runs", "tstr_xgboost_auc_mean", "tstr_xgboost_auc_std",
             "retention_xgboost_mean", "tstr_logistic_regression_auc_mean",
