@@ -1,0 +1,4 @@
+formal_epsilon,delta,eps_eff_low_95,eps_eff_high_95,attack,max_auc,max_advantage
+0.1,1e-09,0.0,0.0126658043264031,ProbabilityEstimation,0.5,0.0008
+1.0,1e-09,0.0,0.0179292727340191,ClosestDistance,0.5320723199999999,0.036
+10.0,1e-09,0.3675870725773288,0.7420805375443341,ShadowModelling,0.6504342399999999,0.2248
