@@ -113,6 +113,12 @@ Run from the repo root, env active:
   python sdg/generate_smartnoise.py aim                   # one generator
   python sdg/generate_smartnoise.py dpctgan --epsilon 10  # a different budget
   python sdg/generate_smartnoise.py --runs 2 --regenerate
+  python sdg/generate_smartnoise.py aim --epsilon 10 --seeds 102   # one specific seed
+
+--seeds exists so a slow fit (AIM at large eps) can be split across parallel processes,
+one seed each. They are independent: each writes its own CSV, and the shared cost table
+is updated under a file lock. Pin them to different cores so they do not fight, e.g.
+`taskset -c 8-15 python sdg/generate_smartnoise.py aim --epsilon 10 --seeds 101`.
 
 Then score them with the ordinary eval scripts:
   python evaluation/eval_fidelity.py aim dpctgan
@@ -135,6 +141,7 @@ ENVIRONMENT NOTE FOR dpctgan
 """
 
 import argparse
+import fcntl
 import logging
 import sys
 import time
@@ -343,16 +350,20 @@ def record_cost(row: dict) -> None:
     generate_runs.py arm. Same reasoning as eps_sweep_generate.record_cost.
     """
     df = pd.DataFrame([row])
-    if COST_CSV.exists():
-        existing = pd.read_csv(COST_CSV)
-        if {"method", "formal_epsilon", "seed", "stage"}.issubset(existing.columns):
-            mask = ~((existing["method"] == row["method"])
-                     & (existing["formal_epsilon"] == row["formal_epsilon"])
-                     & (existing["seed"] == row["seed"])
-                     & (existing["stage"] == row["stage"]))
-            existing = existing[mask]
-        df = pd.concat([existing, df], ignore_index=True)
-    df.reindex(columns=COST_COLUMNS).to_csv(COST_CSV, index=False)
+    # Read-modify-write, so parallel --seeds processes take an exclusive lock or one
+    # would overwrite the other's row.
+    with open(RESULTS_DIR / ".generation_cost.lock", "w") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        if COST_CSV.exists():
+            existing = pd.read_csv(COST_CSV)
+            if {"method", "formal_epsilon", "seed", "stage"}.issubset(existing.columns):
+                mask = ~((existing["method"] == row["method"])
+                         & (existing["formal_epsilon"] == row["formal_epsilon"])
+                         & (existing["seed"] == row["seed"])
+                         & (existing["stage"] == row["stage"]))
+                existing = existing[mask]
+            df = pd.concat([existing, df], ignore_index=True)
+        df.reindex(columns=COST_COLUMNS).to_csv(COST_CSV, index=False)
 
 
 def generate_one(generator: str, train_data: pd.DataFrame, epsilon: float,
@@ -432,6 +443,9 @@ def main() -> int:
                         help=f"formal DP budget (default: {DEFAULT_EPSILON})")
     parser.add_argument("--runs", type=int, default=NUM_RUNS,
                         help=f"how many of the {NUM_RUNS} run seeds to use (default: all)")
+    parser.add_argument("--seeds", type=int, nargs="+", default=None, metavar="SEED",
+                        help=f"run only these seeds, from {RUN_SEEDS} (default: the first "
+                             f"--runs of them); for splitting a slow arm across processes")
     parser.add_argument("--regenerate", action="store_true",
                         help="re-fit even when a cached run CSV exists")
     parser.add_argument("--probe", type=int, metavar="EPOCHS", default=None,
@@ -443,7 +457,13 @@ def main() -> int:
     unknown = set(generators) - set(ALL_GENERATORS)
     if unknown:
         parser.error(f"unknown generator(s): {sorted(unknown)}. Known: {ALL_GENERATORS}")
-    run_seeds = RUN_SEEDS[:args.runs]
+    if args.seeds:
+        bad = set(args.seeds) - set(RUN_SEEDS)
+        if bad:
+            parser.error(f"--seeds {sorted(bad)} not in RUN_SEEDS {RUN_SEEDS}")
+        run_seeds = args.seeds
+    else:
+        run_seeds = RUN_SEEDS[:args.runs]
 
     train_df = load_train_df()
     log.info(f"Loaded training split: {train_df.shape}")
