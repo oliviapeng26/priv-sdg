@@ -1,58 +1,72 @@
 # benchmark_tapas
 
-TAPAS membership-inference audit of the 2x2 generator grid (statistical/neural x non-DP/DP)
-on Adult Census. All four generators share one threat model: exact-knowledge data prior with a
-fixed 499-record background, black-box generator knowledge, and the same target/alternate pair,
-so any difference between them is the generator's.
+TAPAS membership-inference audits of six tabular generators on Adult Census: statistical vs
+neural, DP vs non-DP. All of them share one threat model (exact-knowledge data prior with a
+fixed 499-record background, black-box generator knowledge, the same target/alternate pair and
+the same 5-attack battery), so any difference between them is the generator's.
 
-| generator | family | DP | formal eps |
-|---|---|---|---|
-| bayesian_network | statistical | no | - |
-| privbayes | statistical | yes | 1.0 |
-| ctgan | neural | no | - |
-| dpgan | neural | yes | 1.0 (reported 2.0, neighbouring-relation mismatch) |
+| generator | family | DP | library | status |
+|---|---|---|---|---|
+| bayesian_network | statistical | no | Synthcity | main results |
+| aim | statistical | ε = 1.0, δ = 1e-9 | SmartNoise | main results |
+| ctgan | neural | no | Synthcity | main results |
+| dpctgan | neural | ε = 1.0 (a stopping rule, σ = 5) | SmartNoise | main results |
+| privbayes | statistical | ε = 1.0 | Synthcity | under investigation (paper App. A.3) |
+| dpgan | neural | ε = 1.0 | Synthcity | under investigation, ε_eff spike at ε = 1.0 |
 
-Both GANs are capped at `n_iter=50`, set by `neural_tuning/convergence_check.py`. That makes
-ctgan vs dpgan a clean DP ablation. bayesian_network vs privbayes is NOT one: different
-encoders, and privbayes redraws its DAG every fit while bayesian_network's is deterministic.
+Both Synthcity GANs are capped at `n_iter=50` (`tuning/convergence_check.py`). BN vs PrivBayes is
+not a clean DP ablation: different encoders, and PrivBayes redraws its DAG every fit.
 
 ## Layout
 
 ```
-config.py                 experiment constants (counts, n_iter, paths, threat model)
-common.py                 SynthcityGenerator, SwapMIALabeller, run_attack, run_method
-privacy_analysis.ipynb    all analysis: tables, separation, decisiveness, heatmap, tradeoff
-scripts/                  run_{bn,privbayes,ctgan,dpgan}.py, extract_scores.py
-neural_tuning/            convergence_check.py (picks n_iter), probe_fit_time.py
-results/                  per_method/ scores/ tables/ figures/ convergence/
-cache/                    memoised threat models, gitignored
-preseed_LEGACY/           everything invalidated by the seeding bug; see its README
+config.py  common.py     shared constants, and the TAPAS pipeline + SynthcityGenerator (imported by everything)
+tapas_wrappers/          TAPAS Generator wrappers for the SmartNoise generators (aim_generator.py, dpctgan_generator.py)
+audits/                  every script that runs a TAPAS audit (table below)
+eps_sweep_pipeline/      DPGAN ε sweep: eps_sweep_{sigma_check,generate,evaluate,aggregate}.py
+diagnostics/             DPGAN ε = 1.0 spike diagnosis (signal scan, recompute, ε nudge), disentangle run
+tuning/                  convergence_check.py (picks n_iter, paper Table 4), probe_fit_time.py
+privacy_analysis.ipynb   all tables and figures; see its first cell for the paper map
+results/                 outputs, by experiment (below)
+cache/                   memoised threat models, gitignored
 ```
+
+Wrapper file names (`aim_generator`, `dpctgan_generator`) are kept as-is: threat-model pickles in
+`cache/` refer to their classes by module name.
+
+## What was run, and where the results are
+
+| Experiment | Results | Script |
+|---|---|---|
+| Privacy at ε = 1.0, four audit sizes (50/100, 200/500, 500/1000, 1000/2500) | `results/sample_size_sweep/{generator}/{stage}/` | BN, PrivBayes, CTGAN, DPGAN: `audits/run_synthcity_sample_size_sweep.py`. AIM: `audits/run_aim_audit.py`. DP-CTGAN: `audits/run_dpctgan_audit.py` |
+| Privacy at ε = 0.1, 1, 10, 100 at 1000/2500 | `results/eps_sweep/{dpgan,aim,dp_ctgan}/eps{e}/` | DPGAN: `audits/run_dpgan_eps_sweep.py`. AIM and DP-CTGAN: same scripts as above with `--epsilon` |
+| DP-CTGAN epoch cap 300 / 500 / 750 / 1000 at ε = 100 | `results/extras/dp_ctgan_epoch_cap/` (cap 300 = `eps_sweep/dp_ctgan/eps100`) | `audits/run_dpctgan_audit.py --epoch-cap` |
+| DPGAN ε = 1.0 spike diagnosis | `results/extras/dpgan_spike_diagnosis/` | `diagnostics/` |
+
+ε = 1 is not duplicated in `eps_sweep/`: it is the 1000/2500 stage of `sample_size_sweep/`, and
+`privacy_analysis.ipynb` stitches the two together. AIM ε = 100 was not run (about 12 h of
+synthetic pool per arm). Neither `privbayes` nor the non-DP generators have an ε sweep.
+
+Per-script detail: `audits/README_aim.md`, `audits/README_dpctgan.md`. DP-CTGAN needs the Opacus 0.x
+API, so it runs in the workstation's separate environment.
 
 ## Running an audit
 
-From the repo root, with the venv active. Each script runs the 5-attack battery against one
-generator and writes both the effective-epsilon tables and the raw pre-threshold scores.
+From the repo root with the venv active. Every script is resumable: finished attacks and memoised
+simulations are skipped on re-run. `cache/` must be empty (or hold that arm's own pool) before a
+fresh audit, or the cached threat model is reloaded instead of rebuilt.
 
 ```
-python benchmark_tapas/scripts/run_bn.py
-python benchmark_tapas/scripts/run_privbayes.py
-python benchmark_tapas/scripts/run_ctgan.py
-python benchmark_tapas/scripts/run_dpgan.py
+python benchmark_tapas/audits/run_synthcity_sample_size_sweep.py               # all four Synthcity generators
+python benchmark_tapas/audits/run_synthcity_sample_size_sweep.py --methods dpgan
+python benchmark_tapas/audits/run_aim_audit.py --num-train 1000 --num-test 2500
+python benchmark_tapas/audits/run_dpctgan_audit.py --probe 3                   # pre-flight, then the full audit
+python benchmark_tapas/audits/run_dpgan_eps_sweep.py --epsilons 0.1 10 100
 ```
 
-Roughly 3 h total on the GPU workstation, dominated by privbayes and dpgan. Resumable: finished
-attacks and memoised simulations are skipped on re-run. `cache/` must be empty before a fresh
-audit, or the cached threat model is reloaded instead of rebuilt.
-
-Then open `privacy_analysis.ipynb` and run it top to bottom. It regenerates every table in
-`results/tables/` and every figure in `results/figures/`. It needs pandas, numpy, matplotlib
-and scipy only, so it runs outside the GPU venv.
-
-`scripts/extract_scores.py` re-derives the raw scores from cached threat models without
-re-generating data. Only needed if an audit was resumed from cache and the score CSVs are
-missing, since `run_attack` short-circuits on its per-attack JSON cache, which stores aggregates
-but not scores.
+Then open `privacy_analysis.ipynb` and run it top to bottom. It regenerates the tables in
+`results/tables/` and the figures in `results/figures/{paper,supplementary}/`. It needs pandas,
+numpy, matplotlib and scipy only, so it runs outside the GPU venv.
 
 ## Fit arithmetic
 
@@ -64,19 +78,18 @@ generator fit each; the labeller halves it into pairs and emits both worlds. At 
 
 Each fit runs at `seeds.TAPAS_GENERATOR_SEED_BASE + i`, so no two simulations and no D+/D- pair
 share a draw. This is load-bearing, not cosmetic. Passing no `random_state` does not leave the
-generator free-running: synthcity defaults it to 0 and reseeds numpy/torch/random globally on
+generator free-running: Synthcity defaults it to 0 and reseeds numpy/torch/random globally on
 every `fit()`. With a fixed background feeding every simulation, that made all D+ datasets
-byte-identical and all D- datasets byte-identical, giving an effective sample size of 2 and
-forcing TP=1 / FP=0 for every generator regardless of DP. Every result produced before
-2026-08-23 is invalid for this reason and lives in `preseed_LEGACY/`.
+byte-identical and all D- datasets byte-identical, giving an effective sample size of 2 and forcing
+TP=1 / FP=0 for every generator regardless of DP. Every result produced before 2026-08-23 was
+invalid for this reason and has been deleted.
 
 ## Reading the results
 
-`results/tables/summary_combined.csv` is the headline table. The two axes are TSTR XGBoost AUC
-(utility, from `evaluation/eval_utility.py`) and mean membership advantage across the 5 attacks
-(leakage).
+Interpret AUC against the null band, not against 0.5: with `num_test` test datasets an attack with
+no signal still scatters, and the 95% null half-width narrows from ±0.1146 at 100 test pairs to
+±0.02264 at 2500. ε_eff is a Clopper-Pearson lower bound from the strongest attack, so read
+`eps_low_95` against the formal ε (a correct implementation has `eps_low_95 <= ε`).
 
-Interpret AUC against the null band, not against 0.5. With 50 members and 50 non-members an
-attack with no signal still scatters with s.d. 0.058, so the 95% null band is [0.386, 0.614].
-At the current counts no generator x attack cell falls outside it. Resolving an AUC of 0.55
-would need roughly 260 per class, i.e. `num_test` around 520.
+The two model-training attacks (Groundhog, ShadowModelling) vary between re-runs on identical
+synthetic data (compare `archive/dp_ctgan_sep2_attack_rerun/` with the current ε = 1 and 100 arms).

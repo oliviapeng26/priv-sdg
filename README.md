@@ -1,8 +1,58 @@
 # priv-sdg
 
-Benchmarking synthetic data generation methods for privacy-preserving ML — comparing DP-guaranteed vs non-DP methods on utility and empirical privacy.
+Differential privacy vs. empirical privacy: benchmarking tabular synthetic data generators on the Adult Census dataset. Companion code to the NeurIPS 2026 InfPriv submission.
 
-**Core research question:** Do non-DP synthesis methods achieve comparable utility and privacy empirically to DP-guaranteed methods? If so, under what conditions (data domain, synthesis paradigm, attack type)?
+**Research question:** Do DP synthetic data generators better protect real individuals' data, as measured by empirical privacy leakage (membership inference attacks), than non-DP methods, and at what cost to fidelity and utility?
+
+Six generators, each evaluated on three axes:
+
+| Generator | Family | DP | Library | Role |
+|---|---|---|---|---|
+| BayesNet (BN) | statistical | no | Synthcity | main results |
+| AIM | statistical | ε = 1.0 | SmartNoise | main results |
+| CTGAN | neural | no | Synthcity | main results |
+| DP-CTGAN | neural | ε = 1.0 | SmartNoise | main results |
+| PrivBayes | statistical | ε = 1.0 | Synthcity | **under investigation** (anomalous ε_eff, paper Appendix A.3) |
+| DPGAN | neural | ε = 1.0 | Synthcity | **under investigation** (ε_eff spike at ε = 1.0, paper Appendix A.3) |
+
+## Repository layout
+
+Each pipeline stage owns its code, its analysis notebook and its `results/`.
+
+```
+seeds.py  requirements.txt  data_preprocessing.ipynb
+data/                        gitignored: adult_{clean,train,test}.csv
+synthetic_data/              gitignored: runs/ (Synthcity), smartnoise/{aim,dpctgan}/eps1/
+sdg/                         1. generation
+    generate_runs.py             Synthcity generators: BN, PrivBayes, CTGAN, DPGAN (5 seeds)
+    generate_smartnoise.py       SmartNoise generators: AIM, DP-CTGAN (5 seeds)
+    aim.py                       AIM bin edges (imported by generate_smartnoise.py and the AIM audit)
+evaluation/                  2. fidelity + utility at eps = 1.0
+    eval_fidelity.py  eval_utility.py
+    fidelity_utility_analysis.ipynb
+    results/                     *_per_run.csv, *_summary.csv, computational_cost.csv, figures/
+benchmark_tapas/             3. privacy (TAPAS membership-inference audits)
+    config.py  common.py         shared constants and the TAPAS pipeline
+    tapas_wrappers/              TAPAS Generator wrappers for the SmartNoise generators
+    audits/                      every script that runs a TAPAS audit
+    eps_sweep_pipeline/          DPGAN eps-sweep data pipeline (generate, evaluate, aggregate)
+    diagnostics/                 DPGAN eps = 1.0 spike diagnosis, disentangle run
+    tuning/                      n_iter convergence check, per-fit time probe
+    privacy_analysis.ipynb
+    results/                     sample_size_sweep/  eps_sweep/  extras/  tables/  figures/  convergence/
+archive/                     superseded experiments, kept for reference (see archive/README.md)
+```
+
+**What was run for the paper**
+
+| Question | Where |
+|---|---|
+| Fidelity and utility at ε = 1.0, all six generators | `evaluation/results/{fidelity,utility}_summary.csv` |
+| Privacy at ε = 1.0 across four audit sizes (50/100 … 1000/2500) | `benchmark_tapas/results/sample_size_sweep/{generator}/` |
+| Privacy at ε = 0.1, 1, 10, 100 at 1000/2500 | `benchmark_tapas/results/eps_sweep/{dpgan,aim,dp_ctgan}/` (ε = 1 is the 1000/2500 stage of the sample-size sweep; AIM ε = 100 was too costly to run) |
+| Extras: DP-CTGAN epoch-cap sweep, DPGAN spike diagnosis | `benchmark_tapas/results/extras/` |
+
+Commands per audit are in [benchmark_tapas/README.md](benchmark_tapas/README.md).
 
 ---
 
@@ -170,7 +220,7 @@ python sdg/generate_runs.py privbayes --runs 2  # partial
 ```
 
 - Reads `data/adult_train.csv`; writes `synthetic_data/runs/{method}_seed{seed}.csv`
-- Records wall clock (`time.perf_counter`) + peak memory (`tracemalloc`) across fit + generate into `results/computational_cost.csv`
+- Records wall clock (`time.perf_counter`) + peak memory (`tracemalloc`) across fit + generate into `evaluation/results/computational_cost.csv`
 - Resumable — an existing run CSV is reused and the fit skipped; `--regenerate` forces a re-fit
 - Hyperparameters unchanged from the legacy notebooks: plugin defaults plus ε = 1.0 for the DP methods
 
@@ -192,9 +242,9 @@ This also means generation never imports xgboost and the eval scripts never impo
 | CTGAN, DPGAN | CUDA | torch; GPU purely for the speedup |
 | AIM | jax backend | reported as whatever `jax.default_backend()` returns |
 
-The `device` column in `results/computational_cost.csv` records which was used per run, so the write-up can state it. **Peak memory is Python-level only** — `tracemalloc` cannot see torch CUDA buffers, jax buffers, or C-extension allocations, so it understates CTGAN/DPGAN/AIM badly. Wall clock is the trustworthy cross-method column.
+The `device` column in `evaluation/results/computational_cost.csv` records which was used per run, so the write-up can state it. **Peak memory is Python-level only** — `tracemalloc` cannot see torch CUDA buffers, jax buffers, or C-extension allocations, so it understates CTGAN/DPGAN/AIM badly. Wall clock is the trustworthy cross-method column.
 
-**Legacy.** The per-method `sdg/*_LEGACY.ipynb` notebooks produced the single unseeded draws now at `synthetic_data/{method}_synthetic_LEGACY.csv`, and `sdg/computational_overhead.csv` holds their timings. Kept for provenance — the pre-2026-08 results trace to them — but they can't be reproduced (generated without a seed). `sdg/aim.py` is **not** legacy: `generate_runs.py` imports its bin edges and encode/decode, so the discretisation can't drift.
+**Earlier work.** The first-pass per-method notebooks (`sdg/*_LEGACY.ipynb`) and their single unseeded draws were deleted; they live in git history. The SmartNoise generators (AIM, DP-CTGAN) are generated by `sdg/generate_smartnoise.py` into `synthetic_data/smartnoise/`, with their cost in `evaluation/results/smartnoise/generation_cost.csv`.
 
 
 # Notes
@@ -210,13 +260,13 @@ python evaluation/eval_utility.py  bayesian_network privbayes ctgan dpgan
 
 Name the methods explicitly: `aim` is in each script's default set but is **deferred** until the four grid methods are working end to end (generation → fidelity → utility → privacy → figures).
 
-Privacy is gated separately — run `benchmark_tapas/neural_tuning/convergence_check.py` first, settle `n_iter` from its mean ± std, then the TAPAS audits. See `benchmark_tapas/README.md`.
+Privacy is gated separately — run `benchmark_tapas/tuning/convergence_check.py` first, settle `n_iter` from its mean ± std, then the TAPAS audits. See `benchmark_tapas/README.md`.
 
 Use `conda activate`, not `conda run -n ...`, for anything long — `conda run` buffers stdout, so a 30–90 min job shows nothing until it finishes. Activated, you get AIM's per-round `Selected (...) Budget Used 0.42` lines as a progress bar.
 
 ### macOS OpenMP fix
 
-Now largely **moot by construction**: generation (`sdg/generate_runs.py`) never imports xgboost and the eval scripts never import torch, so the two runtimes no longer meet in one process. It still applies to anything that loads both — the legacy scripts in `evaluation/evaluation_LEGACY/`, and `benchmark_tapas/neural_tuning/convergence_check.py`, which fits GANs and then scores with xgboost.
+Now largely **moot by construction**: generation (`sdg/generate_runs.py`) never imports xgboost and the eval scripts never import torch, so the two runtimes no longer meet in one process. It still applies to anything that loads both, notably `benchmark_tapas/tuning/convergence_check.py`, which fits GANs and then scores with xgboost.
 
 The old `eval_synthcity.py` crashed on 2026-08-08 with `OMP: Error #179` / segfault during `performance.xgb` and `performance.feat_rank_distance`. Cause: **two conflicting OpenMP runtimes in one process.** `libxgboost.dylib` bundles no libomp — it has a single rpath, `/opt/homebrew/opt/libomp/lib`, so it uses Homebrew's (22.1.8, installed Jul 3). torch bundles its own at `torch/.dylibs/libomp.dylib`. The two builds cannot coexist: XGBoost dies the instant it starts a thread pool after torch is imported.
 
@@ -250,7 +300,7 @@ CSV column names in `evaluation/{tool}.py` are listed as `metrics`.
 - *KSComplement, TVComplement* - similarity of a real column vs. a synthetic column in terms of the column shapes - aka the marginal distribution or 1D histogram of the column. KSComplement for continuous, numerical data; TVComplement for discrete, categorical data.
     - `KSComplement`, `TVComplement`
 
-Metrics and their definitions are unchanged (still synthetic vs **training** data — the question is how well the generator reproduced the distribution it was fitted on). Computed by **`evaluation/eval_fidelity.py`**, once per seeded run, into `results/fidelity_per_run.csv` + `results/fidelity_summary.csv`. (`evaluation/evaluation_LEGACY/eval_sdmetrics_LEGACY.py` is the superseded single-draw version, kept for provenance.)
+Metrics and their definitions are unchanged (still synthetic vs **training** data — the question is how well the generator reproduced the distribution it was fitted on). Computed by **`evaluation/eval_fidelity.py`**, once per seeded run, into `evaluation/results/fidelity_per_run.csv` + `evaluation/results/fidelity_summary.csv`.
 
 ### Utility
 
@@ -261,7 +311,7 @@ Metrics and their definitions are unchanged (still synthetic vs **training** dat
 - *Retention* — `TSTR / TRTR`, a like-for-like ratio because both share a test set
     - `tstr_{xgboost,logistic_regression}_auc`, `trtr_…`, `retention_…`
 - Features are one-hot encoded on a layout fitted on the **real** data only (train ∪ test), so a category maps to the same column in every method and run. One-hot rather than `LabelEncoder` because an ordinal code for `occupation` invents an ordering that LR reads as real; LR additionally gets a `StandardScaler` inside its pipeline (`capital_gain` spans 0–99,999 against 0/1 dummies, and unscaled LR doesn't converge in 1000 iterations).
-- Scores every seeded run and reports mean ± std. Outputs `results/utility_per_run.csv` and `results/utility_summary.csv`.
+- Scores every seeded run and reports mean ± std. Outputs `evaluation/results/utility_per_run.csv` and `evaluation/results/utility_summary.csv`.
 
 ```bash
 python evaluation/eval_utility.py                        # all methods with run CSVs
@@ -269,16 +319,8 @@ python evaluation/eval_utility.py bayesian_network       # one method
 python evaluation/eval_utility.py --runs 2               # first 2 seeds only
 ```
 
-**Superseded — `evaluation/evaluation_LEGACY/eval_synthcity_LEGACY.py`**
+**Earlier synthcity-based utility (deleted).** `Metrics.evaluate` split the real training rows internally, so its "held-out" records were in the generator's training set and memorisation was rewarded. Its script and outputs were removed (see git history); everything now reads `evaluation/results/utility_summary.csv` from `eval_utility.py`.
 
-`Metrics.evaluate` takes the real loader it's handed — `adult_train.csv`, the rows every generator was fitted on — and makes its **own** internal 80/20 split of it, training on synthetic and scoring on that internal holdout. Those "held-out" records were in the generator's training set, so memorisation is rewarded; `performance.*.gt` is scored on the same leaky split, so the `syn_id/gt` ratio doesn't correct for it either.
-
-`results/synthcity_results.csv` and the three figures derived from it (`utility_metric_comparison.png`, `utility_privacy_tradeoff.png`, `utility_comparison_b32.png`) have been **deleted** — the numbers weren't salvageable. The script is kept only so the leak stays documented where it happened.
-
-Everything that consumed it has been repointed: `benchmark_tapas/config.py` (`UTILITY_RESULTS`/`FIDELITY_RESULTS`), `aggregate.py`, `tradeoff.py` (whose X axis now carries across-seed error bars), and `evaluation/analysis.ipynb`. All of them degrade to blank/NaN utility columns with an actionable warning until `eval_utility.py` has run, rather than failing.
-
-- *(old) eval_performance (Train on Synthetic, Test on Real)* - PerformanceEvaluatorLinear/XGB, FeatureImportanceRankDistance
-    - `performance.linear_model.gt`, `performance.linear_model.syn_id`, `performance.linear_model.syn_ood`, `performance.xgb.gt`, `performance.xgb.syn_id`, `performance.xgb.syn_ood`, `performance.feat_rank_distance.corr`, `performance.feat_rank_distance.pvalue`
 
 ### Privacy
 **TAPAs**: 
@@ -286,23 +328,18 @@ Everything that consumed it has been repointed: `benchmark_tapas/config.py` (`UT
     - `mia_auc`, `mia_advantage`, `mia_privacy_gain`, `mia_eff_epsilon`, `mia_tp`, `mia_fp`
     - `aia_auc`, `aia_advantage`, `aia_privacy_gain`, `aia_eff_epsilon`
 - *ROCReport* - aggregates summaries by plotting a ROC (receiver operating characteristic) curve for each attack
-    - outputs plots saved to `results/tapas_LEGACY/tapas/{method}/`
+    - ROC plots are written per audit under `benchmark_tapas/results/`
 - *EffectiveEpsilonReport* - effective epsilon of the worst privacy leakage across all simulated attacks
     - `eps_low_90`, `eps_high_90` (across all MIAs only)
 
-**Note — iterations.** `benchmark_tapas/` is the current and only privacy result for the write-up. Everything below it is superseded and kept for traceability only:
-- **iteration 1** (naive 1 MIA, 1 AIA): `evaluation/eval_tapas.py` → `results/tapas_LEGACY/tapas_results.csv`, `results/tapas_LEGACY/tapas/`, plus the three figures built from it (`epsilon_comparison.png`, `mia_effective_epsilon.png`, `privacy_attack_success.png`, all now in `results/tapas_LEGACY/`)
-- **iteration 2** (effective epsilon, PrivBayes + DPGAN only): `evaluation/eval_tapas/eff_eps/` → `results/tapas_LEGACY/tapas_results/`
-- **iteration 3** (effect of target-selection strategy on ε_eff): `target_strategy/`
-
-See `results/tapas_LEGACY/README.md`. These are superseded, not leaky — there's no methodological error in them, they're just narrower.
+**Current privacy pipeline.** `benchmark_tapas/` is the only privacy result: the full 5-attack MIA battery on all six generators under one exact-knowledge, black-box threat model, with a fresh generator seed per fit (`seeds.TAPAS_GENERATOR_SEED_BASE + i`). Everything produced before the per-fit seeding fix (2026-08-23) was invalid and has been deleted. The earlier target-selection experiment is in `archive/target_strategy/`.
 
 ### Computational Overhead
-Measured in `sdg/generate_runs.py` across `.fit()` + `.generate()`, once per run, into `results/computational_cost.csv` (`method, seed, stage, wall_clock_s, peak_memory_mb, device`).
+Measured in `sdg/generate_runs.py` across `.fit()` + `.generate()`, once per run, into `evaluation/results/computational_cost.csv` (`method, seed, stage, wall_clock_s, peak_memory_mb, device`).
 - *Wall clock time (s)* — via `time.perf_counter`
 - *Peak memory (MB)* — via `tracemalloc` (Python-level allocations only; see the device note above)
 
-Legacy single-draw timings are at `sdg/computational_overhead.csv`, measured in the `*_LEGACY.ipynb` notebooks on a Mac CPU, so they are not comparable to workstation numbers.
+Cost lives in `evaluation/results/computational_cost.csv` (Synthcity generators and the evaluation stages) and `evaluation/results/smartnoise/generation_cost.csv` (AIM, DP-CTGAN).
 
 ---
 
@@ -315,31 +352,19 @@ Legacy single-draw timings are at `sdg/computational_overhead.csv`, measured in 
 
 ---
 
-## Future work — multi-seed privacy
+## Future work
 
-Utility and fidelity run over 5 seeds; **privacy stays single-seed**.
-
-The reason is that the privacy budget is better spent elsewhere first. Every generator
-returned `eps_low_95 = 2.209964` at `num_train=50 / num_test=100` — identical to six
-decimals, which is a sample-size ceiling rather than four agreeing measurements. With
-100 test samples the smallest resolvable false-positive rate is 1/100, so the bound
-cannot go higher however much a generator leaks.
-
-Raising the counts addresses that; more seeds does not. The literature runs far larger
-(TAPAS Exp 2 and Chida et al. both use 1000/2500), and at the per-fit times measured on
-the workstation that is ~27 h for all four generators — against ~81 h for three seeds at
-those counts. So it is a genuine either/or, and the bound comes first.
-
-`benchmark_tapas/scripts/run_pilot_counts.py` tests the assumption for ~1 h before
-committing. Multi-seed privacy is deferred to future work.
+- **Multi-seed privacy.** Utility and fidelity run over 5 seeds; each privacy audit is a single run over 1000 training / 2500 test synthetic datasets. Repeated audits would give variance on ε_eff and the MIA AUCs, and the two model-training attacks (Groundhog, ShadowModelling) do vary between re-runs on identical synthetic data (see `archive/dp_ctgan_sep2_attack_rerun/`).
+- **AIM at ε = 100** was not run (a ~12 h synthetic pool per arm).
+- **Synthcity PrivBayes and DPGAN.** Root causes of the anomalous ε_eff are unresolved (paper Appendix A.3). PrivBayes has no ε sweep after the seeding fix.
 
 ---
 
 ## Known issues (deferred, not fixed)
 
-**`sdg/aim_tuning/aim_tuning.py` still uses the leaky TSTR.** Its `xgb_syn_id` / `xgb_gt` / `linear_syn_id` columns and the TSTR panel of `aim_tuning_utility.png` come from synthcity's `Metrics.evaluate`, with the same internal-split leak fixed everywhere else. Its *fidelity* columns and marginal-selection counts are unaffected, and those are what the bins=32 conclusion rests on — so the choice probably stands, but the utility numbers shouldn't be quoted as they are. Fix = swap in `compute_tstr`/`compute_trtr` from `evaluation/eval_utility.py` and re-run the sweep. Full note in that script's header.
+**`archive/aim_tuning/aim_tuning.py` still uses the leaky TSTR.** Its `xgb_syn_id` / `xgb_gt` / `linear_syn_id` columns come from synthcity's `Metrics.evaluate` (internal-split leak). It is archived, and the AIM used in the paper is the SmartNoise one with fixed public bin edges (`sdg/aim.py`).
 
-**`evaluation/analysis.ipynb` has been repointed but not yet executed.** It now reads `results/utility_summary.csv` + `results/fidelity_summary.csv`, which don't exist until the GPU run, so the notebook can't be run — or verified — until then. Two cells were converted to SUPERSEDED markdown: the utility-vs-privacy scatter (the correct version is `benchmark_tapas/analysis/tradeoff.py`) and the AIM b=32 utility comparison (blocked on the `aim_tuning` leak above). Its AIM b=32 fidelity cell now merges fidelity only, for the same reason.
+**`sdg/aim.py` is partly legacy.** Only its `BIN_EDGES` are used (imported by `sdg/generate_smartnoise.py` and the AIM audit); its `main` still writes `*_LEGACY.csv` outputs.
 
 ---
 

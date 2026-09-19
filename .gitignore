@@ -14,24 +14,19 @@ workspace_*/
 **/workspace_*/
 
 # tapas attack caches (memoised shadow datasets + pickled threat models; large
-# and fully regenerable). cache_LEGACY/ holds the pre-2026-08-16 laptop-CPU runs,
-# kept locally for reference but never committed - 696 MB, mostly PrivBayes.
+# and fully regenerable)
 cache/
 cache_*/
 __pycache__/
 
-# aim bin-count sweep: per-setting synthetic CSVs (the results CSV/log/PNG are kept)
-sdg/aim_tuning/synthetic/
+# aim bin-count sweep (archived): per-setting synthetic CSVs
+archive/aim_tuning/synthetic/
 
 # per-run script logs. Rewritten on every invocation and carrying nothing the
 # result CSVs don't already record, so they only ever show up as noise in
-# git status. The *_LEGACY logs already committed stay tracked - this does not
-# untrack them.
+# git status.
 sdg/generate_runs_log.txt
 evaluation/eval_fidelity_log.txt
 evaluation/eval_utility_log.txt
-results/smartnoise/generate_smartnoise_log.txt
+evaluation/results/smartnoise/generate_smartnoise_log.txt
 benchmark_tapas/results/convergence/convergence_check_tstr_log.txt
-benchmark_tapas/results/pilot_counts/pilot_counts_log.txt
-benchmark_tapas/results/pilot_counts/extra_counts_log.txt
-benchmark_tapas/results/pilot_counts/extra_counts_nohup.out
