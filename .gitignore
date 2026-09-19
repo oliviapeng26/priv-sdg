@@ -30,3 +30,6 @@ evaluation/eval_fidelity_log.txt
 evaluation/eval_utility_log.txt
 evaluation/results/smartnoise/generate_smartnoise_log.txt
 benchmark_tapas/results/convergence/convergence_check_tstr_log.txt
+# 98 MB of repeated pgmpy warnings from the Aug 2026 sweep; appended to on every re-run,
+# so tracking it would eventually exceed GitHub's 100 MB limit.
+benchmark_tapas/results/sample_size_sweep/counts_sweep_log.txt
