@@ -1,0 +1,564 @@
+2026-09-03 00:22:58,238 INFO device: cuda (torch.cuda.is_available()=True) | eps=1 | epoch_cap=300 | cache dpctgan_eps1 | results benchmark_tapas/results/dp-ctgan/eps1
+2026-09-03 00:22:58,275 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 00:22:58,277 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 00:22:58,291 INFO === probe: 3 fits on 500 rows, eps=1, sigma=5, batch_size=500, epoch cap=300 ===
+2026-09-03 00:22:58,291 INFO     sample rate = batch_size / n = 500/500 = 1.00  (1.0 means no subsampling amplification)
+2026-09-03 00:22:59,347 INFO   fit 0: 1.1s | epochs run 3/300 | eps spent 1.473458489052405 | 500/500 unique rows
+2026-09-03 00:22:59,632 INFO   fit 1: 0.3s | epochs run 3/300 | eps spent 1.473458489052405 | 500/500 unique rows
+2026-09-03 00:22:59,686 INFO   fit 2: 0.1s | epochs run 3/300 | eps spent 1.473458489052405 | 500/500 unique rows
+2026-09-03 00:22:59,686 INFO === mean 0.5s/fit ===
+2026-09-03 00:22:59,686 INFO     50/100 = 150 fits -> 0.0 h (minus whatever the shared pool already holds)
+2026-09-03 00:22:59,686 INFO     200/500 = 700 fits -> 0.1 h (minus whatever the shared pool already holds)
+2026-09-03 00:22:59,686 INFO     500/1000 = 1500 fits -> 0.2 h (minus whatever the shared pool already holds)
+2026-09-03 00:22:59,686 INFO     1000/2500 = 3500 fits -> 0.5 h (minus whatever the shared pool already holds)
+2026-09-03 00:22:59,687 WARNING     only 3 epochs survived the budget. The audit would measure a barely-trained network. That is a real finding about the library, but decide before committing the run.
+2026-09-03 00:23:00,996 INFO device: cuda (torch.cuda.is_available()=True) | eps=100 | epoch_cap=1000 | cache dpctgan_eps100_ep1000 | results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep1000
+2026-09-03 00:23:01,035 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 00:23:01,036 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 00:23:01,052 INFO === probe: 3 fits on 500 rows, eps=100, sigma=5, batch_size=500, epoch cap=1000 ===
+2026-09-03 00:23:01,052 INFO     sample rate = batch_size / n = 500/500 = 1.00  (1.0 means no subsampling amplification)
+2026-09-03 00:23:10,898 INFO   fit 0: 9.8s | epochs run 1000/1000 | eps spent 76.67428179038214 | 500/500 unique rows
+2026-09-03 00:23:19,780 INFO   fit 1: 8.9s | epochs run 1000/1000 | eps spent 76.67428179038214 | 500/500 unique rows
+2026-09-03 00:23:28,751 INFO   fit 2: 9.0s | epochs run 1000/1000 | eps spent 76.67428179038214 | 500/500 unique rows
+2026-09-03 00:23:28,751 INFO === mean 9.2s/fit ===
+2026-09-03 00:23:28,751 INFO     50/100 = 150 fits -> 0.4 h (minus whatever the shared pool already holds)
+2026-09-03 00:23:28,751 INFO     200/500 = 700 fits -> 1.8 h (minus whatever the shared pool already holds)
+2026-09-03 00:23:28,751 INFO     500/1000 = 1500 fits -> 3.8 h (minus whatever the shared pool already holds)
+2026-09-03 00:23:28,751 INFO     1000/2500 = 3500 fits -> 9.0 h (minus whatever the shared pool already holds)
+2026-09-03 00:23:30,128 INFO device: cuda (torch.cuda.is_available()=True) | eps=1 | epoch_cap=300 | cache dpctgan_eps1 | results benchmark_tapas/results/dp-ctgan/eps1
+2026-09-03 00:23:30,128 INFO === TAPAS privacy audit: dpctgan (SmartNoise) eps=1, sigma=5, epoch_cap=300, batch=500, num_train=50, num_test=100 ===
+2026-09-03 00:23:30,128 INFO     cache benchmark_tapas/cache/dpctgan_eps1   results benchmark_tapas/results/dp-ctgan/eps1   total fits = 150
+2026-09-03 00:23:30,165 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 00:23:30,167 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 00:23:30,181 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dpctgan_eps1/threat_model.pkl
+2026-09-03 00:23:30,599 INFO     pools: 1000/50 train, 2500/100 test  (+0 new fits, 0s)
+2026-09-03 00:23:31,143 INFO     guard train/D+: 500/500 distinct (100.0%)
+2026-09-03 00:23:31,695 INFO     guard train/D-: 500/500 distinct (100.0%)
+2026-09-03 00:23:33,090 INFO     guard test/D+: 1250/1250 distinct (100.0%)
+2026-09-03 00:23:34,356 INFO     guard test/D-: 1250/1250 distinct (100.0%)
+2026-09-03 00:23:40,019 INFO     exported 1000 train datasets -> synthetic_train.csv.gz [27.7 MB]
+2026-09-03 00:23:54,183 INFO     exported 2500 test datasets -> synthetic_test.csv.gz [69.3 MB]
+2026-09-03 00:23:54,209 INFO   [Groundhog] training on 50 simulated datasets...
+2026-09-03 00:24:01,811 INFO   [Groundhog] testing on 100 simulated datasets...
+2026-09-03 00:24:32,560 INFO   [Groundhog] done -- eps_low_95=0.000  auc=0.508  (38.07s, 1127.13 MB)
+2026-09-03 00:24:32,842 INFO   [ShadowModelling(RandomQueries)] training on 50 simulated datasets...
+2026-09-03 00:27:21,315 INFO   [ShadowModelling(RandomQueries)] testing on 100 simulated datasets...
+2026-09-03 00:43:53,905 INFO   [ShadowModelling(RandomQueries)] done -- eps_low_95=0.000  auc=0.503  (1160.87s, 23.55 MB)
+2026-09-03 00:43:54,242 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] training on 50 simulated datasets...
+2026-09-03 00:44:02,297 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] testing on 100 simulated datasets...
+2026-09-03 00:44:48,620 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] done -- eps_low_95=0.000  auc=0.500  (54.35s, 1.19 MB)
+2026-09-03 00:44:48,986 INFO   [ProbabilityEstimation(KernelDensity())] training on 50 simulated datasets...
+2026-09-03 00:44:51,187 INFO   [ProbabilityEstimation(KernelDensity())] testing on 100 simulated datasets...
+2026-09-03 00:45:03,941 INFO   [ProbabilityEstimation(KernelDensity())] done -- eps_low_95=0.000  auc=0.499  (13.4s, 1.04 MB)
+2026-09-03 00:45:04,286 INFO   [ClosestDistance(L_2, accuracy)] training on 50 simulated datasets...
+2026-09-03 00:45:13,462 INFO   [ClosestDistance(L_2, accuracy)] testing on 100 simulated datasets...
+2026-09-03 00:45:59,613 INFO   [ClosestDistance(L_2, accuracy)] done -- eps_low_95=0.000  auc=0.488  (53.64s, 1.16 MB)
+2026-09-03 00:45:59,991 INFO     wrote 12500 raw scores -> raw_scores_dpctgan_50_100.csv
+2026-09-03 00:45:59,992 INFO === done: worst-case eps_low_95=0.000 [0.000, 0.004] via Groundhog ===
+2026-09-03 00:46:01,560 INFO device: cuda (torch.cuda.is_available()=True) | eps=1 | epoch_cap=300 | cache dpctgan_eps1 | results benchmark_tapas/results/dp-ctgan/eps1
+2026-09-03 00:46:01,560 INFO === TAPAS privacy audit: dpctgan (SmartNoise) eps=1, sigma=5, epoch_cap=300, batch=500, num_train=200, num_test=500 ===
+2026-09-03 00:46:01,560 INFO     cache benchmark_tapas/cache/dpctgan_eps1   results benchmark_tapas/results/dp-ctgan/eps1   total fits = 700
+2026-09-03 00:46:01,602 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 00:46:01,604 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 00:46:01,619 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dpctgan_eps1/threat_model.pkl
+2026-09-03 00:46:02,079 INFO     pools: 1000/200 train, 2500/500 test  (+0 new fits, 0s)
+2026-09-03 00:46:02,706 INFO     guard train/D+: 500/500 distinct (100.0%)
+2026-09-03 00:46:03,345 INFO     guard train/D-: 500/500 distinct (100.0%)
+2026-09-03 00:46:04,932 INFO     guard test/D+: 1250/1250 distinct (100.0%)
+2026-09-03 00:46:06,555 INFO     guard test/D-: 1250/1250 distinct (100.0%)
+2026-09-03 00:46:12,583 INFO     exported 1000 train datasets -> synthetic_train.csv.gz [27.7 MB]
+2026-09-03 00:46:28,050 INFO     exported 2500 test datasets -> synthetic_test.csv.gz [69.3 MB]
+2026-09-03 00:46:28,068 INFO   [Groundhog] training on 200 simulated datasets...
+2026-09-03 00:46:48,965 INFO   [Groundhog] testing on 500 simulated datasets...
+2026-09-03 00:48:20,179 INFO   [Groundhog] done -- eps_low_95=0.000  auc=0.508  (111.52s, 1127.12 MB)
+2026-09-03 00:48:20,617 INFO   [ShadowModelling(RandomQueries)] training on 200 simulated datasets...
+2026-09-03 00:51:57,588 INFO   [ShadowModelling(RandomQueries)] testing on 500 simulated datasets...
+2026-09-03 01:09:05,902 INFO   [ShadowModelling(RandomQueries)] done -- eps_low_95=0.000  auc=0.503  (1245.15s, 23.55 MB)
+2026-09-03 01:09:06,178 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] training on 200 simulated datasets...
+2026-09-03 01:09:08,070 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] testing on 500 simulated datasets...
+2026-09-03 01:09:18,848 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] done -- eps_low_95=0.000  auc=0.500  (12.65s, 1.19 MB)
+2026-09-03 01:09:19,171 INFO   [ProbabilityEstimation(KernelDensity())] training on 200 simulated datasets...
+2026-09-03 01:09:20,926 INFO   [ProbabilityEstimation(KernelDensity())] testing on 500 simulated datasets...
+2026-09-03 01:09:31,061 INFO   [ProbabilityEstimation(KernelDensity())] done -- eps_low_95=0.000  auc=0.499  (10.82s, 1.04 MB)
+2026-09-03 01:09:31,330 INFO   [ClosestDistance(L_2, accuracy)] training on 200 simulated datasets...
+2026-09-03 01:09:33,349 INFO   [ClosestDistance(L_2, accuracy)] testing on 500 simulated datasets...
+2026-09-03 01:09:44,983 INFO   [ClosestDistance(L_2, accuracy)] done -- eps_low_95=0.000  auc=0.488  (12.47s, 1.16 MB)
+2026-09-03 01:09:45,263 INFO     wrote 12500 raw scores -> raw_scores_dpctgan_200_500.csv
+2026-09-03 01:09:45,264 INFO === done: worst-case eps_low_95=0.000 [0.000, 0.004] via Groundhog ===
+2026-09-03 01:09:46,447 INFO device: cuda (torch.cuda.is_available()=True) | eps=1 | epoch_cap=300 | cache dpctgan_eps1 | results benchmark_tapas/results/dp-ctgan/eps1
+2026-09-03 01:09:46,448 INFO === TAPAS privacy audit: dpctgan (SmartNoise) eps=1, sigma=5, epoch_cap=300, batch=500, num_train=500, num_test=1000 ===
+2026-09-03 01:09:46,448 INFO     cache benchmark_tapas/cache/dpctgan_eps1   results benchmark_tapas/results/dp-ctgan/eps1   total fits = 1500
+2026-09-03 01:09:46,485 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 01:09:46,486 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 01:09:46,501 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dpctgan_eps1/threat_model.pkl
+2026-09-03 01:09:46,926 INFO     pools: 1000/500 train, 2500/1000 test  (+0 new fits, 0s)
+2026-09-03 01:09:47,477 INFO     guard train/D+: 500/500 distinct (100.0%)
+2026-09-03 01:09:48,008 INFO     guard train/D-: 500/500 distinct (100.0%)
+2026-09-03 01:09:49,372 INFO     guard test/D+: 1250/1250 distinct (100.0%)
+2026-09-03 01:09:50,654 INFO     guard test/D-: 1250/1250 distinct (100.0%)
+2026-09-03 01:09:56,177 INFO     exported 1000 train datasets -> synthetic_train.csv.gz [27.7 MB]
+2026-09-03 01:10:10,036 INFO     exported 2500 test datasets -> synthetic_test.csv.gz [69.3 MB]
+2026-09-03 01:10:10,052 INFO   [Groundhog] training on 500 simulated datasets...
+2026-09-03 01:10:17,858 INFO   [Groundhog] testing on 1000 simulated datasets...
+2026-09-03 01:10:47,838 INFO   [Groundhog] done -- eps_low_95=0.000  auc=0.508  (37.51s, 1127.12 MB)
+2026-09-03 01:10:48,118 INFO   [ShadowModelling(RandomQueries)] training on 500 simulated datasets...
+2026-09-03 01:13:40,647 INFO   [ShadowModelling(RandomQueries)] testing on 1000 simulated datasets...
+2026-09-03 01:28:13,762 INFO   [ShadowModelling(RandomQueries)] done -- eps_low_95=0.000  auc=0.503  (1045.49s, 23.54 MB)
+2026-09-03 01:28:14,048 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] training on 500 simulated datasets...
+2026-09-03 01:28:15,744 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] testing on 1000 simulated datasets...
+2026-09-03 01:28:26,111 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] done -- eps_low_95=0.000  auc=0.500  (12.05s, 1.19 MB)
+2026-09-03 01:28:26,420 INFO   [ProbabilityEstimation(KernelDensity())] training on 500 simulated datasets...
+2026-09-03 01:28:28,135 INFO   [ProbabilityEstimation(KernelDensity())] testing on 1000 simulated datasets...
+2026-09-03 01:28:38,205 INFO   [ProbabilityEstimation(KernelDensity())] done -- eps_low_95=0.000  auc=0.499  (10.71s, 1.04 MB)
+2026-09-03 01:28:38,495 INFO   [ClosestDistance(L_2, accuracy)] training on 500 simulated datasets...
+2026-09-03 01:28:41,055 INFO   [ClosestDistance(L_2, accuracy)] testing on 1000 simulated datasets...
+2026-09-03 01:28:52,683 INFO   [ClosestDistance(L_2, accuracy)] done -- eps_low_95=0.000  auc=0.488  (13.08s, 1.16 MB)
+2026-09-03 01:28:53,012 INFO     wrote 12500 raw scores -> raw_scores_dpctgan_500_1000.csv
+2026-09-03 01:28:53,013 INFO === done: worst-case eps_low_95=0.000 [0.000, 0.004] via Groundhog ===
+2026-09-03 01:28:54,204 INFO device: cuda (torch.cuda.is_available()=True) | eps=1 | epoch_cap=300 | cache dpctgan_eps1 | results benchmark_tapas/results/dp-ctgan/eps1
+2026-09-03 01:28:54,204 INFO === TAPAS privacy audit: dpctgan (SmartNoise) eps=1, sigma=5, epoch_cap=300, batch=500, num_train=1000, num_test=2500 ===
+2026-09-03 01:28:54,204 INFO     cache benchmark_tapas/cache/dpctgan_eps1   results benchmark_tapas/results/dp-ctgan/eps1   total fits = 3500
+2026-09-03 01:28:54,241 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 01:28:54,242 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 01:28:54,256 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dpctgan_eps1/threat_model.pkl
+2026-09-03 01:28:54,679 INFO     pools: 1000/1000 train, 2500/2500 test  (+0 new fits, 0s)
+2026-09-03 01:28:55,232 INFO     guard train/D+: 500/500 distinct (100.0%)
+2026-09-03 01:28:55,763 INFO     guard train/D-: 500/500 distinct (100.0%)
+2026-09-03 01:28:57,100 INFO     guard test/D+: 1250/1250 distinct (100.0%)
+2026-09-03 01:28:58,392 INFO     guard test/D-: 1250/1250 distinct (100.0%)
+2026-09-03 01:29:03,874 INFO     exported 1000 train datasets -> synthetic_train.csv.gz [27.7 MB]
+2026-09-03 01:29:17,649 INFO     exported 2500 test datasets -> synthetic_test.csv.gz [69.3 MB]
+2026-09-03 01:29:17,665 INFO   [Groundhog] training on 1000 simulated datasets...
+2026-09-03 01:29:26,081 INFO   [Groundhog] testing on 2500 simulated datasets...
+2026-09-03 01:29:56,680 INFO   [Groundhog] done -- eps_low_95=0.000  auc=0.508  (38.75s, 1127.13 MB)
+2026-09-03 01:29:56,978 INFO   [ShadowModelling(RandomQueries)] training on 1000 simulated datasets...
+2026-09-03 01:32:47,480 INFO   [ShadowModelling(RandomQueries)] testing on 2500 simulated datasets...
+2026-09-03 01:47:40,531 INFO   [ShadowModelling(RandomQueries)] done -- eps_low_95=0.000  auc=0.503  (1063.41s, 23.54 MB)
+2026-09-03 01:47:40,815 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] training on 1000 simulated datasets...
+2026-09-03 01:47:43,052 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] testing on 2500 simulated datasets...
+2026-09-03 01:47:56,785 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] done -- eps_low_95=0.000  auc=0.500  (15.95s, 1.19 MB)
+2026-09-03 01:47:57,116 INFO   [ProbabilityEstimation(KernelDensity())] training on 1000 simulated datasets...
+2026-09-03 01:47:58,905 INFO   [ProbabilityEstimation(KernelDensity())] testing on 2500 simulated datasets...
+2026-09-03 01:48:09,173 INFO   [ProbabilityEstimation(KernelDensity())] done -- eps_low_95=0.000  auc=0.499  (10.98s, 1.04 MB)
+2026-09-03 01:48:09,481 INFO   [ClosestDistance(L_2, accuracy)] training on 1000 simulated datasets...
+2026-09-03 01:48:11,495 INFO   [ClosestDistance(L_2, accuracy)] testing on 2500 simulated datasets...
+2026-09-03 01:48:23,565 INFO   [ClosestDistance(L_2, accuracy)] done -- eps_low_95=0.000  auc=0.488  (12.94s, 1.16 MB)
+2026-09-03 01:48:23,880 INFO     wrote 12500 raw scores -> raw_scores_dpctgan_1000_2500.csv
+2026-09-03 01:48:23,881 INFO === done: worst-case eps_low_95=0.000 [0.000, 0.004] via Groundhog ===
+2026-09-03 01:48:25,037 INFO device: cuda (torch.cuda.is_available()=True) | eps=100 | epoch_cap=300 | cache dpctgan_eps100 | results benchmark_tapas/results/dp-ctgan/eps100
+2026-09-03 01:48:25,037 INFO === TAPAS privacy audit: dpctgan (SmartNoise) eps=100, sigma=5, epoch_cap=300, batch=500, num_train=1000, num_test=2500 ===
+2026-09-03 01:48:25,037 INFO     cache benchmark_tapas/cache/dpctgan_eps100   results benchmark_tapas/results/dp-ctgan/eps100   total fits = 3500
+2026-09-03 01:48:25,073 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 01:48:25,075 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 01:48:25,088 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dpctgan_eps100/threat_model.pkl
+2026-09-03 01:48:25,519 INFO     pools: 1000/1000 train, 2500/2500 test  (+0 new fits, 0s)
+2026-09-03 01:48:26,050 INFO     guard train/D+: 500/500 distinct (100.0%)
+2026-09-03 01:48:26,587 INFO     guard train/D-: 500/500 distinct (100.0%)
+2026-09-03 01:48:27,937 INFO     guard test/D+: 1250/1250 distinct (100.0%)
+2026-09-03 01:48:29,202 INFO     guard test/D-: 1250/1250 distinct (100.0%)
+2026-09-03 01:48:33,709 INFO     exported 1000 train datasets -> synthetic_train.csv.gz [24.7 MB]
+2026-09-03 01:48:44,985 INFO     exported 2500 test datasets -> synthetic_test.csv.gz [61.7 MB]
+2026-09-03 01:48:45,007 INFO   [Groundhog] training on 1000 simulated datasets...
+2026-09-03 01:48:52,160 INFO   [Groundhog] testing on 2500 simulated datasets...
+2026-09-03 01:49:23,710 INFO   [Groundhog] done -- eps_low_95=0.000  auc=0.501  (38.42s, 1127.12 MB)
+2026-09-03 01:49:23,997 INFO   [ShadowModelling(RandomQueries)] training on 1000 simulated datasets...
+2026-09-03 01:52:18,347 INFO   [ShadowModelling(RandomQueries)] testing on 2500 simulated datasets...
+2026-09-03 02:07:04,412 INFO   [ShadowModelling(RandomQueries)] done -- eps_low_95=0.000  auc=0.504  (1060.18s, 23.54 MB)
+2026-09-03 02:07:04,687 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] training on 1000 simulated datasets...
+2026-09-03 02:07:06,721 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] testing on 2500 simulated datasets...
+2026-09-03 02:07:19,022 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] done -- eps_low_95=0.000  auc=0.499  (14.31s, 1.19 MB)
+2026-09-03 02:07:19,342 INFO   [ProbabilityEstimation(KernelDensity())] training on 1000 simulated datasets...
+2026-09-03 02:07:21,057 INFO   [ProbabilityEstimation(KernelDensity())] testing on 2500 simulated datasets...
+2026-09-03 02:07:31,266 INFO   [ProbabilityEstimation(KernelDensity())] done -- eps_low_95=0.000  auc=0.536  (10.84s, 1.05 MB)
+2026-09-03 02:07:31,539 INFO   [ClosestDistance(L_2, accuracy)] training on 1000 simulated datasets...
+2026-09-03 02:07:33,743 INFO   [ClosestDistance(L_2, accuracy)] testing on 2500 simulated datasets...
+2026-09-03 02:07:45,963 INFO   [ClosestDistance(L_2, accuracy)] done -- eps_low_95=0.000  auc=0.533  (13.28s, 1.16 MB)
+2026-09-03 02:07:46,272 INFO     wrote 12500 raw scores -> raw_scores_dpctgan_1000_2500.csv
+2026-09-03 02:07:46,273 INFO === done: worst-case eps_low_95=0.000 [0.000, 0.018] via Groundhog ===
+2026-09-03 02:07:47,440 INFO device: cuda (torch.cuda.is_available()=True) | eps=100 | epoch_cap=500 | cache dpctgan_eps100_ep500 | results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep500
+2026-09-03 02:07:47,440 INFO === TAPAS privacy audit: dpctgan (SmartNoise) eps=100, sigma=5, epoch_cap=500, batch=500, num_train=1000, num_test=2500 ===
+2026-09-03 02:07:47,440 INFO     cache benchmark_tapas/cache/dpctgan_eps100_ep500   results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep500   total fits = 3500
+2026-09-03 02:07:47,477 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 02:07:47,478 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 02:07:47,492 INFO Building new threat model for dpctgan (no cache found)
+2026-09-03 02:14:58,815 INFO     train pool 100/1000 checkpointed (+100 fits, 431s, 300 left in this process)
+2026-09-03 02:22:13,446 INFO     train pool 200/1000 checkpointed (+100 fits, 435s, 200 left in this process)
+2026-09-03 02:29:28,961 INFO     train pool 300/1000 checkpointed (+100 fits, 436s, 100 left in this process)
+2026-09-03 02:36:45,599 INFO     train pool 400/1000 checkpointed (+100 fits, 437s, 0 left in this process)
+2026-09-03 02:36:45,599 INFO     pools: 400/1000 train, 0/2500 test  (+400 new fits, 1738s)
+2026-09-03 02:36:45,599 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-09-03 02:36:46,910 INFO device: cuda (torch.cuda.is_available()=True) | eps=100 | epoch_cap=500 | cache dpctgan_eps100_ep500 | results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep500
+2026-09-03 02:36:46,910 INFO === TAPAS privacy audit: dpctgan (SmartNoise) eps=100, sigma=5, epoch_cap=500, batch=500, num_train=1000, num_test=2500 ===
+2026-09-03 02:36:46,910 INFO     cache benchmark_tapas/cache/dpctgan_eps100_ep500   results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep500   total fits = 3500
+2026-09-03 02:36:46,953 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 02:36:46,955 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 02:36:46,977 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dpctgan_eps100_ep500/threat_model.pkl
+2026-09-03 02:44:32,444 INFO     train pool 500/1000 checkpointed (+100 fits, 465s, 300 left in this process)
+2026-09-03 02:51:41,441 INFO     train pool 600/1000 checkpointed (+100 fits, 429s, 200 left in this process)
+2026-09-03 02:58:50,064 INFO     train pool 700/1000 checkpointed (+100 fits, 429s, 100 left in this process)
+2026-09-03 03:05:58,911 INFO     train pool 800/1000 checkpointed (+100 fits, 429s, 0 left in this process)
+2026-09-03 03:05:58,911 INFO     pools: 800/1000 train, 0/2500 test  (+400 new fits, 1752s)
+2026-09-03 03:05:58,911 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-09-03 03:06:00,174 INFO device: cuda (torch.cuda.is_available()=True) | eps=100 | epoch_cap=500 | cache dpctgan_eps100_ep500 | results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep500
+2026-09-03 03:06:00,174 INFO === TAPAS privacy audit: dpctgan (SmartNoise) eps=100, sigma=5, epoch_cap=500, batch=500, num_train=1000, num_test=2500 ===
+2026-09-03 03:06:00,174 INFO     cache benchmark_tapas/cache/dpctgan_eps100_ep500   results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep500   total fits = 3500
+2026-09-03 03:06:00,211 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 03:06:00,212 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 03:06:00,227 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dpctgan_eps100_ep500/threat_model.pkl
+2026-09-03 03:13:12,805 INFO     train pool 900/1000 checkpointed (+100 fits, 432s, 300 left in this process)
+2026-09-03 03:20:31,258 INFO     train pool 1000/1000 checkpointed (+100 fits, 438s, 200 left in this process)
+2026-09-03 03:27:47,424 INFO     test pool 100/2500 checkpointed (+100 fits, 436s, 100 left in this process)
+2026-09-03 03:35:06,063 INFO     test pool 200/2500 checkpointed (+100 fits, 439s, 0 left in this process)
+2026-09-03 03:35:06,063 INFO     pools: 1000/1000 train, 200/2500 test  (+400 new fits, 1746s)
+2026-09-03 03:35:06,063 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-09-03 03:35:07,331 INFO device: cuda (torch.cuda.is_available()=True) | eps=100 | epoch_cap=500 | cache dpctgan_eps100_ep500 | results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep500
+2026-09-03 03:35:07,331 INFO === TAPAS privacy audit: dpctgan (SmartNoise) eps=100, sigma=5, epoch_cap=500, batch=500, num_train=1000, num_test=2500 ===
+2026-09-03 03:35:07,331 INFO     cache benchmark_tapas/cache/dpctgan_eps100_ep500   results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep500   total fits = 3500
+2026-09-03 03:35:07,369 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 03:35:07,371 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 03:35:07,387 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dpctgan_eps100_ep500/threat_model.pkl
+2026-09-03 03:42:25,989 INFO     test pool 300/2500 checkpointed (+100 fits, 438s, 300 left in this process)
+2026-09-03 03:49:52,942 INFO     test pool 400/2500 checkpointed (+100 fits, 447s, 200 left in this process)
+2026-09-03 03:58:31,669 INFO     test pool 500/2500 checkpointed (+100 fits, 519s, 100 left in this process)
+2026-09-03 04:09:31,479 INFO     test pool 600/2500 checkpointed (+100 fits, 660s, 0 left in this process)
+2026-09-03 04:09:31,480 INFO     pools: 1000/1000 train, 600/2500 test  (+400 new fits, 2064s)
+2026-09-03 04:09:31,480 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-09-03 04:09:32,828 INFO device: cuda (torch.cuda.is_available()=True) | eps=100 | epoch_cap=500 | cache dpctgan_eps100_ep500 | results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep500
+2026-09-03 04:09:32,828 INFO === TAPAS privacy audit: dpctgan (SmartNoise) eps=100, sigma=5, epoch_cap=500, batch=500, num_train=1000, num_test=2500 ===
+2026-09-03 04:09:32,828 INFO     cache benchmark_tapas/cache/dpctgan_eps100_ep500   results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep500   total fits = 3500
+2026-09-03 04:09:32,867 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 04:09:32,868 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 04:09:32,884 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dpctgan_eps100_ep500/threat_model.pkl
+2026-09-03 04:20:20,222 INFO     test pool 700/2500 checkpointed (+100 fits, 647s, 300 left in this process)
+2026-09-03 04:31:12,815 INFO     test pool 800/2500 checkpointed (+100 fits, 653s, 200 left in this process)
+2026-09-03 04:41:52,185 INFO     test pool 900/2500 checkpointed (+100 fits, 639s, 100 left in this process)
+2026-09-03 04:49:10,476 INFO     test pool 1000/2500 checkpointed (+100 fits, 438s, 0 left in this process)
+2026-09-03 04:49:10,476 INFO     pools: 1000/1000 train, 1000/2500 test  (+400 new fits, 2377s)
+2026-09-03 04:49:10,476 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-09-03 04:49:11,788 INFO device: cuda (torch.cuda.is_available()=True) | eps=100 | epoch_cap=500 | cache dpctgan_eps100_ep500 | results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep500
+2026-09-03 04:49:11,788 INFO === TAPAS privacy audit: dpctgan (SmartNoise) eps=100, sigma=5, epoch_cap=500, batch=500, num_train=1000, num_test=2500 ===
+2026-09-03 04:49:11,788 INFO     cache benchmark_tapas/cache/dpctgan_eps100_ep500   results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep500   total fits = 3500
+2026-09-03 04:49:11,826 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 04:49:11,827 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 04:49:11,842 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dpctgan_eps100_ep500/threat_model.pkl
+2026-09-03 04:56:21,477 INFO     test pool 1100/2500 checkpointed (+100 fits, 429s, 300 left in this process)
+2026-09-03 05:03:39,585 INFO     test pool 1200/2500 checkpointed (+100 fits, 438s, 200 left in this process)
+2026-09-03 05:11:00,549 INFO     test pool 1300/2500 checkpointed (+100 fits, 441s, 100 left in this process)
+2026-09-03 05:18:20,735 INFO     test pool 1400/2500 checkpointed (+100 fits, 440s, 0 left in this process)
+2026-09-03 05:18:20,735 INFO     pools: 1000/1000 train, 1400/2500 test  (+400 new fits, 1749s)
+2026-09-03 05:18:20,735 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-09-03 05:18:22,034 INFO device: cuda (torch.cuda.is_available()=True) | eps=100 | epoch_cap=500 | cache dpctgan_eps100_ep500 | results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep500
+2026-09-03 05:18:22,034 INFO === TAPAS privacy audit: dpctgan (SmartNoise) eps=100, sigma=5, epoch_cap=500, batch=500, num_train=1000, num_test=2500 ===
+2026-09-03 05:18:22,034 INFO     cache benchmark_tapas/cache/dpctgan_eps100_ep500   results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep500   total fits = 3500
+2026-09-03 05:18:22,071 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 05:18:22,072 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 05:18:22,087 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dpctgan_eps100_ep500/threat_model.pkl
+2026-09-03 05:25:39,122 INFO     test pool 1500/2500 checkpointed (+100 fits, 437s, 300 left in this process)
+2026-09-03 05:32:56,004 INFO     test pool 1600/2500 checkpointed (+100 fits, 437s, 200 left in this process)
+2026-09-03 05:40:17,043 INFO     test pool 1700/2500 checkpointed (+100 fits, 441s, 100 left in this process)
+2026-09-03 05:47:12,266 INFO     test pool 1800/2500 checkpointed (+100 fits, 415s, 0 left in this process)
+2026-09-03 05:47:12,266 INFO     pools: 1000/1000 train, 1800/2500 test  (+400 new fits, 1730s)
+2026-09-03 05:47:12,266 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-09-03 05:47:13,532 INFO device: cuda (torch.cuda.is_available()=True) | eps=100 | epoch_cap=500 | cache dpctgan_eps100_ep500 | results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep500
+2026-09-03 05:47:13,532 INFO === TAPAS privacy audit: dpctgan (SmartNoise) eps=100, sigma=5, epoch_cap=500, batch=500, num_train=1000, num_test=2500 ===
+2026-09-03 05:47:13,532 INFO     cache benchmark_tapas/cache/dpctgan_eps100_ep500   results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep500   total fits = 3500
+2026-09-03 05:47:13,568 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 05:47:13,570 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 05:47:13,584 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dpctgan_eps100_ep500/threat_model.pkl
+2026-09-03 05:53:58,123 INFO     test pool 1900/2500 checkpointed (+100 fits, 404s, 300 left in this process)
+2026-09-03 06:01:04,273 INFO     test pool 2000/2500 checkpointed (+100 fits, 426s, 200 left in this process)
+2026-09-03 06:08:33,319 INFO     test pool 2100/2500 checkpointed (+100 fits, 449s, 100 left in this process)
+2026-09-03 06:15:57,643 INFO     test pool 2200/2500 checkpointed (+100 fits, 444s, 0 left in this process)
+2026-09-03 06:15:57,643 INFO     pools: 1000/1000 train, 2200/2500 test  (+400 new fits, 1724s)
+2026-09-03 06:15:57,643 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-09-03 06:15:58,967 INFO device: cuda (torch.cuda.is_available()=True) | eps=100 | epoch_cap=500 | cache dpctgan_eps100_ep500 | results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep500
+2026-09-03 06:15:58,968 INFO === TAPAS privacy audit: dpctgan (SmartNoise) eps=100, sigma=5, epoch_cap=500, batch=500, num_train=1000, num_test=2500 ===
+2026-09-03 06:15:58,968 INFO     cache benchmark_tapas/cache/dpctgan_eps100_ep500   results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep500   total fits = 3500
+2026-09-03 06:15:59,005 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 06:15:59,006 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 06:15:59,020 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dpctgan_eps100_ep500/threat_model.pkl
+2026-09-03 06:23:22,578 INFO     test pool 2300/2500 checkpointed (+100 fits, 443s, 300 left in this process)
+2026-09-03 06:30:43,922 INFO     test pool 2400/2500 checkpointed (+100 fits, 441s, 200 left in this process)
+2026-09-03 06:38:05,459 INFO     test pool 2500/2500 checkpointed (+100 fits, 442s, 100 left in this process)
+2026-09-03 06:38:05,459 INFO     pools: 1000/1000 train, 2500/2500 test  (+300 new fits, 1326s)
+2026-09-03 06:38:05,997 INFO     guard train/D+: 500/500 distinct (100.0%)
+2026-09-03 06:38:06,533 INFO     guard train/D-: 500/500 distinct (100.0%)
+2026-09-03 06:38:07,771 INFO     guard test/D+: 1250/1250 distinct (100.0%)
+2026-09-03 06:38:09,143 INFO     guard test/D-: 1250/1250 distinct (100.0%)
+2026-09-03 06:38:13,716 INFO     exported 1000 train datasets -> synthetic_train.csv.gz [23.5 MB]
+2026-09-03 06:38:24,968 INFO     exported 2500 test datasets -> synthetic_test.csv.gz [58.8 MB]
+2026-09-03 06:38:24,989 INFO   [Groundhog] training on 1000 simulated datasets...
+2026-09-03 06:38:31,673 INFO   [Groundhog] testing on 2500 simulated datasets...
+2026-09-03 06:39:01,682 INFO   [Groundhog] done -- eps_low_95=0.011  auc=0.549  (36.34s, 1127.02 MB)
+2026-09-03 06:39:01,958 INFO   [ShadowModelling(RandomQueries)] training on 1000 simulated datasets...
+2026-09-03 06:42:21,254 INFO   [ShadowModelling(RandomQueries)] testing on 2500 simulated datasets...
+2026-09-03 06:59:01,206 INFO   [ShadowModelling(RandomQueries)] done -- eps_low_95=0.000  auc=0.531  (1198.95s, 23.35 MB)
+2026-09-03 06:59:01,512 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] training on 1000 simulated datasets...
+2026-09-03 06:59:05,381 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] testing on 2500 simulated datasets...
+2026-09-03 06:59:26,513 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] done -- eps_low_95=0.000  auc=0.537  (24.87s, 1.19 MB)
+2026-09-03 06:59:26,820 INFO   [ProbabilityEstimation(KernelDensity())] training on 1000 simulated datasets...
+2026-09-03 06:59:28,794 INFO   [ProbabilityEstimation(KernelDensity())] testing on 2500 simulated datasets...
+2026-09-03 06:59:39,965 INFO   [ProbabilityEstimation(KernelDensity())] done -- eps_low_95=0.000  auc=0.543  (11.99s, 1.05 MB)
+2026-09-03 06:59:40,268 INFO   [ClosestDistance(L_2, accuracy)] training on 1000 simulated datasets...
+2026-09-03 06:59:45,613 INFO   [ClosestDistance(L_2, accuracy)] testing on 2500 simulated datasets...
+2026-09-03 07:00:05,750 INFO   [ClosestDistance(L_2, accuracy)] done -- eps_low_95=0.000  auc=0.549  (24.27s, 1.16 MB)
+2026-09-03 07:00:06,077 INFO     wrote 12500 raw scores -> raw_scores_dpctgan_1000_2500.csv
+2026-09-03 07:00:06,077 INFO === done: worst-case eps_low_95=0.011 [0.011, 0.423] via Groundhog ===
+2026-09-03 07:00:07,592 INFO device: cuda (torch.cuda.is_available()=True) | eps=100 | epoch_cap=750 | cache dpctgan_eps100_ep750 | results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep750
+2026-09-03 07:00:07,592 INFO === TAPAS privacy audit: dpctgan (SmartNoise) eps=100, sigma=5, epoch_cap=750, batch=500, num_train=1000, num_test=2500 ===
+2026-09-03 07:00:07,592 INFO     cache benchmark_tapas/cache/dpctgan_eps100_ep750   results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep750   total fits = 3500
+2026-09-03 07:00:07,640 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 07:00:07,642 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 07:00:07,658 INFO Building new threat model for dpctgan (no cache found)
+2026-09-03 07:15:26,497 INFO     train pool 100/1000 checkpointed (+100 fits, 919s, 300 left in this process)
+2026-09-03 07:31:44,635 INFO     train pool 200/1000 checkpointed (+100 fits, 978s, 200 left in this process)
+2026-09-03 07:48:06,588 INFO     train pool 300/1000 checkpointed (+100 fits, 982s, 100 left in this process)
+2026-09-03 08:04:49,894 INFO     train pool 400/1000 checkpointed (+100 fits, 1003s, 0 left in this process)
+2026-09-03 08:04:49,894 INFO     pools: 400/1000 train, 0/2500 test  (+400 new fits, 3882s)
+2026-09-03 08:04:49,894 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-09-03 08:04:51,525 INFO device: cuda (torch.cuda.is_available()=True) | eps=100 | epoch_cap=750 | cache dpctgan_eps100_ep750 | results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep750
+2026-09-03 08:04:51,525 INFO === TAPAS privacy audit: dpctgan (SmartNoise) eps=100, sigma=5, epoch_cap=750, batch=500, num_train=1000, num_test=2500 ===
+2026-09-03 08:04:51,525 INFO     cache benchmark_tapas/cache/dpctgan_eps100_ep750   results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep750   total fits = 3500
+2026-09-03 08:04:51,562 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 08:04:51,563 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 08:04:51,578 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dpctgan_eps100_ep750/threat_model.pkl
+2026-09-03 08:21:14,659 INFO     train pool 500/1000 checkpointed (+100 fits, 983s, 300 left in this process)
+2026-09-03 08:37:43,186 INFO     train pool 600/1000 checkpointed (+100 fits, 989s, 200 left in this process)
+2026-09-03 08:49:52,360 INFO     train pool 700/1000 checkpointed (+100 fits, 729s, 100 left in this process)
+2026-09-03 09:04:42,199 INFO     train pool 800/1000 checkpointed (+100 fits, 890s, 0 left in this process)
+2026-09-03 09:04:42,199 INFO     pools: 800/1000 train, 0/2500 test  (+400 new fits, 3591s)
+2026-09-03 09:04:42,199 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-09-03 09:04:43,666 INFO device: cuda (torch.cuda.is_available()=True) | eps=100 | epoch_cap=750 | cache dpctgan_eps100_ep750 | results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep750
+2026-09-03 09:04:43,666 INFO === TAPAS privacy audit: dpctgan (SmartNoise) eps=100, sigma=5, epoch_cap=750, batch=500, num_train=1000, num_test=2500 ===
+2026-09-03 09:04:43,666 INFO     cache benchmark_tapas/cache/dpctgan_eps100_ep750   results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep750   total fits = 3500
+2026-09-03 09:04:43,718 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 09:04:43,720 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 09:04:43,736 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dpctgan_eps100_ep750/threat_model.pkl
+2026-09-03 09:21:25,693 INFO     train pool 900/1000 checkpointed (+100 fits, 1002s, 300 left in this process)
+2026-09-03 09:38:59,573 INFO     train pool 1000/1000 checkpointed (+100 fits, 1054s, 200 left in this process)
+2026-09-03 09:56:33,226 INFO     test pool 100/2500 checkpointed (+100 fits, 1054s, 100 left in this process)
+2026-09-03 10:14:06,756 INFO     test pool 200/2500 checkpointed (+100 fits, 1054s, 0 left in this process)
+2026-09-03 10:14:06,756 INFO     pools: 1000/1000 train, 200/2500 test  (+400 new fits, 4163s)
+2026-09-03 10:14:06,756 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-09-03 10:14:08,568 INFO device: cuda (torch.cuda.is_available()=True) | eps=100 | epoch_cap=750 | cache dpctgan_eps100_ep750 | results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep750
+2026-09-03 10:14:08,568 INFO === TAPAS privacy audit: dpctgan (SmartNoise) eps=100, sigma=5, epoch_cap=750, batch=500, num_train=1000, num_test=2500 ===
+2026-09-03 10:14:08,568 INFO     cache benchmark_tapas/cache/dpctgan_eps100_ep750   results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep750   total fits = 3500
+2026-09-03 10:14:08,606 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 10:14:08,607 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 10:14:08,622 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dpctgan_eps100_ep750/threat_model.pkl
+2026-09-03 10:31:44,336 INFO     test pool 300/2500 checkpointed (+100 fits, 1055s, 300 left in this process)
+2026-09-03 10:49:10,475 INFO     test pool 400/2500 checkpointed (+100 fits, 1046s, 200 left in this process)
+2026-09-03 11:06:54,780 INFO     test pool 500/2500 checkpointed (+100 fits, 1064s, 100 left in this process)
+2026-09-03 11:24:42,585 INFO     test pool 600/2500 checkpointed (+100 fits, 1068s, 0 left in this process)
+2026-09-03 11:24:42,586 INFO     pools: 1000/1000 train, 600/2500 test  (+400 new fits, 4234s)
+2026-09-03 11:24:42,586 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-09-03 11:24:44,452 INFO device: cuda (torch.cuda.is_available()=True) | eps=100 | epoch_cap=750 | cache dpctgan_eps100_ep750 | results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep750
+2026-09-03 11:24:44,452 INFO === TAPAS privacy audit: dpctgan (SmartNoise) eps=100, sigma=5, epoch_cap=750, batch=500, num_train=1000, num_test=2500 ===
+2026-09-03 11:24:44,452 INFO     cache benchmark_tapas/cache/dpctgan_eps100_ep750   results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep750   total fits = 3500
+2026-09-03 11:24:44,489 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 11:24:44,490 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 11:24:44,504 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dpctgan_eps100_ep750/threat_model.pkl
+2026-09-03 11:42:13,878 INFO     test pool 700/2500 checkpointed (+100 fits, 1049s, 300 left in this process)
+2026-09-03 11:59:42,170 INFO     test pool 800/2500 checkpointed (+100 fits, 1048s, 200 left in this process)
+2026-09-03 12:17:19,595 INFO     test pool 900/2500 checkpointed (+100 fits, 1057s, 100 left in this process)
+2026-09-03 12:35:00,472 INFO     test pool 1000/2500 checkpointed (+100 fits, 1061s, 0 left in this process)
+2026-09-03 12:35:00,472 INFO     pools: 1000/1000 train, 1000/2500 test  (+400 new fits, 4216s)
+2026-09-03 12:35:00,472 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-09-03 12:35:02,673 INFO device: cuda (torch.cuda.is_available()=True) | eps=100 | epoch_cap=750 | cache dpctgan_eps100_ep750 | results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep750
+2026-09-03 12:35:02,673 INFO === TAPAS privacy audit: dpctgan (SmartNoise) eps=100, sigma=5, epoch_cap=750, batch=500, num_train=1000, num_test=2500 ===
+2026-09-03 12:35:02,673 INFO     cache benchmark_tapas/cache/dpctgan_eps100_ep750   results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep750   total fits = 3500
+2026-09-03 12:35:02,722 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 12:35:02,724 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 12:35:02,743 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dpctgan_eps100_ep750/threat_model.pkl
+2026-09-03 12:52:32,300 INFO     test pool 1100/2500 checkpointed (+100 fits, 1049s, 300 left in this process)
+2026-09-03 13:09:57,619 INFO     test pool 1200/2500 checkpointed (+100 fits, 1045s, 200 left in this process)
+2026-09-03 13:27:31,263 INFO     test pool 1300/2500 checkpointed (+100 fits, 1054s, 100 left in this process)
+2026-09-03 13:42:46,569 INFO     test pool 1400/2500 checkpointed (+100 fits, 915s, 0 left in this process)
+2026-09-03 13:42:46,569 INFO     pools: 1000/1000 train, 1400/2500 test  (+400 new fits, 4064s)
+2026-09-03 13:42:46,569 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-09-03 13:42:47,977 INFO device: cuda (torch.cuda.is_available()=True) | eps=100 | epoch_cap=750 | cache dpctgan_eps100_ep750 | results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep750
+2026-09-03 13:42:47,977 INFO === TAPAS privacy audit: dpctgan (SmartNoise) eps=100, sigma=5, epoch_cap=750, batch=500, num_train=1000, num_test=2500 ===
+2026-09-03 13:42:47,977 INFO     cache benchmark_tapas/cache/dpctgan_eps100_ep750   results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep750   total fits = 3500
+2026-09-03 13:42:48,015 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 13:42:48,016 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 13:42:48,030 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dpctgan_eps100_ep750/threat_model.pkl
+2026-09-03 13:54:29,761 INFO     test pool 1500/2500 checkpointed (+100 fits, 701s, 300 left in this process)
+2026-09-03 14:05:56,705 INFO     test pool 1600/2500 checkpointed (+100 fits, 687s, 200 left in this process)
+2026-09-03 14:16:46,307 INFO     test pool 1700/2500 checkpointed (+100 fits, 650s, 100 left in this process)
+2026-09-03 14:27:34,823 INFO     test pool 1800/2500 checkpointed (+100 fits, 649s, 0 left in this process)
+2026-09-03 14:27:34,823 INFO     pools: 1000/1000 train, 1800/2500 test  (+400 new fits, 2686s)
+2026-09-03 14:27:34,823 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-09-03 14:27:36,176 INFO device: cuda (torch.cuda.is_available()=True) | eps=100 | epoch_cap=750 | cache dpctgan_eps100_ep750 | results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep750
+2026-09-03 14:27:36,176 INFO === TAPAS privacy audit: dpctgan (SmartNoise) eps=100, sigma=5, epoch_cap=750, batch=500, num_train=1000, num_test=2500 ===
+2026-09-03 14:27:36,176 INFO     cache benchmark_tapas/cache/dpctgan_eps100_ep750   results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep750   total fits = 3500
+2026-09-03 14:27:36,214 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 14:27:36,216 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 14:27:36,230 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dpctgan_eps100_ep750/threat_model.pkl
+2026-09-03 14:38:29,806 INFO     test pool 1900/2500 checkpointed (+100 fits, 653s, 300 left in this process)
+2026-09-03 14:49:29,331 INFO     test pool 2000/2500 checkpointed (+100 fits, 660s, 200 left in this process)
+2026-09-03 15:00:30,088 INFO     test pool 2100/2500 checkpointed (+100 fits, 661s, 100 left in this process)
+2026-09-03 15:11:31,207 INFO     test pool 2200/2500 checkpointed (+100 fits, 661s, 0 left in this process)
+2026-09-03 15:11:31,207 INFO     pools: 1000/1000 train, 2200/2500 test  (+400 new fits, 2635s)
+2026-09-03 15:11:31,207 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-09-03 15:11:32,638 INFO device: cuda (torch.cuda.is_available()=True) | eps=100 | epoch_cap=750 | cache dpctgan_eps100_ep750 | results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep750
+2026-09-03 15:11:32,638 INFO === TAPAS privacy audit: dpctgan (SmartNoise) eps=100, sigma=5, epoch_cap=750, batch=500, num_train=1000, num_test=2500 ===
+2026-09-03 15:11:32,638 INFO     cache benchmark_tapas/cache/dpctgan_eps100_ep750   results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep750   total fits = 3500
+2026-09-03 15:11:32,676 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 15:11:32,677 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 15:11:32,691 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dpctgan_eps100_ep750/threat_model.pkl
+2026-09-03 15:22:15,464 INFO     test pool 2300/2500 checkpointed (+100 fits, 642s, 300 left in this process)
+2026-09-03 15:33:01,455 INFO     test pool 2400/2500 checkpointed (+100 fits, 646s, 200 left in this process)
+2026-09-03 15:43:49,035 INFO     test pool 2500/2500 checkpointed (+100 fits, 648s, 100 left in this process)
+2026-09-03 15:43:49,035 INFO     pools: 1000/1000 train, 2500/2500 test  (+300 new fits, 1936s)
+2026-09-03 15:43:49,558 INFO     guard train/D+: 500/500 distinct (100.0%)
+2026-09-03 15:43:50,081 INFO     guard train/D-: 500/500 distinct (100.0%)
+2026-09-03 15:43:51,282 INFO     guard test/D+: 1250/1250 distinct (100.0%)
+2026-09-03 15:43:52,543 INFO     guard test/D-: 1250/1250 distinct (100.0%)
+2026-09-03 15:43:57,399 INFO     exported 1000 train datasets -> synthetic_train.csv.gz [25.1 MB]
+2026-09-03 15:44:09,309 INFO     exported 2500 test datasets -> synthetic_test.csv.gz [62.9 MB]
+2026-09-03 15:44:09,330 INFO   [Groundhog] training on 1000 simulated datasets...
+2026-09-03 15:44:16,045 INFO   [Groundhog] testing on 2500 simulated datasets...
+2026-09-03 15:44:46,502 INFO   [Groundhog] done -- eps_low_95=0.000  auc=0.525  (36.8s, 1127.02 MB)
+2026-09-03 15:44:46,783 INFO   [ShadowModelling(RandomQueries)] training on 1000 simulated datasets...
+2026-09-03 15:48:16,808 INFO   [ShadowModelling(RandomQueries)] testing on 2500 simulated datasets...
+2026-09-03 16:04:16,942 INFO   [ShadowModelling(RandomQueries)] done -- eps_low_95=0.000  auc=0.501  (1169.95s, 23.47 MB)
+2026-09-03 16:04:17,213 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] training on 1000 simulated datasets...
+2026-09-03 16:04:19,453 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] testing on 2500 simulated datasets...
+2026-09-03 16:04:29,139 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] done -- eps_low_95=0.000  auc=0.494  (11.89s, 1.19 MB)
+2026-09-03 16:04:29,427 INFO   [ProbabilityEstimation(KernelDensity())] training on 1000 simulated datasets...
+2026-09-03 16:04:31,143 INFO   [ProbabilityEstimation(KernelDensity())] testing on 2500 simulated datasets...
+2026-09-03 16:04:41,180 INFO   [ProbabilityEstimation(KernelDensity())] done -- eps_low_95=0.000  auc=0.514  (10.65s, 1.04 MB)
+2026-09-03 16:04:41,459 INFO   [ClosestDistance(L_2, accuracy)] training on 1000 simulated datasets...
+2026-09-03 16:04:43,865 INFO   [ClosestDistance(L_2, accuracy)] testing on 2500 simulated datasets...
+2026-09-03 16:04:54,860 INFO   [ClosestDistance(L_2, accuracy)] done -- eps_low_95=0.000  auc=0.510  (12.3s, 1.16 MB)
+2026-09-03 16:04:55,160 INFO     wrote 12500 raw scores -> raw_scores_dpctgan_1000_2500.csv
+2026-09-03 16:04:55,161 INFO === done: worst-case eps_low_95=0.000 [0.000, 0.011] via Groundhog ===
+2026-09-03 16:04:56,608 INFO device: cuda (torch.cuda.is_available()=True) | eps=100 | epoch_cap=1000 | cache dpctgan_eps100_ep1000 | results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep1000
+2026-09-03 16:04:56,608 INFO === TAPAS privacy audit: dpctgan (SmartNoise) eps=100, sigma=5, epoch_cap=1000, batch=500, num_train=1000, num_test=2500 ===
+2026-09-03 16:04:56,608 INFO     cache benchmark_tapas/cache/dpctgan_eps100_ep1000   results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep1000   total fits = 3500
+2026-09-03 16:04:56,646 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 16:04:56,647 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 16:04:56,661 INFO Building new threat model for dpctgan (no cache found)
+2026-09-03 16:19:13,052 INFO     train pool 100/1000 checkpointed (+100 fits, 856s, 300 left in this process)
+2026-09-03 16:33:38,018 INFO     train pool 200/1000 checkpointed (+100 fits, 865s, 200 left in this process)
+2026-09-03 16:48:06,173 INFO     train pool 300/1000 checkpointed (+100 fits, 868s, 100 left in this process)
+2026-09-03 17:02:32,306 INFO     train pool 400/1000 checkpointed (+100 fits, 866s, 0 left in this process)
+2026-09-03 17:02:32,306 INFO     pools: 400/1000 train, 0/2500 test  (+400 new fits, 3456s)
+2026-09-03 17:02:32,306 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-09-03 17:02:33,636 INFO device: cuda (torch.cuda.is_available()=True) | eps=100 | epoch_cap=1000 | cache dpctgan_eps100_ep1000 | results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep1000
+2026-09-03 17:02:33,636 INFO === TAPAS privacy audit: dpctgan (SmartNoise) eps=100, sigma=5, epoch_cap=1000, batch=500, num_train=1000, num_test=2500 ===
+2026-09-03 17:02:33,636 INFO     cache benchmark_tapas/cache/dpctgan_eps100_ep1000   results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep1000   total fits = 3500
+2026-09-03 17:02:33,673 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 17:02:33,674 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 17:02:33,689 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dpctgan_eps100_ep1000/threat_model.pkl
+2026-09-03 17:16:55,314 INFO     train pool 500/1000 checkpointed (+100 fits, 862s, 300 left in this process)
+2026-09-03 17:31:24,515 INFO     train pool 600/1000 checkpointed (+100 fits, 869s, 200 left in this process)
+2026-09-03 17:45:54,748 INFO     train pool 700/1000 checkpointed (+100 fits, 870s, 100 left in this process)
+2026-09-03 18:00:23,898 INFO     train pool 800/1000 checkpointed (+100 fits, 869s, 0 left in this process)
+2026-09-03 18:00:23,898 INFO     pools: 800/1000 train, 0/2500 test  (+400 new fits, 3470s)
+2026-09-03 18:00:23,898 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-09-03 18:00:25,260 INFO device: cuda (torch.cuda.is_available()=True) | eps=100 | epoch_cap=1000 | cache dpctgan_eps100_ep1000 | results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep1000
+2026-09-03 18:00:25,260 INFO === TAPAS privacy audit: dpctgan (SmartNoise) eps=100, sigma=5, epoch_cap=1000, batch=500, num_train=1000, num_test=2500 ===
+2026-09-03 18:00:25,260 INFO     cache benchmark_tapas/cache/dpctgan_eps100_ep1000   results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep1000   total fits = 3500
+2026-09-03 18:00:25,297 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 18:00:25,298 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 18:00:25,313 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dpctgan_eps100_ep1000/threat_model.pkl
+2026-09-03 18:14:38,998 INFO     train pool 900/1000 checkpointed (+100 fits, 854s, 300 left in this process)
+2026-09-03 18:29:01,013 INFO     train pool 1000/1000 checkpointed (+100 fits, 862s, 200 left in this process)
+2026-09-03 18:43:23,670 INFO     test pool 100/2500 checkpointed (+100 fits, 863s, 100 left in this process)
+2026-09-03 18:57:47,369 INFO     test pool 200/2500 checkpointed (+100 fits, 864s, 0 left in this process)
+2026-09-03 18:57:47,369 INFO     pools: 1000/1000 train, 200/2500 test  (+400 new fits, 3442s)
+2026-09-03 18:57:47,369 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-09-03 18:57:48,702 INFO device: cuda (torch.cuda.is_available()=True) | eps=100 | epoch_cap=1000 | cache dpctgan_eps100_ep1000 | results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep1000
+2026-09-03 18:57:48,702 INFO === TAPAS privacy audit: dpctgan (SmartNoise) eps=100, sigma=5, epoch_cap=1000, batch=500, num_train=1000, num_test=2500 ===
+2026-09-03 18:57:48,702 INFO     cache benchmark_tapas/cache/dpctgan_eps100_ep1000   results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep1000   total fits = 3500
+2026-09-03 18:57:48,739 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 18:57:48,740 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 18:57:48,755 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dpctgan_eps100_ep1000/threat_model.pkl
+2026-09-03 19:12:01,038 INFO     test pool 300/2500 checkpointed (+100 fits, 852s, 300 left in this process)
+2026-09-03 19:26:22,063 INFO     test pool 400/2500 checkpointed (+100 fits, 861s, 200 left in this process)
+2026-09-03 19:40:43,944 INFO     test pool 500/2500 checkpointed (+100 fits, 862s, 100 left in this process)
+2026-09-03 19:55:06,174 INFO     test pool 600/2500 checkpointed (+100 fits, 862s, 0 left in this process)
+2026-09-03 19:55:06,174 INFO     pools: 1000/1000 train, 600/2500 test  (+400 new fits, 3437s)
+2026-09-03 19:55:06,174 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-09-03 19:55:07,562 INFO device: cuda (torch.cuda.is_available()=True) | eps=100 | epoch_cap=1000 | cache dpctgan_eps100_ep1000 | results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep1000
+2026-09-03 19:55:07,562 INFO === TAPAS privacy audit: dpctgan (SmartNoise) eps=100, sigma=5, epoch_cap=1000, batch=500, num_train=1000, num_test=2500 ===
+2026-09-03 19:55:07,562 INFO     cache benchmark_tapas/cache/dpctgan_eps100_ep1000   results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep1000   total fits = 3500
+2026-09-03 19:55:07,601 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 19:55:07,603 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 19:55:07,617 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dpctgan_eps100_ep1000/threat_model.pkl
+2026-09-03 20:09:17,625 INFO     test pool 700/2500 checkpointed (+100 fits, 850s, 300 left in this process)
+2026-09-03 20:23:37,903 INFO     test pool 800/2500 checkpointed (+100 fits, 860s, 200 left in this process)
+2026-09-03 20:37:58,141 INFO     test pool 900/2500 checkpointed (+100 fits, 860s, 100 left in this process)
+2026-09-03 20:52:18,438 INFO     test pool 1000/2500 checkpointed (+100 fits, 860s, 0 left in this process)
+2026-09-03 20:52:18,438 INFO     pools: 1000/1000 train, 1000/2500 test  (+400 new fits, 3431s)
+2026-09-03 20:52:18,438 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-09-03 20:52:19,816 INFO device: cuda (torch.cuda.is_available()=True) | eps=100 | epoch_cap=1000 | cache dpctgan_eps100_ep1000 | results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep1000
+2026-09-03 20:52:19,816 INFO === TAPAS privacy audit: dpctgan (SmartNoise) eps=100, sigma=5, epoch_cap=1000, batch=500, num_train=1000, num_test=2500 ===
+2026-09-03 20:52:19,816 INFO     cache benchmark_tapas/cache/dpctgan_eps100_ep1000   results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep1000   total fits = 3500
+2026-09-03 20:52:19,854 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 20:52:19,855 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 20:52:19,870 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dpctgan_eps100_ep1000/threat_model.pkl
+2026-09-03 21:06:31,195 INFO     test pool 1100/2500 checkpointed (+100 fits, 851s, 300 left in this process)
+2026-09-03 21:20:50,601 INFO     test pool 1200/2500 checkpointed (+100 fits, 859s, 200 left in this process)
+2026-09-03 21:35:11,276 INFO     test pool 1300/2500 checkpointed (+100 fits, 861s, 100 left in this process)
+2026-09-03 21:49:31,370 INFO     test pool 1400/2500 checkpointed (+100 fits, 860s, 0 left in this process)
+2026-09-03 21:49:31,370 INFO     pools: 1000/1000 train, 1400/2500 test  (+400 new fits, 3431s)
+2026-09-03 21:49:31,370 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-09-03 21:49:32,744 INFO device: cuda (torch.cuda.is_available()=True) | eps=100 | epoch_cap=1000 | cache dpctgan_eps100_ep1000 | results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep1000
+2026-09-03 21:49:32,744 INFO === TAPAS privacy audit: dpctgan (SmartNoise) eps=100, sigma=5, epoch_cap=1000, batch=500, num_train=1000, num_test=2500 ===
+2026-09-03 21:49:32,744 INFO     cache benchmark_tapas/cache/dpctgan_eps100_ep1000   results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep1000   total fits = 3500
+2026-09-03 21:49:32,782 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 21:49:32,784 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 21:49:32,798 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dpctgan_eps100_ep1000/threat_model.pkl
+2026-09-03 22:03:57,662 INFO     test pool 1500/2500 checkpointed (+100 fits, 865s, 300 left in this process)
+2026-09-03 22:18:30,584 INFO     test pool 1600/2500 checkpointed (+100 fits, 873s, 200 left in this process)
+2026-09-03 22:33:04,822 INFO     test pool 1700/2500 checkpointed (+100 fits, 874s, 100 left in this process)
+2026-09-03 22:47:39,213 INFO     test pool 1800/2500 checkpointed (+100 fits, 874s, 0 left in this process)
+2026-09-03 22:47:39,213 INFO     pools: 1000/1000 train, 1800/2500 test  (+400 new fits, 3486s)
+2026-09-03 22:47:39,213 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-09-03 22:47:40,632 INFO device: cuda (torch.cuda.is_available()=True) | eps=100 | epoch_cap=1000 | cache dpctgan_eps100_ep1000 | results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep1000
+2026-09-03 22:47:40,632 INFO === TAPAS privacy audit: dpctgan (SmartNoise) eps=100, sigma=5, epoch_cap=1000, batch=500, num_train=1000, num_test=2500 ===
+2026-09-03 22:47:40,632 INFO     cache benchmark_tapas/cache/dpctgan_eps100_ep1000   results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep1000   total fits = 3500
+2026-09-03 22:47:40,671 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 22:47:40,673 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 22:47:40,689 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dpctgan_eps100_ep1000/threat_model.pkl
+2026-09-03 23:01:56,252 INFO     test pool 1900/2500 checkpointed (+100 fits, 855s, 300 left in this process)
+2026-09-03 23:16:21,529 INFO     test pool 2000/2500 checkpointed (+100 fits, 865s, 200 left in this process)
+2026-09-03 23:30:45,748 INFO     test pool 2100/2500 checkpointed (+100 fits, 864s, 100 left in this process)
+2026-09-03 23:45:12,701 INFO     test pool 2200/2500 checkpointed (+100 fits, 867s, 0 left in this process)
+2026-09-03 23:45:12,701 INFO     pools: 1000/1000 train, 2200/2500 test  (+400 new fits, 3452s)
+2026-09-03 23:45:12,701 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the wrapper starts a fresh process (see MAX_NEW_FITS in the module docstring). ===
+2026-09-03 23:45:14,102 INFO device: cuda (torch.cuda.is_available()=True) | eps=100 | epoch_cap=1000 | cache dpctgan_eps100_ep1000 | results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep1000
+2026-09-03 23:45:14,102 INFO === TAPAS privacy audit: dpctgan (SmartNoise) eps=100, sigma=5, epoch_cap=1000, batch=500, num_train=1000, num_test=2500 ===
+2026-09-03 23:45:14,102 INFO     cache benchmark_tapas/cache/dpctgan_eps100_ep1000   results benchmark_tapas/results/dp-ctgan/epoch_sweep/eps100_ep1000   total fits = 3500
+2026-09-03 23:45:14,139 INFO Sampled fixed background of 499 records (seed=42)
+2026-09-03 23:45:14,140 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-09-03 23:45:14,155 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dpctgan_eps100_ep1000/threat_model.pkl
+2026-09-03 23:59:42,943 INFO     test pool 2300/2500 checkpointed (+100 fits, 868s, 300 left in this process)
+2026-09-04 00:14:21,773 INFO     test pool 2400/2500 checkpointed (+100 fits, 879s, 200 left in this process)
+2026-09-04 00:29:02,043 INFO     test pool 2500/2500 checkpointed (+100 fits, 880s, 100 left in this process)
+2026-09-04 00:29:02,043 INFO     pools: 1000/1000 train, 2500/2500 test  (+300 new fits, 2627s)
+2026-09-04 00:29:02,604 INFO     guard train/D+: 500/500 distinct (100.0%)
+2026-09-04 00:29:03,144 INFO     guard train/D-: 500/500 distinct (100.0%)
+2026-09-04 00:29:04,402 INFO     guard test/D+: 1250/1250 distinct (100.0%)
+2026-09-04 00:29:05,771 INFO     guard test/D-: 1250/1250 distinct (100.0%)
+2026-09-04 00:29:10,430 INFO     exported 1000 train datasets -> synthetic_train.csv.gz [24.7 MB]
+2026-09-04 00:29:22,081 INFO     exported 2500 test datasets -> synthetic_test.csv.gz [61.9 MB]
+2026-09-04 00:29:22,103 INFO   [Groundhog] training on 1000 simulated datasets...
+2026-09-04 00:29:29,064 INFO   [Groundhog] testing on 2500 simulated datasets...
+2026-09-04 00:30:01,090 INFO   [Groundhog] done -- eps_low_95=0.000  auc=0.524  (38.6s, 1127.02 MB)
+2026-09-04 00:30:01,364 INFO   [ShadowModelling(RandomQueries)] training on 1000 simulated datasets...
+2026-09-04 00:33:23,021 INFO   [ShadowModelling(RandomQueries)] testing on 2500 simulated datasets...
+2026-09-04 00:49:31,823 INFO   [ShadowModelling(RandomQueries)] done -- eps_low_95=0.000  auc=0.529  (1170.23s, 23.35 MB)
+2026-09-04 00:49:32,260 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] training on 1000 simulated datasets...
+2026-09-04 00:49:34,575 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] testing on 2500 simulated datasets...
+2026-09-04 00:49:46,160 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] done -- eps_low_95=0.000  auc=0.500  (13.85s, 1.19 MB)
+2026-09-04 00:49:46,473 INFO   [ProbabilityEstimation(KernelDensity())] training on 1000 simulated datasets...
+2026-09-04 00:49:48,272 INFO   [ProbabilityEstimation(KernelDensity())] testing on 2500 simulated datasets...
+2026-09-04 00:49:58,234 INFO   [ProbabilityEstimation(KernelDensity())] done -- eps_low_95=0.000  auc=0.486  (10.66s, 1.05 MB)
+2026-09-04 00:49:58,526 INFO   [ClosestDistance(L_2, accuracy)] training on 1000 simulated datasets...
+2026-09-04 00:50:00,958 INFO   [ClosestDistance(L_2, accuracy)] testing on 2500 simulated datasets...
+2026-09-04 00:50:12,114 INFO   [ClosestDistance(L_2, accuracy)] done -- eps_low_95=0.000  auc=0.496  (12.42s, 1.16 MB)
+2026-09-04 00:50:12,421 INFO     wrote 12500 raw scores -> raw_scores_dpctgan_1000_2500.csv
+2026-09-04 00:50:12,422 INFO === done: worst-case eps_low_95=0.000 [0.000, 0.012] via Groundhog ===

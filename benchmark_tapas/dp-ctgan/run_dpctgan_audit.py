@@ -53,13 +53,22 @@ EPSILON DOES NOT MEAN WHAT IT MEANS FOR SYNTHCITY -- READ BEFORE COMPARING
     trained generator, and the library breaks out SILENTLY. --probe reports how many
     epochs actually ran; that number belongs in the write-up either way.
 
-WHERE THE POOL CACHE LIVES, AND WHY THE COUNTS SWEEP IS NEARLY FREE
-    TAPAS memoises simulations and only ever GROWS the pool, so a counts sweep that
-    walks upward re-uses everything the previous stage fitted. The eps=1.0 /
-    epoch_cap=300 pool already has 3500 fits in it from the spike diagnosis, at
-    cache/dpctgan_eps1 -- and this script points at that same directory. So the whole
-    counts sweep at eps=1.0 should need ZERO new fits and cost only four attack
-    passes. Do not delete that cache to "start clean"; it is the expensive part.
+WHERE THE POOL CACHE LIVES, AND THE TRAP THE COUNTS SWEEP FELL INTO
+    TAPAS memoises simulations and only ever GROWS the pool -- but it does NOT return
+    a prefix of it. `_generate_samples` subtracts what is memoised, generates the
+    shortfall, and hands back the WHOLE memory. So a stage that asks for 100 test
+    datasets against a pool of 2500 is scored on all 2500 and labelled 100.
+
+    scripts/run_counts_sweep.py is correct because it walks its stages upward on a
+    FRESH pool: each stage attacks at the moment the pool is exactly its own size.
+    A counts sweep pointed at an already-full pool produces N identical copies of the
+    largest stage instead -- which is exactly what happened on 2026-09-03 when this
+    script was first pointed at the spike diagnosis's completed 3500-fit
+    cache/dpctgan_eps1. All four stages came back byte-identical.
+
+    So: a COUNTS SWEEP needs its own empty pool, via --cache-tag. A single-point
+    audit may reuse a completed pool of exactly its own size. assert_pool_matches_counts
+    enforces the distinction rather than trusting the caller to remember it.
 
     A cache root is keyed by EVERY generator parameter that moves (eps and
     epoch_cap), because build_or_load_threat_model unpickles the generator from the
@@ -208,7 +217,7 @@ def eps_slug(eps: float) -> str:
     return f"eps{eps:g}"
 
 
-def set_paths(epsilon: float, epoch_cap: int) -> None:
+def set_paths(epsilon: float, epoch_cap: int, cache_tag: str = "") -> None:
     """Point the pool cache and the results tree at this arm's own directories.
 
     epoch_cap == EPOCHS (300, the SmartNoise default) keeps the spike diagnosis's
@@ -217,11 +226,12 @@ def set_paths(epsilon: float, epoch_cap: int) -> None:
     cap is a different generator and gets its own pool and its own results tree.
     """
     global CACHE_ROOT, RESULTS_ROOT
+    suffix = f"_{cache_tag}" if cache_tag else ""
     if epoch_cap == EPOCHS:
-        CACHE_ROOT = CACHE_DIR / f"dpctgan_{eps_slug(epsilon)}"
+        CACHE_ROOT = CACHE_DIR / f"dpctgan_{eps_slug(epsilon)}{suffix}"
         RESULTS_ROOT = DPCTGAN_DIR / eps_slug(epsilon)
     else:
-        CACHE_ROOT = CACHE_DIR / f"dpctgan_{eps_slug(epsilon)}_ep{epoch_cap}"
+        CACHE_ROOT = CACHE_DIR / f"dpctgan_{eps_slug(epsilon)}_ep{epoch_cap}{suffix}"
         RESULTS_ROOT = (DPCTGAN_DIR / "epoch_sweep"
                         / f"{eps_slug(epsilon)}_ep{epoch_cap}")
     CACHE_ROOT.mkdir(parents=True, exist_ok=True)
@@ -248,6 +258,10 @@ class DegeneratePool(RuntimeError):
 
 class CacheMismatch(RuntimeError):
     """The cached pool was grown by a differently-configured generator."""
+
+
+class PoolOversized(RuntimeError):
+    """The memoised pool is larger than this stage's counts, so the stage is a lie."""
 
 
 # -- Copied from run_aim_audit.py, for the reason stated there ------------
@@ -296,6 +310,39 @@ def assert_distinct(threat_model) -> dict:
             f"  Delete {CACHE_ROOT} before re-running."
         )
     return fractions
+
+
+def assert_pool_matches_counts(threat_model, num_train: int, num_test: int) -> None:
+    """Abort if the memoised pool is BIGGER than the stage being claimed.
+
+    TAPAS does not truncate. `LabelInferenceThreatModel._generate_samples` does
+    `num_samples -= len(self._memory[training][0])`, generates only the shortfall, and
+    then returns the WHOLE memory -- so asking for 100 test datasets from a pool of
+    2500 trains and scores the attack on all 2500 while the result is labelled 100.
+
+    That is why scripts/run_counts_sweep.py walks its stages UPWARD on a fresh pool:
+    each stage's attacks run at the moment the pool is exactly that stage's size. A
+    counts sweep pointed at an already-full pool silently produces N identical copies
+    of the largest stage. Found the hard way on 2026-09-03, when all four DP-CTGAN
+    stages came back byte-identical because they reused the spike diagnosis's
+    3500-fit pool.
+
+    Equal is fine, smaller is fine (grow_pools will top it up). Only bigger is fatal.
+    """
+    have_train = len(threat_model._memory[True][0])
+    have_test = len(threat_model._memory[False][0])
+    if have_train <= num_train and have_test <= num_test:
+        return
+    raise PoolOversized(
+        f"{CACHE_ROOT} holds {have_train} train / {have_test} test simulations, but this "
+        f"stage claims {num_train}/{num_test}.\n"
+        f"  TAPAS returns the whole memoised pool rather than a prefix, so the attacks "
+        f"would run on {have_train}/{have_test} and the results would be mislabelled.\n"
+        f"  For a counts sweep, start from an EMPTY pool and walk the stages upward -- "
+        f"give this sweep its own cache with --cache-tag, e.g. --cache-tag counts.\n"
+        f"  For a single-point audit at the pool's own size, pass "
+        f"--num-train {have_train} --num-test {have_test}."
+    )
 
 
 def assert_generator_matches(threat_model, epsilon: float, epoch_cap: int) -> None:
@@ -525,6 +572,9 @@ def run_audit(num_train: int, num_test: int, cuda: bool,
         return EXIT_INCOMPLETE
 
     # Guard BEFORE the attacks, so a broken pool is caught before hours of scoring.
+    # After growing, before attacking: a pool bigger than the stage silently
+    # invalidates it (see assert_pool_matches_counts).
+    assert_pool_matches_counts(threat_model, num_train, num_test)
     fractions = assert_distinct(threat_model)
     export_pools(threat_model)
 
@@ -610,6 +660,11 @@ def main() -> int:
                     help=f"DP-CTGAN epoch cap (default {EPOCHS}, the SmartNoise "
                          f"default). {EPOCH_LADDER} are the epoch sweep's arms; they "
                          f"get their own caches and land under epoch_sweep/.")
+    ap.add_argument("--cache-tag", default="",
+                    help="suffix for the POOL cache directory, leaving results where "
+                         "they are. Required for a counts sweep: the stages must grow "
+                         "one pool upward from empty, so they cannot share a cache with "
+                         "a completed audit (see assert_pool_matches_counts).")
     ap.add_argument("--max-new-fits", type=int, default=MAX_NEW_FITS,
                     help=f"fits per process before exiting {EXIT_INCOMPLETE} for a "
                          f"fresh one (default {MAX_NEW_FITS}; see grow_pools)")
@@ -617,7 +672,7 @@ def main() -> int:
 
     MAX_NEW_FITS = args.max_new_fits
     CHECKPOINT_EVERY = min(CHECKPOINT_EVERY, MAX_NEW_FITS)
-    set_paths(args.epsilon, args.epoch_cap)
+    set_paths(args.epsilon, args.epoch_cap, args.cache_tag)
 
     import torch
     cuda = torch.cuda.is_available()
@@ -636,6 +691,9 @@ def main() -> int:
         return 1
     except CacheMismatch as exc:
         log.error(f"CACHE CONFIGURATION MISMATCH:\n{exc}")
+        return 1
+    except PoolOversized as exc:
+        log.error(f"POOL LARGER THAN THE REQUESTED STAGE:\n{exc}")
         return 1
 
 
