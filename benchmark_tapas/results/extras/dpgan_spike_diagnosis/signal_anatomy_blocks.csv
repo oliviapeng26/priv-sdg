@@ -1,0 +1,19 @@
+formal_epsilon,block,n_features,auc_only_this,auc_except_this
+1.0,all features,76,0.89232,
+1.0,numeric (all),10,0.87194,0.7115699999999999
+1.0,categorical (all),66,0.7115699999999999,0.87194
+1.0,shuffled labels,76,0.46312,
+1.0,numeric: age,2,0.59053,0.86829
+1.0,numeric: education_num,2,0.70068,0.7658
+1.0,numeric: capital_gain,2,0.53048,0.88848
+1.0,numeric: capital_loss,2,0.50021,0.8890999999999998
+1.0,numeric: hours_per_week,2,0.49711999999999995,0.8877200000000001
+10.0,all features,76,0.51922,
+10.0,numeric (all),10,0.52252,0.52556
+10.0,categorical (all),66,0.52556,0.52252
+10.0,shuffled labels,76,0.52751,
+10.0,numeric: age,2,0.5272399999999999,0.52623
+10.0,numeric: education_num,2,0.50544,0.52294
+10.0,numeric: capital_gain,2,0.4808,0.5204
+10.0,numeric: capital_loss,2,0.4899,0.5151399999999999
+10.0,numeric: hours_per_week,2,0.5215799999999999,0.5186

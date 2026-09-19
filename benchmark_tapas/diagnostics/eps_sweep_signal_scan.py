@@ -79,6 +79,8 @@ Run from the repo root, env active:
   python benchmark_tapas/diagnostics/eps_sweep_signal_scan.py
   python benchmark_tapas/diagnostics/eps_sweep_signal_scan.py --epsilons 1.0
   python benchmark_tapas/diagnostics/eps_sweep_signal_scan.py --n 200 --epsilons 0.3 3.0
+  python benchmark_tapas/diagnostics/eps_sweep_signal_scan.py --epsilons 1.0 --target-seed 7
+      (placebo: a different random target/alternate pair, everything else identical)
 
 Cost: N fits per eps at the 4.4-8 s/fit DPGAN manages on a 500-row background, so
 ~30-55 min per eps and ~1.5-2.5 h for the default three. Resumable -- an interrupted
@@ -108,7 +110,7 @@ import tapas.threat_models as tm                                  # noqa: E402
 import common                                                     # noqa: E402
 from config import (CACHE_DIR, RESULTS_DIR, METHOD_CONFIG,        # noqa: E402
                     NUM_SYNTHETIC, CONTINUOUS_COLS)
-from seeds import SCORE_ATTACK_SEED                               # noqa: E402
+from seeds import SCORE_ATTACK_SEED, TAPAS_TARGET_SEED            # noqa: E402
 
 METHOD = "dpgan"
 # 0.3 and 3.0 bracket 1.0 on a log scale; 1.0 itself is the replication.
@@ -120,6 +122,14 @@ CV_FOLDS = 5
 SWEEP_DIR = RESULTS_DIR / "extras" / "dpgan_spike_diagnosis"
 SWEEP_DIR.mkdir(parents=True, exist_ok=True)
 SCAN_CSV = SWEEP_DIR / "signal_scan.csv"
+
+
+def scan_csv(target_seed: int) -> Path:
+    """The published target keeps signal_scan.csv. Any other target writes its own file,
+    so a placebo run can never overwrite or mix into the scan already on record."""
+    if target_seed == TAPAS_TARGET_SEED:
+        return SCAN_CSV
+    return SWEEP_DIR / f"signal_scan_target{target_seed}.csv"
 
 logging.basicConfig(
     level=logging.INFO,
@@ -187,21 +197,26 @@ def signal_auc(X, y, seed: int = SCORE_ATTACK_SEED):
 
 # -- Pool construction ---------------------------------------------------
 
-def build_pool(epsilon: float, n_datasets: int, device_kwargs: dict):
+def build_pool(epsilon: float, n_datasets: int, device_kwargs: dict,
+               target_seed: int = TAPAS_TARGET_SEED):
     """Grow a training pool of n_datasets at this eps, checkpointing as it goes.
 
     Constructed exactly as run_dpgan_eps_sweep.py does -- same threat model class, same
     knowledge classes, same generator, same seeds -- so the resulting datasets are
     the same draws the audit would have made.
     """
-    cache_dir = CACHE_DIR / f"{METHOD}_signal_{eps_slug(epsilon)}"
+    # A different target is a different experiment: its own cache, never shared.
+    tag = "" if target_seed == TAPAS_TARGET_SEED else f"_target{target_seed}"
+    cache_dir = CACHE_DIR / f"{METHOD}_signal_{eps_slug(epsilon)}{tag}"
     cache_dir.mkdir(parents=True, exist_ok=True)
     cache_path = cache_dir / "threat_model"
 
     plugin_kwargs = {**METHOD_CONFIG[METHOD]["plugin_kwargs"], **device_kwargs}
     train_dataset, _, description = common.load_adult_datasets()
     background, background_idx = common.sample_background(train_dataset)
-    target, alternate = common.select_random_target(train_dataset, background_idx)
+    target, alternate = common.select_random_target(train_dataset, background_idx,
+                                                    seed=target_seed)
+    log.info(f"    target_seed={target_seed} (published target uses {TAPAS_TARGET_SEED})")
 
     threat_model = common.build_or_load_threat_model(
         cache_dir=cache_dir, method=METHOD, background_dataset=background,
@@ -232,10 +247,11 @@ def build_pool(epsilon: float, n_datasets: int, device_kwargs: dict):
 
 # -- Per-eps driver ------------------------------------------------------
 
-def run_one(epsilon: float, n_datasets: int, device_kwargs: dict) -> dict:
+def run_one(epsilon: float, n_datasets: int, device_kwargs: dict,
+            target_seed: int = TAPAS_TARGET_SEED) -> dict:
     log.info(f"=== eps={epsilon:g}: {n_datasets} datasets, "
              f"plugin_kwargs={METHOD_CONFIG[METHOD]['plugin_kwargs']} ===")
-    datasets, labels, pool_s = build_pool(epsilon, n_datasets, device_kwargs)
+    datasets, labels, pool_s = build_pool(epsilon, n_datasets, device_kwargs, target_seed)
 
     n_pos = int(sum(bool(l) for l in labels))
     X, y = features(datasets, labels)
@@ -246,7 +262,7 @@ def run_one(epsilon: float, n_datasets: int, device_kwargs: dict) -> dict:
     log.info(f"    {n_pos} D+ / {len(labels) - n_pos} D-, {X.shape[1]} features, "
              f"pool {pool_s / 60:.1f} min")
 
-    return {
+    row = {
         "method": METHOD, "formal_epsilon": epsilon, "n_datasets": len(datasets),
         "n_positive": n_pos, "n_features": int(X.shape[1]),
         "signal_auc": auc, "signal_auc_cv_std": auc_sd,
@@ -254,20 +270,23 @@ def run_one(epsilon: float, n_datasets: int, device_kwargs: dict) -> dict:
         "num_synthetic": NUM_SYNTHETIC, "cv_folds": CV_FOLDS,
         "pool_wall_clock_s": pool_s,
     }
+    if target_seed != TAPAS_TARGET_SEED:      # published-target rows keep their old schema
+        row["target_seed"] = target_seed
+    return row
 
 
-def upsert(row: dict) -> None:
+def upsert(row: dict, path: Path = SCAN_CSV) -> None:
     """One row per (epsilon, n_datasets), so a re-run at a different N adds rather
     than silently replaces."""
     df = pd.DataFrame([row])
-    if SCAN_CSV.exists():
-        existing = pd.read_csv(SCAN_CSV)
+    if path.exists():
+        existing = pd.read_csv(path)
         if {"formal_epsilon", "n_datasets"}.issubset(existing.columns):
             mask = ~((existing.formal_epsilon == row["formal_epsilon"])
                      & (existing.n_datasets == row["n_datasets"]))
             existing = existing[mask]
         df = pd.concat([existing, df], ignore_index=True)
-    df.sort_values("formal_epsilon").to_csv(SCAN_CSV, index=False)
+    df.sort_values("formal_epsilon").to_csv(path, index=False)
 
 
 def main() -> int:
@@ -277,6 +296,10 @@ def main() -> int:
                         help=f"budgets to scan (default: {SCAN_EPSILONS})")
     parser.add_argument("--n", type=int, default=N_DATASETS,
                         help=f"datasets per eps (default: {N_DATASETS})")
+    parser.add_argument("--target-seed", type=int, default=TAPAS_TARGET_SEED,
+                        help="seed that picks the target/alternate pair (default: "
+                             f"{TAPAS_TARGET_SEED}, the published pair). Any other value is a "
+                             "placebo pair: separate cache and signal_scan_target<seed>.csv")
     args = parser.parse_args()
 
     import torch
@@ -289,13 +312,15 @@ def main() -> int:
     failed = []
     for epsilon in args.epsilons:
         try:
-            upsert(run_one(epsilon, args.n, device_kwargs))
+            upsert(run_one(epsilon, args.n, device_kwargs, args.target_seed),
+                   scan_csv(args.target_seed))
         except Exception:
             log.error(f"eps={epsilon:g} FAILED:\n{traceback.format_exc()}")
             failed.append(epsilon)
 
-    if SCAN_CSV.exists():
-        out = pd.read_csv(SCAN_CSV)
+    csv_path = scan_csv(args.target_seed)
+    if csv_path.exists():
+        out = pd.read_csv(csv_path)
         print("\n=== membership signal vs formal epsilon ===")
         print(out[["formal_epsilon", "n_datasets", "signal_auc",
                    "signal_auc_cv_std", "permuted_auc"]]

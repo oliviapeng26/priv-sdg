@@ -24,7 +24,7 @@ config.py  common.py     shared constants, and the TAPAS pipeline + SynthcityGen
 tapas_wrappers/          TAPAS Generator wrappers for the SmartNoise generators (aim_generator.py, dpctgan_generator.py)
 audits/                  every script that runs a TAPAS audit (table below)
 eps_sweep_pipeline/      DPGAN ε sweep: eps_sweep_{sigma_check,generate,evaluate,aggregate}.py
-diagnostics/             DPGAN ε = 1.0 spike diagnosis (signal scan, recompute, ε nudge), disentangle run
+diagnostics/             DPGAN ε = 1.0 spike diagnosis, components [0]–[6] (table below), disentangle run
 tuning/                  convergence_check.py (picks n_iter, paper Table 4), probe_fit_time.py
 privacy_analysis.ipynb   all tables and figures; see its first cell for the paper map
 results/                 outputs, by experiment (below)
@@ -41,7 +41,7 @@ Wrapper file names (`aim_generator`, `dpctgan_generator`) are kept as-is: threat
 | Privacy at ε = 1.0, four audit sizes (50/100, 200/500, 500/1000, 1000/2500) | `results/sample_size_sweep/{generator}/{stage}/` | BN, PrivBayes, CTGAN, DPGAN: `audits/run_synthcity_sample_size_sweep.py`. AIM: `audits/run_aim_audit.py`. DP-CTGAN: `audits/run_dpctgan_audit.py` |
 | Privacy at ε = 0.1, 1, 10, 100 at 1000/2500 | `results/eps_sweep/{dpgan,aim,dp_ctgan}/eps{e}/` | DPGAN: `audits/run_dpgan_eps_sweep.py`. AIM and DP-CTGAN: same scripts as above with `--epsilon` |
 | DP-CTGAN epoch cap 300 / 500 / 750 / 1000 at ε = 100 | `results/extras/dp_ctgan_epoch_cap/` (cap 300 = `eps_sweep/dp_ctgan/eps100`) | `audits/run_dpctgan_audit.py --epoch-cap` |
-| DPGAN ε = 1.0 spike diagnosis | `results/extras/dpgan_spike_diagnosis/` | `diagnostics/` |
+| DPGAN ε = 1.0 spike diagnosis | `results/extras/dpgan_spike_diagnosis/` | `diagnostics/`, components below |
 
 ε = 1 is not duplicated in `eps_sweep/`: it is the 1000/2500 stage of `sample_size_sweep/`, and
 `privacy_analysis.ipynb` stitches the two together. AIM ε = 100 was not run (about 12 h of
@@ -49,6 +49,26 @@ synthetic pool per arm). Neither `privbayes` nor the non-DP generators have an �
 
 Per-script detail: `audits/README_aim.md`, `audits/README_dpctgan.md`. DP-CTGAN needs the Opacus 0.x
 API, so it runs in the workstation's separate environment.
+
+### DPGAN ε = 1.0 spike: the diagnosis components
+
+Each script's docstring states the question it answers and what it found. Run in order; only [6]
+needs a GPU. Everything else reads the exported pools and finishes in minutes on a laptop.
+
+| | Script | Question | Where it landed |
+|---|---|---|---|
+| [0] | `eps_sweep_signal_scan.py` | Is the signal a smooth function of ε, or is 1.0 a one-off? | Smooth peak: 0.76 / 0.87 / 0.62 at ε = 0.3 / 1 / 3 |
+| [1] | `recompute_eff_eps.py` | Is TAPAS's bound sound? | Reproduced independently; the bound is attainable |
+| [2] | `run_eps_nudge.py` | Is something keying on the literal value 1.0? | No, but ε = 0.999/1.0/1.001 share one σ (11.71875), so these are replicates, not neighbours |
+| [3] | `dpgan_pool_fidelity.py` | Is the ε = 10/100 floor just a blurrier generator? | No. ε = 100 is the farthest from real and the least stable |
+| [4] | `dpgan_target_profile.py` | Is the audited target/alternate pair unusual? | No absent category, so the encoder-layout hypothesis is out |
+| [5] | `dpgan_signal_anatomy.py` | Which columns carry the signal? | Numeric block 0.872, categorical block 0.712; strongest in the two numeric columns where the pair differs |
+| [6] | `run_signal_scan_placebo.py` | Is the spike about DPGAN, or about this one record? | **Open.** Needs GPU, ~30–55 min per pair |
+
+Not yet established: whether the non-DP components (the encoder, the label encoder, the conditional
+sampler, and the generator's own extra penalty, which reads the real batch at `gan.py:359-363`) are
+what carries the signal. They are a channel the formal ε does not cover, read in the Synthcity
+source; nothing here shows they cause the leak.
 
 ## Running an audit
 

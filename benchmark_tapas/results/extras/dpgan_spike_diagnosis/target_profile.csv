@@ -1,0 +1,14 @@
+target_seed,target_row,alternate_row,column,type,differs,target,alternate,target_rarity,alternate_rarity
+43,12435,1204,age,numeric,True,36.0,47.0,43% of background below,72% of background below
+43,12435,1204,education_num,numeric,True,6.0,9.0,5% of background below,13% of background below
+43,12435,1204,capital_gain,numeric,False,0.0,0.0,0% of background below,0% of background below
+43,12435,1204,capital_loss,numeric,False,0.0,0.0,0% of background below,0% of background below
+43,12435,1204,hours_per_week,numeric,False,40.0,40.0,26% of background below,26% of background below
+43,12435,1204,workclass,categorical,True,Private,Local-gov,379 of 499,39 of 499
+43,12435,1204,marital_status,categorical,True,Married-civ-spouse,Separated,216 of 499,17 of 499
+43,12435,1204,occupation,categorical,True,Craft-repair,Adm-clerical,63 of 499,75 of 499
+43,12435,1204,relationship,categorical,True,Husband,Unmarried,182 of 499,67 of 499
+43,12435,1204,race,categorical,True,White,Black,428 of 499,45 of 499
+43,12435,1204,sex,categorical,True,Male,Female,306 of 499,193 of 499
+43,12435,1204,native_country,categorical,False,United-States,United-States,455 of 499,455 of 499
+43,12435,1204,income,categorical,False,<=50K,<=50K,381 of 499,381 of 499
