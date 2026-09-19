@@ -9,7 +9,7 @@ only these changes:
   2. `method` and `epsilon` are per-call parameters, not a hardcoded
      GENERATOR_NAME/eps=10 -- one common module serves all four methods.
   3. A thin `run_method(method, ...)` helper holds the per-method loop so the
-     four scripts/ files stay ~10 lines each.
+     the four baseline scripts (now archived) stay ~10 lines each.
 
 Everything else -- SwapMIALabeller / SwapTargetedMIA (exact-swap D+/D-
 construction), threat-model disk caching, the 5-attack battery, per-attack
@@ -57,7 +57,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KernelDensity
 
 # config.py sits next to this file (benchmark_tapas/); make it importable
-# whether we're run from scripts/ or from benchmark_tapas/ directly.
+# whether we're run from audits/, diagnostics/ or benchmark_tapas/ directly.
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from config import (
     TRAIN_CSV, TEST_CSV,
@@ -531,7 +531,7 @@ def run_method(method: str, extra_plugin_kwargs: dict = None):
         else:
             # run_attack short-circuited on its per-attack JSON cache, which stores
             # only aggregates. The scores cannot be recovered without re-running the
-            # attack -- cheap, since the fits are memoised (see scripts/extract_scores.py).
+            # attack -- cheap, since the fits are memoised (see archive/baseline_50_100/scripts/extract_scores.py).
             no_scores.append(attack.label)
         threat_model.save(str(cache_dir / "threat_model"))
 
@@ -547,7 +547,7 @@ def run_method(method: str, extra_plugin_kwargs: dict = None):
     if no_scores:
         log.warning(f"No raw scores for {no_scores} -- served from the per-attack JSON "
                     f"cache, which does not store them. Re-run those attacks (or use "
-                    f"scripts/extract_scores.py) if the scores are needed.")
+                    f"archive/baseline_50_100/scripts/extract_scores.py) if the scores are needed.")
 
     out = pd.DataFrame(rows)
     out.to_csv(results_dir / f"effeps_{method}.csv", index=False)

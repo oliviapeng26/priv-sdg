@@ -12,7 +12,7 @@ cannot overwrite this one.
 
 Outputs:
     synthetic_data/smartnoise/{generator}/eps{eps}/seed{seed}.csv
-    results/smartnoise/generation_cost.csv    wall clock, peak memory, device
+    evaluation/results/smartnoise/generation_cost.csv    wall clock, peak memory, device
 
 GENERATION ONLY. Scoring is evaluation/eval_fidelity.py and
 evaluation/eval_utility.py, which carry `aim` and `dpctgan` alongside the four
@@ -58,13 +58,13 @@ EPSILON DOES NOT MEAN THE SAME THING FOR THE TWO GENERATORS -- READ BEFORE COMPA
     epoch's worth of budget. Verified against the control flow, not assumed.
 
     So `epsilon_spent` is the number to report for this generator; the requested eps
-    is a target it steps past. Both go into results/smartnoise/generation_cost.csv,
+    is a target it steps past. Both go into evaluation/results/smartnoise/generation_cost.csv,
     alongside `epochs_run`.
 
     Both generators are taken exactly as the libraries ship them, and "eps = 1.0"
     therefore labels two different mechanisms, with two different deltas and only one
     of them exact. That is deliberate -- the same choice
-    benchmark_tapas/scripts/eps_sweep/spike_diagnosis/dpctgan_generator.py documents
+    benchmark_tapas/diagnostics/dpctgan_generator.py documents
     -- but it means the epochs actually trained are a REPORTED QUANTITY rather than a
     configuration detail. A run that stopped in single-digit epochs is an undertrained
     network whose weak utility says nothing about DP-SGD. Check both columns before
@@ -169,7 +169,7 @@ CATEGORICAL_COLS = ["workclass", "marital_status", "occupation", "relationship",
 DATA_DIR = REPO_ROOT / "data"
 TRAIN_CSV = DATA_DIR / "adult_train.csv"
 SYNTH_ROOT = REPO_ROOT / "synthetic_data" / "smartnoise"
-RESULTS_DIR = REPO_ROOT / "results" / "smartnoise"
+RESULTS_DIR = REPO_ROOT / "evaluation" / "results" / "smartnoise"
 COST_CSV = RESULTS_DIR / "generation_cost.csv"
 
 EXPECTED_TRAIN_N = 21_523
@@ -252,7 +252,7 @@ def dpctgan_transformer(columns):
     does categories[np.float32] -> TypeError. The GAN-family synthesisers want
     one-hot: label -> integer code -> one-hot on the way in, and the inverse unwinds
     both. (Same construction as the TAPAS wrapper in
-    benchmark_tapas/scripts/eps_sweep/spike_diagnosis/dpctgan_generator.py.)
+    benchmark_tapas/diagnostics/dpctgan_generator.py.)
     """
     from aim import BIN_EDGES
     from snsynth.transform import (TableTransformer, MinMaxTransformer,
@@ -324,10 +324,10 @@ def generate_dpctgan(train_data: pd.DataFrame, seed: int, epsilon: float,
 
 # Fixed column order, so the header does not reshuffle between runs.
 #
-# Generation cost lands here rather than in results/computational_cost.csv because
+# Generation cost lands here rather than in evaluation/results/computational_cost.csv because
 # that table is keyed (method, seed, stage) with no eps column, so two budgets would
 # collapse onto the same keys. The fidelity/utility rows for these methods DO go to
-# results/computational_cost.csv, written by the eval scripts alongside every other
+# evaluation/results/computational_cost.csv, written by the eval scripts alongside every other
 # method -- which means those eval rows are not eps-keyed and record whichever arm
 # was scored last. Generation, the expensive half, is the one that needed the split.
 COST_COLUMNS = ["method", "formal_epsilon", "seed", "stage", "wall_clock_s",
@@ -337,7 +337,7 @@ COST_COLUMNS = ["method", "formal_epsilon", "seed", "stage", "wall_clock_s",
 def record_cost(row: dict) -> None:
     """Upsert one (method, formal_epsilon, seed, stage) row into generation_cost.csv.
 
-    A SmartNoise-local cost table rather than results/computational_cost.csv: that
+    A SmartNoise-local cost table rather than evaluation/results/computational_cost.csv: that
     file is keyed on (method, seed, stage) with no eps column, so two budgets would
     collapse onto the same keys, and its `aim` rows already belong to the
     generate_runs.py arm. Same reasoning as eps_sweep_generate.record_cost.
@@ -370,7 +370,7 @@ def generate_one(generator: str, train_data: pd.DataFrame, epsilon: float,
     set_all_seeds(seed)
 
     # Timed region covers fit + generate together, matching sdg/generate_runs.py so
-    # the numbers stay comparable to results/computational_cost.csv.
+    # the numbers stay comparable to evaluation/results/computational_cost.csv.
     tracemalloc.start()
     t0 = time.perf_counter()
     if generator == "aim":

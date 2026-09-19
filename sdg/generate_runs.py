@@ -8,7 +8,7 @@ get mean +/- std instead of a single draw, and every draw is reproducible.
 
 Outputs:
     synthetic_data/runs/{method}_seed{seed}.csv   one file per (method, run)
-    results/computational_cost.csv                wall clock + peak memory per run
+    evaluation/results/computational_cost.csv                wall clock + peak memory per run
 
 This script does GENERATION ONLY. Scoring lives in evaluation/eval_fidelity.py
 and evaluation/eval_utility.py, both of which read the CSVs written here. The
@@ -111,7 +111,7 @@ TARGET_COL = "income"
 DATA_DIR = REPO_ROOT / "data"
 TRAIN_CSV = DATA_DIR / "adult_train.csv"
 RUNS_DIR = REPO_ROOT / "synthetic_data" / "runs"
-RESULTS_DIR = REPO_ROOT / "results"
+RESULTS_DIR = REPO_ROOT / "evaluation" / "results"
 COST_CSV = RESULTS_DIR / "computational_cost.csv"
 
 EXPECTED_TRAIN_N = 21_523
@@ -182,7 +182,7 @@ def generate_synthcity(method: str, train_data: pd.DataFrame, seed: int,
 
 
 def record_cost(row: dict) -> None:
-    """Upsert one (method, seed, stage) row into results/computational_cost.csv.
+    """Upsert one (method, seed, stage) row into evaluation/results/computational_cost.csv.
 
     Keyed on stage as well as method+seed -- the eval scripts write fidelity and
     utility rows into this same file, so matching on method+seed alone would

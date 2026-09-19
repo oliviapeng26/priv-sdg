@@ -34,22 +34,26 @@ RESULTS_DIR = BENCHMARK_DIR / "results"
 # results/ is organised into subfolders by artefact type:
 FIGURES_DIR     = RESULTS_DIR / "figures"       # tradeoff + heatmap PNGs
 TABLES_DIR      = RESULTS_DIR / "tables"        # summary_*.csv + benchmark_privacy_per_attack.csv
-CONVERGENCE_DIR = RESULTS_DIR / "convergence"   # convergence_check_tstr.csv (+ _LEGACY)
-PER_METHOD_DIR  = RESULTS_DIR / "per_method"    # per-generator effeps CSVs, ROC PNG, log
-SCORES_DIR      = RESULTS_DIR / "scores"        # raw per-dataset attack scores (pre-threshold)
+CONVERGENCE_DIR = RESULTS_DIR / "convergence"   # convergence_check_tstr.csv
+# The four-method 50/100 baseline (run_bn/ctgan/dpgan/privbayes.py) is archived: the
+# sample-size sweep covers the same stage. common.run_method still writes here if an
+# archived script is copied back, so the paths point at the archive, not results/.
+_BASELINE_DIR   = REPO_ROOT / "archive" / "baseline_50_100"
+PER_METHOD_DIR  = _BASELINE_DIR / "per_method"  # per-generator effeps CSVs, ROC PNG, log
+SCORES_DIR      = _BASELINE_DIR / "scores"      # raw per-dataset attack scores (pre-threshold)
 
 # Utility/fidelity tables that privacy_analysis.ipynb reads. Both are the multi-run,
 # in-house tables: utility from evaluation/eval_utility.py (TSTR scored on the
 # held-out test split) and fidelity from evaluation/eval_fidelity.py, each
 # aggregated over seeds.RUN_SEEDS so every column carries a _mean and a _std.
 #
-# These replace results/synthcity_results.csv, which has been deleted: its
-# performance.* metrics were scored on an internal split of the generators'
-# OWN training data (see evaluation_LEGACY/eval_synthcity_LEGACY.py). Fidelity moved to
+# These replace synthcity_results.csv, which has been deleted: its performance.*
+# metrics were scored on an internal split of the generators' OWN training data
+# (the old evaluation_LEGACY/eval_synthcity_LEGACY.py; see git history). Fidelity moved to
 # multi-run table at the same time so the two halves of summary_utility.csv are
 # not a 5-run mean next to a single draw.
-UTILITY_RESULTS = REPO_ROOT / "results" / "utility_summary.csv"
-FIDELITY_RESULTS = REPO_ROOT / "results" / "fidelity_summary.csv"
+UTILITY_RESULTS = REPO_ROOT / "evaluation" / "results" / "utility_summary.csv"
+FIDELITY_RESULTS = REPO_ROOT / "evaluation" / "results" / "fidelity_summary.csv"
 
 # -- Dataset schema (matches common.py / evaluation/eval_utility.py / target_strategy) --
 CONTINUOUS_COLS = [

@@ -15,8 +15,8 @@ distribution it was fitted on. (Utility is the one that needs a holdout, and
 that lives in evaluation/eval_utility.py.)
 
 Outputs:
-    results/fidelity_per_run.csv    one row per (method, run)
-    results/fidelity_summary.csv    mean/std per method
+    evaluation/results/fidelity_per_run.csv    one row per (method, run)
+    evaluation/results/fidelity_summary.csv    mean/std per method
 
 Run from repo root, after sdg/generate_runs.py:
   python evaluation/eval_fidelity.py                     # every method with run CSVs
@@ -60,7 +60,7 @@ RUNS_DIR = REPO_ROOT / "synthetic_data" / "runs"
 SMARTNOISE_METHODS = {"aim", "dpctgan"}
 SMARTNOISE_DIR = REPO_ROOT / "synthetic_data" / "smartnoise"
 DEFAULT_EPSILON = 1.0
-RESULTS_DIR = REPO_ROOT / "results"
+RESULTS_DIR = REPO_ROOT / "evaluation" / "results"
 EVAL_DIR = REPO_ROOT / "evaluation"
 
 PER_RUN_CSV = RESULTS_DIR / "fidelity_per_run.csv"
@@ -139,7 +139,7 @@ def compute_fidelity(train_data: pd.DataFrame, synthetic_data: pd.DataFrame) -> 
 
 
 def record_cost(row: dict) -> None:
-    """Upsert one (method, seed, stage) row into results/computational_cost.csv.
+    """Upsert one (method, seed, stage) row into evaluation/results/computational_cost.csv.
 
     Same file sdg/generate_runs.py writes, keyed on stage -- so one table carries
     generation, fidelity and utility cost side by side. This replaces the old

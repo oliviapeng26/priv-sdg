@@ -22,8 +22,8 @@ WHY NOT SYNTHCITY'S TSTR (the leak this script exists to fix)
     TSTR/TRTR is therefore a like-for-like ratio.
 
 Outputs:
-    results/utility_per_run.csv    one row per (method, run)
-    results/utility_summary.csv    mean/std per method
+    evaluation/results/utility_per_run.csv    one row per (method, run)
+    evaluation/results/utility_summary.csv    mean/std per method
 
 Run from repo root, after sdg/generate_runs.py:
   python evaluation/eval_utility.py                     # every method with run CSVs
@@ -32,7 +32,7 @@ Run from repo root, after sdg/generate_runs.py:
 
 Cheap and CPU-only -- it never imports torch or synthcity, so it can be re-run
 freely against run CSVs generated on another machine. `compute_tstr` /
-`compute_trtr` are also imported by benchmark_tapas/neural_tuning/
+`compute_trtr` are also imported by benchmark_tapas/tuning/
 convergence_check.py, which uses them for the n_iter sweep.
 """
 
@@ -72,7 +72,7 @@ RUNS_DIR = REPO_ROOT / "synthetic_data" / "runs"
 SMARTNOISE_METHODS = {"aim", "dpctgan"}
 SMARTNOISE_DIR = REPO_ROOT / "synthetic_data" / "smartnoise"
 DEFAULT_EPSILON = 1.0
-RESULTS_DIR = REPO_ROOT / "results"
+RESULTS_DIR = REPO_ROOT / "evaluation" / "results"
 EVAL_DIR = REPO_ROOT / "evaluation"
 
 PER_RUN_CSV = RESULTS_DIR / "utility_per_run.csv"
@@ -269,7 +269,7 @@ def compute_retention(tstr_aucs, trtr_aucs):
 
 
 def record_cost(row: dict) -> None:
-    """Upsert one (method, seed, stage) row into results/computational_cost.csv.
+    """Upsert one (method, seed, stage) row into evaluation/results/computational_cost.csv.
 
     Same file sdg/generate_runs.py writes, keyed on stage -- so one table carries
     generation, fidelity and utility cost side by side. This replaces the old

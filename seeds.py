@@ -6,7 +6,7 @@ Run seeds: varied across runs for variance estimates.
 
 WHY THIS SITS AT THE REPO ROOT AND NOT IN config/
     `benchmark_tapas/common.py` and every script under `benchmark_tapas/` and
-    `target_strategy/` already import their experiment constants as the
+    `archive/target_strategy/` already import their experiment constants as the
     top-level module name `config` (they put their own directory on sys.path
     first). A repo-root `config/` package would shadow-collide with those:
     `from config.seeds import ...` would resolve `config` to
@@ -68,7 +68,7 @@ TAPAS_GENERATOR_SEED_BASE = 1000   # per-fit generator seed in the TAPAS audit: 
                                    # at TAPAS_GENERATOR_SEED_BASE + i, so no two simulations
                                    # (and no D+/D- pair) ever share a draw
 
-# ── Raw-score extraction (benchmark_tapas/scripts/extract_scores.py) ──
+# ── Raw-score extraction (archive/baseline_50_100/scripts/extract_scores.py) ──
 # These are NOT frozen the way the three above are: they seed a read-only
 # re-analysis of already-generated data, so changing them re-shuffles which
 # cached D+/D- pairs are read and re-draws the attacks' internal randomness,

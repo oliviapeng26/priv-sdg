@@ -1,5 +1,0 @@
-method,label
-bayesian_network,BN (no-DP)
-privbayes,PrivBayes (DP)
-ctgan,CTGAN (no-DP)
-dpgan,DPGAN (DP)
