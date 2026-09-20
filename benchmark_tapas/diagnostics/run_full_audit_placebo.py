@@ -86,8 +86,22 @@ COST -- READ THIS BEFORE LAUNCHING, THE OLD ESTIMATE WAS WRONG
 
     If the 4.4 s/fit rate does come back -- it is the same config, so the difference
     is the machine, not the mechanism -- an arm lands nearer 4.3 h and more than one
-    will fit. The projection is re-measured from this run's own first checkpoint
-    rather than assumed, and logged.
+    will fit. The rate is re-measured from this run's own fits (see PROGRESS) rather
+    than assumed, so the first progress line tells you which world you are in about
+    twenty minutes in.
+
+PROGRESS, BECAUSE THE AUDIT IS OTHERWISE SILENT FOR HOURS
+    run_one_epsilon grows both pools in two unbroken calls, and TAPAS's dataset
+    generation takes a progress tracker that defaults to a silent one
+    (attacker_knowledge.py ~431). Nothing is logged between "resuming at fit N" and
+    "pools: ...", which at this fit rate is a ten-hour gap with no way to tell a
+    working run from a wedged one. [6] did not have this problem: the signal scan
+    checkpoints every 100 fits because it drives the pool itself.
+
+    So this script wraps common.SynthcityGenerator.fit to log every --progress-every
+    fits (default 100, about one line every 18 minutes) with the elapsed time, the
+    measured s/fit and the projected pool time remaining. The wrapper calls the
+    original fit and only logs; it changes nothing about what is fitted or seeded.
 
 ORDER, AND WHY 19 GOES FIRST
     Default order is 19, 7, 11 -- deliberately not ascending. If only one arm
@@ -199,6 +213,40 @@ log = sweep.log
 
 _TOTAL_FITS = sweep.NUM_TRAIN + sweep.NUM_TEST
 
+# Per-arm fit counters for the progress wrapper. Reset at the start of each arm so
+# the measured rate covers THIS invocation's fits -- on a resumed run the
+# generator's own _fit_counter starts part-way through and would otherwise divide
+# this run's elapsed time by the whole pool.
+_PROGRESS = {"t0": None, "seen": 0, "every": 100}
+
+
+def install_fit_progress() -> None:
+    """Log every Nth fit, because nothing else does. See PROGRESS in the docstring.
+
+    Wraps the original fit and logs after it returns; it does not touch the
+    dataset, the plugin arguments or the per-fit seed. Installed once per process.
+    """
+    gen_cls = common.SynthcityGenerator
+    if getattr(gen_cls, "_placebo_progress_installed", False):
+        return
+    original_fit = gen_cls.fit
+
+    def fit_with_progress(self, dataset, **kwargs):
+        out = original_fit(self, dataset, **kwargs)
+        _PROGRESS["seen"] += 1
+        seen = _PROGRESS["seen"]
+        if _PROGRESS["t0"] is not None and seen % _PROGRESS["every"] == 0:
+            elapsed = time.time() - _PROGRESS["t0"]
+            rate = elapsed / seen
+            done = getattr(self, "_fit_counter", seen)
+            left_h = max(0, _TOTAL_FITS - done) * rate / 3600
+            log.info(f"    fit {done}/{_TOTAL_FITS} ({elapsed / 60:.0f} min this run, "
+                     f"{rate:.1f} s/fit, ~{left_h:.1f} h of pool left)")
+        return out
+
+    gen_cls.fit = fit_with_progress
+    gen_cls._placebo_progress_installed = True
+
 
 def bind_target_seed(target_seed: int) -> None:
     """Point run_one_epsilon at a different target/alternate pair.
@@ -240,6 +288,9 @@ def main() -> int:
                          "pool time does not fit in what is left (default: 12)")
     ap.add_argument("--allow-degenerate", action="store_true",
                     help="record an arm whose pools failed the distinctness guard")
+    ap.add_argument("--progress-every", type=int, default=100,
+                    help="log a pool progress line every N fits (default: 100, about "
+                         "one line every 18 min at the rate [6] measured)")
     ap.add_argument("--dry-run", action="store_true",
                     help="resolve and print each arm's pair, paths and projection, "
                          "then exit without fitting anything")
@@ -294,6 +345,8 @@ def main() -> int:
             continue
 
         bind_target_seed(seed)
+        _PROGRESS.update(t0=time.time(), seen=0, every=args.progress_every)
+        install_fit_progress()
         log.info(f"--- placebo pair seed={seed} "
                  f"([6] signal AUC {SIGNAL_AUC.get(seed, float('nan')):.3f}), "
                  f"{remaining_h:.1f} h of budget left ---")
