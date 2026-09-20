@@ -52,8 +52,8 @@ API, so it runs in the workstation's separate environment.
 
 ### DPGAN ε = 1.0 spike: the diagnosis components
 
-Each script's docstring states the question it answers and what it found. Run in order; only [6]
-needs a GPU. Everything else reads the exported pools and finishes in minutes on a laptop.
+Each script's docstring states the question it answers and what it found. Run in order; only [6] and
+[7] need a GPU. Everything else reads the exported pools and finishes in minutes on a laptop.
 
 | | Script | Question | Where it landed |
 |---|---|---|---|
@@ -63,7 +63,8 @@ needs a GPU. Everything else reads the exported pools and finishes in minutes on
 | [3] | `dpgan_pool_fidelity.py` | Is the ε = 10/100 floor just a blurrier generator? | No. ε = 100 is the farthest from real and the least stable |
 | [4] | `dpgan_target_profile.py` | Is the audited target/alternate pair unusual? | No absent category, so the encoder-layout hypothesis is out |
 | [5] | `dpgan_signal_anatomy.py` | Which columns carry the signal? | Numeric block 0.872, categorical block 0.712; strongest in the two numeric columns where the pair differs |
-| [6] | `run_signal_scan_placebo.py` | Is the spike about DPGAN, or about this one record? | **Open.** Needs GPU, ~30–55 min per pair |
+| [6] | `run_signal_scan_placebo.py` | Is the *membership signal* about DPGAN, or about this one record? | Not this record: seeds 7 / 11 / 19 gave AUC 0.902 / 0.946 / 0.877 against baselines ~0.5 |
+| [7] | `run_full_audit_placebo.py` | Does the *eff-epsilon* spike itself reproduce on those pairs? | **Open.** Needs GPU, ~10.5 h of pool per pair at the rate [6] measured |
 
 Not yet established: whether the non-DP components (the encoder, the label encoder, the conditional
 sampler, and the generator's own extra penalty, which reads the real batch at `gan.py:359-363`) are

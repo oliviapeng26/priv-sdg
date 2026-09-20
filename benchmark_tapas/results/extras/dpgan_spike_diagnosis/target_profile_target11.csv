@@ -1,0 +1,14 @@
+target_seed,target_row,alternate_row,column,type,differs,target,alternate,target_rarity,alternate_rarity
+11,8721,7971,age,numeric,True,28.0,29.0,23% of background below,25% of background below
+11,8721,7971,education_num,numeric,True,13.0,9.0,79% of background below,13% of background below
+11,8721,7971,capital_gain,numeric,False,0.0,0.0,0% of background below,0% of background below
+11,8721,7971,capital_loss,numeric,False,0.0,0.0,0% of background below,0% of background below
+11,8721,7971,hours_per_week,numeric,True,5.0,20.0,0% of background below,5% of background below
+11,8721,7971,workclass,categorical,True,Self-emp-not-inc,Private,38 of 499,379 of 499
+11,8721,7971,marital_status,categorical,True,Married-civ-spouse,Married-spouse-absent,216 of 499,8 of 499
+11,8721,7971,occupation,categorical,True,Sales,Other-service,51 of 499,63 of 499
+11,8721,7971,relationship,categorical,True,Wife,Not-in-family,31 of 499,134 of 499
+11,8721,7971,race,categorical,False,White,White,428 of 499,428 of 499
+11,8721,7971,sex,categorical,False,Female,Female,193 of 499,193 of 499
+11,8721,7971,native_country,categorical,True,United-States,France,455 of 499,0 of 499
+11,8721,7971,income,categorical,False,<=50K,<=50K,381 of 499,381 of 499

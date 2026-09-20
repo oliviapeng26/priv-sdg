@@ -1,0 +1,2 @@
+method,formal_epsilon,n_datasets,n_positive,n_features,signal_auc,signal_auc_cv_std,permuted_auc,permuted_auc_cv_std,num_synthetic,cv_folds,pool_wall_clock_s,target_seed
+dpgan,1.0,400,200,76,0.9018124999999999,0.03978133591899599,0.512125,0.05347071336255015,500,5,4390.7,7
