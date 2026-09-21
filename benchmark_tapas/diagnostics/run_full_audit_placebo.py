@@ -72,36 +72,60 @@ WHY NOT REUSE [6]'s POOLS
     order two unrelated runs happened to execute in. 400 of 3500 fits is 11% of the
     cost and not worth that.
 
-COST -- READ THIS BEFORE LAUNCHING, THE OLD ESTIMATE WAS WRONG
-    run_dpgan_eps_sweep.py's docstring projects 4.4 s/fit, i.e. ~4.3 h per arm. That
-    rate was not what this workstation delivered in [6]. Its log is unambiguous:
-    400 fits took 4314 s, 4377 s and ~4300 s for seeds 11, 19 and 7, which is
+COST -- THE RATE DEPENDS ON WHO ELSE IS ON THE GPU, SO MEASURE IT
+    run_dpgan_eps_sweep.py's docstring projects 4.4 s/fit, i.e. ~4.3 h per arm. This
+    workstation has delivered three different rates, and the difference is load:
 
-        ~10.8 s/fit  ->  3500 fits  ->  ~10.5 h of POOL per arm, plus attack time
+        [6]   400 fits in ~4300 s                    ~10.8 s/fit   GPU shared with the AIM jobs
+        [7]   first two fits, empty-ish GPU          ~3-4 s/fit
+        [7]   fits 400-1100 of the first attempt     ~6.3 s/fit    another user's job on both cards
 
-    So one placebo arm is roughly a night, and three arms are roughly three nights.
-    Budget accordingly: --max-hours (default 12) refuses to START an arm it projects
-    cannot finish, rather than leaving one killed halfway. Everything is resumable,
-    so a later invocation continues from the memoised fits and the finished attacks.
+    Treat ~6.3 s/fit as the working figure: 3500 fits is ~6.1 h of POOL per arm, plus
+    attack time, so a 12 h window fits ONE arm and not two. --max-hours (default 12)
+    refuses to START an arm it projects cannot finish, rather than leaving one killed
+    halfway. The rate is logged from this run's own fits (see PROGRESS) rather than
+    assumed, and MEASURED_S_PER_FIT below is only what the start-of-arm guard uses.
 
-    If the 4.4 s/fit rate does come back -- it is the same config, so the difference
-    is the machine, not the mechanism -- an arm lands nearer 4.3 h and more than one
-    will fit. The rate is re-measured from this run's own fits (see PROGRESS) rather
-    than assumed, so the first progress line tells you which world you are in about
-    twenty minutes in.
+CHECKPOINTING, BECAUSE THE FIRST ATTEMPT LOST TWO HOURS TO ONE OUT-OF-MEMORY ERROR
+    run_one_epsilon grows both pools in two unbroken calls and saves the threat model
+    ONCE, after both are done. TAPAS holds the fitted datasets in memory until then,
+    so any crash mid-pool loses the whole pool -- the docstring in
+    run_dpgan_eps_sweep.py calls the run "resumable", which is only true across
+    finished pools and finished attacks, not across a crash inside one.
+
+    That is what happened on 2026-09-21. Seed 19 had finished its 1000 training fits
+    and ~100 test fits when another user's process took 15.5 GB of GPU 0 and this
+    process (8 GB in use) died with torch.cuda.OutOfMemoryError. Seeds 7 and 11 then
+    failed on their first fit for the same reason. threat_model.pkl was still the
+    empty file from 01:28, so nothing was recoverable.
+
+    Fix, without touching run_dpgan_eps_sweep.py: before calling run_one_epsilon,
+    prewarm_pool() grows the same pools in chunks of --chunk fits (default 100, about
+    10 min), saving after each chunk. run_one_epsilon then loads that cache through
+    the same build_or_load_threat_model call, finds both pools already full, and
+    generates nothing -- it goes straight to the guard, the export and the attacks.
+    The counts-sweep pools were already grown in nested stages, so growing in chunks
+    is not new to this repo; and each fit is seeded from a per-fit counter, so a chunk
+    boundary does not change which seed any fit uses.
+
+    On torch.cuda.OutOfMemoryError the chunk is retried after --oom-wait seconds, up to
+    --oom-retries times. That is the failure a shared GPU produces, and it is usually
+    gone in minutes. The retry needs no seed bookkeeping: TAPAS pools each dataset as
+    it is made, the fit counter only advances after a fit succeeds, so the retry
+    continues from exactly the next unused seed. A crash of any other kind, or
+    running out of retries, loses at most one chunk: relaunch the same command and
+    it resumes from the last saved chunk.
+
+    Set PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True when launching (the error
+    message itself suggests it); it reduces fragmentation and costs nothing.
 
 PROGRESS, BECAUSE THE AUDIT IS OTHERWISE SILENT FOR HOURS
-    run_one_epsilon grows both pools in two unbroken calls, and TAPAS's dataset
-    generation takes a progress tracker that defaults to a silent one
-    (attacker_knowledge.py ~431). Nothing is logged between "resuming at fit N" and
-    "pools: ...", which at this fit rate is a ten-hour gap with no way to tell a
-    working run from a wedged one. [6] did not have this problem: the signal scan
-    checkpoints every 100 fits because it drives the pool itself.
-
-    So this script wraps common.SynthcityGenerator.fit to log every --progress-every
-    fits (default 100, about one line every 18 minutes) with the elapsed time, the
-    measured s/fit and the projected pool time remaining. The wrapper calls the
-    original fit and only logs; it changes nothing about what is fitted or seeded.
+    TAPAS's dataset generation takes a progress tracker that defaults to a silent one
+    (attacker_knowledge.py ~431), so nothing is logged while a pool grows. This
+    script wraps common.SynthcityGenerator.fit to log every --progress-every fits
+    with the elapsed time, the measured s/fit and the projected pool time remaining.
+    The wrapper calls the original fit and only logs; it changes nothing about what
+    is fitted or seeded. prewarm_pool() additionally logs each saved chunk.
 
 ORDER, AND WHY 19 GOES FIRST
     Default order is 19, 7, 11 -- deliberately not ascending. If only one arm
@@ -168,7 +192,7 @@ sys.path.insert(0, str(REPO_ROOT))
 
 import common                                                      # noqa: E402
 import run_dpgan_eps_sweep as sweep                                # noqa: E402
-from config import RESULTS_DIR                                     # noqa: E402
+from config import RESULTS_DIR, CACHE_DIR, METHOD_CONFIG           # noqa: E402
 from seeds import TAPAS_TARGET_SEED                                # noqa: E402
 
 # The pairs [6] already measured a signal AUC for, so every arm here has a
@@ -180,10 +204,10 @@ PLACEBO_EPSILON = 1.0           # the spike itself; every other budget is flat f
 # [6]'s signal AUCs, carried here so the log states the prior before the arm runs.
 SIGNAL_AUC = {43: 0.874, 7: 0.902, 11: 0.946, 19: 0.877}
 
-# Measured in [6] on this workstation: ~4300-4380 s per 400 fits at eps = 1.0.
-# run_dpgan_eps_sweep.py's docstring claims 4.4; both are logged and the projection
-# is re-measured from this run's own pool timing.
-MEASURED_S_PER_FIT = 10.8
+# Working rate for the start-of-arm budget guard: 5.9-6.4 s/fit over fits 400-1100 of
+# the first [7] attempt, with another user's job on the GPU. [6] saw 10.8 and the first
+# fits of [7] saw 3-4 -- see COST in the docstring. The run logs its own rate.
+MEASURED_S_PER_FIT = 6.3
 OPTIMISTIC_S_PER_FIT = 4.4
 
 DIAG_DIR = RESULTS_DIR / "extras" / "dpgan_spike_diagnosis"
@@ -269,6 +293,72 @@ def bind_target_seed(target_seed: int) -> None:
     sweep.eps_slug = lambda eps: f"eps{eps:g}_target{target_seed}"
 
 
+def prewarm_pool(epsilon: float, device_kwargs: dict, chunk: int,
+                 oom_retries: int, oom_wait_s: int) -> None:
+    """Grow both pools in chunks, saving after each, so a crash costs one chunk.
+
+    See CHECKPOINTING in the module docstring. Builds the threat model with exactly
+    the arguments run_one_epsilon uses (same background, same patched target, same
+    plugin_kwargs, same cache dir from the patched eps_slug), so that run_one_epsilon's
+    own build_or_load_threat_model call loads this one from disk, finds both pools
+    already full, and generates nothing further.
+
+    Train pool first and then test pool, the same order run_one_epsilon uses, so
+    per-fit seeds line up as they would have in one unbroken call.
+    """
+    import torch
+
+    label = sweep.eps_slug(epsilon)
+    cache_dir = CACHE_DIR / f"{sweep.METHOD}_{label}"
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    plugin_kwargs = {**METHOD_CONFIG[sweep.METHOD]["plugin_kwargs"], **device_kwargs}
+
+    train_dataset, _, description = common.load_adult_datasets()
+    background, background_idx = common.sample_background(train_dataset)
+    target, alternate = common.select_random_target(train_dataset, background_idx)
+    threat_model = common.build_or_load_threat_model(
+        cache_dir=cache_dir, method=sweep.METHOD, background_dataset=background,
+        target_record=target, alternate_record=alternate, description=description,
+        epsilon=epsilon, plugin_kwargs=plugin_kwargs,
+    )
+    save_path = str(cache_dir / "threat_model")
+    log.info(f"    prewarm {label}: chunks of {chunk}, resuming with "
+             f"{len(threat_model._memory[True][0])} train / "
+             f"{len(threat_model._memory[False][0])} test already saved")
+
+    t0 = time.time()
+    for training, want, name in ((True, sweep.NUM_TRAIN, "train"),
+                                 (False, sweep.NUM_TEST, "test")):
+        while len(threat_model._memory[training][0]) < want:
+            step = min(want, len(threat_model._memory[training][0]) + chunk)
+            for attempt in range(oom_retries + 1):
+                try:
+                    threat_model._generate_samples(step, training=training)
+                    break
+                except torch.cuda.OutOfMemoryError:
+                    # NO counter rewind, and that is deliberate. TAPAS appends each
+                    # dataset to memory as it is made (attacker_knowledge.py
+                    # _sync_generate_data), so fits that succeeded before the error are
+                    # already pooled and their seeds are spent; the retry generates only
+                    # the shortfall and carries on from the next seed. SynthcityGenerator
+                    # increments its counter AFTER the plugin fit, so the fit that ran
+                    # out of memory did not advance it and is simply retried at the same
+                    # seed. Rewinding would reuse seeds already in the pool -- duplicate
+                    # datasets, the exact failure the distinctness guard exists to catch.
+                    torch.cuda.empty_cache()
+                    if attempt == oom_retries:
+                        log.error(f"    {name} pool {step}/{want}: CUDA out of memory, "
+                                  f"giving up after {oom_retries} retries")
+                        raise
+                    log.warning(f"    {name} pool {step}/{want}: CUDA out of memory "
+                                f"(another process is holding the GPU?), retry "
+                                f"{attempt + 1}/{oom_retries} in {oom_wait_s}s")
+                    time.sleep(oom_wait_s)
+            threat_model.save(save_path)
+            log.info(f"    {name} pool {step}/{want} checkpointed "
+                     f"({(time.time() - t0) / 60:.0f} min this run)")
+
+
 def projected_hours(s_per_fit: float) -> float:
     """Pool time only. Attack time is on top and is not predictable from fit count:
     it depends on the attack, not on the generator."""
@@ -288,6 +378,14 @@ def main() -> int:
                          "pool time does not fit in what is left (default: 12)")
     ap.add_argument("--allow-degenerate", action="store_true",
                     help="record an arm whose pools failed the distinctness guard")
+    ap.add_argument("--chunk", type=int, default=100,
+                    help="save the pool every N fits, so a crash costs at most one "
+                         "chunk (default: 100, about 10 min)")
+    ap.add_argument("--oom-retries", type=int, default=30,
+                    help="retries of a chunk after a CUDA out-of-memory error, e.g. "
+                         "another user's job on the GPU (default: 30)")
+    ap.add_argument("--oom-wait", type=int, default=120,
+                    help="seconds to wait between those retries (default: 120)")
     ap.add_argument("--progress-every", type=int, default=100,
                     help="log a pool progress line every N fits (default: 100, about "
                          "one line every 18 min at the rate [6] measured)")
@@ -351,6 +449,8 @@ def main() -> int:
                  f"([6] signal AUC {SIGNAL_AUC.get(seed, float('nan')):.3f}), "
                  f"{remaining_h:.1f} h of budget left ---")
         try:
+            prewarm_pool(args.epsilon, device_kwargs, args.chunk,
+                         args.oom_retries, args.oom_wait)
             sweep.run_one_epsilon(args.epsilon, device_kwargs, args.allow_degenerate)
         except sweep.DegeneratePool as exc:
             log.error(f"DISTINCTNESS GUARD FAILED for seed={seed}:\n{exc}")
