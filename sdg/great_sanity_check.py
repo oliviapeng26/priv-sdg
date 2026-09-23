@@ -42,6 +42,14 @@ BATCH_SIZE = 32
 EPOCHS = 10
 FP16 = True
 
+# GReaT.sample()'s own generation batch size (separate from fit's BATCH_SIZE
+# above). Default in be_great is k=100; nvidia-smi showed ~0% GPU utilization
+# during sampling at that default, consistent with per-token Python/CUDA
+# dispatch overhead dominating wall clock for such a small batch on a tiny
+# model. Bump this to test whether a larger generation batch amortizes that
+# overhead and actually keeps the GPU busy.
+SAMPLE_K = 2000
+
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger("great_sanity")
 
@@ -53,6 +61,7 @@ def main() -> int:
     df = pd.read_csv(TRAIN_CSV)
     sample = df.sample(n=SAMPLE_N, random_state=SAMPLE_SEED).reset_index(drop=True)
     log.info(f"Loaded {len(sample)}-row sample from {TRAIN_CSV.relative_to(REPO_ROOT)}")
+    log.info(f"sample() generation batch size k={SAMPLE_K} (be_great default is 100)")
 
     model = GReaT(
         llm=LLM,
@@ -72,7 +81,7 @@ def main() -> int:
         log.info(f"Fit done in {fit_s:.1f}s ({fit_s / 60:.1f} min)")
 
         t0 = time.perf_counter()
-        synthetic = model.sample(n_samples=SAMPLE_N)
+        synthetic = model.sample(n_samples=SAMPLE_N, k=SAMPLE_K)
         sample_s = time.perf_counter() - t0
         log.info(f"Sample done in {sample_s:.1f}s ({sample_s / 60:.1f} min)")
     finally:

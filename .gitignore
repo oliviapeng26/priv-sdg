@@ -26,6 +26,8 @@ archive/aim_tuning/synthetic/
 # result CSVs don't already record, so they only ever show up as noise in
 # git status.
 sdg/generate_runs_log.txt
+sdg/generate_great_log.txt
+sdg/.great_scratch*/
 evaluation/eval_fidelity_log.txt
 evaluation/eval_utility_log.txt
 evaluation/results/smartnoise/generate_smartnoise_log.txt
