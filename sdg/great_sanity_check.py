@@ -3,15 +3,28 @@
 
 Not a scientific result -- just confirms the venv, GPU, and be-great API work
 end to end before committing to the full 21,523-row x 5-seed overnight run in
-sdg/generate_great.py. Trains distilgpt2 for 10 epochs on 500 rows, times fit
-and sample separately, and writes the generated rows to
-synthetic_data/great_sanity/sample_500.csv for manual inspection.
+sdg/generate_great.py. Trains the LLM set below for 10 epochs on the same
+500-row sample (fixed SAMPLE_SEED), times fit and sample separately, and
+writes the generated rows to synthetic_data/great_sanity/sample_500_{LLM}.csv
+for manual inspection.
+
+LLM is currently set to gpt2 (full fine-tuning, no LoRA) to compare against
+distilgpt2's numbers -- see synthetic_data/great_sanity/sample_500.csv
+(distilgpt2's run, from before OUT_CSV was made per-LLM) and the earlier
+result: distilgpt2 fit=7.7s, sample(k=2000)=291.5s for 500 rows.
+
+SAMPLE_K=2000 (not be_great's default of 100) is baked in here because the
+default left the GPU at ~0% utilization during sample() -- per-token
+generation overhead dominates wall clock at small batch sizes. Confirmed on
+distilgpt2 (581s -> 291.5s for 500 rows); this run re-checks it holds for a
+different (larger) model too.
 
 DISK: no model checkpoints are written (save_strategy/logging_strategy="no",
 report_to=[] disable HF Trainer's own checkpoint and tensorboard writes). The
 scratch experiment_dir is removed after the run. The only persistent output
-is one ~500-row CSV. distilgpt2's weights (~350 MB) are downloaded once into
-~/.cache/huggingface on first run and reused after that.
+is one ~500-row CSV. Model weights (~350 MB for distilgpt2, ~550 MB for
+gpt2) are downloaded once into ~/.cache/huggingface on first run and reused
+after that.
 
 Run from repo root:
   python sdg/great_sanity_check.py
@@ -31,16 +44,23 @@ sys.path.insert(0, str(REPO_ROOT))
 DATA_DIR = REPO_ROOT / "data"
 TRAIN_CSV = DATA_DIR / "adult_train.csv"
 OUT_DIR = REPO_ROOT / "synthetic_data" / "great_sanity"
-OUT_CSV = OUT_DIR / "sample_500.csv"
 SCRATCH_DIR = REPO_ROOT / "sdg" / ".great_scratch_sanity"
 
 SAMPLE_N = 500
 SAMPLE_SEED = 42   # sanity check only -- not tied to seeds.RUN_SEEDS
 
-LLM = "distilgpt2"
+# Set to "distilgpt2" to reproduce the earlier sanity check instead. Output
+# CSV is named per-LLM (see OUT_CSV below) so switching this doesn't clobber
+# the other model's sanity-check result -- both stay around for comparison.
+LLM = "gpt2"
 BATCH_SIZE = 32
 EPOCHS = 10
 FP16 = True
+DATALOADER_NUM_WORKERS = 4
+# efficient_finetuning intentionally left unset below -- full fine-tuning,
+# no LoRA, to match DP-2Stage's GPT-2 setup exactly.
+
+OUT_CSV = OUT_DIR / f"sample_500_{LLM}.csv"
 
 # GReaT.sample()'s own generation batch size (separate from fit's BATCH_SIZE
 # above). Default in be_great is k=100; nvidia-smi showed ~0% GPU utilization
@@ -69,6 +89,7 @@ def main() -> int:
         batch_size=BATCH_SIZE,
         epochs=EPOCHS,
         fp16=FP16,
+        dataloader_num_workers=DATALOADER_NUM_WORKERS,
         save_strategy="no",       # no checkpoints -- disk is tight
         logging_strategy="no",
         report_to=[],
