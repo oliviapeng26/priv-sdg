@@ -2,12 +2,15 @@
 """Seeded GReaT (be-great) generation on the full 21,523-row adult_train.csv.
 
 Companion to sdg/generate_runs.py's four Synthcity methods -- GReaT is a
-separate LLM-based generator (fine-tuned distilgpt2) with its own dependency
+separate LLM-based generator (fine-tuned GPT-2) with its own dependency
 (be-great) and its own, much longer, per-seed cost, so it gets its own script
 rather than joining METHOD_SPEC there.
 
-Hyperparameters (distilgpt2, batch_size=32, epochs=10, fp16=True) match the
-500-row sanity check in sdg/great_sanity_check.py -- same config, more rows.
+Hyperparameters (gpt2, batch_size=32, epochs=10, fp16=True,
+dataloader_num_workers=4, sample k=2000) match the 500-row sanity check in
+sdg/great_sanity_check.py -- same config, more rows. gpt2 (not distilgpt2)
+because it sampled ~20x faster and matched DP-2Stage's reference setup; see
+the README's GReaT timing table for the sanity-check numbers behind this.
 
 Outputs:
     synthetic_data/runs/great_seed{seed}.csv   one file per seed
@@ -60,10 +63,20 @@ TRAIN_CSV = DATA_DIR / "adult_train.csv"
 RUNS_DIR = REPO_ROOT / "synthetic_data" / "runs"
 EXPECTED_TRAIN_N = 21_523
 
-LLM = "distilgpt2"
+LLM = "gpt2"
 BATCH_SIZE = 32
 EPOCHS = 10
 FP16 = True
+DATALOADER_NUM_WORKERS = 4
+# efficient_finetuning intentionally left unset below -- full fine-tuning,
+# no LoRA, to match DP-2Stage's GPT-2 setup exactly.
+
+# GReaT.sample()'s own generation batch size (separate from fit's BATCH_SIZE
+# above). be_great's default k=100 left the GPU ~0% utilized during sampling
+# -- confirmed via sdg/great_sanity_check.py, where k=2000 roughly halved
+# sample() wall clock (581s -> 291s for 500 rows) with no change to fit() or
+# output quality. See that script's history for the diagnosis.
+SAMPLE_K = 2000
 
 RUNS_DIR.mkdir(parents=True, exist_ok=True)
 logging.basicConfig(
@@ -101,12 +114,13 @@ def generate_one(train_df: pd.DataFrame, seed: int, regenerate: bool) -> bool:
             batch_size=BATCH_SIZE,
             epochs=EPOCHS,
             fp16=FP16,
+            dataloader_num_workers=DATALOADER_NUM_WORKERS,
             save_strategy="no",
             logging_strategy="no",
             report_to=[],
         )
         model.fit(train_df)
-        synthetic = model.sample(n_samples=len(train_df))
+        synthetic = model.sample(n_samples=len(train_df), k=SAMPLE_K)
         assert len(synthetic) == len(train_df), \
             f"seed {seed}: generated {len(synthetic)} rows, expected {len(train_df)}"
         synthetic.to_csv(path, index=False)
