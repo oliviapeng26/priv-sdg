@@ -27,7 +27,8 @@ gpt2) are downloaded once into ~/.cache/huggingface on first run and reused
 after that.
 
 Run from repo root:
-  python sdg/great_sanity_check.py
+  python sdg/great_sanity_check.py            # defaults to gpt2
+  python sdg/great_sanity_check.py distilgpt2 # or override the LLM
 """
 
 import logging
@@ -49,10 +50,12 @@ SCRATCH_DIR = REPO_ROOT / "sdg" / ".great_scratch_sanity"
 SAMPLE_N = 500
 SAMPLE_SEED = 42   # sanity check only -- not tied to seeds.RUN_SEEDS
 
-# Set to "distilgpt2" to reproduce the earlier sanity check instead. Output
-# CSV is named per-LLM (see OUT_CSV below) so switching this doesn't clobber
-# the other model's sanity-check result -- both stay around for comparison.
-LLM = "gpt2"
+# Optional CLI override so both models can be rerun back-to-back without
+# editing this file, e.g. to check whether a timing difference between them
+# is real or a first-call CUDA/cuDNN warm-up artifact:
+#   python sdg/great_sanity_check.py distilgpt2
+#   python sdg/great_sanity_check.py gpt2
+LLM = sys.argv[1] if len(sys.argv) > 1 else "gpt2"
 BATCH_SIZE = 32
 EPOCHS = 10
 FP16 = True
