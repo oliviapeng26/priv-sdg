@@ -108,14 +108,21 @@ from generate_great import (LLM, BATCH_SIZE, EPOCHS, FP16,         # noqa: E402
 # never inside the vocabulary.
 MAX_SAMPLE_ROUNDS = 20
 
-# be_great's sample() default is 100 tokens/row. Probed at k=2000/max_length=100:
-# mean acceptance 82%, because rows with several long category values (e.g.
-# "Married-civ-spouse", "Machine-op-inspct") get cut off mid-value before all
-# columns are written, and the truncated tail fails the vocabulary check in
-# _valid_rows below. Raised here to test whether more headroom per row raises
-# acceptance and so lowers the number of sample() rounds -- and therefore the
-# per-fit wall clock -- the full audit costs.
-SAMPLE_MAX_LENGTH = 150
+# be_great's own default. Probed at k=2000/max_length=100: mean acceptance 82%,
+# 47.6 s/fit -- rows with several long category values (e.g. "Married-civ-spouse",
+# "Machine-op-inspct") sometimes get cut off mid-value before all columns are
+# written, and the truncated tail fails the vocabulary check in _valid_rows below.
+#
+# Tried raising this to 150 to test whether more headroom per row raises
+# acceptance. Never actually measured: the larger max_length raises sample()'s
+# KV-cache memory (scales with batch size x sequence length), and at k=2000 that
+# pushed the process to ~14 GiB right as another user's job reclaimed ~9.5 GiB on
+# the same GPU -- OOM before any acceptance data came back. Reverted to the known-
+# working value rather than chase a number under contention from a job we don't
+# control. If this is revisited, drop k proportionally (e.g. k=1000 at
+# max_length=150) so the memory footprint stays comparable to this known-good
+# config instead of stacking both increases at once.
+SAMPLE_MAX_LENGTH = 100
 
 
 class GReaTGenerator(Generator):
@@ -239,6 +246,25 @@ class GReaTGenerator(Generator):
             # costs the same as a request for num_samples and harvests far fewer.
             batch = self._model.sample(n_samples=num_samples, k=SAMPLE_K,
                                        max_length=SAMPLE_MAX_LENGTH)
+            if len(batch) == 0:
+                # be_great's own _legacy_sample retries internally (its _cnt > 13
+                # guard) before ever returning empty, and swallows the triggering
+                # exception -- including a CUDA OOM from GPU contention, which
+                # this workstation gets from other users' jobs (seen directly:
+                # czha4500's process reclaiming GPU memory mid-probe). A single
+                # empty return means be_great already exhausted its own retry
+                # budget, so this is not "unlucky, try again" -- looping the
+                # remaining MAX_SAMPLE_ROUNDS would just repeat a call that has
+                # already failed 13 times, burning minutes against a GPU that is
+                # not going to free itself. Fail fast instead.
+                raise RuntimeError(
+                    f"GReaT's sample() returned 0 rows on round {rounds + 1} (after "
+                    f"be_great's own internal retries). This is the signature of a "
+                    f"hard failure inside generation, most likely CUDA OOM from GPU "
+                    f"contention -- check `nvidia-smi` for another process before "
+                    f"retrying, rather than assuming this is a vocabulary/acceptance "
+                    f"problem."
+                )
             drawn += len(batch)
             valid = self._valid_rows(batch)
             collected.append(valid)
