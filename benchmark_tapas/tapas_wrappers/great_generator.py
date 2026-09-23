@@ -108,6 +108,18 @@ from generate_great import (LLM, BATCH_SIZE, EPOCHS, FP16,         # noqa: E402
 # never inside the vocabulary.
 MAX_SAMPLE_ROUNDS = 20
 
+
+class HardSampleFailure(RuntimeError):
+    """sample() returned nothing after be_great's own internal retries -- the
+    signature of a hard failure (CUDA OOM from GPU contention, most likely) as
+    opposed to low-but-nonzero vocabulary acceptance. Distinct from a bare
+    RuntimeError so run_great_audit.py can treat this specifically as transient
+    (worth an unlimited restart-loop retry, like AIM's jax-mapping-space crash)
+    rather than counting it against the loop's 3-consecutive-failures budget,
+    which is for the genuinely non-transient failure below (rounds exhausted
+    with nonzero but insufficient acceptance -- retrying the same config would
+    just fail the same way again)."""
+
 # be_great's own default. Probed at k=2000/max_length=100: mean acceptance 82%,
 # 47.6 s/fit -- rows with several long category values (e.g. "Married-civ-spouse",
 # "Machine-op-inspct") sometimes get cut off mid-value before all columns are
@@ -257,7 +269,7 @@ class GReaTGenerator(Generator):
                 # remaining MAX_SAMPLE_ROUNDS would just repeat a call that has
                 # already failed 13 times, burning minutes against a GPU that is
                 # not going to free itself. Fail fast instead.
-                raise RuntimeError(
+                raise HardSampleFailure(
                     f"GReaT's sample() returned 0 rows on round {rounds + 1} (after "
                     f"be_great's own internal retries). This is the signature of a "
                     f"hard failure inside generation, most likely CUDA OOM from GPU "

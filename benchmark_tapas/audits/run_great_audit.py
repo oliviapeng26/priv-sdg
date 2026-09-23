@@ -38,15 +38,24 @@ COST, AND WHY --probe COMES FIRST
 
 CHECKPOINTING AND THE RESTART LOOP
     AIM's audit crashed the process every ~112 fits (jax exhausting its mapping
-    space) and had to be chunked. GReaT has no known equivalent threshold -- but
-    it rebuilds a GPT-2 and an HF Trainer on every one of 3500 fits, and a slow
-    VRAM creep would only surface hours into an unattended run. great_generator
-    frees the previous model explicitly, and this script caps fits per process
-    anyway: cheap insurance, and it costs only process startup.
+    space) and had to be chunked. GReaT's equivalent, observed directly rather
+    than hypothesised: this is a shared workstation, and another user's job
+    (czha4500's) has twice reclaimed enough GPU memory mid-session to OOM a
+    fit+generate cycle outright. great_generator.HardSampleFailure catches that
+    signature (be_great's sample() returning empty after its own internal
+    retries) and main() below maps it to EXIT_INCOMPLETE -- so the restart loop
+    retries it indefinitely, the same as AIM's jax crash, rather than counting
+    it against the loop's 3-consecutive-failures budget (which is reserved for
+    non-transient failures, like the model genuinely failing to produce rows
+    inside the TAPAS vocabulary -- that one stays a plain RuntimeError on
+    purpose, since retrying the same config would just fail the same way).
 
-    So MAX_NEW_FITS here is a checkpoint cadence, not a crash workaround. At
-    ~25.7 s/fit it is ~43 min of work risked per process. Raise it with
-    --max-new-fits once a full run has proven stable.
+    So MAX_NEW_FITS here is a checkpoint cadence, not just a crash workaround
+    anymore -- it also bounds how much a contention-triggered restart repeats:
+    at most one partial CHECKPOINT_EVERY chunk, not the whole run. At
+    ~47.6 s/fit (measured through this wrapper, not the ~25.7 s/fit standalone
+    estimate) that chunk is ~40 min of work at risk per process. Raise
+    MAX_NEW_FITS with --max-new-fits once a full run has proven stable.
 
 WHAT IS AND IS NOT HELD FIXED
     fixed:   background, target/alternate, attack battery + its internal
@@ -119,7 +128,8 @@ sys.path.insert(0, str(REPO_ROOT))
 
 import tapas.threat_models as tm                                   # noqa: E402
 import common                                                      # noqa: E402
-from great_generator import GReaTGenerator, LLM, SAMPLE_K, SAMPLE_MAX_LENGTH  # noqa: E402
+from great_generator import (GReaTGenerator, HardSampleFailure, LLM,  # noqa: E402
+                             SAMPLE_K, SAMPLE_MAX_LENGTH)
 from config import CACHE_DIR, RESULTS_DIR, TRAIN_CSV, NUM_SYNTHETIC  # noqa: E402
 from seeds import SCORE_ATTACK_SEED                                # noqa: E402
 
@@ -468,6 +478,14 @@ def main() -> int:
     except DegeneratePool as exc:
         log.error(f"DISTINCTNESS GUARD FAILED:\n{exc}")
         return 1
+    except HardSampleFailure as exc:
+        # Transient (GPU contention, most likely) -- NOT one of the restart
+        # loop's 3 consecutive-failure strikes. The pool is checkpointed as of
+        # the last completed CHECKPOINT_EVERY chunk (grow_pools saves after
+        # each), so at most one partial chunk of fits is repeated, not the
+        # whole run. See HardSampleFailure's docstring in great_generator.py.
+        log.warning(f"HARD SAMPLE FAILURE (transient, restarting): {exc}")
+        return EXIT_INCOMPLETE
 
 
 if __name__ == "__main__":
