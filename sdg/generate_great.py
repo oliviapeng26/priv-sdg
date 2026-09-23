@@ -78,13 +78,26 @@ DATALOADER_NUM_WORKERS = 4
 # output quality. See that script's history for the diagnosis.
 SAMPLE_K = 2000
 
-RUNS_DIR.mkdir(parents=True, exist_ok=True)
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s %(levelname)s %(message)s",
-    handlers=[logging.FileHandler(SDG_DIR / "generate_great_log.txt"), logging.StreamHandler()],
-)
 log = logging.getLogger("generate_great")
+
+
+def _configure_logging() -> None:
+    """Called from main(), NOT at import time.
+
+    benchmark_tapas/tapas_wrappers/great_generator.py imports the hyperparameter
+    constants above so the audited model cannot drift from the one these runs
+    produce. A module-level basicConfig would fire on that import and attach this
+    file's FileHandler to the root logger before the audit configures its own, so
+    every audit log line would land in generate_great_log.txt. sdg/aim.py is
+    import-safe for the same reason (aim_generator.py imports its BIN_EDGES).
+    """
+    RUNS_DIR.mkdir(parents=True, exist_ok=True)
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s %(levelname)s %(message)s",
+        handlers=[logging.FileHandler(SDG_DIR / "generate_great_log.txt"),
+                  logging.StreamHandler()],
+    )
 
 
 def load_train_df() -> pd.DataFrame:
@@ -115,6 +128,13 @@ def generate_one(train_df: pd.DataFrame, seed: int, regenerate: bool) -> bool:
             epochs=EPOCHS,
             fp16=FP16,
             dataloader_num_workers=DATALOADER_NUM_WORKERS,
+            seed=seed,   # HF's Trainer defaults TrainingArguments.seed=42 and
+                         # calls set_seed(42) internally, silently overwriting
+                         # the set_all_seeds(seed) above -- without this, every
+                         # one of the 5 "seeded" runs trains and samples from
+                         # the same internal state. Confirmed: all 5 committed
+                         # great_seed*.csv were byte-identical (same MD5) before
+                         # this fix.
             save_strategy="no",
             logging_strategy="no",
             report_to=[],
@@ -144,6 +164,7 @@ def main() -> int:
     parser.add_argument("--regenerate", action="store_true",
                         help="re-fit even when a cached run CSV exists")
     args = parser.parse_args()
+    _configure_logging()
 
     if args.seed is not None and args.seeds is not None:
         parser.error("pass either --seed or --seeds, not both")
