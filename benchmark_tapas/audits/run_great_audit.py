@@ -119,7 +119,7 @@ sys.path.insert(0, str(REPO_ROOT))
 
 import tapas.threat_models as tm                                   # noqa: E402
 import common                                                      # noqa: E402
-from great_generator import GReaTGenerator, LLM, SAMPLE_K          # noqa: E402
+from great_generator import GReaTGenerator, LLM, SAMPLE_K, SAMPLE_MAX_LENGTH  # noqa: E402
 from config import CACHE_DIR, RESULTS_DIR, TRAIN_CSV, NUM_SYNTHETIC  # noqa: E402
 from seeds import SCORE_ATTACK_SEED                                # noqa: E402
 
@@ -323,7 +323,7 @@ def probe(n_fits: int) -> int:
     member = background.copy()
     member.add_records(target, in_place=True)
     log.info(f"=== probe: {n_fits} fit+generate cycles on {len(member.data)} rows, "
-             f"llm={LLM}, k={SAMPLE_K} ===")
+             f"llm={LLM}, k={SAMPLE_K}, max_length={SAMPLE_MAX_LENGTH} ===")
 
     times, hashes, rates = [], [], []
     for i in range(n_fits):

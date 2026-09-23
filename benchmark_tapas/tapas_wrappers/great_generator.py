@@ -108,6 +108,15 @@ from generate_great import (LLM, BATCH_SIZE, EPOCHS, FP16,         # noqa: E402
 # never inside the vocabulary.
 MAX_SAMPLE_ROUNDS = 20
 
+# be_great's sample() default is 100 tokens/row. Probed at k=2000/max_length=100:
+# mean acceptance 82%, because rows with several long category values (e.g.
+# "Married-civ-spouse", "Machine-op-inspct") get cut off mid-value before all
+# columns are written, and the truncated tail fails the vocabulary check in
+# _valid_rows below. Raised here to test whether more headroom per row raises
+# acceptance and so lowers the number of sample() rounds -- and therefore the
+# per-fit wall clock -- the full audit costs.
+SAMPLE_MAX_LENGTH = 150
+
 
 class GReaTGenerator(Generator):
     """GReaT (fine-tuned GPT-2) as a TAPAS Generator.
@@ -228,7 +237,8 @@ class GReaTGenerator(Generator):
             # Always ask for the FULL quota, not the shortfall: be_great generates
             # a whole k-row batch per call regardless, so a request for 3 rows
             # costs the same as a request for num_samples and harvests far fewer.
-            batch = self._model.sample(n_samples=num_samples, k=SAMPLE_K)
+            batch = self._model.sample(n_samples=num_samples, k=SAMPLE_K,
+                                       max_length=SAMPLE_MAX_LENGTH)
             drawn += len(batch)
             valid = self._valid_rows(batch)
             collected.append(valid)
