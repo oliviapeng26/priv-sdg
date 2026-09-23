@@ -2,8 +2,8 @@
 """TSTR / TRTR / retention utility, scored per run on a genuine holdout.
 
 Reads the per-run synthetic CSVs written by sdg/generate_runs.py
-(the four Synthcity methods) and sdg/generate_smartnoise.py (aim,
-dpctgan), trains
+(the four Synthcity methods), sdg/generate_smartnoise.py (aim, dpctgan), and
+sdg/generate_great.py (great), trains
 classifiers on them, and scores AUC on data/adult_test.csv -- the 5,381 records
 produced by the DATA_SPLIT_SEED split that no generator has ever seen.
 
@@ -61,7 +61,7 @@ sys.path.insert(0, str(REPO_ROOT))
 from seeds import DATA_SPLIT_SEED, RUN_SEEDS, NUM_RUNS, set_all_seeds
 
 ALL_METHODS = ["bayesian_network", "privbayes", "ctgan", "dpgan",
-               "aim", "dpctgan"]
+               "aim", "dpctgan", "great"]
 
 CONTINUOUS_COLS = ["age", "education_num", "capital_gain", "capital_loss", "hours_per_week"]
 CATEGORICAL_COLS = ["workclass", "marital_status", "occupation", "relationship",
@@ -420,7 +420,7 @@ def main() -> int:
                     f"{missing[:6]}{' ...' if len(missing) > 6 else ''}")
     if not rows:
         log.warning("No runs scored -- run sdg/generate_runs.py / "
-                    "sdg/generate_smartnoise.py first.")
+                    "sdg/generate_smartnoise.py / sdg/generate_great.py first.")
         return 1
 
     per_run = pd.DataFrame(rows)
