@@ -8,9 +8,21 @@ rather than joining METHOD_SPEC there.
 
 Hyperparameters (gpt2, batch_size=32, epochs=10, fp16=True,
 dataloader_num_workers=4, sample k=2000) match the 500-row sanity check in
-sdg/great_sanity_check.py -- same config, more rows. gpt2 (not distilgpt2)
-because it sampled ~20x faster and matched DP-2Stage's reference setup; see
-the README's GReaT timing table for the sanity-check numbers behind this.
+sdg/great_sanity_check.py -- same config, more rows -- with ONE deliberate
+difference: float_precision=0 here (integer text, `age is 47`), which
+great_sanity_check.py does not set (float text, `age is 47.0`). gpt2 (not
+distilgpt2) because it sampled ~20x faster and matched DP-2Stage's reference
+setup; see the README's GReaT timing table for the sanity-check numbers behind
+this.
+
+float_precision=0 is what the TAPAS audit's wrapper (benchmark_tapas/
+tapas_wrappers/great_generator.py) uses, so the model scored for utility and
+fidelity is serialised the same way as the model audited for privacy. The
+earlier runs used be_great's default (float_precision=None), which writes the
+CSV's floats as `47.0`: measured with GPT-2's tokenizer, that makes a row
+80-105 tokens against max_length=100 (integer text: 70-96), and once prompt
+left-padding is counted up to 25.8% of rows overflow when native_country is
+the start column. Those outputs were replaced.
 
 Outputs:
     synthetic_data/runs/great_seed{seed}.csv   one file per seed
@@ -68,6 +80,7 @@ BATCH_SIZE = 32
 EPOCHS = 10
 FP16 = True
 DATALOADER_NUM_WORKERS = 4
+FLOAT_PRECISION = 0   # integer text ("age is 47"); see the module docstring
 # efficient_finetuning intentionally left unset below -- full fine-tuning,
 # no LoRA, to match DP-2Stage's GPT-2 setup exactly.
 
@@ -128,6 +141,7 @@ def generate_one(train_df: pd.DataFrame, seed: int, regenerate: bool) -> bool:
             epochs=EPOCHS,
             fp16=FP16,
             dataloader_num_workers=DATALOADER_NUM_WORKERS,
+            float_precision=FLOAT_PRECISION,
             seed=seed,   # HF's Trainer defaults TrainingArguments.seed=42 and
                          # calls set_seed(42) internally, silently overwriting
                          # the set_all_seeds(seed) above -- without this, every

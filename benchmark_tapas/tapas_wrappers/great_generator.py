@@ -50,13 +50,33 @@ THE SCALING ROUND TRIP, AND WHY IT IS NOT OPTIONAL HERE
     So each fit runs: unscale -> GReaT -> sample -> rescale. The scalers are the
     same (min, max) pairs load_adult_datasets used, passed in by the run script,
     so the round trip is exact and the output lands back in the representation
-    the threat model expects. In original units the serialised text is also
-    identical in form to the 500-row sanity check in sdg/great_sanity_check.py,
-    which is where the ~25.7 s/fit cost estimate comes from.
+    the threat model expects.
 
     float_precision=0 is set for the same token-budget reason: all five
     continuous columns are integer-valued in Adult, and unscaling is exact, so
     this costs no information and writes `age is 39` rather than `age is 39.0`.
+
+    FORMAT PARITY WITH THE OTHER TWO SCRIPTS (corrected -- an earlier version of
+    this docstring wrongly claimed the text already matched the sanity check).
+      sdg/generate_great.py         float_precision=0  -> `age is 47`   matches this
+                                    wrapper. It did NOT until the utility/fidelity
+                                    runs were redone with it; the first 5-seed batch
+                                    used be_great's default and wrote `age is 47.0`.
+      sdg/great_sanity_check.py     float_precision unset -> `age is 47.0`. Still
+                                    float text: rows are ~10 tokens longer, so its
+                                    ~25.7 s/fit was measured on a slightly different
+                                    input than this wrapper's. The wrapper's own
+                                    --probe (47.6 s/fit) is the number to trust.
+    Row length in GPT-2 tokens, measured over all 21,523 rows: 70-96 (median 80)
+    in integer text against 80-105 (median 90) in float text, for
+    max_length=100 -- integer text stays inside it, float text does not always.
+
+    KNOWN GAP, unchanged by float_precision: when fit() ends on a continuous
+    column as its conditional (start) column, be_great builds the sampling
+    prompt with ContinuousStart, whose decimal_places is a hard-coded default of
+    5 and is not fed float_precision. The prompt reads `age is 47.00000,` while
+    the model trained on `age is 47`. This applies to both scripts equally and
+    was not introduced by any change here. It has NOT been assessed.
 
     Output is NOT clipped to [0,1]. aim_generator.py makes the same choice for
     the same reason: no other generator's output is clipped, and bounding this
