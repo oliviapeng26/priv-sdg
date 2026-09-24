@@ -28,6 +28,11 @@ archive/aim_tuning/synthetic/
 sdg/generate_runs_log.txt
 sdg/generate_great_log.txt
 sdg/.great_scratch*/
+sdg/generate_dp2stage_log.txt
+sdg/dp2stage_probe_log.txt
+sdg/.dp2stage_probe/
+sdg/.dp2stage_fit_*/
+sdg/.dp2stage_stage1_*/
 evaluation/eval_fidelity_log.txt
 evaluation/eval_utility_log.txt
 evaluation/results/smartnoise/generate_smartnoise_log.txt
