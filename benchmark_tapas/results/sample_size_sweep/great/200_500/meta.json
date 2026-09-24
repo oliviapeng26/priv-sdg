@@ -1,0 +1,18 @@
+{
+  "method": "great",
+  "formal_epsilon": null,
+  "num_train": 200,
+  "num_test": 500,
+  "num_synthetic": 500,
+  "pool_wall_clock_s": 0.0,
+  "attack_wall_clock_s": 186.57,
+  "new_fits_this_run": 0,
+  "distinct_fractions": {
+    "train/D+": 1.0,
+    "train/D-": 1.0,
+    "test/D+": 1.0,
+    "test/D-": 1.0
+  },
+  "attacks_without_raw_scores": [],
+  "note": "pool_wall_clock_s covers this invocation only; see new_fits_this_run to tell a fresh run from a resumed one."
+}
