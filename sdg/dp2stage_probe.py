@@ -114,13 +114,16 @@ def cmd_tokens(a):
     for k, v in LOCAL_TOKEN_STATS.items():
         log.info(f"{k:<12}{v:>12}{here[k]:>8}{'' if here[k] == v else '   <-- differs'}")
 
+    # Informational only: tokenizer versions can shift a single row by a token (the
+    # first workstation run had max 93 vs the Mac's 94). What decides the verdict is
+    # whether the cap still covers the worst case measured HERE.
     same = here == LOCAL_TOKEN_STATS
-    log.info(f"counts identical to the Mac measurement: {'PASS' if same else 'FAIL'}")
-    if not same:
-        log.info("  -> re-derive MAX_NEW_TOKENS from the 'here' column, not the Mac's")
+    log.info(f"counts identical to the Mac measurement: "
+             f"{'yes' if same else 'no (informational -- see the differing rows above)'}")
+    cap_ok = MAX_NEW_TOKENS >= worst
     log.info(f"MAX_NEW_TOKENS={MAX_NEW_TOKENS} >= worst case {worst}: "
-             f"{'PASS' if MAX_NEW_TOKENS >= worst else 'FAIL -- cap would truncate valid rows'}")
-    return 0 if same and MAX_NEW_TOKENS >= worst else 1
+             f"{'PASS' if cap_ok else 'FAIL -- cap would truncate valid rows; re-derive it'}")
+    return 0 if cap_ok else 1
 
 
 # -- fit ------------------------------------------------------------------------
