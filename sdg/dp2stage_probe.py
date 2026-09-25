@@ -46,6 +46,7 @@ import argparse
 import hashlib
 import json
 import logging
+import re
 import subprocess
 import sys
 import time
@@ -146,7 +147,7 @@ def summarise(runs, n_samples):
     """runs: list of dicts with 'seed', 'info' (driver JSON) and 'out_csv'. Returns ok."""
     log.info("")
     log.info(f"{'seed':>5} {'fit_s':>7} {'gen_s':>6} {'eps_spent':>9} {'sigma':>7} {'steps':>6} "
-             f"{'accept':>7} {'rows':>5} {'GBfit':>6} {'GBgen':>6}  md5")
+             f"{'accept':>7} {'rows':>5} {'GBfit':>6} {'GBgen':>6} {'finalperp':>10}  md5")
     ok = True
     md5s = []
     for r in runs:
@@ -154,8 +155,8 @@ def summarise(runs, n_samples):
         md5s.append(_md5(r["out_csv"]))
         log.info(f"{r['seed']:>5} {i['fit_s']:>7} {i['gen_s']:>6} {i['epsilon_spent']:>9.4f} "
                  f"{i['noise_multiplier']:>7.3f} {i['dp_steps']:>6} {str(i['acceptance']):>7} "
-                 f"{i['n_returned']:>5} {i['peak_gpu_gb_fit']:>6} {i['peak_gpu_gb_gen']:>6}  "
-                 f"{md5s[-1][:10]}")
+                 f"{i['n_returned']:>5} {i['peak_gpu_gb_fit']:>6} {i['peak_gpu_gb_gen']:>6} "
+                 f"{str(r.get('train_perp')):>10}  {md5s[-1][:10]}")
 
     eps_ok = all(r["info"]["epsilon_spent"] <= TARGET_EPSILON + EPS_TOLERANCE for r in runs)
     rows_ok = all(r["info"]["n_returned"] == n_samples for r in runs)
@@ -198,14 +199,15 @@ def cmd_fit(a):
     log.info(f"private sample: {a.n_train} rows of adult_train (TAPAS_BG_SEED={TAPAS_BG_SEED}); "
              f"{a.repeats} fits, seeds {a.seed}..{a.seed + a.repeats - 1}, "
              f"n_samples={a.n_samples}, sample_batch={a.sample_batch}, "
-             f"batch sweep={a.probe_batches or 'off'}")
+             f"batch sweep={a.probe_batches or 'off'}, lr={a.lr if a.lr is not None else 'driver default'}")
 
     runs = []
     for r in range(a.repeats):
         seed = a.seed + r
-        out_csv = PROBE_DIR / f"synth_seed{seed}.csv"
-        info_json = PROBE_DIR / f"info_seed{seed}.json"
-        fit_log = PROBE_DIR / f"fit_seed{seed}.log"
+        sfx = f"_lr{a.lr:g}" if a.lr is not None else ""
+        out_csv = PROBE_DIR / f"synth_seed{seed}{sfx}.csv"
+        info_json = PROBE_DIR / f"info_seed{seed}{sfx}.json"
+        fit_log = PROBE_DIR / f"fit_seed{seed}{sfx}.log"
         cmd =[sys.executable, "-u", str(DRIVER), "fit-sample",
                "--train-csv", str(private_csv), "--out-csv", str(out_csv),
                "--info-json", str(info_json), "--n-samples", str(a.n_samples),
@@ -213,6 +215,8 @@ def cmd_fit(a):
                "--sample-batch", str(a.sample_batch), "--scratch-root", str(PROBE_DIR)]
         if a.stage1_dir:
             cmd += ["--stage1-dir", a.stage1_dir]
+        if a.lr is not None:
+            cmd += ["--lr", str(a.lr)]
         if r == 0 and a.probe_batches:
             cmd += ["--probe-batches", *map(str, a.probe_batches),
                     "--probe-rows", str(a.probe_rows)]
@@ -221,14 +225,22 @@ def cmd_fit(a):
         with open(fit_log, "w") as f:
             rc = subprocess.call(cmd, stdout=f, stderr=subprocess.STDOUT)
         log.info(f"    exit {rc} after {time.perf_counter() - t0:.0f}s wall")
+        perps = re.findall(r"Train perp = ([0-9.eE+\-]+)", fit_log.read_text(errors="replace"))
+        train_perp = round(float(perps[-1]), 2) if perps else None
         if rc != 0 or not info_json.exists():
+            if info_json.exists():       # the driver writes it even when generation fails
+                fi = json.loads(info_json.read_text())
+                log.info(f"    the fit itself ran: lr={fi.get('lr')} fit_s={fi.get('fit_s')} "
+                         f"eps_spent={fi.get('epsilon_spent')} sigma={fi.get('noise_multiplier')} "
+                         f"steps={fi.get('dp_steps')} final Train perp={train_perp} "
+                         f"(Stage 1 ended near 1.2; ~50000 is random guessing)")
             meaning = {3: "hard failure (CUDA OOM or a zero-row generation round) -- "
                           "check nvidia-smi for another job", 4: "quota not filled"}.get(rc, "")
             log.info(f"FIT FAILED (exit {rc}) {meaning}\n--- tail of {fit_log} ---\n"
                      + "".join(fit_log.read_text().splitlines(keepends=True)[-25:]))
             return 1
         runs.append({"seed": seed, "info": json.loads(info_json.read_text()),
-                     "out_csv": out_csv})
+                     "out_csv": out_csv, "train_perp": train_perp})
 
     return 0 if summarise(runs, a.n_samples) else 1
 
@@ -249,6 +261,9 @@ def main():
                    help="batch sizes to sweep on the first fit; pass none to skip")
     f.add_argument("--probe-rows", type=int, default=2000)
     f.add_argument("--stage1-dir", default=None, help="default: the driver's STAGE1_DIR")
+    f.add_argument("--lr", type=float, default=None,
+                   help="Stage 2 learning rate, PROBING only (default: the driver's LR). Outputs get "
+                        "an _lr<value> suffix so runs with different rates never overwrite each other.")
     a = p.parse_args()
 
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s",

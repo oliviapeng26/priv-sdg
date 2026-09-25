@@ -344,9 +344,19 @@ def _sample_rows(generation, model, dataset, torch, scratch, tag, n, k, gen_seed
             drawn += sum(1 for _ in open(raw_txt)) if raw_txt.exists() else 0
             rounds += 1
             if len(batch) == 0:
+                # Zero valid rows is either contention (nothing was generated) or a model
+                # that writes well-formed nonsense (e.g. still emitting Stage 1's Airline
+                # keys). The raw text tells them apart, and it lives in a scratch dir that
+                # is deleted on exit -- so show a few rows in the message itself.
+                sample = ""
+                if raw_txt.exists():
+                    lines = [l.rstrip("\n") for l in open(raw_txt) if l.strip()][:3]
+                    sample = ("\n  raw model output, first %d row(s) of this round (prompt included):\n"
+                              % len(lines)) + "\n".join("    " + repr(l[:400]) for l in lines)
                 raise HardGenerationFailure(
                     f"generation round {rounds} ({tag}, k={k}) returned 0 rows -- "
-                    f"check nvidia-smi for OOM/contention")
+                    f"if raw output is shown below the model ran but no row was valid; "
+                    f"if none, check nvidia-smi for OOM/contention{sample}")
             batch = _integer_rows_only(batch)   # after the zero-row check: an empty
                                                 # result here is a format problem, not OOM
             collected.append(batch)
@@ -362,6 +372,7 @@ def cmd_fit_sample(a):
     stage1_dir = Path(a.stage1_dir)
     if not (stage1_dir / "model.safetensors").exists():
         sys.exit(f"no Stage 1 checkpoint at {stage1_dir} -- run `stage1` first")
+    lr = a.lr if a.lr is not None else LR    # --lr is for PROBING; the final value belongs in LR
 
     private = pd.read_csv(a.train_csv)
     for c in INTEGER_COLS:                                          # deviation 4
@@ -373,7 +384,7 @@ def cmd_fit_sample(a):
     scratch = Path(tempfile.mkdtemp(prefix=".dp2stage_fit_", dir=a.scratch_root))
     info = {"n_train": len(private), "n_requested": a.n_samples, "seed": a.seed,
             "gen_seed": a.gen_seed, "target_epsilon": EPSILON, "delta": DELTA,
-            "clip": CLIP, "epochs": EPOCHS, "batch_size": BATCH_SIZE,
+            "clip": CLIP, "epochs": EPOCHS, "batch_size": BATCH_SIZE, "lr": lr,
             "max_new_tokens": MAX_NEW_TOKENS, "sample_batch": a.sample_batch,
             "stage1_dir": str(stage1_dir),
             "dp2stage_commit": DP2STAGE_COMMIT}
@@ -385,7 +396,7 @@ def cmd_fit_sample(a):
         try:
             cap = _run_main(ft_opacus, _common_argv(
                 train_csv, scratch / "run", a.seed, stage1_dir,
-                stage1_dir / "model.safetensors", EPOCHS, BATCH_SIZE, LR,
+                stage1_dir / "model.safetensors", EPOCHS, BATCH_SIZE, lr,
                 WEIGHTED_LOSS, START_COL) + [
                 "--enable_privacy", "True", "--micro_batch_size", MICRO_BATCH_SIZE,
                 "--target_epsilon", EPSILON, "--target_delta", DELTA,
@@ -483,6 +494,10 @@ def main():
     s2.add_argument("--seed", type=int, required=True, help="training seed")
     s2.add_argument("--gen-seed", type=int, required=True, help="generation seed")
     s2.add_argument("--stage1-dir", default=str(STAGE1_DIR))
+    s2.add_argument("--lr", type=float, default=None,
+                    help="Stage 2 learning rate, for PROBING only (default: the LR constant). "
+                         "generate_dp2stage.py and the TAPAS wrapper never pass it, so whatever "
+                         "wins must be written into LR or the runs will not match the probe.")
     s2.add_argument("--sample-batch", type=int, default=SAMPLE_BATCH,
                     help="rows drawn per model.generate() call (sampling only)")
     s2.add_argument("--probe-batches", type=int, nargs="+", default=None,
