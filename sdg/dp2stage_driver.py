@@ -106,11 +106,12 @@ Usage (from ~/priv-sdg, one GPU pinned):
 
 EXIT CODES (fit-sample)
   0  full quota written
-  3  hard failure: CUDA OOM in training, or a generation round returning zero rows
+  3  hard failure: CUDA OOM in training, or a generation round that produced NO TEXT AT ALL
      (generate() swallows every exception, OOM included, and returns what it has).
      Transient under GPU contention -- callers map it to HardSampleFailure.
-  4  quota not filled after MAX_GEN_ROUNDS rounds that each produced SOME rows --
-     a model problem, not contention; retrying the same config fails the same way.
+  4  quota not filled: either MAX_GEN_ROUNDS rounds that each produced SOME valid rows, or a
+     round that wrote text but zero VALID rows (NoValidRows) -- a model problem, not
+     contention; retrying the same config fails the same way.
 """
 
 import argparse
@@ -315,6 +316,14 @@ def _integer_rows_only(df):
     return df
 
 
+class NoValidRows(RuntimeError):
+    """A generation round produced text but ZERO valid rows: the model ran, and what it
+    wrote is not Adult rows (seen at n=500: Stage 2 gets 160 DP steps and keeps writing
+    Stage 1's Airline columns). NOT transient -- retrying the same config fails the same
+    way -- so it exits EXIT_SHORTFALL, not EXIT_HARD_FAILURE, and the audit's restart loop
+    does not retry it forever."""
+
+
 class HardGenerationFailure(RuntimeError):
     """A generation round returned zero rows. generate() catches every exception
     (CUDA OOM included) and returns what it has, so zero rows is how OOM or GPU
@@ -348,15 +357,18 @@ def _sample_rows(generation, model, dataset, torch, scratch, tag, n, k, gen_seed
                 # that writes well-formed nonsense (e.g. still emitting Stage 1's Airline
                 # keys). The raw text tells them apart, and it lives in a scratch dir that
                 # is deleted on exit -- so show a few rows in the message itself.
-                sample = ""
+                lines = []
                 if raw_txt.exists():
                     lines = [l.rstrip("\n") for l in open(raw_txt) if l.strip()][:3]
-                    sample = ("\n  raw model output, first %d row(s) of this round (prompt included):\n"
-                              % len(lines)) + "\n".join("    " + repr(l[:400]) for l in lines)
+                if lines:       # the model ran and wrote text, none of it a valid row
+                    raise NoValidRows(
+                        f"generation round {rounds} ({tag}, k={k}) wrote text but 0 VALID rows -- "
+                        f"a model problem, not contention. Raw model output, first {len(lines)} "
+                        f"row(s) of this round (prompt included):\n"
+                        + "\n".join("    " + repr(l[:400]) for l in lines))
                 raise HardGenerationFailure(
-                    f"generation round {rounds} ({tag}, k={k}) returned 0 rows -- "
-                    f"if raw output is shown below the model ran but no row was valid; "
-                    f"if none, check nvidia-smi for OOM/contention{sample}")
+                    f"generation round {rounds} ({tag}, k={k}) produced no text at all -- "
+                    f"check nvidia-smi for OOM/contention")
             batch = _integer_rows_only(batch)   # after the zero-row check: an empty
                                                 # result here is a format problem, not OOM
             collected.append(batch)
@@ -432,6 +444,9 @@ def cmd_fit_sample(a):
         try:
             out, drawn, rounds = _sample_rows(tag="main", n=a.n_samples, k=a.sample_batch,
                                               gen_seed=a.gen_seed, **gen_kw)
+        except NoValidRows as e:
+            print(e, file=sys.stderr)
+            return EXIT_SHORTFALL
         except HardGenerationFailure as e:
             print(e, file=sys.stderr)
             return EXIT_HARD_FAILURE
@@ -455,7 +470,7 @@ def cmd_fit_sample(a):
                     rows, drawn_k, rounds_k = _sample_rows(
                         tag=f"probe{k}", n=a.probe_rows, k=k, gen_seed=a.gen_seed, **gen_kw)
                     rec.update(ok=True, rows=len(rows), rows_drawn=drawn_k, gen_rounds=rounds_k)
-                except HardGenerationFailure as e:
+                except (HardGenerationFailure, NoValidRows) as e:
                     rows = ()
                     rec.update(ok=False, rows=0, note=str(e)[:200])
                 secs = time.perf_counter() - t2
