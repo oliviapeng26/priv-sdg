@@ -135,6 +135,8 @@ PUBLIC_VOCAB_CSVS = [REPO_ROOT / "data" / "adult_train.csv",
 INTEGER_COLS = ["age", "education_num", "capital_gain", "capital_loss", "hours_per_week"]
 
 STAGE1_DIR = DP2STAGE_ROOT / "runs" / "priv-sdg_stage1_airline"   # outside our repo: ~0.5 GB
+STAGE1_DIR_U = DP2STAGE_ROOT / "runs" / "priv-sdg_stage1_uniform"  # variant U, shared (5 seeds)
+STAGE1_DIRS = {"O": STAGE1_DIR, "U": STAGE1_DIR_U}
 
 LLM = "gpt2"
 
@@ -142,7 +144,9 @@ LLM = "gpt2"
 STAGE1_EPOCHS = 5
 STAGE1_BATCH_SIZE = 32
 STAGE1_LR = 5e-4
-STAGE1_START_COL = "satisfaction"
+STAGE1_START_COL = "satisfaction"      # variant O (Airline)
+STAGE1_START_COL_U = "income"         # variant U: the pseudo data has Adult's schema, and
+                                      # stage1_master.sh takes START_COL from the dataset config
 STAGE1_WEIGHTED_LOSS = -1          # -1 -> None in main(): plain LM loss
 
 # Stage 2: ood/stage2/full_dp-eps1.sh + master.sh + adult_general.sh.
@@ -202,6 +206,12 @@ def _run_main(ft_opacus, argv):
             super().__init__(*a, **k)
             captured["engine"] = self
 
+    # get_logger() adds a FileHandler on every main() call and never removes it; a per-fit
+    # U run calls main() twice, so drop the previous call's handlers first.
+    lg = ft_opacus.logging.getLogger(ft_opacus.__name__)
+    for h in list(lg.handlers):
+        lg.removeHandler(h)
+        h.close()
     ft_opacus.save_model = capture_save_model
     ft_opacus.PrivacyEngine = RecordingPrivacyEngine
     sys.argv = ["ft_opacus.py"] + [str(x) for x in argv]
@@ -235,22 +245,87 @@ def _common_argv(train_csv, output_dir, seed, model_path, checkpoint_path, epoch
     ]
 
 
+def _read_private(path):
+    """The private CSV with the integer columns as int64 (deviation 4)."""
+    private = pd.read_csv(path)
+    for c in INTEGER_COLS:
+        vals = pd.to_numeric(private[c])
+        assert (vals % 1 == 0).all(), f"{c} has non-integer values; refusing to truncate"
+        private[c] = vals.astype("int64")
+    return private
+
+
+def uniform_pseudo_data(private, n_samples, seed):
+    """DP-2Stage-U's Stage 1 data: every column sampled INDEPENDENTLY and UNIFORMLY from
+    the PRIVATE data's own statistics -- integer columns on [min, max], categorical
+    columns over the categories that occur. A re-implementation of
+    utils/create_independent_uniform_pseudo_data.py::generate_uniform_data at the pinned
+    commit, with the same numpy draw order (column order of `private`, one uniform or
+    choice call per column), so it reproduces theirs value for value given the same seed
+    and the same frame.
+
+    Why not call theirs: (a) its imports (`from dataset import ...`, `from utils import
+    ...`) collide with ft_opacus's `utils` package in one process; (b) a numeric column
+    whose dtype is not int* falls into an else-branch that reuses the PREVIOUS column's
+    min/max (an unbound-variable bug) -- our integer columns are int64, so that branch
+    is never taken here, and non-integer numerics are refused rather than mis-sampled.
+
+    PRIVACY: min/max and the category lists come from the private data with NO noise.
+    That is exactly the leak the paper concedes for U (Sec. 6, "Privacy Guarantees"); it
+    is the variant under test, not a bug. `seed` goes through transformers.set_seed
+    like theirs does.
+    """
+    import numpy as np
+    from transformers import set_seed
+    set_seed(seed)
+    df = pd.DataFrame()
+    for col in private.columns:
+        dtype = str(private[col].dtype)
+        if dtype.startswith("i"):
+            lo, hi = private[col].min(), private[col].max()
+            df[col] = np.random.uniform(low=lo, high=hi + 1, size=n_samples).astype(dtype)
+        elif dtype.startswith("o"):
+            cats = list(private[col].value_counts(normalize=True).index)   # their get_metadata order
+            df[col] = np.random.choice(cats, n_samples).astype(dtype)
+        else:
+            raise ValueError(f"column {col} has dtype {dtype}; U's generator is only defined "
+                             f"for int and object columns here")
+    return df
+
+
+def _train_stage1(ft_opacus, train_csv, run_dir, seed, start_col):
+    """Their non-DP Stage 1 on one CSV; returns the trained model (in memory)."""
+    cap = _run_main(ft_opacus, _common_argv(
+        train_csv, run_dir, seed, LLM, "None", STAGE1_EPOCHS, STAGE1_BATCH_SIZE,
+        STAGE1_LR, STAGE1_WEIGHTED_LOSS, start_col) + ["--enable_privacy", "False"])
+    return cap["model"]
+
+
 # -- stage 1 ------------------------------------------------------------------
 
 def cmd_stage1(a):
     ft_opacus, _ = _import_dp2stage()
     import safetensors.torch
 
-    out_dir = Path(a.out_dir)
+    out_dir = Path(a.out_dir or STAGE1_DIRS[a.variant])
     if out_dir.exists():
         sys.exit(f"{out_dir} already exists -- Stage 1 is trained once. Move it aside "
                  f"first if you really mean to retrain.")
     scratch = Path(tempfile.mkdtemp(prefix=".dp2stage_stage1_", dir=REPO_ROOT / "sdg"))
     t0 = time.perf_counter()
     try:
+        if a.variant == "U":
+            # Pseudo data from the stats of --train-csv (the PRIVATE data, as in the paper),
+            # one pseudo row per private row -- their example uses n_synth_samples = train size.
+            private = _read_private(a.train_csv)
+            train_csv = scratch / "uniform_pseudo.csv"
+            uniform_pseudo_data(private, len(private), a.seed).to_csv(train_csv, index=False)
+            start_col = STAGE1_START_COL_U
+        else:
+            train_csv, start_col = a.train_csv, STAGE1_START_COL
         cap = _run_main(ft_opacus, _common_argv(
-            a.train_csv, scratch, a.seed, LLM, "None", STAGE1_EPOCHS, STAGE1_BATCH_SIZE,
-            STAGE1_LR, STAGE1_WEIGHTED_LOSS, STAGE1_START_COL) + ["--enable_privacy", "False"])
+            train_csv, scratch / "run", a.seed, LLM, "None", STAGE1_EPOCHS, STAGE1_BATCH_SIZE,
+            STAGE1_LR, STAGE1_WEIGHTED_LOSS, start_col) + ["--enable_privacy", "False"])
         # Their save_model minus the ~1 GB optimizer/RNG resume dict.
         model = cap["model"]
         out_dir.mkdir(parents=True)
@@ -261,8 +336,8 @@ def cmd_stage1(a):
     finally:
         shutil.rmtree(scratch, ignore_errors=True)
     elapsed = time.perf_counter() - t0
-    info = {"train_csv": str(a.train_csv), "rows": len(pd.read_csv(a.train_csv)),
-            "seed": a.seed, "epochs": STAGE1_EPOCHS, "batch_size": STAGE1_BATCH_SIZE,
+    info = {"variant": a.variant, "train_csv": str(a.train_csv),
+            "rows": len(pd.read_csv(a.train_csv)), "seed": a.seed, "epochs": STAGE1_EPOCHS, "batch_size": STAGE1_BATCH_SIZE,
             "lr": STAGE1_LR, "dp2stage_commit": DP2STAGE_COMMIT,
             "elapsed_s": round(elapsed, 1)}
     (out_dir / "priv-sdg_stage1_info.json").write_text(json.dumps(info, indent=2))
@@ -377,20 +452,20 @@ def _sample_rows(generation, model, dataset, torch, scratch, tag, n, k, gen_seed
 
 
 def cmd_fit_sample(a):
+    per_fit = a.variant == "U" and a.stage1_per_fit
+    if a.stage1_per_fit and a.variant != "U":
+        sys.exit("--stage1-per-fit only exists for variant U (O's Stage 1 never sees private data)")
+    stage1_dir = Path(a.stage1_dir or STAGE1_DIRS[a.variant])
+    if not per_fit and not (stage1_dir / "model.safetensors").exists():
+        sys.exit(f"no Stage 1 checkpoint at {stage1_dir} -- run `stage1 --variant {a.variant}` first")
+
     ft_opacus, generation = _import_dp2stage()
     import torch
     import utils.dataset as dataset_utils
 
-    stage1_dir = Path(a.stage1_dir)
-    if not (stage1_dir / "model.safetensors").exists():
-        sys.exit(f"no Stage 1 checkpoint at {stage1_dir} -- run `stage1` first")
     lr = a.lr if a.lr is not None else LR    # --lr is for PROBING; the final value belongs in LR
 
-    private = pd.read_csv(a.train_csv)
-    for c in INTEGER_COLS:                                          # deviation 4
-        vals = pd.to_numeric(private[c])
-        assert (vals % 1 == 0).all(), f"{c} has non-integer values; refusing to truncate"
-        private[c] = vals.astype("int64")
+    private = _read_private(a.train_csv)                            # deviation 4
     out_cols = list(private.columns)
 
     scratch = Path(tempfile.mkdtemp(prefix=".dp2stage_fit_", dir=a.scratch_root))
@@ -398,11 +473,36 @@ def cmd_fit_sample(a):
             "gen_seed": a.gen_seed, "target_epsilon": EPSILON, "delta": DELTA,
             "clip": CLIP, "epochs": EPOCHS, "batch_size": BATCH_SIZE, "lr": lr,
             "max_new_tokens": MAX_NEW_TOKENS, "sample_batch": a.sample_batch,
-            "stage1_dir": str(stage1_dir),
+            "variant": a.variant, "stage1_per_fit": per_fit,
+            "stage1_dir": "per-fit (rebuilt from this CSV)" if per_fit else str(stage1_dir),
             "dp2stage_commit": DP2STAGE_COMMIT}
     try:
         train_csv = scratch / "private.csv"
         private.to_csv(train_csv, index=False)
+
+        if per_fit:
+            # Stage 1 rebuilt from THIS private CSV's stats, so the target's presence or
+            # absence reaches the pseudo data exactly as the paper's U would let it.
+            ts = time.perf_counter()
+            pseudo_csv = scratch / "uniform_pseudo.csv"
+            uniform_pseudo_data(private, len(private), a.seed).to_csv(pseudo_csv, index=False)
+            try:
+                s1_model = _train_stage1(ft_opacus, pseudo_csv, scratch / "stage1_run",
+                                         a.seed, STAGE1_START_COL_U)
+            except torch.cuda.OutOfMemoryError as e:
+                print(f"CUDA OOM during per-fit Stage 1: {e}", file=sys.stderr)
+                return EXIT_HARD_FAILURE
+            import safetensors.torch
+            stage1_dir = scratch / "stage1"
+            stage1_dir.mkdir()
+            s1_model.config.save_pretrained(stage1_dir)
+            s1_model.generation_config.save_pretrained(stage1_dir)
+            safetensors.torch.save_model(s1_model, str(stage1_dir / "model.safetensors"),
+                                         metadata={"format": "pt"})
+            del s1_model
+            torch.cuda.empty_cache()
+            torch.cuda.reset_peak_memory_stats()
+            info["stage1_s"] = round(time.perf_counter() - ts, 1)
 
         t0 = time.perf_counter()
         try:
@@ -496,9 +596,13 @@ def main():
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = p.add_subparsers(dest="cmd", required=True)
 
-    s1 = sub.add_parser("stage1", help="non-DP fine-tune on Airline (once)")
+    s1 = sub.add_parser("stage1", help="non-DP Stage 1, trained once and shared")
+    s1.add_argument("--variant", choices=["O", "U"], default="O",
+                    help="O: --train-csv is the public Airline data. U: --train-csv is the "
+                         "PRIVATE training data; uniform pseudo data is drawn from its stats")
     s1.add_argument("--train-csv", required=True)
-    s1.add_argument("--out-dir", default=str(STAGE1_DIR))
+    s1.add_argument("--out-dir", default=None,
+                    help="default: STAGE1_DIR (O) or STAGE1_DIR_U (U)")
     s1.add_argument("--seed", type=int, default=1000)   # GPT2.sh's SEED
 
     s2 = sub.add_parser("fit-sample", help="DP Stage 2 on a private CSV, then sample")
@@ -508,7 +612,12 @@ def main():
     s2.add_argument("--n-samples", type=int, required=True)
     s2.add_argument("--seed", type=int, required=True, help="training seed")
     s2.add_argument("--gen-seed", type=int, required=True, help="generation seed")
-    s2.add_argument("--stage1-dir", default=str(STAGE1_DIR))
+    s2.add_argument("--variant", choices=["O", "U"], default="O")
+    s2.add_argument("--stage1-dir", default=None,
+                    help="shared Stage 1 checkpoint (default: STAGE1_DIR for O, STAGE1_DIR_U for U)")
+    s2.add_argument("--stage1-per-fit", action="store_true",
+                    help="variant U only: rebuild Stage 1 from THIS --train-csv's stats inside the "
+                         "call (the TAPAS audit), instead of loading the shared checkpoint")
     s2.add_argument("--lr", type=float, default=None,
                     help="Stage 2 learning rate, for PROBING only (default: the LR constant). "
                          "generate_dp2stage.py and the TAPAS wrapper never pass it, so whatever "

@@ -32,6 +32,9 @@ Run from ~/priv-sdg, one GPU pinned, in a named screen:
   nvidia-smi                                   # is czha4500's job on this GPU?
   python -u sdg/dp2stage_probe.py tokens
   python -u sdg/dp2stage_probe.py fit
+  # variant U (needs `dp2stage_driver.py stage1 --variant U` first for the shared case):
+  python -u sdg/dp2stage_probe.py fit --variant U --repeats 1 --probe-batches
+  python -u sdg/dp2stage_probe.py fit --variant U --stage1-per-fit --repeats 2 --probe-batches
 
 What to send back: the summary tables at the end of each command (also appended
 to sdg/dp2stage_probe_log.txt), plus the tail of sdg/.dp2stage_probe/fit_seed*.log
@@ -153,6 +156,8 @@ def summarise(runs, n_samples):
     for r in runs:
         i = r["info"]
         md5s.append(_md5(r["out_csv"]))
+        if i.get("stage1_s") is not None:
+            log.info(f"  seed {r['seed']}: per-fit Stage 1 took {i['stage1_s']}s (not in fit_s)")
         log.info(f"{r['seed']:>5} {i['fit_s']:>7} {i['gen_s']:>6} {i['epsilon_spent']:>9.4f} "
                  f"{i['noise_multiplier']:>7.3f} {i['dp_steps']:>6} {str(i['acceptance']):>7} "
                  f"{i['n_returned']:>5} {i['peak_gpu_gb_fit']:>6} {i['peak_gpu_gb_gen']:>6} "
@@ -199,12 +204,15 @@ def cmd_fit(a):
     log.info(f"private sample: {a.n_train} rows of adult_train (TAPAS_BG_SEED={TAPAS_BG_SEED}); "
              f"{a.repeats} fits, seeds {a.seed}..{a.seed + a.repeats - 1}, "
              f"n_samples={a.n_samples}, sample_batch={a.sample_batch}, "
-             f"batch sweep={a.probe_batches or 'off'}, lr={a.lr if a.lr is not None else 'driver default'}")
+             f"batch sweep={a.probe_batches or 'off'}, lr={a.lr if a.lr is not None else 'driver default'}, "
+             f"variant={a.variant}, stage1={'per-fit' if a.stage1_per_fit else 'shared'}")
 
     runs = []
     for r in range(a.repeats):
         seed = a.seed + r
-        sfx = f"_lr{a.lr:g}" if a.lr is not None else ""
+        sfx = (("" if a.variant == "O" else f"_{a.variant}")
+               + ("_perfit" if a.stage1_per_fit else "")
+               + (f"_lr{a.lr:g}" if a.lr is not None else ""))
         out_csv = PROBE_DIR / f"synth_seed{seed}{sfx}.csv"
         info_json = PROBE_DIR / f"info_seed{seed}{sfx}.json"
         fit_log = PROBE_DIR / f"fit_seed{seed}{sfx}.log"
@@ -213,6 +221,9 @@ def cmd_fit(a):
                "--info-json", str(info_json), "--n-samples", str(a.n_samples),
                "--seed", str(seed), "--gen-seed", str(seed),
                "--sample-batch", str(a.sample_batch), "--scratch-root", str(PROBE_DIR)]
+        cmd += ["--variant", a.variant]
+        if a.stage1_per_fit:
+            cmd += ["--stage1-per-fit"]
         if a.stage1_dir:
             cmd += ["--stage1-dir", a.stage1_dir]
         if a.lr is not None:
@@ -261,6 +272,10 @@ def main():
                    help="batch sizes to sweep on the first fit; pass none to skip")
     f.add_argument("--probe-rows", type=int, default=2000)
     f.add_argument("--stage1-dir", default=None, help="default: the driver's STAGE1_DIR")
+    f.add_argument("--variant", choices=["O", "U"], default="O")
+    f.add_argument("--stage1-per-fit", action="store_true",
+                   help="variant U: rebuild Stage 1 from the 500 private rows inside each fit "
+                        "(what the TAPAS audit does) instead of loading the shared checkpoint")
     f.add_argument("--lr", type=float, default=None,
                    help="Stage 2 learning rate, PROBING only (default: the driver's LR). Outputs get "
                         "an _lr<value> suffix so runs with different rates never overwrite each other.")
