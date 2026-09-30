@@ -3,7 +3,7 @@
 
 Reads the per-run synthetic CSVs written by sdg/generate_runs.py
 (the four Synthcity methods), sdg/generate_smartnoise.py (aim, dpctgan),
-sdg/generate_great.py (great) and sdg/generate_dp2stage.py (dp2stage), trains
+sdg/generate_great.py (great) and sdg/generate_dp2stage.py (dp2stage, dp2stageu), trains
 classifiers on them, and scores AUC on data/adult_test.csv -- the 5,381 records
 produced by the DATA_SPLIT_SEED split that no generator has ever seen.
 
@@ -61,7 +61,7 @@ sys.path.insert(0, str(REPO_ROOT))
 from seeds import DATA_SPLIT_SEED, RUN_SEEDS, NUM_RUNS, set_all_seeds
 
 ALL_METHODS = ["bayesian_network", "privbayes", "ctgan", "dpgan",
-               "aim", "dpctgan", "great", "dp2stage"]
+               "aim", "dpctgan", "great", "dp2stageo", "dp2stageu"]
 
 CONTINUOUS_COLS = ["age", "education_num", "capital_gain", "capital_loss", "hours_per_week"]
 CATEGORICAL_COLS = ["workclass", "marital_status", "occupation", "relationship",

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""TAPAS MIA audit of DP-2Stage-O, at num_train=200 / num_test=500 to start.
+"""TAPAS MIA audit of DP-2Stage (--variant U; O is infeasible), at 200/500 to start.
 
 Structurally this is run_great_audit.py with a different generator plus the formal
 privacy record that the DP audits (AIM, DP-CTGAN) carry. Everything load-bearing is
@@ -9,10 +9,25 @@ same SCORE_ATTACK_SEED, the same per-attack JSON caches, the same raw-score expo
 Only the generator differs (see tapas_wrappers/dp2stage_generator.py, and
 sdg/dp2stage_driver.py for the method itself).
 
+WHICH VARIANT, AND WHY --variant IS REQUIRED
+    U  the one this script is for. Every fit rebuilds Stage 1 from THAT fit's ~500 rows
+       (uniform pseudo data over their ranges/categories, non-DP), then runs DP Stage 2
+       from it -- see tapas_wrappers/dp2stage_generator.py. U's formal (eps, delta) covers
+       Stage 2 ONLY: the pseudo data's statistics are read off the private rows with no
+       noise, which is the weakening the paper states for U (Sec. 6). The audit is
+       therefore exactly the experiment of whether that leak is observable.
+       CAVEAT for the write-up: the standard random target rarely moves a min/max or
+       adds a category, so a clean U result under it does NOT show U is safe -- only
+       that this target did not trigger U's leak mechanism. An outlier-target arm
+       (cf. archive/target_strategy) is the planned near-term follow-up.
+    O  infeasible, recorded as a limitation, not run: at n=500 Stage 2 gets 160 DP steps
+       at sigma=3.44 and the model never leaves Stage 1's Airline schema (0 valid rows at
+       lr 5e-5 .. 2e-3). The option stays so the refusal is explicit, not accidental.
+    Results and caches are namespaced per method (dp2stage / dp2stageu), so the two can
+    never share a pool.
+
 THE FORMAL EPSILON IS REPORTED NEXT TO THE EMPIRICAL ONE
-    DP-2Stage-O has a genuine (eps=1, delta=1e-5) guarantee: Stage 1 (Airline) never
-    touches the private data, and Stage 2 is DP-SGD with Opacus's RDP accountant solving
-    sigma for eps=1. Every fit's SPENT epsilon, sigma and step count come back from that
+    Stage 2 is DP-SGD with Opacus's RDP accountant solving sigma for eps=1 (delta=1e-5). Every fit's SPENT epsilon, sigma and step count come back from that
     accountant (through the driver) and are logged per fit; meta.json carries their
     summary and each effeps row carries formal_epsilon=1.0 and delta, the same columns
     the AIM/DP-CTGAN audits write. TAPAS's eps_low_95 is then read against 1.0.
@@ -24,7 +39,9 @@ WHAT IS HELD FIXED (everything else lives in the driver / wrapper)
     background, target/alternate, attack battery + its internal randomness,
     num_synthetic (500 records per simulation), and DP-2Stage's entire configuration --
     imported from sdg/dp2stage_driver.py, never restated, so the audited model is the one
-    whose utility and fidelity are reported. One shared Stage 1 checkpoint for every fit.
+    whose utility and fidelity are reported. For U, Stage 1 differs from the utility runs
+    only in WHICH rows its statistics come from (the fit's 500 vs all 21,523) -- same
+    generator, same size rule (one pseudo row per private row), same hyperparameters.
     varies: the counts (--num-train/--num-test), and the per-fit seed, which MUST vary.
 
 COST, AND WHY --probe COMES FIRST
@@ -57,15 +74,16 @@ CHECKPOINTING AND THE RESTART LOOP (same pattern as GReaT)
     Grep the repo for PROBE-DEPENDENT for the full list.
 
 OUTPUTS
-      cache/dp2stage_audit/threat_model.pkl                     pools, resumable
-      cache/dp2stage_audit/fit_log.jsonl                        one line per fit: spent eps, sigma, ...
-      cache/dp2stage_audit/attacks_{nt}_{nte}/result_*.json     per-attack cache
-      results/sample_size_sweep/dp2stage/dp2stage_audit_log.txt one log for every stage
-      results/sample_size_sweep/dp2stage/{nt}_{nte}/effeps_dp2stage_{nt}_{nte}.csv
-      results/sample_size_sweep/dp2stage/{nt}_{nte}/raw_scores_dp2stage_{nt}_{nte}.csv
-      results/sample_size_sweep/dp2stage/{nt}_{nte}/effective_epsilon_*.csv
-      results/sample_size_sweep/dp2stage/{nt}_{nte}/fit_log_dp2stage_{nt}_{nte}.jsonl
-      results/sample_size_sweep/dp2stage/{nt}_{nte}/meta.json
+      cache/{method}_audit/threat_model.pkl                     pools, resumable
+      cache/{method}_audit/fit_log.jsonl                        one line per fit: spent eps, sigma, ...
+      cache/{method}_audit/attacks_{nt}_{nte}/result_*.json     per-attack cache
+      results/sample_size_sweep/{method}/{method}_audit_log.txt   one log for every stage
+      results/sample_size_sweep/{method}/{nt}_{nte}/effeps_{method}_{nt}_{nte}.csv
+      results/sample_size_sweep/{method}/{nt}_{nte}/raw_scores_{method}_{nt}_{nte}.csv
+      results/sample_size_sweep/{method}/{nt}_{nte}/effective_epsilon_*.csv
+      results/sample_size_sweep/{method}/{nt}_{nte}/fit_log_{method}_{nt}_{nte}.jsonl
+      results/sample_size_sweep/{method}/{nt}_{nte}/meta.json
+    {method} = dp2stageu for --variant U (dp2stage for O).
 
 RUN IT IN THE RESTART LOOP, IN ~/priv-sdg/venv (the TAPAS venv), NOT DIRECTLY
     The script builds at most MAX_NEW_FITS per process and exits EXIT_INCOMPLETE while the
@@ -80,7 +98,7 @@ RUN IT IN THE RESTART LOOP, IN ~/priv-sdg/venv (the TAPAS venv), NOT DIRECTLY
       run_stage () {
         fails=0
         while true; do
-          python -u benchmark_tapas/audits/run_dp2stage_audit.py \\
+          python -u benchmark_tapas/audits/run_dp2stage_audit.py --variant U \\
                  --num-train $1 --num-test $2
           rc=$?
           [ $rc -eq 0 ] && return 0
@@ -92,8 +110,7 @@ RUN IT IN THE RESTART LOOP, IN ~/priv-sdg/venv (the TAPAS venv), NOT DIRECTLY
       run_stage 200 500
 
 Also:
-  python benchmark_tapas/audits/run_dp2stage_audit.py --probe 10
-  python benchmark_tapas/audits/run_dp2stage_audit.py --probe 10 --sample-batch 500   # PROBE-DEPENDENT
+  python benchmark_tapas/audits/run_dp2stage_audit.py --variant U --probe 4
 """
 
 import argparse
@@ -121,7 +138,8 @@ from dp2stage_generator import (DP2StageGenerator, HardSampleFailure,   # noqa: 
 from config import CACHE_DIR, RESULTS_DIR, TRAIN_CSV, NUM_SYNTHETIC  # noqa: E402
 from seeds import SCORE_ATTACK_SEED                                # noqa: E402
 
-METHOD = "dp2stage"
+METHODS = {"O": "dp2stageo", "U": "dp2stageu"}
+LABELS = {"O": "DP-2Stage-O", "U": "DP-2Stage-U"}
 NUM_TRAIN, NUM_TEST = 200, 500     # the starting stage (700 fits); GReaT defaulted to 1000/2500
 
 # The config.METHOD_CONFIG entry DP-2Stage would have, kept local so config.py is
@@ -137,19 +155,27 @@ MAX_NEW_FITS = 100
 CHECKPOINT_EVERY = 50
 EXIT_INCOMPLETE = 3     # "pools not finished, restart me" -- not an error
 
-CACHE_ROOT = CACHE_DIR / "dp2stage_audit"
-RESULTS_ROOT = RESULTS_DIR / "sample_size_sweep" / "dp2stage"
-FIT_LOG = CACHE_ROOT / "fit_log.jsonl"
-RESULTS_ROOT.mkdir(parents=True, exist_ok=True)
-CACHE_ROOT.mkdir(parents=True, exist_ok=True)
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s %(levelname)s %(message)s",
-    handlers=[logging.FileHandler(RESULTS_ROOT / "dp2stage_audit_log.txt"),
-              logging.StreamHandler()],
-)
+# Set by _configure(variant) in main(): every path is namespaced by method, so the O and U
+# pools, caches and logs can never mix. Module-level so the functions below read them as
+# globals, the same way run_great_audit.py's do.
+VARIANT = METHOD = CACHE_ROOT = RESULTS_ROOT = FIT_LOG = None
 log = logging.getLogger("dp2stage_audit")
+
+
+def _configure(variant: str) -> None:
+    global VARIANT, METHOD, CACHE_ROOT, RESULTS_ROOT, FIT_LOG
+    VARIANT, METHOD = variant, METHODS[variant]
+    CACHE_ROOT = CACHE_DIR / f"{METHOD}_audit"
+    RESULTS_ROOT = RESULTS_DIR / "sample_size_sweep" / METHOD
+    FIT_LOG = CACHE_ROOT / "fit_log.jsonl"
+    RESULTS_ROOT.mkdir(parents=True, exist_ok=True)
+    CACHE_ROOT.mkdir(parents=True, exist_ok=True)
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s %(levelname)s %(message)s",
+        handlers=[logging.FileHandler(RESULTS_ROOT / f"{METHOD}_audit_log.txt"),
+                  logging.StreamHandler()],
+    )
 
 
 class DegeneratePool(RuntimeError):
@@ -289,7 +315,7 @@ def grow_pools(threat_model, num_train: int, num_test: int) -> int:
 
 # -- Shared setup ---------------------------------------------------------
 
-def build_world(sample_batch: int = AUDIT_SAMPLE_BATCH, fit_log_path=FIT_LOG):
+def build_world(sample_batch: int = AUDIT_SAMPLE_BATCH, fit_log_path="default"):
     """The fixed audit world: scalers, background, target/alternate, generator.
 
     Identical to what common.run_method builds for the other methods, so the DP-2Stage
@@ -299,7 +325,10 @@ def build_world(sample_batch: int = AUDIT_SAMPLE_BATCH, fit_log_path=FIT_LOG):
     background, background_idx = common.sample_background(train_dataset)
     target, alternate = common.select_random_target(train_dataset, background_idx)
     scalers = common._fit_scalers(pd.read_csv(TRAIN_CSV))
+    if fit_log_path == "default":
+        fit_log_path = FIT_LOG
     generator = DP2StageGenerator(description, scalers, fit_log_path=fit_log_path,
+                                  variant=VARIANT,
                                   sample_batch=sample_batch)
     return description, background, target, alternate, generator
 
@@ -316,7 +345,7 @@ def build_or_load_threat_model(background, target, alternate, generator):
         log.info(f"Loading cached threat model from {cache_path}.pkl")
         return tm.ThreatModel.load(str(cache_path))
 
-    log.info("Building new threat model for dp2stage (no cache found)")
+    log.info(f"Building new threat model for {METHOD} (no cache found)")
     threat_model = common.SwapTargetedMIA(
         attacker_knowledge_data=tm.ExactDataKnowledge(background),
         target_record=target,
@@ -353,7 +382,8 @@ def probe(n_fits: int, sample_batch: int) -> int:
     member.add_records(target, in_place=True)
     log.info(f"=== probe: {n_fits} fit+generate cycles on {len(member.data)} rows, "
              f"eps={EPSILON}, delta={DELTA}, max_new_tokens={MAX_NEW_TOKENS}, "
-             f"sample_batch={sample_batch} (PROBE-DEPENDENT) ===")
+             f"sample_batch={sample_batch}, variant={VARIANT} "
+             f"({'Stage 1 rebuilt per fit' if VARIANT == 'U' else 'shared Stage 1'}) ===")
 
     times, hashes, infos = [], [], []
     for i in range(n_fits):
@@ -396,7 +426,7 @@ def probe(n_fits: int, sample_batch: int) -> int:
 # -- Audit ----------------------------------------------------------------
 
 def run_audit(num_train: int, num_test: int, sample_batch: int) -> int:
-    log.info(f"=== TAPAS privacy audit: dp2stage (dp={DP2STAGE_CONFIG['dp']}, "
+    log.info(f"=== TAPAS privacy audit: {METHOD} (dp={DP2STAGE_CONFIG['dp']}, "
              f"kind={DP2STAGE_CONFIG['kind']}, formal eps={FORMAL_EPSILON}, delta={DELTA}, "
              f"num_train={num_train}, num_test={num_test}) ===")
     log.info(f"    cache {CACHE_ROOT.relative_to(REPO_ROOT)}   "
@@ -479,7 +509,9 @@ def run_audit(num_train: int, num_test: int, sample_batch: int) -> int:
                      orient="records", lines=True)
 
     meta = {
-        "method": METHOD, "variant": "DP-2Stage-O",
+        "method": METHOD, "variant": LABELS[VARIANT],
+        "stage1": ("rebuilt per fit from that fit's rows (uniform pseudo data, non-DP)"
+                   if VARIANT == "U" else "shared Airline checkpoint"),
         "formal_epsilon": FORMAL_EPSILON, "delta": DELTA,
         "privacy_spent": priv,
         "num_train": num_train, "num_test": num_test,
@@ -513,6 +545,11 @@ def main() -> int:
     global MAX_NEW_FITS, CHECKPOINT_EVERY
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--variant", choices=["O", "U"], required=True,
+                        help="U: the audit this script exists for. O: refused (infeasible at "
+                             "n=500, see docstring) unless --force-o")
+    parser.add_argument("--force-o", action="store_true",
+                        help="run variant O anyway (it is expected to fail with exit 4)")
     parser.add_argument("--probe", type=int, metavar="N",
                         help="time N real fit+generate cycles and exit (no caching)")
     parser.add_argument("--num-train", type=int, default=NUM_TRAIN)
@@ -522,9 +559,13 @@ def main() -> int:
                              f"fresh one (default {MAX_NEW_FITS}, PROBE-DEPENDENT; see grow_pools)")
     parser.add_argument("--sample-batch", type=int, default=AUDIT_SAMPLE_BATCH,
                         help=f"rows per model.generate() call inside each fit "
-                             f"(default {AUDIT_SAMPLE_BATCH}, PROBE-DEPENDENT)")
+                             f"(default {AUDIT_SAMPLE_BATCH})")
     args = parser.parse_args()
 
+    if args.variant == "O" and not args.force_o:
+        parser.error("variant O is infeasible at n=500 (Stage 2 never leaves the Airline "
+                     "schema; recorded as a limitation). Pass --force-o to run it anyway.")
+    _configure(args.variant)
     MAX_NEW_FITS = args.max_new_fits
     CHECKPOINT_EVERY = min(CHECKPOINT_EVERY, MAX_NEW_FITS)
 

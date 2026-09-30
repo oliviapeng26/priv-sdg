@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Seeded DP-2Stage-O generation on the full 21,523-row adult_train.csv.
+"""Seeded DP-2Stage generation (variant O or U) on the full 21,523-row adult_train.csv.
 
 Companion to sdg/generate_great.py, and shaped like it: 5 seeds from
 seeds.RUN_SEEDS, one CSV per seed, resumable, per-seed try/except, one process per
@@ -19,15 +19,24 @@ WHAT ONE SEED IS
     training seed and the generation seed, so the five runs differ in Stage 2 only.
 
 Outputs:
-    synthetic_data/runs/dp2stage_seed{seed}.csv                 one file per seed
-    evaluation/results/dp2stage/generation_info_seed{seed}.json spent epsilon, sigma,
+    synthetic_data/runs/{method}_seed{seed}.csv                 one file per seed
+    evaluation/results/{method}/generation_info_seed{seed}.json spent epsilon, sigma,
                                                                  delta, steps, timings,
                                                                  acceptance, md5 (tracked:
                                                                  the formal-epsilon record)
     sdg/generate_dp2stage_log.txt                               start/end/elapsed, errors
 
-    run_path() in evaluation/eval_{fidelity,utility}.py already resolves
-    "dp2stage" to the first of these.
+    {method} is "dp2stageo" for variant O and "dp2stageu" for variant U;
+    run_path() in evaluation/eval_{fidelity,utility}.py resolves both.
+
+VARIANTS (--variant, default O)
+    O  Stage 1 on public Airline data; the guarantee is exactly (eps, delta).
+    U  Stage 1 on uniform pseudo data drawn from the PRIVATE training set's own ranges
+       and categories, with no noise -- the paper's DP-2Stage-U, whose guarantee the
+       paper itself says is weakened (Sec. 6). Built ONCE from the full training set
+       (`dp2stage_driver.py stage1 --variant U --train-csv data/adult_train.csv`) and
+       shared by all 5 seeds, the same pattern as O. Everything in Stage 2 and
+       sampling is identical between the variants.
 
 REFUSES TO PUBLISH A FIT THAT OVERSPENT: the driver reports the epsilon Opacus's RDP
 accountant says was spent; a seed whose spent epsilon exceeds the 1.0 target by more
@@ -43,15 +52,15 @@ GPU: this script does not select a GPU. One process per GPU, e.g.
   wait
 Check nvidia-smi first: czha4500's job has filled both cards before.
 
-Resumable: an existing dp2stage_seed{seed}.csv is reused and skipped (--regenerate to
+Resumable: an existing {method}_seed{seed}.csv is reused and skipped (--regenerate to
 re-fit). Exit code 0 only if every requested seed has an output file, else 1.
 
 After all five exist, ALWAYS md5 them (this script also does, and logs an ERROR on any
 duplicate) and check the eval summary's std is not 0 -- the GReaT seeding bug made all
 five byte-identical once.
 
-PROBE-DEPENDENT settings, to be set from the workstation probe (sdg/dp2stage_probe.py fit):
-  FULL_GEN_SAMPLE_BATCH   see below. Grep the repo for PROBE-DEPENDENT to find them all.
+No PROBE-DEPENDENT settings remain in this file (FULL_GEN_SAMPLE_BATCH was settled by the
+seed-100 run, see its comment). Grep the repo for PROBE-DEPENDENT for the rest.
 
 Run from repo root (in ~/venv-dp2stage):
   python sdg/generate_dp2stage.py                 # all 5 seeds, sequential
@@ -79,24 +88,26 @@ sys.path.insert(0, str(REPO_ROOT))
 sys.path.insert(0, str(SDG_DIR))
 
 from seeds import RUN_SEEDS                                                # noqa: E402
-from dp2stage_driver import (EPSILON, DELTA, INTEGER_COLS, STAGE1_DIR,     # noqa: E402
+from dp2stage_driver import (EPSILON, DELTA, INTEGER_COLS, STAGE1_DIRS,    # noqa: E402
                              EXIT_HARD_FAILURE, EXIT_SHORTFALL, DP2STAGE_COMMIT)
 
 DATA_DIR = REPO_ROOT / "data"
 TRAIN_CSV = DATA_DIR / "adult_train.csv"
 RUNS_DIR = REPO_ROOT / "synthetic_data" / "runs"
-INFO_DIR = REPO_ROOT / "evaluation" / "results" / "dp2stage"
+INFO_ROOT = REPO_ROOT / "evaluation" / "results"
+METHOD = {"O": "dp2stageo", "U": "dp2stageu"}   # eval method key, file prefix, info dir
+LABEL = {"O": "DP-2Stage-O", "U": "DP-2Stage-U"}
 DRIVER = SDG_DIR / "dp2stage_driver.py"
 EXPECTED_TRAIN_N = 21_523
 
 # Opacus's make_private_with_epsilon solves for sigma to within this of the target.
 EPS_TOLERANCE = 0.01
 
-# PROBE-DEPENDENT: rows drawn per model.generate() call when sampling the FULL 21,523
-# rows. 100 is DP-2Stage's own default and has never been timed here; GReaT needed
-# k=2000 because sampling dominated its wall clock. Set from the `k` sweep in
-# `python sdg/dp2stage_probe.py fit` (rows/s and peak GPU memory per batch size), and
-# keep it below the point where czha4500's job can push us into OOM.
+# Rows drawn per model.generate() call when sampling the FULL 21,523 rows. 100 is
+# DP-2Stage's own default. SETTLED by the variant-O seed-100 run (2026-09-26): sampling
+# took 114 s of a 3,259 s seed (3.5%; the DP fit is the other 96%), at 84% acceptance and
+# 3.6 GB peak, so a larger batch could save at most ~2 min per seed. Unlike GReaT, where
+# sampling dominated and k=2000 halved wall clock, there is nothing to win here.
 FULL_GEN_SAMPLE_BATCH = 100
 
 log = logging.getLogger("generate_dp2stage")
@@ -105,7 +116,6 @@ log = logging.getLogger("generate_dp2stage")
 def _configure_logging() -> None:
     """Called from main(), not at import time (same reason as generate_great.py)."""
     RUNS_DIR.mkdir(parents=True, exist_ok=True)
-    INFO_DIR.mkdir(parents=True, exist_ok=True)
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s %(levelname)s %(message)s",
@@ -125,14 +135,17 @@ def load_train_df() -> pd.DataFrame:
 
 
 def generate_one(train_df: pd.DataFrame, seed: int, regenerate: bool,
-                 sample_batch: int, stage1_dir: str) -> bool:
+                 sample_batch: int, stage1_dir: str, variant: str) -> bool:
     """DP Stage 2 + sample for one seed. Returns True if a fit actually happened."""
-    path = RUNS_DIR / f"dp2stage_seed{seed}.csv"
+    method = METHOD[variant]
+    path = RUNS_DIR / f"{method}_seed{seed}.csv"
     if path.exists() and not regenerate:
         log.info(f"  cached at {path.relative_to(REPO_ROOT)}, skipping (--regenerate to re-fit)")
         return False
 
-    scratch = SDG_DIR / f".dp2stage_fit_seed{seed}"      # gitignored (.dp2stage_fit_*)
+    # gitignored (.dp2stage_fit_*); O keeps its original name
+    scratch = SDG_DIR / (f".dp2stage_fit_seed{seed}" if variant == "O"
+                         else f".dp2stage_fit_{variant}_seed{seed}")
     scratch.mkdir(exist_ok=True)
     out_csv, info_json = scratch / "synth.csv", scratch / "info.json"
 
@@ -144,6 +157,7 @@ def generate_one(train_df: pd.DataFrame, seed: int, regenerate: bool,
                "--info-json", str(info_json), "--n-samples", str(len(train_df)),
                "--seed", str(seed), "--gen-seed", str(seed),
                "--sample-batch", str(sample_batch), "--stage1-dir", stage1_dir,
+               "--variant", variant,
                "--scratch-root", str(scratch)]
         rc = subprocess.call(cmd)                 # inherits the GPU pin and stdout
         if rc != 0:
@@ -173,10 +187,12 @@ def generate_one(train_df: pd.DataFrame, seed: int, regenerate: bool,
         info.update(seed=seed, run_csv=str(path.relative_to(REPO_ROOT)),
                     md5=_md5(path), wall_clock_s=round(elapsed_s, 1),
                     started=t_start_wall, finished=time.strftime("%Y-%m-%d %H:%M:%S"),
-                    variant="DP-2Stage-O", stage2_rows=len(train_df),
+                    variant=LABEL[variant], stage2_rows=len(train_df),
                     delta_note=f"delta={DELTA} (DP-2Stage's own); differs from AIM 1e-9, "
                                f"DP-CTGAN 1/(n*sqrt(n)), DPGAN 1/n -- limitation")
-        (INFO_DIR / f"generation_info_seed{seed}.json").write_text(json.dumps(info, indent=2))
+        info_dir = INFO_ROOT / method
+        info_dir.mkdir(parents=True, exist_ok=True)
+        (info_dir / f"generation_info_seed{seed}.json").write_text(json.dumps(info, indent=2))
     finally:
         shutil.rmtree(scratch, ignore_errors=True)
 
@@ -187,12 +203,12 @@ def generate_one(train_df: pd.DataFrame, seed: int, regenerate: bool,
     return True
 
 
-def check_distinct() -> None:
+def check_distinct(method: str) -> None:
     """md5 every output that exists; duplicates mean a seed is being overridden."""
-    md5s = {s: _md5(RUNS_DIR / f"dp2stage_seed{s}.csv") for s in RUN_SEEDS
-            if (RUNS_DIR / f"dp2stage_seed{s}.csv").exists()}
+    md5s = {s: _md5(RUNS_DIR / f"{method}_seed{s}.csv") for s in RUN_SEEDS
+            if (RUNS_DIR / f"{method}_seed{s}.csv").exists()}
     for s, m in md5s.items():
-        log.info(f"  md5 dp2stage_seed{s}.csv  {m}")
+        log.info(f"  md5 {method}_seed{s}.csv  {m}")
     if len(set(md5s.values())) < len(md5s):
         log.error("DUPLICATE MD5s among the seed outputs -- a seed is being silently "
                   "overridden (the GReaT bug's shape). Do not evaluate these.")
@@ -209,10 +225,12 @@ def main() -> int:
     parser.add_argument("--regenerate", action="store_true",
                         help="re-fit even when a cached run CSV exists")
     parser.add_argument("--sample-batch", type=int, default=FULL_GEN_SAMPLE_BATCH,
-                        help=f"rows per model.generate() call (default {FULL_GEN_SAMPLE_BATCH}, "
-                             f"PROBE-DEPENDENT)")
-    parser.add_argument("--stage1-dir", default=str(STAGE1_DIR),
-                        help="the shared Stage 1 checkpoint (default: the driver's STAGE1_DIR)")
+                        help=f"rows per model.generate() call (default {FULL_GEN_SAMPLE_BATCH})")
+    parser.add_argument("--variant", choices=["O", "U"], default="O",
+                        help="O: Airline Stage 1 (default). U: uniform pseudo data from the "
+                             "private data's stats (weaker guarantee, see docstring)")
+    parser.add_argument("--stage1-dir", default=None,
+                        help="the shared Stage 1 checkpoint (default: the driver's STAGE1_DIRS[variant])")
     args = parser.parse_args()
     _configure_logging()
 
@@ -223,8 +241,9 @@ def main() -> int:
     if unknown:
         parser.error(f"unknown seed(s): {sorted(unknown)}. Known: {RUN_SEEDS}")
 
-    log.info(f"=== generate_dp2stage: seeds={seeds}, DP-2Stage-O, eps={EPSILON}, delta={DELTA}, "
-             f"sample_batch={args.sample_batch} (PROBE-DEPENDENT), commit={DP2STAGE_COMMIT[:7]}, "
+    stage1_dir = args.stage1_dir or str(STAGE1_DIRS[args.variant])
+    log.info(f"=== generate_dp2stage: seeds={seeds}, {LABEL[args.variant]}, eps={EPSILON}, delta={DELTA}, "
+             f"sample_batch={args.sample_batch}, commit={DP2STAGE_COMMIT[:7]}, "
              f"CUDA_VISIBLE_DEVICES={os.environ.get('CUDA_VISIBLE_DEVICES', '<unset>')} ===")
 
     train_df = load_train_df()
@@ -235,14 +254,15 @@ def main() -> int:
         log.info(f"--- seed {seed} ---")
         try:
             fitted += generate_one(train_df, seed, args.regenerate,
-                                   args.sample_batch, args.stage1_dir)
+                                   args.sample_batch, stage1_dir, args.variant)
         except Exception:
             log.error(f"  seed {seed} FAILED:\n{traceback.format_exc()}")
 
-    missing = [s for s in seeds if not (RUNS_DIR / f"dp2stage_seed{s}.csv").exists()]
+    missing = [s for s in seeds
+               if not (RUNS_DIR / f"{METHOD[args.variant]}_seed{s}.csv").exists()]
     log.info(f"=== Done: {fitted} run(s) generated. "
              f"Synthetic data in {RUNS_DIR.relative_to(REPO_ROOT)}/ ===")
-    check_distinct()
+    check_distinct(METHOD[args.variant])
     if missing:
         log.error(f"missing outputs for seeds {missing} -- re-run to resume them")
     return 1 if missing else 0

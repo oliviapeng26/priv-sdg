@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""DP-2Stage-O (Afonja et al., TMLR 2025) wrapped as a TAPAS Generator.
+"""DP-2Stage (Afonja et al., TMLR 2025), variant O or U, wrapped as a TAPAS Generator.
 
 Structurally this mirrors tapas_wrappers/{great,aim,dpctgan}_generator.py and reuses
 everything they reuse from benchmark_tapas/common.py. It is closest to GReaT's
@@ -22,12 +22,20 @@ WHY EVERY FIT IS A SUBPROCESS, AND WHAT THAT COSTS
       - the fitted model never exists in this process, so nothing needs pickling:
         __getstate__ only has to keep the seed counter.
 
-TWO-STAGE STRUCTURE
-    Stage 1 (Airline, non-DP) is trained ONCE and shared by every fit in the audit,
-    as it is by the five utility/fidelity seeds. It never sees the audit's data, so it
-    is a fixed public component of the mechanism and does not enter the DP accounting.
-    Each fit is Stage 2 only: DP fine-tuning (eps=1, delta=1e-5, C=1) of a copy of that
-    checkpoint on the ~500 rows TAPAS hands over, then sampling.
+TWO-STAGE STRUCTURE, PER VARIANT
+    O  Stage 1 (Airline, non-DP) is trained ONCE and shared by every fit. It never sees
+       the audit's data, so it is a fixed public component of the mechanism. Each fit is
+       Stage 2 only. NOTE: at n=500 the O model never leaves Stage 1's Airline schema
+       (160 DP steps at sigma=3.44; every generated row invalid, at lr 5e-5 to 2e-3), so
+       the O audit is INFEASIBLE and is reported as a limitation, not run.
+    U  Stage 1 is REBUILT INSIDE EVERY FIT (driver --stage1-per-fit): uniform pseudo data
+       drawn from THAT fit's ~500 private rows' ranges and categories, then non-DP Stage
+       1, then DP Stage 2 from it. That is what makes the audit see U's leak: the target's
+       presence can move a min/max or add a category, and the shared-Stage-1 shortcut used
+       for the utility seeds would hide that (same checkpoint in both worlds). Costs one
+       extra small Stage 1 per fit.
+    Either way Stage 2 is DP fine-tuning (eps=1, delta=1e-5, C=1) on the ~500 rows TAPAS
+    hands over, then sampling.
 
 fit() DEFERS THE WORK TO generate()
     Generator.__call__ is `self.fit(dataset); return self.generate(n)`, and the driver
@@ -70,7 +78,7 @@ EPSILON
     paper's 1e-5; AIM uses 1e-9, DP-CTGAN 1/(n*sqrt(n)), DPGAN 1/n -- a stated
     limitation.
 
-PROBE-DEPENDENT setting in this file: AUDIT_SAMPLE_BATCH (below). Grep PROBE-DEPENDENT.
+No PROBE-DEPENDENT settings remain in this file (AUDIT_SAMPLE_BATCH settled, see its comment).
 """
 
 import json
@@ -109,11 +117,10 @@ DP2STAGE_PYTHON = Path(os.environ.get("DP2STAGE_PYTHON", "~/venv-dp2stage/bin/py
 # Opacus make_private_with_epsilon solves for sigma to within this of the target.
 EPS_TOLERANCE = 0.01
 
-# PROBE-DEPENDENT: rows per model.generate() call inside each 500-row audit fit. 100 is
-# DP-2Stage's own default and has never been timed here. Each fit asks for NUM_SYNTHETIC
-# (500) rows, so any value >= 500 is one call; the k sweep in
-# `python sdg/dp2stage_probe.py fit` (rows/s and peak GPU memory at k=100/500/2000)
-# says whether 500 is faster than 100 and whether it fits beside czha4500's job.
+# Rows per model.generate() call inside each 500-row audit fit; DP-2Stage's own default.
+# SETTLED (2026-09-26): the variant-O full-data run drew ~224 rows/s at k=100, so a 500-row
+# fit spends ~3 s sampling against ~75 s of DP Stage 2 (plus per-fit Stage 1 for U) --
+# nothing to win from a larger batch, and a smaller footprint beside czha4500's job.
 AUDIT_SAMPLE_BATCH = 100
 
 _OOM_SIGNATURES = ("out of memory", "cuda error", "cublas", "cudnn", "nccl")
@@ -134,12 +141,15 @@ class DP2StageGenerator(Generator):
     def __init__(self, description, scalers: dict,
                  seed_base: int = TAPAS_GENERATOR_SEED_BASE,
                  stage1_dir=None, fit_log_path=None,
-                 sample_batch: int = AUDIT_SAMPLE_BATCH):
+                 sample_batch: int = AUDIT_SAMPLE_BATCH, variant: str = "U"):
         super().__init__()
         self.description = description
         self.scalers = scalers          # {column: (min, max)} from common._fit_scalers
         self.seed_base = seed_base
-        self.stage1_dir = str(stage1_dir or STAGE1_DIR)
+        assert variant in ("O", "U"), variant
+        self.variant = variant
+        # O loads the shared Airline checkpoint; U rebuilds Stage 1 per fit (no checkpoint).
+        self.stage1_dir = str(stage1_dir or STAGE1_DIR) if variant == "O" else None
         self.fit_log_path = Path(fit_log_path) if fit_log_path else None
         self.sample_batch = sample_batch
         self._raw = None                # unscaled rows waiting for generate()
@@ -190,7 +200,8 @@ class DP2StageGenerator(Generator):
                "--info-json", str(info_json), "--n-samples", str(num_samples),
                "--seed", str(seed), "--gen-seed", str(seed),
                "--sample-batch", str(self.sample_batch),
-               "--stage1-dir", self.stage1_dir, "--scratch-root", str(scratch)]
+               "--variant", self.variant, "--scratch-root", str(scratch)]
+        cmd += (["--stage1-per-fit"] if self.variant == "U" else ["--stage1-dir", self.stage1_dir])
         # Do not leak this venv's interpreter settings into the other one.
         env = {k: v for k, v in os.environ.items()
                if k not in ("PYTHONPATH", "PYTHONHOME", "VIRTUAL_ENV")}
@@ -257,7 +268,7 @@ class DP2StageGenerator(Generator):
         """Append this fit's formal-privacy and cost record (JSONL, one line per fit)."""
         if self.fit_log_path is None:
             return
-        keep = ("epsilon_spent", "noise_multiplier", "dp_steps", "sample_rate", "fit_s", "gen_s",
+        keep = ("epsilon_spent", "noise_multiplier", "dp_steps", "sample_rate", "stage1_s", "fit_s", "gen_s",
                 "acceptance", "peak_gpu_gb_fit", "peak_gpu_gb_gen", "n_returned")
         rec = {"fit_index": fit_index, "seed": seed, **{k: info.get(k) for k in keep}}
         self.fit_log_path.parent.mkdir(parents=True, exist_ok=True)
@@ -266,7 +277,7 @@ class DP2StageGenerator(Generator):
 
     @property
     def label(self):
-        return "dp2stage"
+        return "dp2stageo" if self.variant == "O" else "dp2stageu"
 
     def __getstate__(self):
         # No fitted model ever lives in this process (the driver fits in a subprocess and
