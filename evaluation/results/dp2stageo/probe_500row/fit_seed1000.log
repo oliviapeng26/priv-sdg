@@ -1,0 +1,288 @@
+09/30/2026 18:33:29:INFO:ARGS
+09/30/2026 18:33:29:INFO:Namespace(train_mode=True, evaluation_mode=False, generation_mode=False, weighted_loss=0.65, output_dir='/home/open0051/priv-sdg/sdg/.dp2stage_probe/.dp2stage_fit_fx4pv8d8/run', seed=1000, device='cuda', serializer='great', num_train_epochs=10, max_train_steps=None, save_every_epoch=None, save_every_step=None, model_name_or_path='/home/open0051/DP-2Stage/runs/priv-sdg_stage1_airline', finetune_type='entire', model_type='gpt2', config_name='/home/open0051/DP-2Stage/runs/priv-sdg_stage1_airline', checkpoint_path='/home/open0051/DP-2Stage/runs/priv-sdg_stage1_airline/model.safetensors', resume_from_checkpoint=False, train_file='/home/open0051/priv-sdg/sdg/.dp2stage_probe/.dp2stage_fit_fx4pv8d8/private.csv', validation_file=None, max_train_samples=None, max_validation_samples=None, train_batch_size=32, validation_batch_size=8, cache_dir='/home/open0051/DP-2Stage/cache', tokenizer_name='gpt2', use_slow_tokenizer=False, trust_remote_code=False, low_cpu_mem_usage=False, loading_4_bit=False, learning_rate=0.0005, lr_scheduler_type=<SchedulerType.LINEAR: 'linear'>, num_warmup_steps=0, enable_privacy=True, micro_batch_size=16, target_epsilon=1.0, noise_multiplier=None, max_grad_norm=1.0, target_delta=1e-05, n_synth_set=1, n_synth_samples=None, sample_batch=100, temperature=0.7, top_p=1.0, max_new_tokens=200, start_col='income', prompt_template=None, synth_folder=None, start_prompt='default', rejection_sample=False, do_impute=False, sampling_max_retries=15, synth_save_as='synth', sampling_max_allowed_time=None, generation_seed=1000, shuffle_dataset=False, lora_rank=16, resume_checkpoint_path=None)
+09/30/2026 18:33:29:INFO:/home/open0051/DP-2Stage/cache
+/home/open0051/venv-dp2stage/lib/python3.9/site-packages/huggingface_hub/file_download.py:949: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+  warnings.warn(
+09/30/2026 18:33:29:INFO:Shuffle dataset =  False
+09/30/2026 18:33:29:INFO:Sample 398 of the training set: {'input_ids': [3739, 318, 19841, 1120, 42, 11, 2479, 318, 2808, 11, 3139, 62, 48544, 318, 657, 11, 3139, 62, 22462, 318, 657, 11, 3707, 62, 22510, 318, 860, 11, 2250, 62, 525, 62, 10464, 318, 3126, 11, 29555, 62, 13376, 318, 7236, 12, 30526, 11, 6868, 62, 19315, 318, 1578, 12, 42237, 11, 13755, 318, 1215, 76, 12, 22902, 605, 11, 3234, 318, 2619, 11, 2776, 318, 11744, 12, 9410, 11, 1714, 318, 15396, 11, 670, 4871, 318, 15348], 'attention_mask': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}
+09/30/2026 18:33:29:INFO: income is <=50K, age is 29, capital_gain is 0, capital_loss is 0, education_num is 9, hours_per_week is 60, marital_status is Never-married, native_country is United-States, occupation is Adm-clerical, race is Black, relationship is Own-child, sex is Female, workclass is Private
+Some weights of GPT2LMHeadModel were not initialized from the model checkpoint at /home/open0051/DP-2Stage/runs/priv-sdg_stage1_airline and are newly initialized: ['transformer.wte.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+09/30/2026 18:33:30:INFO:Mismatched keys: {'transformer.wte.weight'}
+09/30/2026 18:33:30:INFO:Checkpoint successfully loaded.
+09/30/2026 18:33:30:INFO:Finetuning entire - Total size=118.68M params
+09/30/2026 18:33:30:INFO:GPT2LMHeadModel(
+  (transformer): GPT2Model(
+    (wte): Embedding(50257, 768)
+    (wpe): Embedding(1024, 768)
+    (drop): Dropout(p=0.1, inplace=False)
+    (h): ModuleList(
+      (0-11): 12 x GPT2Block(
+        (ln_1): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+        (attn): GPT2Attention(
+          (c_attn): Conv1D()
+          (c_proj): Conv1D()
+          (attn_dropout): Dropout(p=0.1, inplace=False)
+          (resid_dropout): Dropout(p=0.1, inplace=False)
+        )
+        (ln_2): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+        (mlp): GPT2MLP(
+          (c_fc): Conv1D()
+          (c_proj): Conv1D()
+          (act): NewGELUActivation()
+          (dropout): Dropout(p=0.1, inplace=False)
+        )
+      )
+    )
+    (ln_f): LayerNorm((768,), eps=1e-05, elementwise_affine=True)
+  )
+  (lm_head): Linear(in_features=768, out_features=50257, bias=False)
+)
+09/30/2026 18:33:30:INFO:Train epoch=10, Max train step=160
+Namespace(train_mode=True, evaluation_mode=False, generation_mode=False, weighted_loss=0.65, output_dir='/home/open0051/priv-sdg/sdg/.dp2stage_probe/.dp2stage_fit_fx4pv8d8/run', seed=1000, device='cuda', serializer='great', num_train_epochs=10, max_train_steps=160, save_every_epoch=None, save_every_step=None, model_name_or_path='/home/open0051/DP-2Stage/runs/priv-sdg_stage1_airline', finetune_type='entire', model_type='gpt2', config_name='/home/open0051/DP-2Stage/runs/priv-sdg_stage1_airline', checkpoint_path='/home/open0051/DP-2Stage/runs/priv-sdg_stage1_airline/model.safetensors', resume_from_checkpoint=False, train_file='/home/open0051/priv-sdg/sdg/.dp2stage_probe/.dp2stage_fit_fx4pv8d8/private.csv', validation_file=None, max_train_samples=None, max_validation_samples=None, train_batch_size=32, validation_batch_size=8, cache_dir='/home/open0051/DP-2Stage/cache', tokenizer_name='gpt2', use_slow_tokenizer=False, trust_remote_code=False, low_cpu_mem_usage=False, loading_4_bit=False, learning_rate=0.0005, lr_scheduler_type=<SchedulerType.LINEAR: 'linear'>, num_warmup_steps=0, enable_privacy=True, micro_batch_size=16, target_epsilon=1.0, noise_multiplier=None, max_grad_norm=1.0, target_delta=1e-05, n_synth_set=1, n_synth_samples=None, sample_batch=100, temperature=0.7, top_p=1.0, max_new_tokens=200, start_col='income', prompt_template=None, synth_folder=None, start_prompt='default', rejection_sample=False, do_impute=False, sampling_max_retries=15, synth_save_as='synth', sampling_max_allowed_time=None, generation_seed=1000, shuffle_dataset=False, lora_rank=16, resume_checkpoint_path=None)
+09/30/2026 18:33:30:INFO:**** Statistics ****
+09/30/2026 18:33:30:INFO:Num examples = 500
+09/30/2026 18:33:30:INFO:Num epochs = 10
+09/30/2026 18:33:30:INFO:Train Batch size = 32
+09/30/2026 18:33:30:INFO:Total optimization steps = 160
+09/30/2026 18:33:30:INFO:*** ***
+  0%|          | 0/160 [00:00<?, ?it/s]/home/open0051/venv-dp2stage/lib/python3.9/site-packages/opacus/privacy_engine.py:95: UserWarning: Secure RNG turned off. This is perfectly fine for experimentation as it allows for much faster training performance, but remember to turn it on and retrain one last time before production with ``secure_mode`` turned on.
+  warnings.warn(
+/home/open0051/venv-dp2stage/lib/python3.9/site-packages/opacus/accountants/analysis/rdp.py:332: UserWarning: Optimal order is the largest alpha. Please consider expanding the range of alphas to get a tighter privacy bound.
+  warnings.warn(
+09/30/2026 18:33:30:INFO:*** Privacy Info ***
+09/30/2026 18:33:30:INFO:Noise multiplier = 3.4375
+09/30/2026 18:33:30:INFO:Sigma = 3.4375
+09/30/2026 18:33:30:INFO:C = 1.0
+09/30/2026 18:33:30:INFO:Eps = 1.0
+09/30/2026 18:33:30:INFO:Delta = 1e-05
+09/30/2026 18:33:30:INFO:Micro batch size = 16
+09/30/2026 18:33:30:INFO:*** ***
+09/30/2026 18:33:30:INFO:***********
+09/30/2026 18:33:30:INFO:1, 0
+09/30/2026 18:33:30:INFO:Training with MicroBatch
+You're using a GPT2TokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+/home/open0051/venv-dp2stage/lib/python3.9/site-packages/torch/nn/modules/module.py:1827: FutureWarning: Using a non-full backward hook when the forward contains multiple autograd Nodes is deprecated and will be removed in future versions. This hook will be missing some grad_input. Please use register_full_backward_hook to get the documented behavior.
+  self._maybe_warn_non_full_backward_hook(args, result, grad_fn)
+09/30/2026 18:33:31:INFO:epoch=1/10, step = 1/160, epsilon=0.12116212249495553, Train perp = 15927551.137403129
+  1%|          | 1/160 [00:00<02:20,  1.13it/s]09/30/2026 18:33:31:INFO:epoch=1/10, step = 2/160, epsilon=0.13945699377863133, Train perp = 12187597.72651329
+  1%|▏         | 2/160 [00:01<01:37,  1.62it/s]09/30/2026 18:33:32:INFO:epoch=1/10, step = 3/160, epsilon=0.15721252259664117, Train perp = 9250267.612591943
+  2%|▏         | 3/160 [00:01<01:18,  2.00it/s]09/30/2026 18:33:32:INFO:epoch=1/10, step = 4/160, epsilon=0.17435271245955006, Train perp = 8180446.643310172
+  2%|▎         | 4/160 [00:02<01:10,  2.23it/s]09/30/2026 18:33:32:INFO:epoch=1/10, step = 5/160, epsilon=0.1902968183734408, Train perp = 6661154.902583308
+  3%|▎         | 5/160 [00:02<01:10,  2.21it/s]09/30/2026 18:33:33:INFO:epoch=1/10, step = 6/160, epsilon=0.2050502900732446, Train perp = 7344985.186912469
+  4%|▍         | 6/160 [00:02<01:06,  2.32it/s]09/30/2026 18:33:33:INFO:epoch=1/10, step = 7/160, epsilon=0.21877993166988668, Train perp = 8304374.135553742
+  4%|▍         | 7/160 [00:03<01:05,  2.35it/s]09/30/2026 18:33:34:INFO:epoch=1/10, step = 8/160, epsilon=0.23169367651490902, Train perp = 6678469.06772572
+  5%|▌         | 8/160 [00:03<01:05,  2.31it/s]09/30/2026 18:33:34:INFO:epoch=1/10, step = 9/160, epsilon=0.24393408145000323, Train perp = 6344405.9519371
+  6%|▌         | 9/160 [00:04<01:03,  2.37it/s]09/30/2026 18:33:35:INFO:epoch=1/10, step = 10/160, epsilon=0.255546765264919, Train perp = 7292713.696355981
+  6%|▋         | 10/160 [00:04<01:07,  2.23it/s]09/30/2026 18:33:35:INFO:epoch=1/10, step = 11/160, epsilon=0.2667006508031196, Train perp = 4841127.633295636
+  7%|▋         | 11/160 [00:05<01:12,  2.04it/s]09/30/2026 18:33:36:INFO:epoch=1/10, step = 12/160, epsilon=0.27736134572132276, Train perp = 5856368.370402783
+  8%|▊         | 12/160 [00:05<01:10,  2.10it/s]09/30/2026 18:33:36:INFO:epoch=1/10, step = 13/160, epsilon=0.28764137096962894, Train perp = 5360745.70512675
+  8%|▊         | 13/160 [00:06<01:08,  2.15it/s]09/30/2026 18:33:37:INFO:epoch=1/10, step = 14/160, epsilon=0.29757629833910626, Train perp = 4400966.22345487
+  9%|▉         | 14/160 [00:06<01:09,  2.12it/s]09/30/2026 18:33:37:INFO:epoch=1/10, step = 15/160, epsilon=0.3071972459201629, Train perp = 4642304.030487709
+  9%|▉         | 15/160 [00:06<01:03,  2.30it/s]09/30/2026 18:33:37:INFO:epoch=1/10, step = 16/160, epsilon=0.31653611267055776, Train perp = 4792440.025405862
+ 10%|█         | 16/160 [00:07<01:02,  2.30it/s]09/30/2026 18:33:37:INFO:epoch=1/10, step = 16/160, epsilon=0.31653611267055776, Train perp = 4792440.025405862
+09/30/2026 18:33:37:INFO:***********
+09/30/2026 18:33:37:INFO:2, 16
+09/30/2026 18:33:37:INFO:Training with MicroBatch
+09/30/2026 18:33:38:INFO:epoch=2/10, step = 17/160, epsilon=0.32562586219924516, Train perp = 3288949.3330873395
+ 11%|█         | 17/160 [00:07<01:08,  2.07it/s]09/30/2026 18:33:38:INFO:epoch=2/10, step = 18/160, epsilon=0.3344686331288101, Train perp = 4121758.878997327
+ 11%|█▏        | 18/160 [00:08<01:06,  2.14it/s]09/30/2026 18:33:39:INFO:epoch=2/10, step = 19/160, epsilon=0.3430516164873532, Train perp = 3424682.3453016942
+ 12%|█▏        | 19/160 [00:08<01:05,  2.16it/s]09/30/2026 18:33:39:INFO:epoch=2/10, step = 20/160, epsilon=0.3514612009199411, Train perp = 2900091.476659108
+ 12%|█▎        | 20/160 [00:09<01:06,  2.10it/s]09/30/2026 18:33:40:INFO:epoch=2/10, step = 21/160, epsilon=0.35972532290755455, Train perp = 2945227.5540592605
+ 13%|█▎        | 21/160 [00:09<01:01,  2.26it/s]09/30/2026 18:33:40:INFO:epoch=2/10, step = 22/160, epsilon=0.3677179135670862, Train perp = 2965939.011396617
+ 14%|█▍        | 22/160 [00:10<00:57,  2.41it/s]09/30/2026 18:33:40:INFO:epoch=2/10, step = 23/160, epsilon=0.37562048475596715, Train perp = 3276017.5840971
+ 14%|█▍        | 23/160 [00:10<00:53,  2.56it/s]09/30/2026 18:33:41:INFO:epoch=2/10, step = 24/160, epsilon=0.38332643647494746, Train perp = 3033912.3240030445
+ 15%|█▌        | 24/160 [00:10<00:55,  2.45it/s]09/30/2026 18:33:41:INFO:epoch=2/10, step = 25/160, epsilon=0.3909104873506286, Train perp = 2834499.959994766
+ 16%|█▌        | 25/160 [00:11<00:58,  2.31it/s]09/30/2026 18:33:42:INFO:epoch=2/10, step = 26/160, epsilon=0.39834455255078294, Train perp = 2421463.1123578036
+ 16%|█▋        | 26/160 [00:11<01:00,  2.23it/s]09/30/2026 18:33:42:INFO:epoch=2/10, step = 27/160, epsilon=0.4056662603097692, Train perp = 1971589.1158837124
+ 17%|█▋        | 27/160 [00:12<00:56,  2.36it/s]09/30/2026 18:33:43:INFO:epoch=2/10, step = 28/160, epsilon=0.4128330049043908, Train perp = 2198581.5992486835
+ 18%|█▊        | 28/160 [00:12<00:59,  2.23it/s]09/30/2026 18:33:43:INFO:epoch=2/10, step = 29/160, epsilon=0.4199524087800778, Train perp = 1687625.1386638186
+ 18%|█▊        | 29/160 [00:13<00:57,  2.26it/s]09/30/2026 18:33:44:INFO:epoch=2/10, step = 30/160, epsilon=0.42685623664084815, Train perp = 1934779.494281438
+ 19%|█▉        | 30/160 [00:13<00:56,  2.28it/s]09/30/2026 18:33:44:INFO:epoch=2/10, step = 31/160, epsilon=0.4337600645016184, Train perp = 2146013.608177184
+ 19%|█▉        | 31/160 [00:14<00:57,  2.24it/s]09/30/2026 18:33:44:INFO:epoch=2/10, step = 32/160, epsilon=0.44048325235280517, Train perp = 1797732.4287072627
+ 20%|██        | 32/160 [00:14<00:56,  2.25it/s]09/30/2026 18:33:45:INFO:epoch=2/10, step = 32/160, epsilon=0.44048325235280517, Train perp = 1797732.4287072627
+09/30/2026 18:33:45:INFO:***********
+09/30/2026 18:33:45:INFO:3, 32
+09/30/2026 18:33:45:INFO:Training with MicroBatch
+09/30/2026 18:33:45:INFO:epoch=3/10, step = 33/160, epsilon=0.4471284145589729, Train perp = 2597763.9889428504
+ 21%|██        | 33/160 [00:14<00:54,  2.33it/s]09/30/2026 18:33:45:INFO:epoch=3/10, step = 34/160, epsilon=0.45377357676514074, Train perp = 1989555.457285931
+ 21%|██▏       | 34/160 [00:15<00:53,  2.34it/s]09/30/2026 18:33:46:INFO:epoch=3/10, step = 35/160, epsilon=0.4601792363267241, Train perp = 1491835.7965262646
+ 22%|██▏       | 35/160 [00:15<00:54,  2.28it/s]09/30/2026 18:33:46:INFO:epoch=3/10, step = 36/160, epsilon=0.4665698396733967, Train perp = 1211488.6593655024
+ 22%|██▎       | 36/160 [00:16<00:52,  2.34it/s]09/30/2026 18:33:47:INFO:epoch=3/10, step = 37/160, epsilon=0.47296044302006957, Train perp = 1505991.7880379613
+ 23%|██▎       | 37/160 [00:16<00:56,  2.17it/s]09/30/2026 18:33:47:INFO:epoch=3/10, step = 38/160, epsilon=0.4791337738301904, Train perp = 1491363.5264347552
+ 24%|██▍       | 38/160 [00:17<00:55,  2.20it/s]09/30/2026 18:33:48:INFO:epoch=3/10, step = 39/160, epsilon=0.4852737886726243, Train perp = 1633308.0773963106
+ 24%|██▍       | 39/160 [00:17<00:55,  2.17it/s]09/30/2026 18:33:48:INFO:epoch=3/10, step = 40/160, epsilon=0.49141380351505826, Train perp = 1277098.8105222378
+ 25%|██▌       | 40/160 [00:18<00:54,  2.21it/s]09/30/2026 18:33:48:INFO:epoch=3/10, step = 41/160, epsilon=0.4974479918346724, Train perp = 1170692.9357945886
+ 26%|██▌       | 41/160 [00:18<00:53,  2.21it/s]09/30/2026 18:33:49:INFO:epoch=3/10, step = 42/160, epsilon=0.503341259335633, Train perp = 1474656.4762431276
+ 26%|██▋       | 42/160 [00:19<00:55,  2.13it/s]09/30/2026 18:33:49:INFO:epoch=3/10, step = 43/160, epsilon=0.5092345268365934, Train perp = 1443911.193931957
+ 27%|██▋       | 43/160 [00:19<00:49,  2.36it/s]09/30/2026 18:33:50:INFO:epoch=3/10, step = 44/160, epsilon=0.5151277943375538, Train perp = 1230017.7262055043
+ 28%|██▊       | 44/160 [00:19<00:53,  2.17it/s]09/30/2026 18:33:50:INFO:epoch=3/10, step = 45/160, epsilon=0.5208827685736567, Train perp = 1227163.5263958299
+ 28%|██▊       | 45/160 [00:20<00:50,  2.27it/s]09/30/2026 18:33:51:INFO:epoch=3/10, step = 46/160, epsilon=0.5265330074125928, Train perp = 1100345.4345153233
+ 29%|██▉       | 46/160 [00:20<00:50,  2.27it/s]09/30/2026 18:33:51:INFO:epoch=3/10, step = 47/160, epsilon=0.5321832462515289, Train perp = 1315791.1190915161
+ 29%|██▉       | 47/160 [00:21<00:48,  2.32it/s]09/30/2026 18:33:51:INFO:epoch=3/10, step = 48/160, epsilon=0.537833485090465, Train perp = 1137862.53841241
+ 30%|███       | 48/160 [00:21<00:45,  2.45it/s]09/30/2026 18:33:51:INFO:epoch=3/10, step = 48/160, epsilon=0.537833485090465, Train perp = 1137862.53841241
+09/30/2026 18:33:52:INFO:***********
+09/30/2026 18:33:52:INFO:4, 48
+09/30/2026 18:33:52:INFO:Training with MicroBatch
+09/30/2026 18:33:52:INFO:epoch=4/10, step = 49/160, epsilon=0.5434313583962639, Train perp = 1124906.3806127547
+ 31%|███       | 49/160 [00:21<00:47,  2.33it/s]09/30/2026 18:33:52:INFO:epoch=4/10, step = 50/160, epsilon=0.5488421709919398, Train perp = 1001562.5762605992
+ 31%|███▏      | 50/160 [00:22<00:47,  2.31it/s]09/30/2026 18:33:53:INFO:epoch=4/10, step = 51/160, epsilon=0.5542529835876155, Train perp = 945995.0348878416
+ 32%|███▏      | 51/160 [00:22<00:48,  2.27it/s]09/30/2026 18:33:53:INFO:epoch=4/10, step = 52/160, epsilon=0.5596637961832914, Train perp = 946615.9323233768
+ 32%|███▎      | 52/160 [00:23<00:50,  2.14it/s]09/30/2026 18:33:54:INFO:epoch=4/10, step = 53/160, epsilon=0.5650746087789672, Train perp = 927046.9079823166
+ 33%|███▎      | 53/160 [00:23<00:48,  2.19it/s]09/30/2026 18:33:54:INFO:epoch=4/10, step = 54/160, epsilon=0.5704158717003035, Train perp = 919071.4592058449
+ 34%|███▍      | 54/160 [00:24<00:47,  2.24it/s]09/30/2026 18:33:55:INFO:epoch=4/10, step = 55/160, epsilon=0.575590749992445, Train perp = 883129.3509976682
+ 34%|███▍      | 55/160 [00:24<00:45,  2.32it/s]09/30/2026 18:33:55:INFO:epoch=4/10, step = 56/160, epsilon=0.5807656282845863, Train perp = 1051763.876027377
+ 35%|███▌      | 56/160 [00:25<00:46,  2.24it/s]09/30/2026 18:33:56:INFO:epoch=4/10, step = 57/160, epsilon=0.5859405065767277, Train perp = 1205898.075201561
+ 36%|███▌      | 57/160 [00:25<00:50,  2.02it/s]09/30/2026 18:33:56:INFO:epoch=4/10, step = 58/160, epsilon=0.5911153848688692, Train perp = 973852.1908008746
+ 36%|███▋      | 58/160 [00:26<00:48,  2.12it/s]09/30/2026 18:33:56:INFO:epoch=4/10, step = 59/160, epsilon=0.5962902631610105, Train perp = 790891.0111105834
+ 37%|███▋      | 59/160 [00:26<00:45,  2.23it/s]09/30/2026 18:33:57:INFO:epoch=4/10, step = 60/160, epsilon=0.6013032569674314, Train perp = 1031535.0296832662
+ 38%|███▊      | 60/160 [00:27<00:46,  2.14it/s]09/30/2026 18:33:57:INFO:epoch=4/10, step = 61/160, epsilon=0.6062455877977109, Train perp = 937550.7358144568
+ 38%|███▊      | 61/160 [00:27<00:44,  2.25it/s]09/30/2026 18:33:58:INFO:epoch=4/10, step = 62/160, epsilon=0.6111879186279904, Train perp = 903873.8779831383
+ 39%|███▉      | 62/160 [00:27<00:42,  2.33it/s]09/30/2026 18:33:58:INFO:epoch=4/10, step = 63/160, epsilon=0.6161302494582698, Train perp = 760506.1396360928
+ 39%|███▉      | 63/160 [00:28<00:43,  2.21it/s]09/30/2026 18:33:59:INFO:epoch=4/10, step = 64/160, epsilon=0.6210725802885493, Train perp = 883243.9000440916
+ 40%|████      | 64/160 [00:28<00:43,  2.20it/s]09/30/2026 18:33:59:INFO:epoch=4/10, step = 64/160, epsilon=0.6210725802885493, Train perp = 883243.9000440916
+09/30/2026 18:33:59:INFO:***********
+09/30/2026 18:33:59:INFO:5, 64
+09/30/2026 18:33:59:INFO:Training with MicroBatch
+09/30/2026 18:33:59:INFO:epoch=5/10, step = 65/160, epsilon=0.6260149111188288, Train perp = 750790.572246979
+ 41%|████      | 65/160 [00:29<00:44,  2.11it/s]09/30/2026 18:34:00:INFO:epoch=5/10, step = 66/160, epsilon=0.6308887372842951, Train perp = 871882.1776743489
+ 41%|████▏     | 66/160 [00:29<00:43,  2.16it/s]09/30/2026 18:34:00:INFO:epoch=5/10, step = 67/160, epsilon=0.6356018074124563, Train perp = 711225.4852923766
+ 42%|████▏     | 67/160 [00:30<00:43,  2.13it/s]09/30/2026 18:34:01:INFO:epoch=5/10, step = 68/160, epsilon=0.6403148775406176, Train perp = 759072.173672066
+ 42%|████▎     | 68/160 [00:30<00:44,  2.08it/s]09/30/2026 18:34:01:INFO:epoch=5/10, step = 69/160, epsilon=0.6450279476687788, Train perp = 707380.5865116315
+ 43%|████▎     | 69/160 [00:31<00:41,  2.18it/s]09/30/2026 18:34:02:INFO:epoch=5/10, step = 70/160, epsilon=0.6497410177969402, Train perp = 769216.8839683163
+ 44%|████▍     | 70/160 [00:31<00:40,  2.22it/s]09/30/2026 18:34:02:INFO:epoch=5/10, step = 71/160, epsilon=0.6544540879251014, Train perp = 746605.7458865342
+ 44%|████▍     | 71/160 [00:32<00:42,  2.10it/s]09/30/2026 18:34:02:INFO:epoch=5/10, step = 72/160, epsilon=0.6591671580532628, Train perp = 1175276.0192244938
+ 45%|████▌     | 72/160 [00:32<00:39,  2.20it/s]09/30/2026 18:34:03:INFO:epoch=5/10, step = 73/160, epsilon=0.663880228181424, Train perp = 703752.4220219881
+ 46%|████▌     | 73/160 [00:33<00:42,  2.02it/s]09/30/2026 18:34:04:INFO:epoch=5/10, step = 74/160, epsilon=0.6683786251691066, Train perp = 880642.4212595107
+ 46%|████▋     | 74/160 [00:33<00:43,  1.98it/s]09/30/2026 18:34:04:INFO:epoch=5/10, step = 75/160, epsilon=0.6728656259561077, Train perp = 1195237.5095725346
+ 47%|████▋     | 75/160 [00:34<00:43,  1.97it/s]09/30/2026 18:34:05:INFO:epoch=5/10, step = 76/160, epsilon=0.6773526267431087, Train perp = 800667.9832152466
+ 48%|████▊     | 76/160 [00:34<00:41,  2.05it/s]09/30/2026 18:34:05:INFO:epoch=5/10, step = 77/160, epsilon=0.6818396275301097, Train perp = 866681.8014903355
+ 48%|████▊     | 77/160 [00:35<00:41,  1.98it/s]09/30/2026 18:34:06:INFO:epoch=5/10, step = 78/160, epsilon=0.6863266283171107, Train perp = 900253.8450670514
+ 49%|████▉     | 78/160 [00:35<00:41,  1.98it/s]09/30/2026 18:34:06:INFO:epoch=5/10, step = 79/160, epsilon=0.6908136291041116, Train perp = 888181.0491004934
+ 49%|████▉     | 79/160 [00:36<00:37,  2.15it/s]09/30/2026 18:34:06:INFO:epoch=5/10, step = 80/160, epsilon=0.6953006298911126, Train perp = 960012.9684391475
+ 50%|█████     | 80/160 [00:36<00:37,  2.12it/s]09/30/2026 18:34:07:INFO:epoch=5/10, step = 80/160, epsilon=0.6953006298911126, Train perp = 960012.9684391475
+09/30/2026 18:34:07:INFO:***********
+09/30/2026 18:34:07:INFO:6, 80
+09/30/2026 18:34:07:INFO:Training with MicroBatch
+09/30/2026 18:34:07:INFO:epoch=6/10, step = 81/160, epsilon=0.6997876306781137, Train perp = 750822.7933742233
+ 51%|█████     | 81/160 [00:37<00:38,  2.04it/s]09/30/2026 18:34:07:INFO:epoch=6/10, step = 82/160, epsilon=0.7041726390415946, Train perp = 1002668.3115157868
+ 51%|█████▏    | 82/160 [00:37<00:38,  2.02it/s]09/30/2026 18:34:08:INFO:epoch=6/10, step = 83/160, epsilon=0.7084366708282348, Train perp = 746188.6194811339
+ 52%|█████▏    | 83/160 [00:37<00:34,  2.26it/s]09/30/2026 18:34:08:INFO:epoch=6/10, step = 84/160, epsilon=0.7127007026148748, Train perp = 1142420.5934114573
+ 52%|█████▎    | 84/160 [00:38<00:37,  2.05it/s]09/30/2026 18:34:09:INFO:epoch=6/10, step = 85/160, epsilon=0.7169647344015151, Train perp = 907425.3864243111
+ 53%|█████▎    | 85/160 [00:39<00:37,  1.97it/s]09/30/2026 18:34:09:INFO:epoch=6/10, step = 86/160, epsilon=0.7212287661881551, Train perp = 801123.2041634545
+ 54%|█████▍    | 86/160 [00:39<00:35,  2.06it/s]09/30/2026 18:34:10:INFO:epoch=6/10, step = 87/160, epsilon=0.7254927979747954, Train perp = 990730.7886169233
+ 54%|█████▍    | 87/160 [00:39<00:33,  2.19it/s]09/30/2026 18:34:10:INFO:epoch=6/10, step = 88/160, epsilon=0.7297568297614354, Train perp = 749389.2187181461
+ 55%|█████▌    | 88/160 [00:40<00:32,  2.25it/s]09/30/2026 18:34:11:INFO:epoch=6/10, step = 89/160, epsilon=0.7340208615480757, Train perp = 727473.2975365239
+ 56%|█████▌    | 89/160 [00:40<00:33,  2.15it/s]09/30/2026 18:34:11:INFO:epoch=6/10, step = 90/160, epsilon=0.7382848933347157, Train perp = 813579.9858564545
+ 56%|█████▋    | 90/160 [00:41<00:34,  2.02it/s]09/30/2026 18:34:12:INFO:epoch=6/10, step = 91/160, epsilon=0.742548925121356, Train perp = 706509.5262381935
+ 57%|█████▋    | 91/160 [00:41<00:33,  2.04it/s]09/30/2026 18:34:12:INFO:epoch=6/10, step = 92/160, epsilon=0.7466849981924276, Train perp = 1041265.6418204326
+ 57%|█████▊    | 92/160 [00:42<00:31,  2.19it/s]09/30/2026 18:34:13:INFO:epoch=6/10, step = 93/160, epsilon=0.7507290743989441, Train perp = 890161.0806657274
+ 58%|█████▊    | 93/160 [00:42<00:31,  2.16it/s]09/30/2026 18:34:13:INFO:epoch=6/10, step = 94/160, epsilon=0.7547731506054606, Train perp = 919527.3495566457
+ 59%|█████▉    | 94/160 [00:43<00:31,  2.12it/s]09/30/2026 18:34:14:INFO:epoch=6/10, step = 95/160, epsilon=0.7588172268119772, Train perp = 644540.0423127712
+ 59%|█████▉    | 95/160 [00:43<00:31,  2.09it/s]09/30/2026 18:34:14:INFO:epoch=6/10, step = 96/160, epsilon=0.7628613030184936, Train perp = 777583.0781581396
+ 60%|██████    | 96/160 [00:44<00:29,  2.16it/s]09/30/2026 18:34:14:INFO:epoch=6/10, step = 96/160, epsilon=0.7628613030184936, Train perp = 777583.0781581396
+09/30/2026 18:34:14:INFO:***********
+09/30/2026 18:34:14:INFO:7, 96
+09/30/2026 18:34:14:INFO:Training with MicroBatch
+09/30/2026 18:34:15:INFO:epoch=7/10, step = 97/160, epsilon=0.7669053792250101, Train perp = 870895.7555238337
+ 61%|██████    | 97/160 [00:44<00:30,  2.07it/s]09/30/2026 18:34:15:INFO:epoch=7/10, step = 98/160, epsilon=0.7709494554315267, Train perp = 1162628.738179364
+ 61%|██████▏   | 98/160 [00:45<00:29,  2.12it/s]09/30/2026 18:34:15:INFO:epoch=7/10, step = 99/160, epsilon=0.7749935316380432, Train perp = 673902.8345012711
+ 62%|██████▏   | 99/160 [00:45<00:28,  2.17it/s]09/30/2026 18:34:16:INFO:epoch=7/10, step = 100/160, epsilon=0.7790376078445597, Train perp = 702126.7623165796
+ 62%|██████▎   | 100/160 [00:45<00:26,  2.24it/s]09/30/2026 18:34:16:INFO:epoch=7/10, step = 101/160, epsilon=0.7830816840510763, Train perp = 681059.5780605823
+ 63%|██████▎   | 101/160 [00:46<00:27,  2.17it/s]09/30/2026 18:34:17:INFO:epoch=7/10, step = 102/160, epsilon=0.7871257602575927, Train perp = 914031.4598173506
+ 64%|██████▍   | 102/160 [00:46<00:25,  2.29it/s]09/30/2026 18:34:17:INFO:epoch=7/10, step = 103/160, epsilon=0.7911662813356148, Train perp = 910261.3593085598
+ 64%|██████▍   | 103/160 [00:47<00:25,  2.26it/s]09/30/2026 18:34:18:INFO:epoch=7/10, step = 104/160, epsilon=0.794993332305121, Train perp = 800832.9327261166
+ 65%|██████▌   | 104/160 [00:47<00:23,  2.34it/s]09/30/2026 18:34:18:INFO:epoch=7/10, step = 105/160, epsilon=0.7988203832746275, Train perp = 929992.0958123327
+ 66%|██████▌   | 105/160 [00:48<00:24,  2.24it/s]09/30/2026 18:34:19:INFO:epoch=7/10, step = 106/160, epsilon=0.8026474342441339, Train perp = 750978.1902230342
+ 66%|██████▋   | 106/160 [00:48<00:25,  2.11it/s]09/30/2026 18:34:19:INFO:epoch=7/10, step = 107/160, epsilon=0.8064744852136401, Train perp = 829965.1131443596
+ 67%|██████▋   | 107/160 [00:49<00:26,  1.96it/s]09/30/2026 18:34:20:INFO:epoch=7/10, step = 108/160, epsilon=0.8103015361831465, Train perp = 936362.3126480296
+ 68%|██████▊   | 108/160 [00:49<00:24,  2.10it/s]09/30/2026 18:34:20:INFO:epoch=7/10, step = 109/160, epsilon=0.8141285871526528, Train perp = 907983.7335758191
+ 68%|██████▊   | 109/160 [00:50<00:24,  2.12it/s]09/30/2026 18:34:20:INFO:epoch=7/10, step = 110/160, epsilon=0.8179556381221591, Train perp = 919058.3118771983
+ 69%|██████▉   | 110/160 [00:50<00:23,  2.14it/s]09/30/2026 18:34:21:INFO:epoch=7/10, step = 111/160, epsilon=0.8217826890916655, Train perp = 662112.4024939294
+ 69%|██████▉   | 111/160 [00:51<00:23,  2.08it/s]09/30/2026 18:34:22:INFO:epoch=7/10, step = 112/160, epsilon=0.8256097400611718, Train perp = 692272.4235385801
+ 70%|███████   | 112/160 [00:51<00:23,  2.01it/s]09/30/2026 18:34:22:INFO:epoch=7/10, step = 112/160, epsilon=0.8256097400611718, Train perp = 692272.4235385801
+09/30/2026 18:34:22:INFO:***********
+09/30/2026 18:34:22:INFO:8, 112
+09/30/2026 18:34:22:INFO:Training with MicroBatch
+09/30/2026 18:34:22:INFO:epoch=8/10, step = 113/160, epsilon=0.8294367910306781, Train perp = 931277.2280071401
+ 71%|███████   | 113/160 [00:52<00:22,  2.13it/s]09/30/2026 18:34:22:INFO:epoch=8/10, step = 114/160, epsilon=0.8332638420001846, Train perp = 693161.6265984563
+ 71%|███████▏  | 114/160 [00:52<00:21,  2.15it/s]09/30/2026 18:34:23:INFO:epoch=8/10, step = 115/160, epsilon=0.8370908929696909, Train perp = 871898.80766574
+ 72%|███████▏  | 115/160 [00:52<00:20,  2.21it/s]09/30/2026 18:34:23:INFO:epoch=8/10, step = 116/160, epsilon=0.8409179439391972, Train perp = 767365.3532094234
+ 72%|███████▎  | 116/160 [00:53<00:19,  2.22it/s]09/30/2026 18:34:24:INFO:epoch=8/10, step = 117/160, epsilon=0.8446663686611374, Train perp = 740469.9992162215
+ 73%|███████▎  | 117/160 [00:53<00:18,  2.32it/s]09/30/2026 18:34:24:INFO:epoch=8/10, step = 118/160, epsilon=0.848279245267482, Train perp = 880232.6717373623
+ 74%|███████▍  | 118/160 [00:54<00:18,  2.24it/s]09/30/2026 18:34:25:INFO:epoch=8/10, step = 119/160, epsilon=0.8518921218738266, Train perp = 879568.9129885888
+ 74%|███████▍  | 119/160 [00:54<00:17,  2.30it/s]09/30/2026 18:34:25:INFO:epoch=8/10, step = 120/160, epsilon=0.855504998480171, Train perp = 893840.2583564336
+ 75%|███████▌  | 120/160 [00:55<00:17,  2.23it/s]09/30/2026 18:34:25:INFO:epoch=8/10, step = 121/160, epsilon=0.8591178750865156, Train perp = 957785.3023060285
+ 76%|███████▌  | 121/160 [00:55<00:17,  2.25it/s]09/30/2026 18:34:26:INFO:epoch=8/10, step = 122/160, epsilon=0.8627307516928602, Train perp = 968881.3135186874
+ 76%|███████▋  | 122/160 [00:55<00:16,  2.27it/s]09/30/2026 18:34:26:INFO:epoch=8/10, step = 123/160, epsilon=0.8663436282992047, Train perp = 863269.9975942388
+ 77%|███████▋  | 123/160 [00:56<00:16,  2.19it/s]09/30/2026 18:34:27:INFO:epoch=8/10, step = 124/160, epsilon=0.8699565049055493, Train perp = 791471.9987847568
+ 78%|███████▊  | 124/160 [00:56<00:15,  2.34it/s]09/30/2026 18:34:27:INFO:epoch=8/10, step = 125/160, epsilon=0.8735693815118939, Train perp = 989022.1132978617
+ 78%|███████▊  | 125/160 [00:57<00:17,  2.04it/s]09/30/2026 18:34:28:INFO:epoch=8/10, step = 126/160, epsilon=0.8771822581182384, Train perp = 976232.6642951117
+ 79%|███████▉  | 126/160 [00:57<00:15,  2.18it/s]09/30/2026 18:34:28:INFO:epoch=8/10, step = 127/160, epsilon=0.8807951347245829, Train perp = 928951.446641045
+ 79%|███████▉  | 127/160 [00:58<00:15,  2.11it/s]09/30/2026 18:34:29:INFO:epoch=8/10, step = 128/160, epsilon=0.8844080113309275, Train perp = 734879.3006091153
+ 80%|████████  | 128/160 [00:58<00:14,  2.16it/s]09/30/2026 18:34:29:INFO:epoch=8/10, step = 128/160, epsilon=0.8844080113309275, Train perp = 734879.3006091153
+09/30/2026 18:34:29:INFO:***********
+09/30/2026 18:34:29:INFO:9, 128
+09/30/2026 18:34:29:INFO:Training with MicroBatch
+09/30/2026 18:34:29:INFO:epoch=9/10, step = 129/160, epsilon=0.8880208879372721, Train perp = 1016008.515220526
+ 81%|████████  | 129/160 [00:59<00:14,  2.14it/s]09/30/2026 18:34:30:INFO:epoch=9/10, step = 130/160, epsilon=0.8916337645436166, Train perp = 1019097.3409069537
+ 81%|████████▏ | 130/160 [00:59<00:13,  2.23it/s]09/30/2026 18:34:30:INFO:epoch=9/10, step = 131/160, epsilon=0.8952466411499612, Train perp = 776091.0076516334
+ 82%|████████▏ | 131/160 [01:00<00:13,  2.17it/s]09/30/2026 18:34:31:INFO:epoch=9/10, step = 132/160, epsilon=0.8988595177563058, Train perp = 988731.648823015
+ 82%|████████▎ | 132/160 [01:00<00:13,  2.14it/s]09/30/2026 18:34:31:INFO:epoch=9/10, step = 133/160, epsilon=0.9024470738864845, Train perp = 768058.696599095
+ 83%|████████▎ | 133/160 [01:01<00:12,  2.10it/s]09/30/2026 18:34:31:INFO:epoch=9/10, step = 134/160, epsilon=0.9058485509250848, Train perp = 912501.1858517171
+ 84%|████████▍ | 134/160 [01:01<00:11,  2.23it/s]09/30/2026 18:34:32:INFO:epoch=9/10, step = 135/160, epsilon=0.9092500279636851, Train perp = 1071936.4538150285
+ 84%|████████▍ | 135/160 [01:02<00:11,  2.14it/s]09/30/2026 18:34:32:INFO:epoch=9/10, step = 136/160, epsilon=0.9126515050022854, Train perp = 816083.7492570926
+ 85%|████████▌ | 136/160 [01:02<00:10,  2.21it/s]09/30/2026 18:34:33:INFO:epoch=9/10, step = 137/160, epsilon=0.9160529820408857, Train perp = 735729.2043402521
+ 86%|████████▌ | 137/160 [01:02<00:10,  2.23it/s]09/30/2026 18:34:33:INFO:epoch=9/10, step = 138/160, epsilon=0.9194544590794861, Train perp = 741836.2794024635
+ 86%|████████▋ | 138/160 [01:03<00:09,  2.21it/s]09/30/2026 18:34:34:INFO:epoch=9/10, step = 139/160, epsilon=0.9228559361180864, Train perp = 1110056.9463604568
+ 87%|████████▋ | 139/160 [01:03<00:09,  2.16it/s]09/30/2026 18:34:34:INFO:epoch=9/10, step = 140/160, epsilon=0.9262574131566866, Train perp = 1019829.4346207109
+ 88%|████████▊ | 140/160 [01:04<00:08,  2.24it/s]09/30/2026 18:34:35:INFO:epoch=9/10, step = 141/160, epsilon=0.929658890195287, Train perp = 645577.2285778114
+ 88%|████████▊ | 141/160 [01:04<00:08,  2.21it/s]09/30/2026 18:34:35:INFO:epoch=9/10, step = 142/160, epsilon=0.9330603672338872, Train perp = 716755.8456971901
+ 89%|████████▉ | 142/160 [01:05<00:08,  2.25it/s]09/30/2026 18:34:36:INFO:epoch=9/10, step = 143/160, epsilon=0.9364618442724876, Train perp = 843300.5173603946
+ 89%|████████▉ | 143/160 [01:05<00:08,  2.06it/s]09/30/2026 18:34:36:INFO:epoch=9/10, step = 144/160, epsilon=0.939863321311088, Train perp = 950282.8186327715
+ 90%|█████████ | 144/160 [01:06<00:07,  2.19it/s]09/30/2026 18:34:36:INFO:epoch=9/10, step = 144/160, epsilon=0.939863321311088, Train perp = 950282.8186327715
+09/30/2026 18:34:36:INFO:***********
+09/30/2026 18:34:36:INFO:10, 144
+09/30/2026 18:34:36:INFO:Training with MicroBatch
+09/30/2026 18:34:37:INFO:epoch=10/10, step = 145/160, epsilon=0.9432647983496881, Train perp = 674006.3145411393
+ 91%|█████████ | 145/160 [01:06<00:06,  2.15it/s]09/30/2026 18:34:37:INFO:epoch=10/10, step = 146/160, epsilon=0.9466662753882885, Train perp = 927108.7971059032
+ 91%|█████████▏| 146/160 [01:07<00:06,  2.22it/s]09/30/2026 18:34:37:INFO:epoch=10/10, step = 147/160, epsilon=0.9500677524268887, Train perp = 793149.4443345792
+ 92%|█████████▏| 147/160 [01:07<00:05,  2.34it/s]09/30/2026 18:34:38:INFO:epoch=10/10, step = 148/160, epsilon=0.9534692294654891, Train perp = 841574.7908053519
+ 92%|█████████▎| 148/160 [01:07<00:05,  2.37it/s]09/30/2026 18:34:38:INFO:epoch=10/10, step = 149/160, epsilon=0.9568707065040895, Train perp = 915091.1749703848
+ 93%|█████████▎| 149/160 [01:08<00:04,  2.46it/s]09/30/2026 18:34:39:INFO:epoch=10/10, step = 150/160, epsilon=0.9602721835426898, Train perp = 957852.8974191728
+ 94%|█████████▍| 150/160 [01:08<00:04,  2.40it/s]09/30/2026 18:34:39:INFO:epoch=10/10, step = 151/160, epsilon=0.96367366058129, Train perp = 1007513.6685665362
+ 94%|█████████▍| 151/160 [01:09<00:03,  2.36it/s]09/30/2026 18:34:39:INFO:epoch=10/10, step = 152/160, epsilon=0.9670751376198904, Train perp = 1110654.175861579
+ 95%|█████████▌| 152/160 [01:09<00:03,  2.24it/s]09/30/2026 18:34:40:INFO:epoch=10/10, step = 153/160, epsilon=0.9703526306389454, Train perp = 977495.9278075757
+ 96%|█████████▌| 153/160 [01:09<00:03,  2.27it/s]09/30/2026 18:34:40:INFO:epoch=10/10, step = 154/160, epsilon=0.9735454100173653, Train perp = 904659.5023946691
+ 96%|█████████▋| 154/160 [01:10<00:02,  2.18it/s]09/30/2026 18:34:41:INFO:epoch=10/10, step = 155/160, epsilon=0.9767381893957852, Train perp = 952982.7713935247
+ 97%|█████████▋| 155/160 [01:10<00:02,  2.17it/s]09/30/2026 18:34:41:INFO:epoch=10/10, step = 156/160, epsilon=0.979930968774205, Train perp = 1055373.9810234336
+ 98%|█████████▊| 156/160 [01:11<00:01,  2.20it/s]09/30/2026 18:34:42:INFO:epoch=10/10, step = 157/160, epsilon=0.9831237481526252, Train perp = 868321.5374722712
+ 98%|█████████▊| 157/160 [01:11<00:01,  2.22it/s]09/30/2026 18:34:42:INFO:epoch=10/10, step = 158/160, epsilon=0.986316527531045, Train perp = 849319.0658668482
+ 99%|█████████▉| 158/160 [01:12<00:00,  2.15it/s]09/30/2026 18:34:43:INFO:epoch=10/10, step = 159/160, epsilon=0.9895093069094651, Train perp = 988137.7826157291
+ 99%|█████████▉| 159/160 [01:12<00:00,  2.08it/s]09/30/2026 18:34:43:INFO:epoch=10/10, step = 160/160, epsilon=0.992702086287885, Train perp = 786494.6700569483
+100%|██████████| 160/160 [01:13<00:00,  2.04it/s]09/30/2026 18:34:43:INFO:epoch=10/10, step = 160/160, epsilon=0.992702086287885, Train perp = 786494.6700569483
+100%|██████████| 160/160 [01:13<00:00,  2.18it/s]
+/home/open0051/venv-dp2stage/lib/python3.9/site-packages/huggingface_hub/file_download.py:949: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+  warnings.warn(
+  0%|          | 0/500 [00:00<?, ?it/s]Random seeds saved at /home/open0051/priv-sdg/sdg/.dp2stage_probe/.dp2stage_fit_fx4pv8d8/synth/random_seeds_main_round0.pt
+  0%|          | 0/500 [00:00<?, ?it/s]Random seeds saved at /home/open0051/priv-sdg/sdg/.dp2stage_probe/.dp2stage_fit_fx4pv8d8/synth/random_seeds_main_round0.pt
+  0%|          | 0/500 [00:01<?, ?it/s]Random seeds saved at /home/open0051/priv-sdg/sdg/.dp2stage_probe/.dp2stage_fit_fx4pv8d8/synth/random_seeds_main_round0.pt
+  0%|          | 0/500 [00:01<?, ?it/s]Random seeds saved at /home/open0051/priv-sdg/sdg/.dp2stage_probe/.dp2stage_fit_fx4pv8d8/synth/random_seeds_main_round0.pt
+  0%|          | 0/500 [00:02<?, ?it/s]Random seeds saved at /home/open0051/priv-sdg/sdg/.dp2stage_probe/.dp2stage_fit_fx4pv8d8/synth/random_seeds_main_round0.pt
+  0%|          | 0/500 [00:02<?, ?it/s]Random seeds saved at /home/open0051/priv-sdg/sdg/.dp2stage_probe/.dp2stage_fit_fx4pv8d8/synth/random_seeds_main_round0.pt
+  0%|          | 0/500 [00:03<?, ?it/s]Random seeds saved at /home/open0051/priv-sdg/sdg/.dp2stage_probe/.dp2stage_fit_fx4pv8d8/synth/random_seeds_main_round0.pt
+  0%|          | 0/500 [00:03<?, ?it/s]Random seeds saved at /home/open0051/priv-sdg/sdg/.dp2stage_probe/.dp2stage_fit_fx4pv8d8/synth/random_seeds_main_round0.pt
+  0%|          | 0/500 [00:04<?, ?it/s]Random seeds saved at /home/open0051/priv-sdg/sdg/.dp2stage_probe/.dp2stage_fit_fx4pv8d8/synth/random_seeds_main_round0.pt
+  0%|          | 0/500 [00:04<?, ?it/s]Random seeds saved at /home/open0051/priv-sdg/sdg/.dp2stage_probe/.dp2stage_fit_fx4pv8d8/synth/random_seeds_main_round0.pt
+  0%|          | 0/500 [00:05<?, ?it/s]Random seeds saved at /home/open0051/priv-sdg/sdg/.dp2stage_probe/.dp2stage_fit_fx4pv8d8/synth/random_seeds_main_round0.pt
+  0%|          | 0/500 [00:05<?, ?it/s]Random seeds saved at /home/open0051/priv-sdg/sdg/.dp2stage_probe/.dp2stage_fit_fx4pv8d8/synth/random_seeds_main_round0.pt
+  0%|          | 0/500 [00:06<?, ?it/s]Random seeds saved at /home/open0051/priv-sdg/sdg/.dp2stage_probe/.dp2stage_fit_fx4pv8d8/synth/random_seeds_main_round0.pt
+  0%|          | 0/500 [00:06<?, ?it/s]Random seeds saved at /home/open0051/priv-sdg/sdg/.dp2stage_probe/.dp2stage_fit_fx4pv8d8/synth/random_seeds_main_round0.pt
+  0%|          | 0/500 [00:07<?, ?it/s]Random seeds saved at /home/open0051/priv-sdg/sdg/.dp2stage_probe/.dp2stage_fit_fx4pv8d8/synth/random_seeds_main_round0.pt
+  0%|          | 0/500 [00:07<?, ?it/s]Random seeds saved at /home/open0051/priv-sdg/sdg/.dp2stage_probe/.dp2stage_fit_fx4pv8d8/synth/random_seeds_main_round0.pt
+Breaking the generation loop!
+  0%|          | 0/500 [00:08<?, ?it/s]
+generation round 1 (main, k=100) wrote text but 0 VALID rows -- a model problem, not contention. Raw model output, first 3 row(s) of this round (prompt included):
+    'income is Satisfied, age is 46, arrival-delay-in-minutes is 0.0, baggage-handling is 4, checkin-service is 4, class is Business, cleanliness is 4, customer-type is Loyal-customer, departure-delay-in-minutes is 0, departure/arrival-time-convenient is 3, ease-of-online-booking is 3, flight-distance is 1416, food-and-drink is 3, gate-location is 3, gender is Female, id is 8'
+    'income is Neutral-or-dissatisfied, age is 28, arrival-delay-in-minutes is 0.0, baggage-handling is 5, checkin-service is 3, class is Eco, cleanliness is 3, customer-type is Loyal-customer, departure-delay-in-minutes is 0, departure/arrival-time-convenient is 4, ease-of-online-booking is 1, flight-distance is 1464, food-and-drink is 3, gate-location is 3, gender'
+    'income is Satisfied, age is 24, arrival-delay-in-minutes is 0.0, baggage-handling is 4, checkin-service is 5, class is Business, cleanliness is 5, customer-type is Disloyal-customer, departure-delay-in-minutes is 0, departure/arrival-time-convenient is 2, ease-of-online-booking is 0, flight-distance is 533, food-and-drink is 5, gate-location is 1, gender is Female, id'
