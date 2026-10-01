@@ -147,12 +147,14 @@ NUM_TRAIN, NUM_TEST = 200, 500     # the starting stage (700 fits); GReaT defaul
 DP2STAGE_CONFIG = {"dp": True, "kind": "neural", "plugin_kwargs": {}}
 FORMAL_EPSILON = EPSILON
 
-# PROBE-DEPENDENT: checkpoint cadence and per-process fit budget. These are GReaT's values
-# (100 / 50), carried over WITHOUT a measurement. Choose CHECKPOINT_EVERY ~= 1800 / (mean
-# s/fit from --probe) so a crash or contention restart repeats at most ~30 min, and
-# MAX_NEW_FITS as a small multiple of it. --max-new-fits overrides MAX_NEW_FITS at the CLI.
-MAX_NEW_FITS = 100
-CHECKPOINT_EVERY = 50
+# PROBE-DEPENDENT: checkpoint cadence and per-process fit budget. Set from the driver-level
+# probe (dp2stage_probe.py fit --variant U --stage1-per-fit, 2026-09-30): ~97 s wall per fit
+# (Stage 1 ~18 s + Stage 2 ~74 s + sampling ~3 s). CHECKPOINT_EVERY ~= 1800 / 97 ~= 19 so a
+# crash or contention restart repeats at most ~30 min, and MAX_NEW_FITS ~= 3 chunks.
+# Re-check against `--probe 4` (the whole wrapper, incl. subprocess start-up).
+# --max-new-fits overrides MAX_NEW_FITS at the CLI.
+MAX_NEW_FITS = 57
+CHECKPOINT_EVERY = 19
 EXIT_INCOMPLETE = 3     # "pools not finished, restart me" -- not an error
 
 # Set by _configure(variant) in main(): every path is namespaced by method, so the O and U
