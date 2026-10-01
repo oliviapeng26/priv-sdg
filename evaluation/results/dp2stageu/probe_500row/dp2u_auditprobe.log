@@ -1,0 +1,13 @@
+2026-10-01 16:22:18,686 INFO Sampled fixed background of 499 records (seed=42)
+2026-10-01 16:22:18,687 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-10-01 16:22:18,701 INFO === probe: 4 fit+generate cycles on 500 rows, eps=1.0, delta=1e-05, max_new_tokens=115, sample_batch=100, variant=U (Stage 1 rebuilt per fit) ===
+2026-10-01 16:23:58,547 INFO   fit 0: 99.8s wall  (driver: fit 77.0s + gen 2.6s; overhead 20.2s)  eps_spent=0.9927 sigma=3.438 steps=160  acceptance 0.9506  peak 14.48/4.68 GB (torch-allocated)  500/500 unique rows
+2026-10-01 16:25:40,285 INFO   fit 1: 101.7s wall  (driver: fit 78.9s + gen 2.6s; overhead 20.2s)  eps_spent=0.9927 sigma=3.438 steps=160  acceptance 0.956  peak 14.49/4.68 GB (torch-allocated)  500/500 unique rows
+2026-10-01 16:27:21,830 INFO   fit 2: 101.5s wall  (driver: fit 78.9s + gen 2.3s; overhead 20.3s)  eps_spent=0.9927 sigma=3.438 steps=160  acceptance 0.9804  peak 14.45/4.67 GB (torch-allocated)  500/500 unique rows
+2026-10-01 16:29:02,963 INFO   fit 3: 101.1s wall  (driver: fit 78.4s + gen 2.6s; overhead 20.1s)  eps_spent=0.9927 sigma=3.438 steps=160  acceptance 0.9671  peak 14.49/4.64 GB (torch-allocated)  500/500 unique rows
+2026-10-01 16:29:02,963 INFO === mean 101.1s/fit (min 99.8, max 101.7), mean acceptance 96.4%, max spent eps 0.9927 (within budget) ===
+2026-10-01 16:29:02,963 INFO === 4/4 distinct outputs across consecutive seeds (seeding OK) ===
+2026-10-01 16:29:02,963 INFO     200/500 = 700 fits -> 19.7 h
+2026-10-01 16:29:02,963 INFO     500/1000 = 1500 fits -> 42.1 h
+2026-10-01 16:29:02,963 INFO     1000/2500 = 3500 fits -> 98.3 h
+2026-10-01 16:29:02,963 INFO     PROBE-DEPENDENT: set CHECKPOINT_EVERY ~= 18 (~30 min of fits) and MAX_NEW_FITS to a small multiple; both are still GReaT's provisional 19/57.
