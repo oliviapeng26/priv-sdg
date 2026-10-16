@@ -150,6 +150,29 @@ def select_random_target(train_dataset: TabularDataset, background_indices: set,
     return target, alternate
 
 
+def select_fixed_target(train_dataset: TabularDataset, background_indices: set,
+                        target_index: int, alternate_index: int):
+    """Explicit-index counterpart of select_random_target, for re-auditing a known
+    t/t' pair against a different background. select_random_target excludes the
+    background by construction; here the caller chose the indices, so the same
+    guarantee has to be checked instead. Indices are positions in train_dataset
+    (get_records uses iloc), the same space select_random_target logs.
+    Returns (target_record, alternate_record)."""
+    n = len(train_dataset.data)
+    for name, i in (("target", target_index), ("alternate", alternate_index)):
+        if not 0 <= i < n:
+            raise ValueError(f"{name} index {i} is outside the training set (0..{n - 1})")
+        if i in background_indices:
+            raise ValueError(f"{name} index {i} is in the sampled background, so it would "
+                             f"be in both D+ and D-. Choose another index or background seed.")
+    if target_index == alternate_index:
+        raise ValueError(f"target and alternate are the same record (index {target_index})")
+    target = train_dataset.get_records([int(target_index)])
+    alternate = train_dataset.get_records([int(alternate_index)])
+    log.info(f"Using fixed target t at index {target_index}, alternate t' at index {alternate_index}")
+    return target, alternate
+
+
 # -- Synthcity-TAPAS generator wrapper -----------------------------------
 
 class SynthcityGenerator(Generator):
@@ -304,17 +327,27 @@ class SwapTargetedMIA(tm.TargetedMIA):
 
 def build_or_load_threat_model(cache_dir: Path, method: str, background_dataset,
                                target_record, alternate_record, description,
-                               epsilon: float = FORMAL_EPSILON, plugin_kwargs: dict = None):
+                               epsilon: float = FORMAL_EPSILON, plugin_kwargs: dict = None,
+                               seed_base: int = TAPAS_GENERATOR_SEED_BASE,
+                               audit_config: dict = None):
     """Load cached threat model if present (with any memoised simulations),
     otherwise build fresh. Run scripts must call threat_model.save() again after
-    each attack to persist newly-generated simulations."""
+    each attack to persist newly-generated simulations.
+
+    seed_base is passed through explicitly because SynthcityGenerator's default is
+    bound when common is imported. It only applies to a FRESH build: a loaded
+    threat model keeps the generator (and seed_base, fit counter) it was pickled
+    with, so callers that vary it must check what they loaded. audit_config, if
+    given, is attached to a fresh build before its first save so the pickle
+    records how it was made; a loaded one is returned as is."""
     cache_path = cache_dir / "threat_model"
     if (cache_dir / "threat_model.pkl").exists():
         log.info(f"Loading cached threat model from {cache_path}.pkl")
         return tm.ThreatModel.load(str(cache_path))
 
     log.info(f"Building new threat model for {method} (no cache found)")
-    generator = SynthcityGenerator(method, description, epsilon, plugin_kwargs)
+    generator = SynthcityGenerator(method, description, epsilon, plugin_kwargs,
+                                   seed_base=seed_base)
     threat_model = SwapTargetedMIA(
         attacker_knowledge_data=tm.ExactDataKnowledge(background_dataset),
         target_record=target_record,
@@ -323,6 +356,8 @@ def build_or_load_threat_model(cache_dir: Path, method: str, background_dataset,
             generator, num_synthetic_records=NUM_SYNTHETIC
         ),
     )
+    if audit_config is not None:
+        threat_model.audit_config = audit_config
     cache_dir.mkdir(parents=True, exist_ok=True)
     threat_model.save(str(cache_path))
     return threat_model

@@ -72,7 +72,33 @@ DISTINCTNESS GUARD, AND WHY IT IS PER-EPS RECOVERABLE
     results by default, and --allow-degenerate records the arm with a
     `degenerate_pool` flag if you decide the collapse is real.
 
-OUTPUTS
+TAGGED RUNS -- VARYING THE PAIR, THE BACKGROUND OR THE SEEDS AT A FIXED EPS
+    With no new options the script does exactly what it always did. --seed-base,
+    --background-seed, --target-seed and --target-index/--alternate-index each
+    change WHAT is audited while leaving eps alone, and every path is derived from
+    eps alone, so each of them requires --tag. The tag is appended to the label,
+    eps1 -> eps1_<tag>, and from there to every path below plus a separate log file
+    (eps_sweep_privacy_log_<tag>.txt). eps_slug never contains "_", so a tagged
+    label cannot equal an untagged one and two different tags cannot collide.
+
+    --target-index/--alternate-index name the pair directly (train-set positions,
+    the indices select_random_target logs), for re-auditing a known pair against a
+    different background. Neither may be in the sampled background: that is checked
+    up front and the run refuses. --target-seed and the explicit indices are
+    mutually exclusive. SCORE_ATTACK_SEED is deliberately not an option.
+
+    The resolved configuration (eps, counts, seed base, background seed and a hash
+    of its indices, target seed or explicit indices, the t/t' indices actually used,
+    attack seed, n_iter, tag) is written to meta.json and attached to the pickled
+    threat model. On resume the pickle's configuration is compared with this run's
+    and the arm stops on any difference. Pickles from before this was recorded are
+    treated as the default configuration, corrected by what the pickle itself still
+    shows (eps, seed base, n_iter, the background and the t/t' records).
+
+    --dry-run prints the resolved configuration and every path the run would write,
+    marking the ones that already exist, and exits without generating anything.
+
+OUTPUTS   (<label> = eps{eps}, or eps{eps}_<tag> for a tagged run)
     cache/dpgan_eps{eps}/threat_model.pkl           per-eps, never shared
     cache/dpgan_eps{eps}/datasets/synthetic_{split}.csv.gz
                                                     every generated dataset, gzipped
@@ -88,6 +114,8 @@ Run from the repo root, venv active:
   python benchmark_tapas/audits/run_dpgan_eps_sweep.py
   python benchmark_tapas/audits/run_dpgan_eps_sweep.py --epsilons 10 100
   python benchmark_tapas/audits/run_dpgan_eps_sweep.py --epsilons 0.1 --allow-degenerate
+  python benchmark_tapas/audits/run_dpgan_eps_sweep.py --epsilons 1.0 --seed-base 10000 --tag seedbase10000
+  python benchmark_tapas/audits/run_dpgan_eps_sweep.py --epsilons 1.0 --tag seedbase10000 --seed-base 10000 --dry-run
 
 Resumable: finished attacks and memoised fits are skipped on re-run, so a crash
 or a disconnect costs only the attack that was in flight.
@@ -97,6 +125,7 @@ import argparse
 import hashlib
 import json
 import logging
+import re
 import sys
 import time
 import traceback
@@ -115,8 +144,9 @@ sys.path.insert(0, str(REPO_ROOT))
 
 import common                                                    # noqa: E402
 from tapas.report import EffectiveEpsilonReport                  # noqa: E402
-from config import CACHE_DIR, RESULTS_DIR, METHOD_CONFIG, slug   # noqa: E402
-from seeds import SCORE_ATTACK_SEED                              # noqa: E402
+from config import (CACHE_DIR, RESULTS_DIR, METHOD_CONFIG, slug,  # noqa: E402
+                    BACKGROUND_SEED, TARGET_SEED)
+from seeds import SCORE_ATTACK_SEED, TAPAS_GENERATOR_SEED_BASE   # noqa: E402
 
 METHOD = "dpgan"
 # 1.0 is reused from counts_sweep (see module docstring).
@@ -129,10 +159,13 @@ SWEEP_DIR = RESULTS_DIR / "eps_sweep" / "dpgan"
 PRIVACY_DIR = SWEEP_DIR                     # eps arms sit directly under eps_sweep/dpgan/
 PRIVACY_DIR.mkdir(parents=True, exist_ok=True)
 
+# delay=True: the file is opened on the first record, not here, so --dry-run and a
+# tagged run (both swap this handler out in main before logging anything) never
+# touch the shared log. An untagged run writes to it exactly as before.
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s %(levelname)s %(message)s",
-    handlers=[logging.FileHandler(PRIVACY_DIR / "eps_sweep_privacy_log.txt"),
+    handlers=[logging.FileHandler(PRIVACY_DIR / "eps_sweep_privacy_log.txt", delay=True),
               logging.StreamHandler()],
 )
 log = logging.getLogger("eps_sweep_privacy")
@@ -142,9 +175,152 @@ class DegeneratePool(RuntimeError):
     """The memoised simulations are not independent draws. Raised by assert_distinct."""
 
 
+class ConfigMismatch(RuntimeError):
+    """A cached threat model was built under a different configuration than this run."""
+
+
 def eps_slug(eps: float) -> str:
     """Must match eps_sweep_generate.eps_slug: 0.1 -> 'eps0.1', 10.0 -> 'eps10'."""
     return f"eps{eps:g}"
+
+
+# -- Run options, labels, paths and the recorded configuration -------------
+
+# What a tagged run may vary. None means the default, which is all an untagged run
+# (and run_eps_nudge.py / run_full_audit_placebo.py, which call run_one_epsilon with
+# no options) ever gets.
+RUN_OPTIONS = ("tag", "seed_base", "background_seed", "target_seed",
+               "target_index", "alternate_index")
+TAG_PATTERN = re.compile(r"[A-Za-z0-9-]+")
+
+# Captured at import, before any caller can rebind it (run_full_audit_placebo.py
+# does), so a rebound selector is recorded as such instead of as TARGET_SEED.
+_SELECT_RANDOM_TARGET = common.select_random_target
+
+
+def arm_label(epsilon: float, tag: str = None) -> str:
+    """eps_slug, plus '_<tag>' for a tagged run. Looks eps_slug up at call time, so
+    run_full_audit_placebo.py's rebinding of it still applies."""
+    label = eps_slug(epsilon)
+    return f"{label}_{tag}" if tag else label
+
+
+def arm_paths(label: str) -> dict:
+    """Every per-arm path run_one_epsilon writes, from the label alone. Module
+    globals are read at call time, so run_eps_nudge.py's PRIVACY_DIR redirection
+    still applies. Per-attack files hang off stage_cache and results_dir."""
+    cache_dir = CACHE_DIR / f"{METHOD}_{label}"
+    results_dir = PRIVACY_DIR / label
+    return {
+        "cache_dir": cache_dir,
+        "threat_model": cache_dir / "threat_model.pkl",
+        "stage_cache": cache_dir / f"sweep_{NUM_TRAIN}_{NUM_TEST}",
+        "datasets": cache_dir / "datasets",
+        "results_dir": results_dir,
+        "effeps": results_dir / f"effeps_{METHOD}_{label}.csv",
+        "meta": results_dir / "meta.json",
+        "raw_scores": PRIVACY_DIR / f"raw_scores_{METHOD}_{label}.csv",
+    }
+
+
+def log_path(tag: str = None) -> Path:
+    return PRIVACY_DIR / (f"eps_sweep_privacy_log_{tag}.txt" if tag else
+                          "eps_sweep_privacy_log.txt")
+
+
+def resolve_pair(train_dataset, options: dict):
+    """Background, then t/t'. With no options this makes exactly the calls the script
+    always made, so callers that rebind common.select_random_target still work.
+    Returns (background, background_idx, target, alternate)."""
+    if options.get("background_seed") is None:
+        background, background_idx = common.sample_background(train_dataset)
+    else:
+        background, background_idx = common.sample_background(
+            train_dataset, seed=options["background_seed"])
+    if options.get("target_index") is not None:
+        target, alternate = common.select_fixed_target(
+            train_dataset, background_idx, options["target_index"], options["alternate_index"])
+    elif options.get("target_seed") is not None:
+        target, alternate = common.select_random_target(
+            train_dataset, background_idx, seed=options["target_seed"])
+    else:
+        target, alternate = common.select_random_target(train_dataset, background_idx)
+    return background, background_idx, target, alternate
+
+
+def background_fingerprint(indices) -> str:
+    return hashlib.sha256(",".join(str(int(i)) for i in sorted(indices)).encode()).hexdigest()
+
+
+def _default_target_selection() -> tuple:
+    if common.select_random_target is _SELECT_RANDOM_TARGET:
+        return "random", TARGET_SEED
+    return "random (select_random_target rebound by caller)", None
+
+
+def build_config(epsilon: float, options: dict, background_idx, target, alternate) -> dict:
+    """The full configuration of one arm, with the t/t' indices actually used."""
+    if options.get("target_index") is not None:
+        selection, target_seed = "explicit", None
+    elif options.get("target_seed") is not None:
+        selection, target_seed = "random", options["target_seed"]
+    else:
+        selection, target_seed = _default_target_selection()
+    seed_base, bg_seed = options.get("seed_base"), options.get("background_seed")
+    return {
+        "method": METHOD,
+        "formal_epsilon": float(epsilon),
+        "num_train": NUM_TRAIN,
+        "num_test": NUM_TEST,
+        "seed_base": TAPAS_GENERATOR_SEED_BASE if seed_base is None else seed_base,
+        "background_seed": BACKGROUND_SEED if bg_seed is None else bg_seed,
+        "background_sha256": background_fingerprint(background_idx),
+        "target_selection": selection,
+        "target_seed": target_seed,
+        "target_index": int(target.id),
+        "alternate_index": int(alternate.id),
+        "attack_seed": SCORE_ATTACK_SEED,
+        "n_iter": METHOD_CONFIG[METHOD]["plugin_kwargs"].get("n_iter"),
+        "tag": options.get("tag"),
+    }
+
+
+def stored_config(threat_model, current: dict) -> dict:
+    """The configuration a cached threat model was built under. Pickles from before
+    it was recorded are taken as the default configuration, overridden by whatever
+    the pickle itself still shows: eps, seed base and n_iter from the generator,
+    and the background and t/t' records it actually holds."""
+    stored = getattr(threat_model, "audit_config", None)
+    if stored is not None:
+        return stored
+    selection, target_seed = _default_target_selection()
+    legacy = dict(current, num_train=NUM_TRAIN, num_test=NUM_TEST,
+                  background_seed=BACKGROUND_SEED, target_selection=selection,
+                  target_seed=target_seed, attack_seed=SCORE_ATTACK_SEED, tag=None)
+    gen = threat_model.atk_know_gen.generator
+    legacy["formal_epsilon"] = float(gen.epsilon)
+    legacy["seed_base"] = getattr(gen, "seed_base", TAPAS_GENERATOR_SEED_BASE)
+    legacy["n_iter"] = gen.plugin_kwargs.get("n_iter")
+    background = threat_model.atk_know_data.attacker_knowledge.training_dataset
+    legacy["background_sha256"] = background_fingerprint(background.data.index)
+    legacy["target_index"] = int(threat_model.target_record.id)
+    legacy["alternate_index"] = int(threat_model.alternate_record.id)
+    return legacy
+
+
+def check_config(stored: dict, current: dict, where: Path) -> None:
+    diffs = []
+    for key in sorted(set(stored) | set(current)):
+        a, b = stored.get(key), current.get(key)
+        same = (np.isclose(float(a), float(b)) if key == "formal_epsilon" and None not in (a, b)
+                else a == b)
+        if not same:
+            diffs.append(f"{key}: cached={a!r} this run={b!r}")
+    if diffs:
+        raise ConfigMismatch(
+            f"{where} was built under a different configuration:\n    " + "\n    ".join(diffs)
+            + "\n  Use a different --tag, or delete that cache directory if it is yours "
+              "to discard.")
 
 
 # -- Copied from run_synthcity_sample_size_sweep.py -------------------------------------
@@ -278,32 +454,46 @@ def selected_threshold(summary) -> dict:
 
 # -- Per-eps driver ------------------------------------------------------
 
-def run_one_epsilon(epsilon: float, device_kwargs: dict, allow_degenerate: bool) -> None:
-    label = eps_slug(epsilon)
+def run_one_epsilon(epsilon: float, device_kwargs: dict, allow_degenerate: bool,
+                    options: dict = None) -> None:
+    """One arm. options holds the RUN_OPTIONS of a tagged run; None (what
+    run_eps_nudge.py and run_full_audit_placebo.py pass) is the default arm."""
+    options = options or {}
+    tag = options.get("tag")
+    label = arm_label(epsilon, tag)
+    paths = arm_paths(label)
     cfg = METHOD_CONFIG[METHOD]
     plugin_kwargs = {**cfg["plugin_kwargs"], **device_kwargs}
-    cache_dir = CACHE_DIR / f"{METHOD}_{label}"
-    stage_cache = cache_dir / f"sweep_{NUM_TRAIN}_{NUM_TEST}"
-    results_dir = PRIVACY_DIR / label
-    cache_dir.mkdir(parents=True, exist_ok=True)
-    stage_cache.mkdir(parents=True, exist_ok=True)
-    results_dir.mkdir(parents=True, exist_ok=True)
+    cache_dir = paths["cache_dir"]
+    stage_cache = paths["stage_cache"]
+    results_dir = paths["results_dir"]
 
-    log.info(f"=== {METHOD} eps={epsilon:g} "
+    log.info(f"=== {METHOD} eps={epsilon:g}{f' tag={tag}' if tag else ''} "
              f"(num_train={NUM_TRAIN}, num_test={NUM_TEST}, "
              f"plugin_kwargs={plugin_kwargs}) ===")
     log.info(f"    cache {cache_dir.relative_to(REPO_ROOT)}   "
              f"total fits = {NUM_TRAIN + NUM_TEST}")
 
     train_dataset, _, description = common.load_adult_datasets()
-    background, background_idx = common.sample_background(train_dataset)
-    target, alternate = common.select_random_target(train_dataset, background_idx)
+    background, background_idx, target, alternate = resolve_pair(train_dataset, options)
+    config = build_config(epsilon, options, background_idx, target, alternate)
+    log.info(f"    config {json.dumps(config)}")
 
+    resuming = paths["threat_model"].exists()
     threat_model = common.build_or_load_threat_model(
         cache_dir=cache_dir, method=METHOD, background_dataset=background,
         target_record=target, alternate_record=alternate, description=description,
         epsilon=epsilon, plugin_kwargs=plugin_kwargs,
+        seed_base=config["seed_base"], audit_config=config,
     )
+    if resuming:
+        # Before any directory is created or any fit run: a cache made under another
+        # seed base, background, pair or tag must not be extended or re-attacked.
+        check_config(stored_config(threat_model, config), config, paths["threat_model"])
+        # Pre-existing pickles gain the record on their next save below.
+        threat_model.audit_config = config
+    stage_cache.mkdir(parents=True, exist_ok=True)
+    results_dir.mkdir(parents=True, exist_ok=True)
     gen = threat_model.atk_know_gen.generator
     # A cache built at another eps would silently audit the wrong mechanism, and the
     # per-eps cache directory is the only thing preventing it. Verify rather than trust.
@@ -361,9 +551,9 @@ def run_one_epsilon(epsilon: float, device_kwargs: dict, allow_degenerate: bool)
         threat_model.save(str(cache_dir / "threat_model"))
 
     out = pd.DataFrame(rows)
-    out.to_csv(results_dir / f"effeps_{METHOD}_{label}.csv", index=False)
+    out.to_csv(paths["effeps"], index=False)
     if score_rows:
-        path = PRIVACY_DIR / f"raw_scores_{METHOD}_{label}.csv"
+        path = paths["raw_scores"]
         pd.DataFrame(score_rows).to_csv(path, index=False)
         log.info(f"    wrote {len(score_rows)} raw scores -> {path.name}")
     if no_scores:
@@ -387,21 +577,81 @@ def run_one_epsilon(epsilon: float, device_kwargs: dict, allow_degenerate: bool)
         # before quoting total_wall_clock_s as the cost of the arm.
         "note": "pool_wall_clock_s and total_wall_clock_s cover this invocation only; "
                 "see new_fits_this_run to tell a fresh arm from a resumed one",
+        "config": config,
     }
-    (results_dir / "meta.json").write_text(json.dumps(meta, indent=2))
+    paths["meta"].write_text(json.dumps(meta, indent=2))
 
     # Defensive: the CSV and meta.json are already on disk by this point, so a
     # degenerate eps_low_95 column must not turn a finished 4-hour arm into a
     # traceback that main() records as a failure.
+    arm = f"eps={epsilon:g}{f' tag={tag}' if tag else ''}"
     if "eps_low_95" in out.columns and out["eps_low_95"].notna().any():
         best = out.loc[out["eps_low_95"].idxmax()]
-        log.info(f"=== eps={epsilon:g} done: worst-case eps_low_95={best['eps_low_95']:.3f} "
+        log.info(f"=== {arm} done: worst-case eps_low_95={best['eps_low_95']:.3f} "
                  f"[{best['eps_low_95']:.3f}, {best['eps_high_95']:.3f}] via {best['attack']} "
                  f"({meta['total_wall_clock_s'] / 3600:.2f} h) ===")
     else:
-        log.warning(f"=== eps={epsilon:g} done but no usable eps_low_95 across the 5 attacks "
+        log.warning(f"=== {arm} done but no usable eps_low_95 across the 5 attacks "
                     f"({meta['total_wall_clock_s'] / 3600:.2f} h). Results are written; "
                     f"inspect {results_dir.relative_to(REPO_ROOT)} ===")
+
+
+def _drop_file_handlers() -> None:
+    root = logging.getLogger()
+    for h in list(root.handlers):
+        if isinstance(h, logging.FileHandler):
+            root.removeHandler(h)
+            h.close()
+
+
+def dry_run(epsilons: list, options: dict) -> int:
+    """Resolve everything a run would use and list every path it would write, then
+    stop. Reads the data and, where one exists, the cached threat model; writes
+    nothing (the log FileHandler has already been removed by main)."""
+    tag = options.get("tag")
+    rel = lambda p: p.relative_to(REPO_ROOT)                      # noqa: E731
+    mark = lambda p: "EXISTS" if p.exists() else "new   "         # noqa: E731
+
+    train_dataset, _, _ = common.load_adult_datasets()
+    try:
+        background, background_idx, target, alternate = resolve_pair(train_dataset, options)
+    except ValueError as exc:
+        print(f"[dry-run] REFUSED: {exc}")
+        return 2
+    np.random.seed(SCORE_ATTACK_SEED)
+    attack_slugs = [slug(a.label) for a in common.build_attacks(target, background)]
+
+    print(f"[dry-run] options: {json.dumps(options)}")
+    print(f"[dry-run] {mark(log_path(tag))} {rel(log_path(tag))}   (log, appended)")
+    for epsilon in epsilons:
+        label = arm_label(epsilon, tag)
+        paths = arm_paths(label)
+        config = build_config(epsilon, options, background_idx, target, alternate)
+        print(f"\n[dry-run] --- eps={epsilon:g}  label={label} ---")
+        print("[dry-run] config " + json.dumps(config, indent=2).replace("\n", "\n[dry-run] "))
+        files = [paths["cache_dir"], paths["threat_model"], paths["stage_cache"]]
+        files += [paths["stage_cache"] / f"result_{s}.json" for s in attack_slugs]
+        files += [paths["datasets"] / n for n in
+                  ("scalers.csv", "synthetic_train.csv.gz", "synthetic_test.csv.gz")]
+        files += [paths["results_dir"], paths["effeps"], paths["meta"]]
+        files += [paths["results_dir"] / f"effective_epsilon_{s}.csv" for s in attack_slugs]
+        files += [paths["raw_scores"]]
+        for p in files:
+            print(f"[dry-run]   {mark(p)} {rel(p)}")
+        if paths["threat_model"].exists():
+            cached = common.tm.ThreatModel.load(str(paths["cache_dir"] / "threat_model"))
+            try:
+                check_config(stored_config(cached, config), config, paths["threat_model"])
+                n = (len(cached._memory[True][0]), len(cached._memory[False][0]))
+                print(f"[dry-run]   would RESUME a matching cache ({n[0]} train / {n[1]} test "
+                      f"already fitted)")
+            except ConfigMismatch as exc:
+                print(f"[dry-run]   would STOP: {exc}")
+        else:
+            print(f"[dry-run]   fresh arm: {NUM_TRAIN + NUM_TEST} fits, seeds "
+                  f"{config['seed_base']}..{config['seed_base'] + NUM_TRAIN + NUM_TEST - 1}")
+    print("\n[dry-run] nothing generated, nothing written.")
+    return 0
 
 
 def main() -> int:
@@ -413,9 +663,60 @@ def main() -> int:
     parser.add_argument("--allow-degenerate", action="store_true",
                         help="record an eps whose pools failed the distinctness guard, "
                              "flagged as degenerate_pool (see the module docstring)")
+    parser.add_argument("--tag", default=None,
+                        help="appended to the label (eps1 -> eps1_<tag>) and so to every "
+                             "cache, result and log path. Required by every option below. "
+                             "Letters, digits and '-' only")
+    parser.add_argument("--seed-base", type=int, default=None,
+                        help=f"generator seed base: fit i runs at seed_base + i "
+                             f"(default {TAPAS_GENERATOR_SEED_BASE})")
+    parser.add_argument("--background-seed", type=int, default=None,
+                        help=f"seed of the 499-record background (default {BACKGROUND_SEED})")
+    parser.add_argument("--target-seed", type=int, default=None,
+                        help=f"seed of the random t/t' draw (default {TARGET_SEED})")
+    parser.add_argument("--target-index", type=int, default=None,
+                        help="explicit train-set index of the target t (with --alternate-index)")
+    parser.add_argument("--alternate-index", type=int, default=None,
+                        help="explicit train-set index of the replacement t' (with --target-index)")
+    parser.add_argument("--dry-run", action="store_true",
+                        help="print the resolved configuration and every output path, "
+                             "then exit without generating or writing anything")
     args = parser.parse_args()
 
-    if 1.0 in args.epsilons:
+    options = {k: getattr(args, k) for k in RUN_OPTIONS}
+    overrides = [k for k in RUN_OPTIONS if k != "tag" and options[k] is not None]
+    if overrides and options["tag"] is None:
+        parser.error(", ".join("--" + k.replace("_", "-") for k in overrides)
+                     + " changes what is audited but not the eps label, so it would share "
+                       "(and resume) the untagged arm's cache and results. Add --tag.")
+    if options["tag"] is not None and not TAG_PATTERN.fullmatch(options["tag"]):
+        parser.error(f"--tag {options['tag']!r}: letters, digits and '-' only")
+    if (options["target_index"] is None) != (options["alternate_index"] is None):
+        parser.error("--target-index and --alternate-index must be given together")
+    if options["target_index"] is not None and options["target_seed"] is not None:
+        parser.error("--target-seed and --target-index/--alternate-index are alternatives; "
+                     "give one or the other")
+
+    if args.dry_run:
+        _drop_file_handlers()
+        return dry_run(args.epsilons, options)
+
+    if options["tag"] is not None:
+        # Before the first record, so nothing from a tagged run reaches the shared log.
+        _drop_file_handlers()
+        handler = logging.FileHandler(log_path(options["tag"]))
+        handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(message)s"))
+        logging.getLogger().addHandler(handler)
+
+    if options["target_index"] is not None:
+        # Refuse before any arm starts, rather than failing each arm in turn.
+        try:
+            resolve_pair(common.load_adult_datasets()[0], options)
+        except ValueError as exc:
+            log.error(f"refusing to run: {exc}")
+            return 2
+
+    if 1.0 in args.epsilons and options["tag"] is None:
         log.warning("eps=1.0 requested. That arm is already audited at 1000/2500 in "
                     "results/sample_size_sweep/dpgan/1000_2500/ with cache/dpgan/threat_model.pkl. "
                     "This will build a SEPARATE cache under cache/dpgan_eps1/ and spend "
@@ -435,10 +736,13 @@ def main() -> int:
         # Per-eps isolation: a guard failure or a crash in one arm must not cost the
         # others, which by then may represent many hours of finished compute.
         try:
-            run_one_epsilon(epsilon, device_kwargs, args.allow_degenerate)
+            run_one_epsilon(epsilon, device_kwargs, args.allow_degenerate, options)
         except DegeneratePool as exc:
             log.error(f"DISTINCTNESS GUARD FAILED for eps={epsilon:g}:\n{exc}")
             failed.append((epsilon, "degenerate pool"))
+        except ConfigMismatch as exc:
+            log.error(f"CONFIG MISMATCH for eps={epsilon:g}, arm not run:\n{exc}")
+            failed.append((epsilon, "config mismatch"))
         except Exception:
             log.error(f"eps={epsilon:g} FAILED:\n{traceback.format_exc()}")
             failed.append((epsilon, "exception"))
