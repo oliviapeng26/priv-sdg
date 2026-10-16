@@ -40,3 +40,5 @@ benchmark_tapas/results/convergence/convergence_check_tstr_log.txt
 # 98 MB of repeated pgmpy warnings from the Aug 2026 sweep; appended to on every re-run,
 # so tracking it would eventually exceed GitHub's 100 MB limit.
 benchmark_tapas/results/sample_size_sweep/counts_sweep_log.txt
+# empty fcntl lock created by sdg/generate_smartnoise.py on every cost write
+evaluation/results/smartnoise/.generation_cost.lock
