@@ -117,14 +117,20 @@ Run from the repo root, venv active:
   python benchmark_tapas/audits/run_dpgan_eps_sweep.py --epsilons 1.0 --seed-base 10000 --tag seedbase10000
   python benchmark_tapas/audits/run_dpgan_eps_sweep.py --epsilons 1.0 --tag seedbase10000 --seed-base 10000 --dry-run
 
-Resumable: finished attacks and memoised fits are skipped on re-run, so a crash
-or a disconnect costs only the attack that was in flight.
+Resumable: the pools are saved every --chunk fits (default 100, the same chunked
+growth run_full_audit_placebo.py uses), and finished attacks are cached, so a
+crash or a disconnect costs at most one chunk or the attack in flight. Re-run the
+same command to resume. A CUDA out-of-memory error (another job on a shared GPU)
+is retried from the last checkpoint after --oom-wait seconds, up to --oom-retries
+times. Saves are atomic (temp file + rename). Chunking does not change any result:
+fits run in the same order at the same per-fit seeds as one unbroken call.
 """
 
 import argparse
 import hashlib
 import json
 import logging
+import os
 import re
 import sys
 import time
@@ -308,6 +314,65 @@ def stored_config(threat_model, current: dict) -> dict:
     return legacy
 
 
+def checkpoint(threat_model, cache_dir: Path) -> None:
+    """Save the threat model atomically: write a temp pickle, then rename over the
+    real one, so a crash mid-save cannot leave a truncated threat_model.pkl."""
+    tmp = cache_dir / "threat_model.tmp"
+    threat_model.save(str(tmp))
+    os.replace(f"{tmp}.pkl", cache_dir / "threat_model.pkl")
+
+
+def grow_pools(threat_model, cache_dir: Path, chunk: int, oom_retries: int,
+               oom_wait_s: int):
+    """Grow the train pool to NUM_TRAIN, then the test pool to NUM_TEST, saving every
+    `chunk` fits, so a crash costs at most one chunk and re-running resumes.
+
+    Same order as the unchunked calls (train first, then test), and every fit takes
+    the next per-fit seed, so the pools are the ones one unbroken call makes.
+
+    On CUDA out-of-memory (another job on a shared GPU) the chunk is retried after
+    oom_wait_s, up to oom_retries times, FROM THE LAST CHECKPOINT. TAPAS appends each
+    dataset to memory as it is made (attacker_knowledge.py _sync_generate_data), so
+    an in-place retry would keep a partial chunk, possibly half a D+/D- pair, and
+    shift every later seed onto a different world. Reloading discards that partial
+    chunk and its seeds are reused, which is exactly what a crash plus a re-run does.
+    Returns the threat model (a new object if it was reloaded)."""
+    import torch
+
+    t0 = time.time()
+    fitted = 0
+    for training, want, name in ((True, NUM_TRAIN, "train"), (False, NUM_TEST, "test")):
+        while len(threat_model._memory[training][0]) < want:
+            have = len(threat_model._memory[training][0])
+            step = min(want, have + chunk)
+            for attempt in range(oom_retries + 1):
+                try:
+                    threat_model._generate_samples(step, training=training)
+                    break
+                except torch.cuda.OutOfMemoryError:
+                    torch.cuda.empty_cache()
+                    if attempt == oom_retries:
+                        log.error(f"    {name} pool {step}/{want}: CUDA out of memory, giving "
+                                  f"up after {oom_retries} retries. Re-run the same command "
+                                  f"to resume from the last saved chunk.")
+                        raise
+                    log.warning(f"    {name} pool {step}/{want}: CUDA out of memory (another "
+                                f"job on the GPU?). Back to the last checkpoint, retry "
+                                f"{attempt + 1}/{oom_retries} in {oom_wait_s}s")
+                    time.sleep(oom_wait_s)
+                    threat_model = common.tm.ThreatModel.load(str(cache_dir / "threat_model"))
+            checkpoint(threat_model, cache_dir)
+            fitted += step - have
+            elapsed = time.time() - t0
+            n_tr, n_te = (len(threat_model._memory[t][0]) for t in (True, False))
+            left = (NUM_TRAIN - n_tr) + (NUM_TEST - n_te)
+            rate = elapsed / fitted
+            log.info(f"    {name} pool {step}/{want} saved  ({fitted} fits in "
+                     f"{elapsed / 60:.0f} min, {rate:.1f} s/fit, {left} fits left, "
+                     f"~{left * rate / 3600:.1f} h)")
+    return threat_model
+
+
 def check_config(stored: dict, current: dict, where: Path) -> None:
     diffs = []
     for key in sorted(set(stored) | set(current)):
@@ -455,9 +520,11 @@ def selected_threshold(summary) -> dict:
 # -- Per-eps driver ------------------------------------------------------
 
 def run_one_epsilon(epsilon: float, device_kwargs: dict, allow_degenerate: bool,
-                    options: dict = None) -> None:
+                    options: dict = None, chunk: int = 100, oom_retries: int = 30,
+                    oom_wait_s: int = 120) -> None:
     """One arm. options holds the RUN_OPTIONS of a tagged run; None (what
-    run_eps_nudge.py and run_full_audit_placebo.py pass) is the default arm."""
+    run_eps_nudge.py and run_full_audit_placebo.py pass) is the default arm.
+    chunk / oom_retries / oom_wait_s only control checkpointing (see grow_pools)."""
     options = options or {}
     tag = options.get("tag")
     label = arm_label(epsilon, tag)
@@ -490,8 +557,9 @@ def run_one_epsilon(epsilon: float, device_kwargs: dict, allow_degenerate: bool,
         # Before any directory is created or any fit run: a cache made under another
         # seed base, background, pair or tag must not be extended or re-attacked.
         check_config(stored_config(threat_model, config), config, paths["threat_model"])
-        # Pre-existing pickles gain the record on their next save below.
+        # Saved now, so every checkpoint grow_pools may reload from carries the record.
         threat_model.audit_config = config
+        checkpoint(threat_model, cache_dir)
     stage_cache.mkdir(parents=True, exist_ok=True)
     results_dir.mkdir(parents=True, exist_ok=True)
     gen = threat_model.atk_know_gen.generator
@@ -514,14 +582,13 @@ def run_one_epsilon(epsilon: float, device_kwargs: dict, allow_degenerate: bool,
 
     t_pool = time.time()
     n_before = len(threat_model._memory[True][0]) + len(threat_model._memory[False][0])
-    threat_model.generate_training_samples(NUM_TRAIN)
-    threat_model._generate_samples(NUM_TEST, training=False)
+    threat_model = grow_pools(threat_model, cache_dir, chunk, oom_retries, oom_wait_s)
     n_after = len(threat_model._memory[True][0]) + len(threat_model._memory[False][0])
     pool_s = round(time.time() - t_pool, 1)
     log.info(f"    pools: {len(threat_model._memory[True][0])} train / "
              f"{len(threat_model._memory[False][0])} test  "
              f"(+{n_after - n_before} new fits, {pool_s:.0f}s)")
-    threat_model.save(str(cache_dir / "threat_model"))
+    checkpoint(threat_model, cache_dir)
 
     # Guard BEFORE hours of attack time, so a degenerate cache is caught immediately.
     fractions = assert_distinct(threat_model, label, allow_degenerate)
@@ -548,7 +615,7 @@ def run_one_epsilon(epsilon: float, device_kwargs: dict, allow_degenerate: bool,
         else:
             no_scores.append(attack.label)
         rows.append(result)
-        threat_model.save(str(cache_dir / "threat_model"))
+        checkpoint(threat_model, cache_dir)
 
     out = pd.DataFrame(rows)
     out.to_csv(paths["effeps"], index=False)
@@ -681,7 +748,16 @@ def main() -> int:
     parser.add_argument("--dry-run", action="store_true",
                         help="print the resolved configuration and every output path, "
                              "then exit without generating or writing anything")
+    parser.add_argument("--chunk", type=int, default=100,
+                        help="save the pools every N fits, so a crash costs at most one "
+                             "chunk; even, since fits come in D+/D- pairs (default: 100)")
+    parser.add_argument("--oom-retries", type=int, default=30,
+                        help="retries of a chunk after CUDA out-of-memory (default: 30)")
+    parser.add_argument("--oom-wait", type=int, default=120,
+                        help="seconds between those retries (default: 120)")
     args = parser.parse_args()
+    if args.chunk < 2 or args.chunk % 2:
+        parser.error("--chunk must be an even number >= 2 (fits come in D+/D- pairs)")
 
     options = {k: getattr(args, k) for k in RUN_OPTIONS}
     overrides = [k for k in RUN_OPTIONS if k != "tag" and options[k] is not None]
@@ -736,7 +812,9 @@ def main() -> int:
         # Per-eps isolation: a guard failure or a crash in one arm must not cost the
         # others, which by then may represent many hours of finished compute.
         try:
-            run_one_epsilon(epsilon, device_kwargs, args.allow_degenerate, options)
+            run_one_epsilon(epsilon, device_kwargs, args.allow_degenerate, options,
+                            chunk=args.chunk, oom_retries=args.oom_retries,
+                            oom_wait_s=args.oom_wait)
         except DegeneratePool as exc:
             log.error(f"DISTINCTNESS GUARD FAILED for eps={epsilon:g}:\n{exc}")
             failed.append((epsilon, "degenerate pool"))
