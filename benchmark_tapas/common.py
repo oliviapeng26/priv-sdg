@@ -387,10 +387,10 @@ def run_attack(attack, threat_model, num_train: int, num_test: int,
     t0 = time.time()
 
     log.info(f"  [{attack.label}] training on {num_train} simulated datasets...")
-    attack.train(threat_model, num_samples=num_train)
+    attack.train(threat_model, num_samples=num_train) # Step 0 attack training on num_train datasets
 
     log.info(f"  [{attack.label}] testing on {num_test} simulated datasets...")
-    summary = threat_model.test(attack, num_samples=num_test)
+    summary = threat_model.test(attack, num_samples=num_test) # Step 0 trained attack scores on num_test datasets -> (score, true label) rows
 
     wall_time_s = round(time.time() - t0, 2)
     _, peak_bytes = tracemalloc.get_traced_memory()
@@ -398,12 +398,12 @@ def run_attack(attack, threat_model, num_train: int, num_test: int,
     peak_memory_mb = round(peak_bytes / 1e6, 2)
 
     results_dir.mkdir(parents=True, exist_ok=True)
-    validation_split = min(0.5, max(0.1, 15 / len(summary.scores)))
+    validation_split = min(0.5, max(0.1, 15 / len(summary.scores))) # Step 1, split manual override 
     eps_report = EffectiveEpsilonReport(
         [summary], validation_split=validation_split, confidence_levels=(0.9, 0.95, 0.99),
         suffix=attack_slug,
-    )
-    eps_df = eps_report.publish(str(results_dir))
+    ) # one attack per report
+    eps_df = eps_report.publish(str(results_dir)) # Steps 2-5 run in here
 
     pointwise_eps = summary.effective_epsilon
 
@@ -421,7 +421,7 @@ def run_attack(attack, threat_model, num_train: int, num_test: int,
         "eff_epsilon_pointwise": None if np.isinf(pointwise_eps) else float(pointwise_eps),
         "eff_epsilon_pointwise_is_inf": bool(np.isinf(pointwise_eps)),
     }
-    for _, row in eps_df.iterrows():
+    for _, row in eps_df.iterrows(): # The audit result: eps_low_90/95/99 and eps_high_90/95/99 from the report
         c = int(row.confidence * 100)
         result[f"eps_low_{c}"] = float(row.epsilon_low)
         result[f"eps_high_{c}"] = float(row.epsilon_high)
@@ -430,7 +430,7 @@ def run_attack(attack, threat_model, num_train: int, num_test: int,
     result_path.write_text(json.dumps(result, indent=2))
     log.info(f"  [{attack.label}] done -- eps_low_95={result.get('eps_low_95', float('nan')):.3f}  "
              f"auc={result['auc']:.3f}  ({wall_time_s}s, {peak_memory_mb} MB)")
-    return result, summary
+    return result, summary 
 
 
 def save_roc_report(summaries_by_attack: dict, results_dir: Path, label: str):

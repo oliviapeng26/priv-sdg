@@ -121,7 +121,7 @@ The three fixed values are the ones the repo already ran with, hoisted rather th
 
 All four Synthcity plugins accept `random_state` (checked, not assumed): it is consumed in `Plugin.fit`, can be passed again to `Plugin.generate(random_state=…)`, and both route through `enable_reproducible_results`, which seeds numpy + torch + random. AIM takes no seed, and its Gaussian noise comes from opendp's unseedable CSPRNG, so AIM runs are not bit-reproducible at any seed.
 
-**Deliberate exception — the TAPAS generator is left unseeded.** TAPAS re-fits the generator 2 × (`num_train` + `num_test`) times per attack on D⁺/D⁻ pairs differing in one record. A constant `random_state` would give those pairs common random numbers, collapsing the generator's sampling variance and inflating attack success — a change to the threat model, not a reproducibility fix. The privacy run is pinned where it should be (background + target draw); the per-simulation generator randomness stays free.
+**Deliberate exception — the TAPAS generator is left unseeded.** TAPAS re-fits the generator `num_train` + `num_test` times per attack on D⁺/D⁻ pairs differing in one record. A constant `random_state` would give those pairs common random numbers, collapsing the generator's sampling variance and inflating attack success — a change to the threat model, not a reproducibility fix. The privacy run is pinned where it should be (background + target draw); the per-simulation generator randomness stays free.
 
 ---
 
