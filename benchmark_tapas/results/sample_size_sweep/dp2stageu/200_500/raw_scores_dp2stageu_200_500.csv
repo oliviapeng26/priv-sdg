@@ -1,0 +1,2501 @@
+generator,attack,target_id,ground_truth,raw_score,binary_prediction,threshold
+dp2stageu,Groundhog,12435,1,0.53,1,0.5
+dp2stageu,Groundhog,12435,0,0.53,1,0.5
+dp2stageu,Groundhog,12435,1,0.55,1,0.5
+dp2stageu,Groundhog,12435,0,0.53,1,0.5
+dp2stageu,Groundhog,12435,1,0.47,0,0.5
+dp2stageu,Groundhog,12435,0,0.45,0,0.5
+dp2stageu,Groundhog,12435,1,0.55,1,0.5
+dp2stageu,Groundhog,12435,0,0.46,0,0.5
+dp2stageu,Groundhog,12435,1,0.49,0,0.5
+dp2stageu,Groundhog,12435,0,0.46,0,0.5
+dp2stageu,Groundhog,12435,1,0.47,0,0.5
+dp2stageu,Groundhog,12435,0,0.5,0,0.5
+dp2stageu,Groundhog,12435,1,0.48,0,0.5
+dp2stageu,Groundhog,12435,0,0.57,1,0.5
+dp2stageu,Groundhog,12435,1,0.5,0,0.5
+dp2stageu,Groundhog,12435,0,0.48,0,0.5
+dp2stageu,Groundhog,12435,1,0.45,0,0.5
+dp2stageu,Groundhog,12435,0,0.53,1,0.5
+dp2stageu,Groundhog,12435,1,0.53,1,0.5
+dp2stageu,Groundhog,12435,0,0.41,0,0.5
+dp2stageu,Groundhog,12435,1,0.51,1,0.5
+dp2stageu,Groundhog,12435,0,0.49,0,0.5
+dp2stageu,Groundhog,12435,1,0.51,1,0.5
+dp2stageu,Groundhog,12435,0,0.53,1,0.5
+dp2stageu,Groundhog,12435,1,0.54,1,0.5
+dp2stageu,Groundhog,12435,0,0.47,0,0.5
+dp2stageu,Groundhog,12435,1,0.52,1,0.5
+dp2stageu,Groundhog,12435,0,0.51,1,0.5
+dp2stageu,Groundhog,12435,1,0.56,1,0.5
+dp2stageu,Groundhog,12435,0,0.52,1,0.5
+dp2stageu,Groundhog,12435,1,0.6,1,0.5
+dp2stageu,Groundhog,12435,0,0.51,1,0.5
+dp2stageu,Groundhog,12435,1,0.51,1,0.5
+dp2stageu,Groundhog,12435,0,0.52,1,0.5
+dp2stageu,Groundhog,12435,1,0.45,0,0.5
+dp2stageu,Groundhog,12435,0,0.58,1,0.5
+dp2stageu,Groundhog,12435,1,0.54,1,0.5
+dp2stageu,Groundhog,12435,0,0.48,0,0.5
+dp2stageu,Groundhog,12435,1,0.39,0,0.5
+dp2stageu,Groundhog,12435,0,0.55,1,0.5
+dp2stageu,Groundhog,12435,1,0.49,0,0.5
+dp2stageu,Groundhog,12435,0,0.48,0,0.5
+dp2stageu,Groundhog,12435,1,0.42,0,0.5
+dp2stageu,Groundhog,12435,0,0.45,0,0.5
+dp2stageu,Groundhog,12435,1,0.39,0,0.5
+dp2stageu,Groundhog,12435,0,0.49,0,0.5
+dp2stageu,Groundhog,12435,1,0.54,1,0.5
+dp2stageu,Groundhog,12435,0,0.49,0,0.5
+dp2stageu,Groundhog,12435,1,0.45,0,0.5
+dp2stageu,Groundhog,12435,0,0.44,0,0.5
+dp2stageu,Groundhog,12435,1,0.52,1,0.5
+dp2stageu,Groundhog,12435,0,0.52,1,0.5
+dp2stageu,Groundhog,12435,1,0.48,0,0.5
+dp2stageu,Groundhog,12435,0,0.41,0,0.5
+dp2stageu,Groundhog,12435,1,0.53,1,0.5
+dp2stageu,Groundhog,12435,0,0.45,0,0.5
+dp2stageu,Groundhog,12435,1,0.61,1,0.5
+dp2stageu,Groundhog,12435,0,0.49,0,0.5
+dp2stageu,Groundhog,12435,1,0.51,1,0.5
+dp2stageu,Groundhog,12435,0,0.51,1,0.5
+dp2stageu,Groundhog,12435,1,0.5,0,0.5
+dp2stageu,Groundhog,12435,0,0.52,1,0.5
+dp2stageu,Groundhog,12435,1,0.51,1,0.5
+dp2stageu,Groundhog,12435,0,0.49,0,0.5
+dp2stageu,Groundhog,12435,1,0.55,1,0.5
+dp2stageu,Groundhog,12435,0,0.42,0,0.5
+dp2stageu,Groundhog,12435,1,0.54,1,0.5
+dp2stageu,Groundhog,12435,0,0.49,0,0.5
+dp2stageu,Groundhog,12435,1,0.52,1,0.5
+dp2stageu,Groundhog,12435,0,0.51,1,0.5
+dp2stageu,Groundhog,12435,1,0.56,1,0.5
+dp2stageu,Groundhog,12435,0,0.51,1,0.5
+dp2stageu,Groundhog,12435,1,0.43,0,0.5
+dp2stageu,Groundhog,12435,0,0.47,0,0.5
+dp2stageu,Groundhog,12435,1,0.43,0,0.5
+dp2stageu,Groundhog,12435,0,0.5,0,0.5
+dp2stageu,Groundhog,12435,1,0.46,0,0.5
+dp2stageu,Groundhog,12435,0,0.56,1,0.5
+dp2stageu,Groundhog,12435,1,0.45,0,0.5
+dp2stageu,Groundhog,12435,0,0.45,0,0.5
+dp2stageu,Groundhog,12435,1,0.55,1,0.5
+dp2stageu,Groundhog,12435,0,0.53,1,0.5
+dp2stageu,Groundhog,12435,1,0.5,0,0.5
+dp2stageu,Groundhog,12435,0,0.49,0,0.5
+dp2stageu,Groundhog,12435,1,0.61,1,0.5
+dp2stageu,Groundhog,12435,0,0.48,0,0.5
+dp2stageu,Groundhog,12435,1,0.51,1,0.5
+dp2stageu,Groundhog,12435,0,0.51,1,0.5
+dp2stageu,Groundhog,12435,1,0.54,1,0.5
+dp2stageu,Groundhog,12435,0,0.45,0,0.5
+dp2stageu,Groundhog,12435,1,0.45,0,0.5
+dp2stageu,Groundhog,12435,0,0.56,1,0.5
+dp2stageu,Groundhog,12435,1,0.47,0,0.5
+dp2stageu,Groundhog,12435,0,0.52,1,0.5
+dp2stageu,Groundhog,12435,1,0.56,1,0.5
+dp2stageu,Groundhog,12435,0,0.59,1,0.5
+dp2stageu,Groundhog,12435,1,0.65,1,0.5
+dp2stageu,Groundhog,12435,0,0.55,1,0.5
+dp2stageu,Groundhog,12435,1,0.43,0,0.5
+dp2stageu,Groundhog,12435,0,0.51,1,0.5
+dp2stageu,Groundhog,12435,1,0.59,1,0.5
+dp2stageu,Groundhog,12435,0,0.48,0,0.5
+dp2stageu,Groundhog,12435,1,0.56,1,0.5
+dp2stageu,Groundhog,12435,0,0.48,0,0.5
+dp2stageu,Groundhog,12435,1,0.46,0,0.5
+dp2stageu,Groundhog,12435,0,0.56,1,0.5
+dp2stageu,Groundhog,12435,1,0.51,1,0.5
+dp2stageu,Groundhog,12435,0,0.64,1,0.5
+dp2stageu,Groundhog,12435,1,0.46,0,0.5
+dp2stageu,Groundhog,12435,0,0.5,0,0.5
+dp2stageu,Groundhog,12435,1,0.58,1,0.5
+dp2stageu,Groundhog,12435,0,0.52,1,0.5
+dp2stageu,Groundhog,12435,1,0.47,0,0.5
+dp2stageu,Groundhog,12435,0,0.42,0,0.5
+dp2stageu,Groundhog,12435,1,0.43,0,0.5
+dp2stageu,Groundhog,12435,0,0.54,1,0.5
+dp2stageu,Groundhog,12435,1,0.53,1,0.5
+dp2stageu,Groundhog,12435,0,0.51,1,0.5
+dp2stageu,Groundhog,12435,1,0.45,0,0.5
+dp2stageu,Groundhog,12435,0,0.5,0,0.5
+dp2stageu,Groundhog,12435,1,0.55,1,0.5
+dp2stageu,Groundhog,12435,0,0.51,1,0.5
+dp2stageu,Groundhog,12435,1,0.57,1,0.5
+dp2stageu,Groundhog,12435,0,0.54,1,0.5
+dp2stageu,Groundhog,12435,1,0.4,0,0.5
+dp2stageu,Groundhog,12435,0,0.56,1,0.5
+dp2stageu,Groundhog,12435,1,0.43,0,0.5
+dp2stageu,Groundhog,12435,0,0.55,1,0.5
+dp2stageu,Groundhog,12435,1,0.58,1,0.5
+dp2stageu,Groundhog,12435,0,0.58,1,0.5
+dp2stageu,Groundhog,12435,1,0.46,0,0.5
+dp2stageu,Groundhog,12435,0,0.41,0,0.5
+dp2stageu,Groundhog,12435,1,0.42,0,0.5
+dp2stageu,Groundhog,12435,0,0.45,0,0.5
+dp2stageu,Groundhog,12435,1,0.54,1,0.5
+dp2stageu,Groundhog,12435,0,0.49,0,0.5
+dp2stageu,Groundhog,12435,1,0.41,0,0.5
+dp2stageu,Groundhog,12435,0,0.54,1,0.5
+dp2stageu,Groundhog,12435,1,0.51,1,0.5
+dp2stageu,Groundhog,12435,0,0.45,0,0.5
+dp2stageu,Groundhog,12435,1,0.55,1,0.5
+dp2stageu,Groundhog,12435,0,0.55,1,0.5
+dp2stageu,Groundhog,12435,1,0.49,0,0.5
+dp2stageu,Groundhog,12435,0,0.49,0,0.5
+dp2stageu,Groundhog,12435,1,0.51,1,0.5
+dp2stageu,Groundhog,12435,0,0.57,1,0.5
+dp2stageu,Groundhog,12435,1,0.52,1,0.5
+dp2stageu,Groundhog,12435,0,0.53,1,0.5
+dp2stageu,Groundhog,12435,1,0.52,1,0.5
+dp2stageu,Groundhog,12435,0,0.53,1,0.5
+dp2stageu,Groundhog,12435,1,0.46,0,0.5
+dp2stageu,Groundhog,12435,0,0.39,0,0.5
+dp2stageu,Groundhog,12435,1,0.48,0,0.5
+dp2stageu,Groundhog,12435,0,0.48,0,0.5
+dp2stageu,Groundhog,12435,1,0.47,0,0.5
+dp2stageu,Groundhog,12435,0,0.43,0,0.5
+dp2stageu,Groundhog,12435,1,0.6,1,0.5
+dp2stageu,Groundhog,12435,0,0.55,1,0.5
+dp2stageu,Groundhog,12435,1,0.46,0,0.5
+dp2stageu,Groundhog,12435,0,0.6,1,0.5
+dp2stageu,Groundhog,12435,1,0.57,1,0.5
+dp2stageu,Groundhog,12435,0,0.42,0,0.5
+dp2stageu,Groundhog,12435,1,0.55,1,0.5
+dp2stageu,Groundhog,12435,0,0.37,0,0.5
+dp2stageu,Groundhog,12435,1,0.64,1,0.5
+dp2stageu,Groundhog,12435,0,0.56,1,0.5
+dp2stageu,Groundhog,12435,1,0.58,1,0.5
+dp2stageu,Groundhog,12435,0,0.55,1,0.5
+dp2stageu,Groundhog,12435,1,0.38,0,0.5
+dp2stageu,Groundhog,12435,0,0.47,0,0.5
+dp2stageu,Groundhog,12435,1,0.46,0,0.5
+dp2stageu,Groundhog,12435,0,0.45,0,0.5
+dp2stageu,Groundhog,12435,1,0.49,0,0.5
+dp2stageu,Groundhog,12435,0,0.5,0,0.5
+dp2stageu,Groundhog,12435,1,0.44,0,0.5
+dp2stageu,Groundhog,12435,0,0.52,1,0.5
+dp2stageu,Groundhog,12435,1,0.54,1,0.5
+dp2stageu,Groundhog,12435,0,0.56,1,0.5
+dp2stageu,Groundhog,12435,1,0.52,1,0.5
+dp2stageu,Groundhog,12435,0,0.53,1,0.5
+dp2stageu,Groundhog,12435,1,0.44,0,0.5
+dp2stageu,Groundhog,12435,0,0.53,1,0.5
+dp2stageu,Groundhog,12435,1,0.59,1,0.5
+dp2stageu,Groundhog,12435,0,0.54,1,0.5
+dp2stageu,Groundhog,12435,1,0.45,0,0.5
+dp2stageu,Groundhog,12435,0,0.47,0,0.5
+dp2stageu,Groundhog,12435,1,0.45,0,0.5
+dp2stageu,Groundhog,12435,0,0.57,1,0.5
+dp2stageu,Groundhog,12435,1,0.46,0,0.5
+dp2stageu,Groundhog,12435,0,0.51,1,0.5
+dp2stageu,Groundhog,12435,1,0.55,1,0.5
+dp2stageu,Groundhog,12435,0,0.54,1,0.5
+dp2stageu,Groundhog,12435,1,0.54,1,0.5
+dp2stageu,Groundhog,12435,0,0.51,1,0.5
+dp2stageu,Groundhog,12435,1,0.49,0,0.5
+dp2stageu,Groundhog,12435,0,0.43,0,0.5
+dp2stageu,Groundhog,12435,1,0.51,1,0.5
+dp2stageu,Groundhog,12435,0,0.56,1,0.5
+dp2stageu,Groundhog,12435,1,0.63,1,0.5
+dp2stageu,Groundhog,12435,0,0.48,0,0.5
+dp2stageu,Groundhog,12435,1,0.45,0,0.5
+dp2stageu,Groundhog,12435,0,0.45,0,0.5
+dp2stageu,Groundhog,12435,1,0.67,1,0.5
+dp2stageu,Groundhog,12435,0,0.5,0,0.5
+dp2stageu,Groundhog,12435,1,0.54,1,0.5
+dp2stageu,Groundhog,12435,0,0.54,1,0.5
+dp2stageu,Groundhog,12435,1,0.49,0,0.5
+dp2stageu,Groundhog,12435,0,0.6,1,0.5
+dp2stageu,Groundhog,12435,1,0.42,0,0.5
+dp2stageu,Groundhog,12435,0,0.5,0,0.5
+dp2stageu,Groundhog,12435,1,0.56,1,0.5
+dp2stageu,Groundhog,12435,0,0.48,0,0.5
+dp2stageu,Groundhog,12435,1,0.51,1,0.5
+dp2stageu,Groundhog,12435,0,0.43,0,0.5
+dp2stageu,Groundhog,12435,1,0.52,1,0.5
+dp2stageu,Groundhog,12435,0,0.53,1,0.5
+dp2stageu,Groundhog,12435,1,0.5,0,0.5
+dp2stageu,Groundhog,12435,0,0.62,1,0.5
+dp2stageu,Groundhog,12435,1,0.5,0,0.5
+dp2stageu,Groundhog,12435,0,0.49,0,0.5
+dp2stageu,Groundhog,12435,1,0.51,1,0.5
+dp2stageu,Groundhog,12435,0,0.52,1,0.5
+dp2stageu,Groundhog,12435,1,0.49,0,0.5
+dp2stageu,Groundhog,12435,0,0.52,1,0.5
+dp2stageu,Groundhog,12435,1,0.47,0,0.5
+dp2stageu,Groundhog,12435,0,0.43,0,0.5
+dp2stageu,Groundhog,12435,1,0.4,0,0.5
+dp2stageu,Groundhog,12435,0,0.55,1,0.5
+dp2stageu,Groundhog,12435,1,0.54,1,0.5
+dp2stageu,Groundhog,12435,0,0.43,0,0.5
+dp2stageu,Groundhog,12435,1,0.55,1,0.5
+dp2stageu,Groundhog,12435,0,0.43,0,0.5
+dp2stageu,Groundhog,12435,1,0.51,1,0.5
+dp2stageu,Groundhog,12435,0,0.47,0,0.5
+dp2stageu,Groundhog,12435,1,0.52,1,0.5
+dp2stageu,Groundhog,12435,0,0.41,0,0.5
+dp2stageu,Groundhog,12435,1,0.56,1,0.5
+dp2stageu,Groundhog,12435,0,0.48,0,0.5
+dp2stageu,Groundhog,12435,1,0.48,0,0.5
+dp2stageu,Groundhog,12435,0,0.56,1,0.5
+dp2stageu,Groundhog,12435,1,0.47,0,0.5
+dp2stageu,Groundhog,12435,0,0.52,1,0.5
+dp2stageu,Groundhog,12435,1,0.6,1,0.5
+dp2stageu,Groundhog,12435,0,0.55,1,0.5
+dp2stageu,Groundhog,12435,1,0.46,0,0.5
+dp2stageu,Groundhog,12435,0,0.47,0,0.5
+dp2stageu,Groundhog,12435,1,0.44,0,0.5
+dp2stageu,Groundhog,12435,0,0.48,0,0.5
+dp2stageu,Groundhog,12435,1,0.5,0,0.5
+dp2stageu,Groundhog,12435,0,0.47,0,0.5
+dp2stageu,Groundhog,12435,1,0.57,1,0.5
+dp2stageu,Groundhog,12435,0,0.51,1,0.5
+dp2stageu,Groundhog,12435,1,0.53,1,0.5
+dp2stageu,Groundhog,12435,0,0.49,0,0.5
+dp2stageu,Groundhog,12435,1,0.54,1,0.5
+dp2stageu,Groundhog,12435,0,0.5,0,0.5
+dp2stageu,Groundhog,12435,1,0.48,0,0.5
+dp2stageu,Groundhog,12435,0,0.5,0,0.5
+dp2stageu,Groundhog,12435,1,0.52,1,0.5
+dp2stageu,Groundhog,12435,0,0.47,0,0.5
+dp2stageu,Groundhog,12435,1,0.46,0,0.5
+dp2stageu,Groundhog,12435,0,0.55,1,0.5
+dp2stageu,Groundhog,12435,1,0.53,1,0.5
+dp2stageu,Groundhog,12435,0,0.45,0,0.5
+dp2stageu,Groundhog,12435,1,0.5,0,0.5
+dp2stageu,Groundhog,12435,0,0.43,0,0.5
+dp2stageu,Groundhog,12435,1,0.47,0,0.5
+dp2stageu,Groundhog,12435,0,0.48,0,0.5
+dp2stageu,Groundhog,12435,1,0.46,0,0.5
+dp2stageu,Groundhog,12435,0,0.49,0,0.5
+dp2stageu,Groundhog,12435,1,0.48,0,0.5
+dp2stageu,Groundhog,12435,0,0.58,1,0.5
+dp2stageu,Groundhog,12435,1,0.42,0,0.5
+dp2stageu,Groundhog,12435,0,0.5,0,0.5
+dp2stageu,Groundhog,12435,1,0.45,0,0.5
+dp2stageu,Groundhog,12435,0,0.52,1,0.5
+dp2stageu,Groundhog,12435,1,0.53,1,0.5
+dp2stageu,Groundhog,12435,0,0.55,1,0.5
+dp2stageu,Groundhog,12435,1,0.46,0,0.5
+dp2stageu,Groundhog,12435,0,0.49,0,0.5
+dp2stageu,Groundhog,12435,1,0.5,0,0.5
+dp2stageu,Groundhog,12435,0,0.4,0,0.5
+dp2stageu,Groundhog,12435,1,0.51,1,0.5
+dp2stageu,Groundhog,12435,0,0.52,1,0.5
+dp2stageu,Groundhog,12435,1,0.44,0,0.5
+dp2stageu,Groundhog,12435,0,0.53,1,0.5
+dp2stageu,Groundhog,12435,1,0.55,1,0.5
+dp2stageu,Groundhog,12435,0,0.48,0,0.5
+dp2stageu,Groundhog,12435,1,0.48,0,0.5
+dp2stageu,Groundhog,12435,0,0.51,1,0.5
+dp2stageu,Groundhog,12435,1,0.5,0,0.5
+dp2stageu,Groundhog,12435,0,0.52,1,0.5
+dp2stageu,Groundhog,12435,1,0.61,1,0.5
+dp2stageu,Groundhog,12435,0,0.49,0,0.5
+dp2stageu,Groundhog,12435,1,0.56,1,0.5
+dp2stageu,Groundhog,12435,0,0.32,0,0.5
+dp2stageu,Groundhog,12435,1,0.36,0,0.5
+dp2stageu,Groundhog,12435,0,0.6,1,0.5
+dp2stageu,Groundhog,12435,1,0.54,1,0.5
+dp2stageu,Groundhog,12435,0,0.39,0,0.5
+dp2stageu,Groundhog,12435,1,0.52,1,0.5
+dp2stageu,Groundhog,12435,0,0.45,0,0.5
+dp2stageu,Groundhog,12435,1,0.48,0,0.5
+dp2stageu,Groundhog,12435,0,0.51,1,0.5
+dp2stageu,Groundhog,12435,1,0.5,0,0.5
+dp2stageu,Groundhog,12435,0,0.48,0,0.5
+dp2stageu,Groundhog,12435,1,0.58,1,0.5
+dp2stageu,Groundhog,12435,0,0.42,0,0.5
+dp2stageu,Groundhog,12435,1,0.59,1,0.5
+dp2stageu,Groundhog,12435,0,0.49,0,0.5
+dp2stageu,Groundhog,12435,1,0.45,0,0.5
+dp2stageu,Groundhog,12435,0,0.52,1,0.5
+dp2stageu,Groundhog,12435,1,0.49,0,0.5
+dp2stageu,Groundhog,12435,0,0.57,1,0.5
+dp2stageu,Groundhog,12435,1,0.49,0,0.5
+dp2stageu,Groundhog,12435,0,0.52,1,0.5
+dp2stageu,Groundhog,12435,1,0.47,0,0.5
+dp2stageu,Groundhog,12435,0,0.56,1,0.5
+dp2stageu,Groundhog,12435,1,0.57,1,0.5
+dp2stageu,Groundhog,12435,0,0.5,0,0.5
+dp2stageu,Groundhog,12435,1,0.49,0,0.5
+dp2stageu,Groundhog,12435,0,0.57,1,0.5
+dp2stageu,Groundhog,12435,1,0.52,1,0.5
+dp2stageu,Groundhog,12435,0,0.55,1,0.5
+dp2stageu,Groundhog,12435,1,0.54,1,0.5
+dp2stageu,Groundhog,12435,0,0.51,1,0.5
+dp2stageu,Groundhog,12435,1,0.51,1,0.5
+dp2stageu,Groundhog,12435,0,0.52,1,0.5
+dp2stageu,Groundhog,12435,1,0.42,0,0.5
+dp2stageu,Groundhog,12435,0,0.61,1,0.5
+dp2stageu,Groundhog,12435,1,0.43,0,0.5
+dp2stageu,Groundhog,12435,0,0.48,0,0.5
+dp2stageu,Groundhog,12435,1,0.6,1,0.5
+dp2stageu,Groundhog,12435,0,0.57,1,0.5
+dp2stageu,Groundhog,12435,1,0.51,1,0.5
+dp2stageu,Groundhog,12435,0,0.54,1,0.5
+dp2stageu,Groundhog,12435,1,0.41,0,0.5
+dp2stageu,Groundhog,12435,0,0.44,0,0.5
+dp2stageu,Groundhog,12435,1,0.49,0,0.5
+dp2stageu,Groundhog,12435,0,0.52,1,0.5
+dp2stageu,Groundhog,12435,1,0.51,1,0.5
+dp2stageu,Groundhog,12435,0,0.53,1,0.5
+dp2stageu,Groundhog,12435,1,0.61,1,0.5
+dp2stageu,Groundhog,12435,0,0.45,0,0.5
+dp2stageu,Groundhog,12435,1,0.59,1,0.5
+dp2stageu,Groundhog,12435,0,0.48,0,0.5
+dp2stageu,Groundhog,12435,1,0.47,0,0.5
+dp2stageu,Groundhog,12435,0,0.48,0,0.5
+dp2stageu,Groundhog,12435,1,0.55,1,0.5
+dp2stageu,Groundhog,12435,0,0.4,0,0.5
+dp2stageu,Groundhog,12435,1,0.54,1,0.5
+dp2stageu,Groundhog,12435,0,0.53,1,0.5
+dp2stageu,Groundhog,12435,1,0.48,0,0.5
+dp2stageu,Groundhog,12435,0,0.47,0,0.5
+dp2stageu,Groundhog,12435,1,0.54,1,0.5
+dp2stageu,Groundhog,12435,0,0.39,0,0.5
+dp2stageu,Groundhog,12435,1,0.48,0,0.5
+dp2stageu,Groundhog,12435,0,0.48,0,0.5
+dp2stageu,Groundhog,12435,1,0.54,1,0.5
+dp2stageu,Groundhog,12435,0,0.52,1,0.5
+dp2stageu,Groundhog,12435,1,0.35,0,0.5
+dp2stageu,Groundhog,12435,0,0.45,0,0.5
+dp2stageu,Groundhog,12435,1,0.52,1,0.5
+dp2stageu,Groundhog,12435,0,0.59,1,0.5
+dp2stageu,Groundhog,12435,1,0.55,1,0.5
+dp2stageu,Groundhog,12435,0,0.47,0,0.5
+dp2stageu,Groundhog,12435,1,0.49,0,0.5
+dp2stageu,Groundhog,12435,0,0.54,1,0.5
+dp2stageu,Groundhog,12435,1,0.52,1,0.5
+dp2stageu,Groundhog,12435,0,0.49,0,0.5
+dp2stageu,Groundhog,12435,1,0.51,1,0.5
+dp2stageu,Groundhog,12435,0,0.47,0,0.5
+dp2stageu,Groundhog,12435,1,0.56,1,0.5
+dp2stageu,Groundhog,12435,0,0.49,0,0.5
+dp2stageu,Groundhog,12435,1,0.5,0,0.5
+dp2stageu,Groundhog,12435,0,0.46,0,0.5
+dp2stageu,Groundhog,12435,1,0.43,0,0.5
+dp2stageu,Groundhog,12435,0,0.43,0,0.5
+dp2stageu,Groundhog,12435,1,0.49,0,0.5
+dp2stageu,Groundhog,12435,0,0.57,1,0.5
+dp2stageu,Groundhog,12435,1,0.54,1,0.5
+dp2stageu,Groundhog,12435,0,0.48,0,0.5
+dp2stageu,Groundhog,12435,1,0.48,0,0.5
+dp2stageu,Groundhog,12435,0,0.42,0,0.5
+dp2stageu,Groundhog,12435,1,0.4,0,0.5
+dp2stageu,Groundhog,12435,0,0.58,1,0.5
+dp2stageu,Groundhog,12435,1,0.51,1,0.5
+dp2stageu,Groundhog,12435,0,0.56,1,0.5
+dp2stageu,Groundhog,12435,1,0.61,1,0.5
+dp2stageu,Groundhog,12435,0,0.51,1,0.5
+dp2stageu,Groundhog,12435,1,0.56,1,0.5
+dp2stageu,Groundhog,12435,0,0.52,1,0.5
+dp2stageu,Groundhog,12435,1,0.54,1,0.5
+dp2stageu,Groundhog,12435,0,0.57,1,0.5
+dp2stageu,Groundhog,12435,1,0.51,1,0.5
+dp2stageu,Groundhog,12435,0,0.47,0,0.5
+dp2stageu,Groundhog,12435,1,0.49,0,0.5
+dp2stageu,Groundhog,12435,0,0.49,0,0.5
+dp2stageu,Groundhog,12435,1,0.6,1,0.5
+dp2stageu,Groundhog,12435,0,0.5,0,0.5
+dp2stageu,Groundhog,12435,1,0.5,0,0.5
+dp2stageu,Groundhog,12435,0,0.43,0,0.5
+dp2stageu,Groundhog,12435,1,0.54,1,0.5
+dp2stageu,Groundhog,12435,0,0.61,1,0.5
+dp2stageu,Groundhog,12435,1,0.54,1,0.5
+dp2stageu,Groundhog,12435,0,0.51,1,0.5
+dp2stageu,Groundhog,12435,1,0.49,0,0.5
+dp2stageu,Groundhog,12435,0,0.52,1,0.5
+dp2stageu,Groundhog,12435,1,0.51,1,0.5
+dp2stageu,Groundhog,12435,0,0.53,1,0.5
+dp2stageu,Groundhog,12435,1,0.59,1,0.5
+dp2stageu,Groundhog,12435,0,0.52,1,0.5
+dp2stageu,Groundhog,12435,1,0.45,0,0.5
+dp2stageu,Groundhog,12435,0,0.53,1,0.5
+dp2stageu,Groundhog,12435,1,0.49,0,0.5
+dp2stageu,Groundhog,12435,0,0.53,1,0.5
+dp2stageu,Groundhog,12435,1,0.44,0,0.5
+dp2stageu,Groundhog,12435,0,0.42,0,0.5
+dp2stageu,Groundhog,12435,1,0.42,0,0.5
+dp2stageu,Groundhog,12435,0,0.55,1,0.5
+dp2stageu,Groundhog,12435,1,0.53,1,0.5
+dp2stageu,Groundhog,12435,0,0.5,0,0.5
+dp2stageu,Groundhog,12435,1,0.51,1,0.5
+dp2stageu,Groundhog,12435,0,0.48,0,0.5
+dp2stageu,Groundhog,12435,1,0.54,1,0.5
+dp2stageu,Groundhog,12435,0,0.46,0,0.5
+dp2stageu,Groundhog,12435,1,0.55,1,0.5
+dp2stageu,Groundhog,12435,0,0.5,0,0.5
+dp2stageu,Groundhog,12435,1,0.55,1,0.5
+dp2stageu,Groundhog,12435,0,0.45,0,0.5
+dp2stageu,Groundhog,12435,1,0.51,1,0.5
+dp2stageu,Groundhog,12435,0,0.52,1,0.5
+dp2stageu,Groundhog,12435,1,0.46,0,0.5
+dp2stageu,Groundhog,12435,0,0.56,1,0.5
+dp2stageu,Groundhog,12435,1,0.54,1,0.5
+dp2stageu,Groundhog,12435,0,0.51,1,0.5
+dp2stageu,Groundhog,12435,1,0.47,0,0.5
+dp2stageu,Groundhog,12435,0,0.48,0,0.5
+dp2stageu,Groundhog,12435,1,0.53,1,0.5
+dp2stageu,Groundhog,12435,0,0.51,1,0.5
+dp2stageu,Groundhog,12435,1,0.44,0,0.5
+dp2stageu,Groundhog,12435,0,0.42,0,0.5
+dp2stageu,Groundhog,12435,1,0.43,0,0.5
+dp2stageu,Groundhog,12435,0,0.51,1,0.5
+dp2stageu,Groundhog,12435,1,0.49,0,0.5
+dp2stageu,Groundhog,12435,0,0.55,1,0.5
+dp2stageu,Groundhog,12435,1,0.43,0,0.5
+dp2stageu,Groundhog,12435,0,0.51,1,0.5
+dp2stageu,Groundhog,12435,1,0.49,0,0.5
+dp2stageu,Groundhog,12435,0,0.51,1,0.5
+dp2stageu,Groundhog,12435,1,0.42,0,0.5
+dp2stageu,Groundhog,12435,0,0.5,0,0.5
+dp2stageu,Groundhog,12435,1,0.5,0,0.5
+dp2stageu,Groundhog,12435,0,0.54,1,0.5
+dp2stageu,Groundhog,12435,1,0.51,1,0.5
+dp2stageu,Groundhog,12435,0,0.5,0,0.5
+dp2stageu,Groundhog,12435,1,0.52,1,0.5
+dp2stageu,Groundhog,12435,0,0.48,0,0.5
+dp2stageu,Groundhog,12435,1,0.53,1,0.5
+dp2stageu,Groundhog,12435,0,0.54,1,0.5
+dp2stageu,Groundhog,12435,1,0.44,0,0.5
+dp2stageu,Groundhog,12435,0,0.46,0,0.5
+dp2stageu,Groundhog,12435,1,0.5,0,0.5
+dp2stageu,Groundhog,12435,0,0.5,0,0.5
+dp2stageu,Groundhog,12435,1,0.48,0,0.5
+dp2stageu,Groundhog,12435,0,0.47,0,0.5
+dp2stageu,Groundhog,12435,1,0.53,1,0.5
+dp2stageu,Groundhog,12435,0,0.43,0,0.5
+dp2stageu,Groundhog,12435,1,0.46,0,0.5
+dp2stageu,Groundhog,12435,0,0.54,1,0.5
+dp2stageu,Groundhog,12435,1,0.5,0,0.5
+dp2stageu,Groundhog,12435,0,0.44,0,0.5
+dp2stageu,Groundhog,12435,1,0.47,0,0.5
+dp2stageu,Groundhog,12435,0,0.45,0,0.5
+dp2stageu,Groundhog,12435,1,0.4,0,0.5
+dp2stageu,Groundhog,12435,0,0.52,1,0.5
+dp2stageu,Groundhog,12435,1,0.57,1,0.5
+dp2stageu,Groundhog,12435,0,0.39,0,0.5
+dp2stageu,Groundhog,12435,1,0.6,1,0.5
+dp2stageu,Groundhog,12435,0,0.52,1,0.5
+dp2stageu,Groundhog,12435,1,0.53,1,0.5
+dp2stageu,Groundhog,12435,0,0.61,1,0.5
+dp2stageu,Groundhog,12435,1,0.49,0,0.5
+dp2stageu,Groundhog,12435,0,0.48,0,0.5
+dp2stageu,Groundhog,12435,1,0.48,0,0.5
+dp2stageu,Groundhog,12435,0,0.43,0,0.5
+dp2stageu,Groundhog,12435,1,0.44,0,0.5
+dp2stageu,Groundhog,12435,0,0.48,0,0.5
+dp2stageu,Groundhog,12435,1,0.49,0,0.5
+dp2stageu,Groundhog,12435,0,0.52,1,0.5
+dp2stageu,Groundhog,12435,1,0.49,0,0.5
+dp2stageu,Groundhog,12435,0,0.46,0,0.5
+dp2stageu,Groundhog,12435,1,0.52,1,0.5
+dp2stageu,Groundhog,12435,0,0.46,0,0.5
+dp2stageu,Groundhog,12435,1,0.48,0,0.5
+dp2stageu,Groundhog,12435,0,0.61,1,0.5
+dp2stageu,Groundhog,12435,1,0.5,0,0.5
+dp2stageu,Groundhog,12435,0,0.45,0,0.5
+dp2stageu,Groundhog,12435,1,0.53,1,0.5
+dp2stageu,Groundhog,12435,0,0.49,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.6,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.35,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.77,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.47,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.64,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.49,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.49,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.45,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.44,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.6,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.74,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.71,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.43,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.55,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.31,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.56,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.53,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.57,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.48,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.23,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.79,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.56,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.58,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.54,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.31,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.42,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.83,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.55,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.29,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.43,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.65,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.34,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.51,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.34,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.56,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.74,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.49,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.41,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.6,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.59,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.17,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.28,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.33,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.6,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.68,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.35,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.71,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.46,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.46,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.53,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.2,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.55,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.37,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.35,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.61,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.46,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.54,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.36,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.48,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.8,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.2,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.24,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.6,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.56,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.28,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.33,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.65,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.64,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.57,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.39,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.42,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.57,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.58,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.57,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.37,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.53,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.53,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.48,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.43,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.49,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.55,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.54,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.65,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.52,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.58,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.57,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.52,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.11,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.54,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.49,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.59,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.4,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.46,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.51,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.42,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.59,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.38,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.6,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.44,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.47,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.65,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.49,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.66,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.54,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.41,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.46,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.32,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.44,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.46,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.28,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.51,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.3,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.42,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.45,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.66,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.72,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.34,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.54,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.28,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.33,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.77,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.32,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.51,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.73,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.4,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.41,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.43,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.46,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.48,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.62,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.6,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.45,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.5,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.61,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.3,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.44,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.61,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.84,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.33,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.35,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.65,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.45,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.59,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.44,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.31,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.62,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.53,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.28,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.36,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.26,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.48,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.52,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.26,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.44,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.25,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.6,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.71,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.78,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.33,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.31,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.33,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.65,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.13,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.2,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.59,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.39,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.6,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.6,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.38,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.25,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.41,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.5,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.46,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.39,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.67,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.67,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.2,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.42,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.34,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.38,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.5,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.46,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.71,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.29,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.49,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.41,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.46,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.37,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.52,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.19,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.46,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.51,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.29,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.49,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.52,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.63,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.51,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.3,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.56,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.36,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.76,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.41,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.4,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.58,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.46,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.56,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.55,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.73,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.69,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.51,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.53,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.22,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.74,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.28,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.5,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.48,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.41,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.32,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.62,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.31,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.63,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.55,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.4,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.63,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.27,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.31,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.5,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.37,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.33,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.92,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.4,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.4,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.58,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.71,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.42,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.24,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.31,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.24,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.43,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.28,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.46,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.3,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.72,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.64,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.44,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.38,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.45,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.81,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.26,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.52,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.53,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.4,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.58,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.54,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.48,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.76,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.4,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.65,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.29,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.34,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.71,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.51,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.36,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.32,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.45,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.61,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.68,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.45,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.25,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.41,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.37,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.25,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.25,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.49,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.42,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.7,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.5,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.54,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.45,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.36,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.39,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.4,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.44,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.56,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.65,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.45,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.52,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.77,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.37,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.84,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.49,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.43,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.64,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.39,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.66,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.48,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.88,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.63,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.46,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.43,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.48,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.61,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.65,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.5,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.76,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.43,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.6,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.58,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.67,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.11,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.36,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.51,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.72,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.24,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.88,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.73,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.7,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.77,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.21,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.71,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.24,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.68,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.59,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.46,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.64,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.35,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.22,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.49,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.53,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.44,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.35,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.56,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.39,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.45,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.67,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.27,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.41,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.17,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.56,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.6,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.7,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.31,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.58,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.52,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.8,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.36,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.68,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.58,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.57,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.39,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.47,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.42,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.72,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.08,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.27,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.5,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.67,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.53,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.57,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.51,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.35,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.56,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.66,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.27,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.46,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.47,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.42,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.38,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.63,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.37,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.31,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.44,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.42,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.55,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.7,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.59,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.39,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.41,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.33,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.45,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.59,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.36,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.42,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.46,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.56,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.31,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.56,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.51,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.47,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.56,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.55,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.49,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.37,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.53,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.47,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.6,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.6,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.58,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.69,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.74,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.51,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.75,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.45,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.5,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.58,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.33,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.53,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.61,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.45,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.37,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.6,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.27,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.29,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.4,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.52,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.66,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.46,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.25,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.73,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.61,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.62,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.64,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.58,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.45,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.35,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.47,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.29,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.4,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.55,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.49,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.46,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.21,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.52,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.52,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.27,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.35,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.62,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.37,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.33,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.43,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.48,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.71,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.49,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.21,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.42,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.47,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.61,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.33,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.25,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.56,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.53,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.11,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.44,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.42,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.5,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.56,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.26,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.71,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.25,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.33,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.56,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.39,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.6,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.34,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.71,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.23,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.27,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.56,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.83,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.49,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.74,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.52,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.34,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.46,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.36,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.26,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.6,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.59,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.45,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.39,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.39,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.68,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.28,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.54,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.52,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.36,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.39,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.35,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.59,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.33,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.69,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.57,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.54,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.48,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.43,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.67,1,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.41,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.49,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,1,0.32,0,0.5
+dp2stageu,ShadowModelling(RandomQueries),12435,0,0.53,1,0.5
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.004,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.004,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.004,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.002,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,1,0.0,0,0.006
+dp2stageu,"LocalNeighbourhood(L_2, 0.250411558405805, accuracy)",12435,0,0.0,0,0.006
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.39684894077668,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.90265163724526,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.31353946737644,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.13281585271386,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.96814300827171,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.35486003225772,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.1168690183773,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.6049743017366,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.15841053760663,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.56166456249686,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.13187917814123,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.38698538594163,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.16438206867285,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.44271694719538,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.18603643850838,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.10795490732048,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.10174511167514,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.23521582908236,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.15971782207961,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.19344396503318,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.89968990554529,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.4812216436892,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.25334825793209,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.16024113439771,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.44015798459972,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.07469622497372,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.30339568053121,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.4930107749057,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.24284827297937,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.7855661657461,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.18468230055925,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.21008614871947,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.87875122912064,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.16378836558931,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.20450703061402,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.33108687710202,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.41678815302538,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.48379566043431,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.16184626249674,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.11257109300291,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.14190822051363,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.3304246456096,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.06202301597096,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.21411025192982,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.1068685805879,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.12555989240846,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.28809513773444,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.15652447478864,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.098428397388,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.96245734004424,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.00594417837773,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.06366002116722,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.11654143262419,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.04809162440745,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.22083782745828,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.35372982485003,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.07069870209654,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.18350649904652,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.88540212680945,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.05485726678793,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.16566715380134,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.1544689191934,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.10999680897027,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.07154575925193,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.926844979603,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.25479387521821,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.30865305151306,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.22970332542097,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.16587879482752,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.22571083218,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.99474400567772,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.25676529464211,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.27854627692413,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.43345687950038,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.0602438208584,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.98078631969084,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.27580846385611,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.09143361711426,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.98942831939989,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.00333507323187,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.23877248795506,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.14703302608127,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.9837998386164,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.14231084917076,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.40849070990474,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.33637206586913,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.1253858628056,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.36110461715519,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.28485266075309,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.23783912481026,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.95468451627102,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.1199312631127,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.11219742257475,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.11969437361405,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.79698039064547,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.23628928002222,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.29825712481717,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.2169002689416,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.27348308202257,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.02882945029143,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.32351763215851,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.99298627424645,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.19836389787393,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.12148483402417,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.93339146202086,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.81157669653092,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.05600382878501,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.27335907344312,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.04541038921963,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.31324025311719,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.14148812249462,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.34217896473591,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.28682541069095,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.98763684545362,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.11678341412144,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.12854150509627,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.98458743277564,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.2165372767359,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.00598020946038,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.05702526609798,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.12076745467252,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.19422501851137,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.22828441225519,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.27992312510982,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.33944816779685,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.04074104657245,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.17039128441945,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.13702801719162,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.79933862271909,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.03051709092898,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.3176123246529,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.96332436056095,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.93130441235556,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.29095158195369,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.15024790604772,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.36220259390163,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.03417614820384,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.16822639569168,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.20392953523313,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.30350753553756,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.27741840540024,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.1592709177043,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.25027008107027,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.30239806606365,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.28142120345072,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.03482671052357,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.11141337349204,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.10428190897684,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.14292068445704,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.21344449734588,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.82334734839921,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.15989605157068,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.34549852771809,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.60826855358951,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.3550350026049,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.44403846942471,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.02694234329387,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.33103744916545,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.16459408692728,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.40548320737533,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.09625993339493,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.41599968383315,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.3629303856857,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.21664809697948,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.05946358473423,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.97482735171093,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.11654266774838,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.15439817593527,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.11787682847982,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.04814303441643,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.88753841108351,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.33814616417779,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.12610305645111,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.3328075196973,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.26853013790135,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.03552900470741,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.99165106272271,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.95059977025515,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.01284529804929,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.73838045720844,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.85401404125786,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.97873709717102,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.13428296574288,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.28942622712438,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.95563436809486,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.05786324100951,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.20461735834314,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.11930069908333,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.52941401321888,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.19196728944814,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.8603441487757,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.27566453539723,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.93364810660576,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.98083855503535,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.1988832444379,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.54850369219784,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.97839772710363,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.80191982364155,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.11062727516698,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.11751375674608,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.06548920292902,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.85501854218086,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.04551476738698,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.8054888961355,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.04479444208155,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.22592209682429,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.27208115392463,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.36031732661877,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.21747053945695,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.17685267848836,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.35276895976963,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.53095798690762,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.39517602901165,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.10606318269696,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.91625743007614,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.0871772143422,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.0555757934678,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.17372855573555,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.12217959021356,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.23238900763505,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.25796417775175,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.11109870831082,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.08064428824697,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.12688481818495,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.22966267431715,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.58837968502785,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.91895084017773,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.36920273580826,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.07672175334734,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.34761899365948,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.0880023616322,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.9456455713257,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.2916409318619,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.2707525869109,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.84035809609841,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.42930856053967,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.40095243461415,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.1908050759797,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.86571461542998,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.98509420011395,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.26106277152176,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.97907670031361,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.20915675817089,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.27835503966024,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.13668507183185,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.8671668044397,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.23473965815357,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.45408154537638,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.25531700279453,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.01970871274987,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.43826087168877,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.22217745973443,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.23664130594038,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.24543812114732,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.92467362391127,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.35941111573713,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.06256785575208,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.26680762115076,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.25962506891497,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.29226025281913,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.25720309667727,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.09250332599888,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.37437851945793,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.83401571676683,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.19565419786106,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.07747623070725,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.22176304937832,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.28587057468931,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.89612231296306,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.06023897915432,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.18345263996444,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.20041379256263,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.15693738323064,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.90008481890752,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.99963882475163,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.26007056973037,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.12086480819929,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.2289332128902,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.13577014434772,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.33798901729112,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.99527002515104,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.4735072840806,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.31162093118088,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.13754638701153,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.36334902365132,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.01254414798854,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.2736740894896,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.18015698483609,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.03625242600327,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.3387315611037,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.30279028981411,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.17858415426309,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.26072664631978,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.08981012937888,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.10753223822913,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.28490322838469,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.15896809034706,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.81724571854751,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.15480932580518,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.18680938752557,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.12398685795849,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.1555502668586,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.20287687628056,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.00119532582721,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.60703153320392,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.11896794325011,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.16358666384414,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.36050386321979,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.30267246862101,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.22551292028454,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.0597307612646,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.23898934537665,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.06045281709001,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.11100884676755,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.46874533826875,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.26057252695074,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.10762898822426,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.19374662421214,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.37869316846721,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.34997084050794,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.03392410197124,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.2243281503399,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.40531879020543,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.1898657383319,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.27184650016868,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.35808735084107,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.75558503048522,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.98512569236622,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.0131147548056,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.25579282342886,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.98656066046455,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.09574088239306,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.06037257678962,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.3746793345524,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.19012520229121,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.43468766157234,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.17466802050522,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.13886757666745,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.01499548965849,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.96786350731958,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.15693908907656,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.19770612787207,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.12031494270616,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.14776319431425,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.17669974195606,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.39803156885064,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.21038612302546,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.31266241850282,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.95092936644986,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.82465614003895,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.40341638850498,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.35687276791231,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.27937527690239,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.43957869462476,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.88923861504108,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.03440686646495,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.02473056218861,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.1129507610392,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.83501313964811,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.16425664281925,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.29579247559157,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.17402842585366,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.14047613129239,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.45009014928011,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.04152938819738,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.2122660728143,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.22985825105395,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.1879961540193,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.41279494488913,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.9577284002189,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.36252695986015,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.00705644942217,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.91791861881094,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.05366287390213,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.2828117864773,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.1686801759229,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.1159512915108,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.99458285146656,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.27954582570098,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.78850447993767,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.12399398738292,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.05048341660847,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.85600023057029,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.1802131731949,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.23897600040523,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.7562837721649,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.9439288353183,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.0516425596701,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.85622033566122,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.48002420435945,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.01577755205074,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.2391760608183,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.11560312132495,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.07435046714876,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.06968292055726,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.02425487546355,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.50848559258019,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.14939980694179,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.21737160077849,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.03829772003128,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.23575532106028,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.36196140919984,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.1211329090331,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.88293617623555,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.90187290120319,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.20021567826886,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.24802048160032,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.07631133862957,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.22542577072616,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.13681701808196,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.1469562687127,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.11713321708255,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.20938548933795,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.51199046818213,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.155094751316,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.93493582248009,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.74041633848644,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.09660852963286,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.22168261504632,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.25032777747997,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.25706429981466,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.28732601396192,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.28025150633925,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.0095657240636,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.16218377636645,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.1914899985853,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.48312791156147,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.15620342445371,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.91100633041238,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.25568707812376,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.28616731045909,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.57163587658202,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.65238273540777,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.28224556668616,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.00267739626625,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.00427624085583,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.1977570112791,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.91684430407315,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.03490306350257,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.2554193073556,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.30853398176907,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.0946487059836,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.08321243663033,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.144435227638,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.02785172861594,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.05868058862919,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.92621725285699,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.78040984394339,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.79132508926801,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.35720995025997,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.27768728675339,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.2312553538715,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.11167043870736,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.91161924656461,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.09387669420498,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.09294853980109,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.10941336321238,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.32883350023153,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.15917516124854,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.4034984322732,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.9501080695273,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.10562443450415,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.96520110740745,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.21528466409896,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.15338933300247,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.00498548939555,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.92166371024828,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.87853194205469,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.28358291033577,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.99383226728185,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.28587111647738,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.04359929114787,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.9412157884986,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.07262174710769,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.09473667232925,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.30832423075437,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.20672454589732,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.2329373211271,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.13396154368851,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.28138421669325,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.98260792090478,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.04880262713093,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.42900622811052,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.26762143274719,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.20830070225745,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-83.92665516698487,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.89060275476407,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.01771910986339,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.80559446906659,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.42474725045983,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.07044849919306,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.0129565523441,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.33637443863326,0,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.20851392918767,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.99423920858439,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.15934062664917,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-83.87493119375367,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.22136365413981,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,1,-84.02936386819898,1,-84.26263122846282
+dp2stageu,ProbabilityEstimation(KernelDensity()),12435,0,-84.23784553737626,1,-84.26263122846282
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.3268498962122405,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.38145480418389155,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.3527894988128135,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.34824091156504,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.3459446524698323,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.8975075876059929,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.1855966071245827,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-1.4608024877555976,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.8022923283282355,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-1.4565498485835513,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.36001756149621816,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.2882355399236499,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-1.453230098640033,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-1.4665787689355536,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.3867441593601693,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.25776176354067903,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.2570798433127856,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.3455090366505958,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.3528826581111732,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.38884845129961454,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.21349464963075104,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.4531291626432997,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.43269073929437096,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.27233297216298985,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-1.0452664515326984,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.5297665750864881,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.44591204897875747,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.5602300806298296,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.7825853551393301,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.29819321930812365,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.6398956205652031,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.5741417670495725,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.20888745537395648,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.567912303777167,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.33862415504437837,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.7311911633905083,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.3173757445269918,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-1.4585102744704435,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.4746452579542327,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.6405413611402481,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.22190026568033427,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.39920829968682764,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.35951766355771886,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.7157287181954185,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.3115194078824215,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.26349490642233586,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.6394514050115933,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.6690682331642012,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.5003333874497593,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.25910290925797497,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.3795021843832793,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.4382682141030412,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.5474415725484009,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.5794772738720899,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.6237906109923359,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-1.0323735822527629,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.20752455460040964,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.304288529072529,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.3786211297447011,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.252553142013064,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.4448971122763331,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.3075031645172768,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.5773350958152702,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.2761289927991409,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.260048233188574,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.7338026740154812,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-1.4437422848007044,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.8031008575853369,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.4145370721109814,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.32835254998069097,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.21017474786510368,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.05569256708831226,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.08632570956214151,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.25874813861780505,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.535382554057668,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.2946793241730822,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-1.439836820160611,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.20768451673258245,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.4800765725116454,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.4749526893643455,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.37198509509353556,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.6024828798376487,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.14379339268413072,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.41695116060369897,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.6430417542316601,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.43269402769390536,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.9954687285554323,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.2813393992824617,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.45278371581735816,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.6882006798817796,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.3424799060847661,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-1.4244353072265437,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.5647658346526039,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.507496249444153,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.27226698626240575,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.36135056113526126,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.43571708599296854,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.7834119568981879,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.5229608364560652,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.14224661937606067,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.2779054380462733,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.45657359341695175,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.2757544398508243,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.45979021854307023,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.3156003030651073,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.41197015708997603,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.28542320048904346,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.5429934322935649,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.3130194341694623,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.8539838017714673,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.3809226714285637,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.9585541288654711,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.2916235095592343,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.3460823909897028,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.7424112682577739,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.2776250791067769,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.4147150036501866,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.738298227522422,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.49321551743471925,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.30076233480859943,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.9667744246015064,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.4343792818961305,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.3694832041376527,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-1.0576860158781562,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.5776330397775162,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.33190275537292346,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.43376339424731297,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.6112896562634361,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.2397541736595499,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.2722381292070571,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.28703845829937413,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.1744862693289475,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.2876004086975521,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.5013027147749115,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.6554277506125185,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.6820600860019128,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.24009261081746208,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.6409763481893316,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-1.4215738416273869,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.20998735646537078,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.4999638397077522,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-1.1323068845862132,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.43778535682819303,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.6547415849495225,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.5074383853644979,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.26456417913925667,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.5158963160868829,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.4831006211124539,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.36232328299949484,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.9657764070467486,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.17943637313370855,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.42499712559238934,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.49792855693877686,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.7603095580084948,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.4324720645428646,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.4721944244174688,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.36279176188786494,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.3997655390878312,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.41834461168827985,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.7301831614651422,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.23020968989442042,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-1.4232747299113198,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-1.1073516577563949,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.348553638790725,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.3122835811436117,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.5902993083514827,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.31274397894581996,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.4431604009621091,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.6019669941692244,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.28584020271806815,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.510226327748238,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.6188675492531067,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.2251621474059175,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.4392305137272123,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.368468479377673,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.38537573098920375,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.4752948417806476,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.37824568424364363,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.41301480611922453,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-1.0349205737869298,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.34018221255163683,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.2769851879172779,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.3426258943560895,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.30781018547088107,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.22291352159539957,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.2802689745707937,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.6084972540575978,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.5310019706268555,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.5541064439599228,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.407981607889157,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.3457002925341419,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.5812655761711248,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.2987175685821797,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.44600304236349403,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.6304124261425694,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-1.4215473772247,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.42209165183262365,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.4479511707868851,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.4300740439463904,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.38144468737577963,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.22979903390621276,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.303804422532947,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.3409193792356445,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.3000512460588174,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.2949997893226704,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.9529479841541096,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.2629142654360639,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.6272281398422318,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.4686376032692242,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.6641831635441133,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.27046554693940866,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-1.4568532946474912,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.7865675570829607,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.5432612086799468,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.2722808843084202,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.7174191121289974,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.21146534197575007,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.2285139466309311,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.45792262345576984,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-1.1031996871598986,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.6921797902130199,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.408439537823448,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.6932193055072353,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.5895034839467109,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.8156877715779913,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.5516734746968736,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.4078982746930182,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.4246880201310133,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.3282422526475284,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.3271049696520766,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.2990013602821033,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.4441907040535838,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-1.0241032877426204,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-1.4302284409186068,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.31490953196328286,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.6549412841698802,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.5595223187371446,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.42644920373993134,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.21183957716818683,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.44339961348380913,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-1.4293366220372552,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.09924662405569536,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.27292443567710456,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.38724122570963054,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.3919216313063411,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.3845302790752051,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.2775044262417919,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.6984352063195067,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.46932830480415866,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.30708440008892185,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.6761802300606797,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.616306544390988,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.3336267938941964,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.09721767799213756,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.33792234925849074,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.6979969357464468,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.34412032996503467,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-1.0467291112430537,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.49659923674209466,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.385766400341984,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.18296598926055013,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.18149756392694189,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.49658496988849377,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.21928076768135776,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.4647791626415177,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.13688657010283314,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.2790626748277864,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.2675606044686673,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.477896141104764,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.42736313495235895,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.30161415677301107,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-1.0894628239959443,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.5686533057765282,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.21297271650891594,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.4566146914210381,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.5611261789987475,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.20743129196942486,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.9475532000443336,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.4711347720109953,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.3133178854906443,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.2178330127547619,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.5771069248236699,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.7029811996404828,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.34391598540416424,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.6793860576466797,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.39101427825616736,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.36758796841536917,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.4522995396318963,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.44276896839477364,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.28071430919335444,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-1.030597782804182,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.4397912153363299,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.9106072528911954,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.5734239491808971,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.4695089415185002,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.37549988843721266,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.21139937511937967,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.3319261450397525,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.4134702340342795,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.3598475543269384,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.457057557364927,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.27255449169144147,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.46670909777962244,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.4127310369462566,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.5557886419169179,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.41306715488067125,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.25156283416454683,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.2874460711195633,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.5152237467207819,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.5602381644552966,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.20737176252867068,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.27848141268889787,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-1.0260494031836467,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.272442239941354,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.7345363079692496,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.7167597005070335,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.4005371050173158,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.6716655031734672,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.7319870430409465,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.732130963941663,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.27247109365261796,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.41981099766263064,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.38832031040736226,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.5693749700147528,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.2724466708659447,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.7128043026828885,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.33861090838866853,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.2964271392479116,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.4229875361303123,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-1.434691532533051,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.4934462859477033,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.29962038725104717,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.26721712886212323,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.7092505508432378,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-1.0100213579314656,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.5103722686219232,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.2883707937297689,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.28651385444915506,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.2975683528087942,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.3351620719716895,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.4197129305714339,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.427337331809032,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.558647559501529,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.38008472891277195,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.3426259057912024,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.23677146160450613,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.5477262623316129,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.5160185300157856,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.49361356162538794,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.3501189009433041,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-1.433008366250126,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.9982766123055229,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.7470004366098221,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.275495637210169,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.20985582709771142,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.34177612354880316,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.2756049060746149,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.5219253935934113,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.3150007106752276,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.4371277066912311,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.7377586424393053,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.1746929459817127,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.27631084964810615,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.3618441913390354,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.5679619918652525,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.8422912690371195,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.333894755232215,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.591871206245754,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.9388667411643656,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.25920940956182625,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.500150436964413,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.25436980246752455,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.5046155133834619,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.22455865239949996,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.40430348425615714,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.34152501775571564,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.2073862206468385,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.21159214751319275,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.2962565276274475,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.3398817469276043,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.6689669825535786,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.2722760612085582,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.37407901482282746,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.5772663688708408,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.4445671108129837,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-1.0679083976163155,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.20763566419819462,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.5666234357039168,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.21339310512034704,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.5084266976898092,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.21079042694394823,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.2298248946958364,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-1.4410907481911912,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.4071757652865408,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.5078530521045005,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.27228017767013296,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.6596703451825248,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.29941282155204585,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.25984850763082346,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-1.0857896313257662,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.5886791706306992,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.3540090037596933,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.7625711402032703,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.268148634472992,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.38123672388910756,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.4777445509887909,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.4394764988758714,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.20760417134164652,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.47417685772623247,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.976392081901494,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.48557678736060783,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.3854491475538932,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.4336901849858827,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.45754003794782333,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.36083334935847144,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.618071373379729,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.20814832775639633,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.3506580994859474,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.6050820943848765,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.6927462611045744,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.3973959102187306,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.5287827054363101,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.2892354939745402,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.2848048889660842,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.645392713930804,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.36624763294751816,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.7751422465739324,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.42576307987828244,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.4698232400696469,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-1.4298367804797993,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.36997126598070645,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.9896708790711904,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-1.461618433812556,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.4395726533008511,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.3105182765830641,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.3306600828124987,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.2794410290120855,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.2578308175018295,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.33158528781005037,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-1.172526910902269,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.9444880570770172,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.7334452172757043,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.2723252166852099,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.32201337427888027,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.4084086308797756,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.45570151659632996,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.3640807506861558,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.22165254051002165,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.32684989524672237,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.735860428163456,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.6220697004672678,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.2735118762357256,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.559922545503731,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.21354019064637525,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.33175539898746653,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.3507634202040565,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.44902340284744313,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.3170740082621002,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.21927861436382848,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-1.0358481528692849,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.29992993540537266,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.3890813590842756,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.6834557202099569,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.4380252374499267,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.46453102945931724,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.6282109131024094,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.40463749248609054,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.2883995185677391,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.3606183629322984,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.25925204579721317,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.8993069144301128,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.4288529001243895,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.47663174788413604,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-1.0023470694691579,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.4780689486937307,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-1.431507242815879,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.3422511227865472,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.1865953726199725,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.27309662426252257,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.9752308853258407,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.40071541516513665,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.20758392965236205,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.08929122366642003,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.3823299885573582,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.3305759097043601,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.27487877253223053,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.22485049902608606,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.4073258236263866,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.20763849404232007,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.20963415776369035,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.5288084109802944,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.3335470616580576,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.8851467404442057,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.5377060926060494,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.6386221952477809,0,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.43167678199048476,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.3726313024079364,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.4704013393848321,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,1,-0.4320604878320609,1,-0.6357652742129962
+dp2stageu,"ClosestDistance(L_2, accuracy)",12435,0,-0.9276594655371448,0,-0.6357652742129962

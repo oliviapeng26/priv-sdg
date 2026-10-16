@@ -1,0 +1,41 @@
+{
+  "method": "dp2stageu",
+  "variant": "DP-2Stage-U",
+  "stage1": "rebuilt per fit from that fit's rows (uniform pseudo data, non-DP)",
+  "formal_epsilon": 1.0,
+  "delta": 1e-05,
+  "privacy_spent": {
+    "n_fits_logged": 700,
+    "epsilon_spent_max": 0.992702086287885,
+    "epsilon_spent_min": 0.992702086287885,
+    "epsilon_spent_mean": 0.9927020862878849,
+    "noise_multiplier_mean": 3.4375,
+    "noise_multiplier_min": 3.4375,
+    "noise_multiplier_max": 3.4375,
+    "dp_steps_distinct": [
+      160
+    ],
+    "fit_s_mean": 78.41557142857143,
+    "gen_s_mean": 2.461,
+    "acceptance_mean": 0.969236857142857,
+    "peak_gpu_gb_fit_max": 14.5,
+    "within_budget": true
+  },
+  "num_train": 200,
+  "num_test": 500,
+  "num_synthetic": 500,
+  "sample_batch": 100,
+  "max_new_tokens": 115,
+  "pool_wall_clock_s": 403.2,
+  "attack_wall_clock_s": 191.84,
+  "new_fits_this_run": 4,
+  "distinct_fractions": {
+    "train/D+": 1.0,
+    "train/D-": 1.0,
+    "test/D+": 1.0,
+    "test/D-": 1.0
+  },
+  "attacks_without_raw_scores": [],
+  "delta_note": "delta=1e-05 is DP-2Stage's own; AIM uses 1e-9, DP-CTGAN 1/(n*sqrt(n)), DPGAN 1/n, so eps=1 is not the same guarantee across generators (limitation).",
+  "note": "pool_wall_clock_s covers this invocation only; see new_fits_this_run to tell a fresh run from a resumed one."
+}

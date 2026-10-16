@@ -1,0 +1,163 @@
+2026-10-01 16:22:18,686 INFO Sampled fixed background of 499 records (seed=42)
+2026-10-01 16:22:18,687 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-10-01 16:22:18,701 INFO === probe: 4 fit+generate cycles on 500 rows, eps=1.0, delta=1e-05, max_new_tokens=115, sample_batch=100, variant=U (Stage 1 rebuilt per fit) ===
+2026-10-01 16:23:58,547 INFO   fit 0: 99.8s wall  (driver: fit 77.0s + gen 2.6s; overhead 20.2s)  eps_spent=0.9927 sigma=3.438 steps=160  acceptance 0.9506  peak 14.48/4.68 GB (torch-allocated)  500/500 unique rows
+2026-10-01 16:25:40,285 INFO   fit 1: 101.7s wall  (driver: fit 78.9s + gen 2.6s; overhead 20.2s)  eps_spent=0.9927 sigma=3.438 steps=160  acceptance 0.956  peak 14.49/4.68 GB (torch-allocated)  500/500 unique rows
+2026-10-01 16:27:21,830 INFO   fit 2: 101.5s wall  (driver: fit 78.9s + gen 2.3s; overhead 20.3s)  eps_spent=0.9927 sigma=3.438 steps=160  acceptance 0.9804  peak 14.45/4.67 GB (torch-allocated)  500/500 unique rows
+2026-10-01 16:29:02,963 INFO   fit 3: 101.1s wall  (driver: fit 78.4s + gen 2.6s; overhead 20.1s)  eps_spent=0.9927 sigma=3.438 steps=160  acceptance 0.9671  peak 14.49/4.64 GB (torch-allocated)  500/500 unique rows
+2026-10-01 16:29:02,963 INFO === mean 101.1s/fit (min 99.8, max 101.7), mean acceptance 96.4%, max spent eps 0.9927 (within budget) ===
+2026-10-01 16:29:02,963 INFO === 4/4 distinct outputs across consecutive seeds (seeding OK) ===
+2026-10-01 16:29:02,963 INFO     200/500 = 700 fits -> 19.7 h
+2026-10-01 16:29:02,963 INFO     500/1000 = 1500 fits -> 42.1 h
+2026-10-01 16:29:02,963 INFO     1000/2500 = 3500 fits -> 98.3 h
+2026-10-01 16:29:02,963 INFO     PROBE-DEPENDENT: set CHECKPOINT_EVERY ~= 18 (~30 min of fits) and MAX_NEW_FITS to a small multiple; both are still GReaT's provisional 19/57.
+2026-10-01 16:32:28,147 INFO === TAPAS privacy audit: dp2stageu (dp=True, kind=neural, formal eps=1.0, delta=1e-05, num_train=200, num_test=500) ===
+2026-10-01 16:32:28,147 INFO     cache benchmark_tapas/cache/dp2stageu_audit   results benchmark_tapas/results/sample_size_sweep/dp2stageu   total fits = 700   sample_batch=100
+2026-10-01 16:32:28,181 INFO Sampled fixed background of 499 records (seed=42)
+2026-10-01 16:32:28,183 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-10-01 16:32:28,196 INFO Building new threat model for dp2stageu (no cache found)
+2026-10-01 17:06:14,848 INFO     train pool 20/200 checkpointed (+20 fits, 2027s, 37 left in this process)
+2026-10-01 17:40:04,682 INFO     train pool 40/200 checkpointed (+20 fits, 2030s, 17 left in this process)
+2026-10-01 18:10:30,937 INFO     train pool 58/200 checkpointed (+18 fits, 1826s, -1 left in this process)
+2026-10-01 18:10:30,937 INFO     pools: 58/200 train, 0/500 test  (+58 new fits, 5883s)
+2026-10-01 18:10:30,937 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the restart loop starts a fresh process (see MAX_NEW_FITS). ===
+2026-10-01 18:10:31,590 INFO === TAPAS privacy audit: dp2stageu (dp=True, kind=neural, formal eps=1.0, delta=1e-05, num_train=200, num_test=500) ===
+2026-10-01 18:10:31,590 INFO     cache benchmark_tapas/cache/dp2stageu_audit   results benchmark_tapas/results/sample_size_sweep/dp2stageu   total fits = 700   sample_batch=100
+2026-10-01 18:10:31,625 INFO Sampled fixed background of 499 records (seed=42)
+2026-10-01 18:10:31,626 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-10-01 18:10:31,641 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dp2stageu_audit/threat_model.pkl
+2026-10-01 18:44:08,788 INFO     train pool 78/200 checkpointed (+20 fits, 2017s, 37 left in this process)
+2026-10-01 19:17:57,743 INFO     train pool 98/200 checkpointed (+20 fits, 2029s, 17 left in this process)
+2026-10-01 19:48:22,069 INFO     train pool 116/200 checkpointed (+18 fits, 1824s, -1 left in this process)
+2026-10-01 19:48:22,069 INFO     pools: 116/200 train, 0/500 test  (+58 new fits, 5870s)
+2026-10-01 19:48:22,069 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the restart loop starts a fresh process (see MAX_NEW_FITS). ===
+2026-10-01 19:48:22,725 INFO === TAPAS privacy audit: dp2stageu (dp=True, kind=neural, formal eps=1.0, delta=1e-05, num_train=200, num_test=500) ===
+2026-10-01 19:48:22,725 INFO     cache benchmark_tapas/cache/dp2stageu_audit   results benchmark_tapas/results/sample_size_sweep/dp2stageu   total fits = 700   sample_batch=100
+2026-10-01 19:48:22,759 INFO Sampled fixed background of 499 records (seed=42)
+2026-10-01 19:48:22,760 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-10-01 19:48:22,774 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dp2stageu_audit/threat_model.pkl
+2026-10-01 20:22:01,102 INFO     train pool 136/200 checkpointed (+20 fits, 2018s, 37 left in this process)
+2026-10-01 20:55:39,578 INFO     train pool 156/200 checkpointed (+20 fits, 2018s, 17 left in this process)
+2026-10-01 21:26:00,742 INFO     train pool 174/200 checkpointed (+18 fits, 1821s, -1 left in this process)
+2026-10-01 21:26:00,742 INFO     pools: 174/200 train, 0/500 test  (+58 new fits, 5858s)
+2026-10-01 21:26:00,742 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the restart loop starts a fresh process (see MAX_NEW_FITS). ===
+2026-10-01 21:26:01,391 INFO === TAPAS privacy audit: dp2stageu (dp=True, kind=neural, formal eps=1.0, delta=1e-05, num_train=200, num_test=500) ===
+2026-10-01 21:26:01,392 INFO     cache benchmark_tapas/cache/dp2stageu_audit   results benchmark_tapas/results/sample_size_sweep/dp2stageu   total fits = 700   sample_batch=100
+2026-10-01 21:26:01,426 INFO Sampled fixed background of 499 records (seed=42)
+2026-10-01 21:26:01,427 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-10-01 21:26:01,441 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dp2stageu_audit/threat_model.pkl
+2026-10-01 21:59:40,229 INFO     train pool 194/200 checkpointed (+20 fits, 2019s, 37 left in this process)
+2026-10-01 22:09:44,955 INFO     train pool 200/200 checkpointed (+6 fits, 605s, 31 left in this process)
+2026-10-01 22:43:25,633 INFO     test pool 20/500 checkpointed (+20 fits, 2021s, 11 left in this process)
+2026-10-01 23:03:35,066 INFO     test pool 32/500 checkpointed (+12 fits, 1209s, -1 left in this process)
+2026-10-01 23:03:35,066 INFO     pools: 200/200 train, 32/500 test  (+58 new fits, 5854s)
+2026-10-01 23:03:35,066 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the restart loop starts a fresh process (see MAX_NEW_FITS). ===
+2026-10-01 23:03:35,714 INFO === TAPAS privacy audit: dp2stageu (dp=True, kind=neural, formal eps=1.0, delta=1e-05, num_train=200, num_test=500) ===
+2026-10-01 23:03:35,714 INFO     cache benchmark_tapas/cache/dp2stageu_audit   results benchmark_tapas/results/sample_size_sweep/dp2stageu   total fits = 700   sample_batch=100
+2026-10-01 23:03:35,748 INFO Sampled fixed background of 499 records (seed=42)
+2026-10-01 23:03:35,749 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-10-01 23:03:35,763 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dp2stageu_audit/threat_model.pkl
+2026-10-01 23:37:16,702 INFO     test pool 52/500 checkpointed (+20 fits, 2021s, 37 left in this process)
+2026-10-02 00:11:10,893 INFO     test pool 72/500 checkpointed (+20 fits, 2034s, 17 left in this process)
+2026-10-02 00:41:35,343 INFO     test pool 90/500 checkpointed (+18 fits, 1824s, -1 left in this process)
+2026-10-02 00:41:35,343 INFO     pools: 200/200 train, 90/500 test  (+58 new fits, 5880s)
+2026-10-02 00:41:35,343 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the restart loop starts a fresh process (see MAX_NEW_FITS). ===
+2026-10-02 00:41:35,989 INFO === TAPAS privacy audit: dp2stageu (dp=True, kind=neural, formal eps=1.0, delta=1e-05, num_train=200, num_test=500) ===
+2026-10-02 00:41:35,989 INFO     cache benchmark_tapas/cache/dp2stageu_audit   results benchmark_tapas/results/sample_size_sweep/dp2stageu   total fits = 700   sample_batch=100
+2026-10-02 00:41:36,023 INFO Sampled fixed background of 499 records (seed=42)
+2026-10-02 00:41:36,024 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-10-02 00:41:36,038 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dp2stageu_audit/threat_model.pkl
+2026-10-02 01:15:21,226 INFO     test pool 110/500 checkpointed (+20 fits, 2025s, 37 left in this process)
+2026-10-02 01:49:05,192 INFO     test pool 130/500 checkpointed (+20 fits, 2024s, 17 left in this process)
+2026-10-02 02:19:39,811 INFO     test pool 148/500 checkpointed (+18 fits, 1835s, -1 left in this process)
+2026-10-02 02:19:39,811 INFO     pools: 200/200 train, 148/500 test  (+58 new fits, 5884s)
+2026-10-02 02:19:39,811 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the restart loop starts a fresh process (see MAX_NEW_FITS). ===
+2026-10-02 02:19:40,461 INFO === TAPAS privacy audit: dp2stageu (dp=True, kind=neural, formal eps=1.0, delta=1e-05, num_train=200, num_test=500) ===
+2026-10-02 02:19:40,461 INFO     cache benchmark_tapas/cache/dp2stageu_audit   results benchmark_tapas/results/sample_size_sweep/dp2stageu   total fits = 700   sample_batch=100
+2026-10-02 02:19:40,495 INFO Sampled fixed background of 499 records (seed=42)
+2026-10-02 02:19:40,496 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-10-02 02:19:40,510 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dp2stageu_audit/threat_model.pkl
+2026-10-02 02:53:23,439 INFO     test pool 168/500 checkpointed (+20 fits, 2023s, 37 left in this process)
+2026-10-02 03:26:59,440 INFO     test pool 188/500 checkpointed (+20 fits, 2016s, 17 left in this process)
+2026-10-02 03:57:20,718 INFO     test pool 206/500 checkpointed (+18 fits, 1821s, -1 left in this process)
+2026-10-02 03:57:20,718 INFO     pools: 200/200 train, 206/500 test  (+58 new fits, 5860s)
+2026-10-02 03:57:20,718 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the restart loop starts a fresh process (see MAX_NEW_FITS). ===
+2026-10-02 03:57:21,363 INFO === TAPAS privacy audit: dp2stageu (dp=True, kind=neural, formal eps=1.0, delta=1e-05, num_train=200, num_test=500) ===
+2026-10-02 03:57:21,363 INFO     cache benchmark_tapas/cache/dp2stageu_audit   results benchmark_tapas/results/sample_size_sweep/dp2stageu   total fits = 700   sample_batch=100
+2026-10-02 03:57:21,397 INFO Sampled fixed background of 499 records (seed=42)
+2026-10-02 03:57:21,398 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-10-02 03:57:21,412 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dp2stageu_audit/threat_model.pkl
+2026-10-02 04:31:11,332 INFO     test pool 226/500 checkpointed (+20 fits, 2030s, 37 left in this process)
+2026-10-02 05:04:58,851 INFO     test pool 246/500 checkpointed (+20 fits, 2028s, 17 left in this process)
+2026-10-02 05:35:19,037 INFO     test pool 264/500 checkpointed (+18 fits, 1820s, -1 left in this process)
+2026-10-02 05:35:19,038 INFO     pools: 200/200 train, 264/500 test  (+58 new fits, 5878s)
+2026-10-02 05:35:19,038 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the restart loop starts a fresh process (see MAX_NEW_FITS). ===
+2026-10-02 05:35:19,684 INFO === TAPAS privacy audit: dp2stageu (dp=True, kind=neural, formal eps=1.0, delta=1e-05, num_train=200, num_test=500) ===
+2026-10-02 05:35:19,684 INFO     cache benchmark_tapas/cache/dp2stageu_audit   results benchmark_tapas/results/sample_size_sweep/dp2stageu   total fits = 700   sample_batch=100
+2026-10-02 05:35:19,718 INFO Sampled fixed background of 499 records (seed=42)
+2026-10-02 05:35:19,720 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-10-02 05:35:19,734 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dp2stageu_audit/threat_model.pkl
+2026-10-02 06:09:07,743 INFO     test pool 284/500 checkpointed (+20 fits, 2028s, 37 left in this process)
+2026-10-02 06:42:42,715 INFO     test pool 304/500 checkpointed (+20 fits, 2015s, 17 left in this process)
+2026-10-02 07:13:06,326 INFO     test pool 322/500 checkpointed (+18 fits, 1824s, -1 left in this process)
+2026-10-02 07:13:06,326 INFO     pools: 200/200 train, 322/500 test  (+58 new fits, 5866s)
+2026-10-02 07:13:06,326 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the restart loop starts a fresh process (see MAX_NEW_FITS). ===
+2026-10-02 07:13:06,976 INFO === TAPAS privacy audit: dp2stageu (dp=True, kind=neural, formal eps=1.0, delta=1e-05, num_train=200, num_test=500) ===
+2026-10-02 07:13:06,976 INFO     cache benchmark_tapas/cache/dp2stageu_audit   results benchmark_tapas/results/sample_size_sweep/dp2stageu   total fits = 700   sample_batch=100
+2026-10-02 07:13:07,010 INFO Sampled fixed background of 499 records (seed=42)
+2026-10-02 07:13:07,011 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-10-02 07:13:07,025 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dp2stageu_audit/threat_model.pkl
+2026-10-02 07:46:52,738 INFO     test pool 342/500 checkpointed (+20 fits, 2026s, 37 left in this process)
+2026-10-02 08:20:31,637 INFO     test pool 362/500 checkpointed (+20 fits, 2019s, 17 left in this process)
+2026-10-02 08:50:52,250 INFO     test pool 380/500 checkpointed (+18 fits, 1821s, -1 left in this process)
+2026-10-02 08:50:52,250 INFO     pools: 200/200 train, 380/500 test  (+58 new fits, 5865s)
+2026-10-02 08:50:52,250 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the restart loop starts a fresh process (see MAX_NEW_FITS). ===
+2026-10-02 08:50:52,901 INFO === TAPAS privacy audit: dp2stageu (dp=True, kind=neural, formal eps=1.0, delta=1e-05, num_train=200, num_test=500) ===
+2026-10-02 08:50:52,901 INFO     cache benchmark_tapas/cache/dp2stageu_audit   results benchmark_tapas/results/sample_size_sweep/dp2stageu   total fits = 700   sample_batch=100
+2026-10-02 08:50:52,935 INFO Sampled fixed background of 499 records (seed=42)
+2026-10-02 08:50:52,936 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-10-02 08:50:52,950 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dp2stageu_audit/threat_model.pkl
+2026-10-02 09:24:31,223 INFO     test pool 400/500 checkpointed (+20 fits, 2018s, 37 left in this process)
+2026-10-02 09:58:15,642 INFO     test pool 420/500 checkpointed (+20 fits, 2024s, 17 left in this process)
+2026-10-02 10:28:38,106 INFO     test pool 438/500 checkpointed (+18 fits, 1822s, -1 left in this process)
+2026-10-02 10:28:38,106 INFO     pools: 200/200 train, 438/500 test  (+58 new fits, 5865s)
+2026-10-02 10:28:38,106 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the restart loop starts a fresh process (see MAX_NEW_FITS). ===
+2026-10-02 10:28:38,764 INFO === TAPAS privacy audit: dp2stageu (dp=True, kind=neural, formal eps=1.0, delta=1e-05, num_train=200, num_test=500) ===
+2026-10-02 10:28:38,764 INFO     cache benchmark_tapas/cache/dp2stageu_audit   results benchmark_tapas/results/sample_size_sweep/dp2stageu   total fits = 700   sample_batch=100
+2026-10-02 10:28:38,798 INFO Sampled fixed background of 499 records (seed=42)
+2026-10-02 10:28:38,800 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-10-02 10:28:38,814 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dp2stageu_audit/threat_model.pkl
+2026-10-02 11:02:24,382 INFO     test pool 458/500 checkpointed (+20 fits, 2026s, 37 left in this process)
+2026-10-02 11:36:06,603 INFO     test pool 478/500 checkpointed (+20 fits, 2022s, 17 left in this process)
+2026-10-02 12:06:20,347 INFO     test pool 496/500 checkpointed (+18 fits, 1814s, -1 left in this process)
+2026-10-02 12:06:20,347 INFO     pools: 200/200 train, 496/500 test  (+58 new fits, 5862s)
+2026-10-02 12:06:20,347 INFO === fit budget for this process spent. Pools are checkpointed; exit 3 so the restart loop starts a fresh process (see MAX_NEW_FITS). ===
+2026-10-02 12:06:20,995 INFO === TAPAS privacy audit: dp2stageu (dp=True, kind=neural, formal eps=1.0, delta=1e-05, num_train=200, num_test=500) ===
+2026-10-02 12:06:20,995 INFO     cache benchmark_tapas/cache/dp2stageu_audit   results benchmark_tapas/results/sample_size_sweep/dp2stageu   total fits = 700   sample_batch=100
+2026-10-02 12:06:21,029 INFO Sampled fixed background of 499 records (seed=42)
+2026-10-02 12:06:21,030 INFO Selected random target t at index 12435, alternate t' at index 1204
+2026-10-02 12:06:21,044 INFO Loading cached threat model from /home/open0051/priv-sdg/benchmark_tapas/cache/dp2stageu_audit/threat_model.pkl
+2026-10-02 12:13:04,287 INFO     test pool 500/500 checkpointed (+4 fits, 403s, 53 left in this process)
+2026-10-02 12:13:04,287 INFO     pools: 200/200 train, 500/500 test  (+4 new fits, 403s)
+2026-10-02 12:13:04,390 INFO     guard train/D+: 100/100 distinct (100.0%)
+2026-10-02 12:13:04,468 INFO     guard train/D-: 100/100 distinct (100.0%)
+2026-10-02 12:13:04,692 INFO     guard test/D+: 250/250 distinct (100.0%)
+2026-10-02 12:13:04,887 INFO     guard test/D-: 250/250 distinct (100.0%)
+2026-10-02 12:13:04,890 INFO     formal privacy over 700 logged fits: spent eps max 0.9927 (target 1.0), sigma mean 3.438, steps [160], WITHIN budget
+2026-10-02 12:13:04,890 INFO   [Groundhog] training on 200 simulated datasets...
+2026-10-02 12:13:06,139 INFO   [Groundhog] testing on 500 simulated datasets...
+2026-10-02 12:13:11,618 INFO   [Groundhog] done -- eps_low_95=0.000  auc=0.517  (6.65s, 211.98 MB)
+2026-10-02 12:13:11,687 INFO   [ShadowModelling(RandomQueries)] training on 200 simulated datasets...
+2026-10-02 12:13:40,854 INFO   [ShadowModelling(RandomQueries)] testing on 500 simulated datasets...
+2026-10-02 12:16:10,771 INFO   [ShadowModelling(RandomQueries)] done -- eps_low_95=0.000  auc=0.544  (178.95s, 4.79 MB)
+2026-10-02 12:16:10,850 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] training on 200 simulated datasets...
+2026-10-02 12:16:11,201 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] testing on 500 simulated datasets...
+2026-10-02 12:16:13,004 INFO   [LocalNeighbourhood(L_2, 0.250411558405805, accuracy)] done -- eps_low_95=0.000  auc=0.518  (2.13s, 1.12 MB)
+2026-10-02 12:16:13,130 INFO   [ProbabilityEstimation(KernelDensity())] training on 200 simulated datasets...
+2026-10-02 12:16:13,492 INFO   [ProbabilityEstimation(KernelDensity())] testing on 500 simulated datasets...
+2026-10-02 12:16:15,444 INFO   [ProbabilityEstimation(KernelDensity())] done -- eps_low_95=0.000  auc=0.561  (2.12s, 0.97 MB)
+2026-10-02 12:16:15,521 INFO   [ClosestDistance(L_2, accuracy)] training on 200 simulated datasets...
+2026-10-02 12:16:15,874 INFO   [ClosestDistance(L_2, accuracy)] testing on 500 simulated datasets...
+2026-10-02 12:16:17,733 INFO   [ClosestDistance(L_2, accuracy)] done -- eps_low_95=0.000  auc=0.538  (1.99s, 1.1 MB)
+2026-10-02 12:16:17,807 INFO     wrote 2500 raw scores -> raw_scores_dp2stageu_200_500.csv
+2026-10-02 12:16:17,809 INFO === done: worst-case eps_low_95=0.000 [0.000, 0.034] via Groundhog  (formal eps 1.0) ===
