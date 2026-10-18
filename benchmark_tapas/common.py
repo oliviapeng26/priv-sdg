@@ -24,6 +24,7 @@ world D- = background+alternate(t'), both size BACKGROUND_SIZE+1, deterministic
 on every draw.
 """
 
+import contextlib
 import json
 import logging
 import os
@@ -173,6 +174,52 @@ def select_fixed_target(train_dataset: TabularDataset, background_indices: set,
     return target, alternate
 
 
+# -- Per-fit seed override (opt-in, see SynthcityGenerator.seed_fix) ------
+
+@contextlib.contextmanager
+def forced_synthcity_seed(seed: int):
+    """Inside the block, every call to synthcity's enable_reproducible_results seeds
+    with `seed`, whatever seed the caller passed. Yields the names of the modules
+    that were patched.
+
+    The function is found, not listed: the home module (synthcity.utils.reproducibility)
+    is patched, and so is every loaded synthcity module that imported the function by
+    name (plugin, gan, mlp, ... whatever is loaded now). A module first imported inside
+    the block binds the patched home attribute, so on exit every synthcity module still
+    holding the override is put back as well. Restoration is in `finally`, so an
+    exception raised mid-fit (a CUDA out-of-memory error, say) cannot leave the
+    override installed. Only modules whose name starts with "synthcity" are looked at.
+    """
+    import synthcity.utils.reproducibility as repro
+    original = repro.enable_reproducible_results
+
+    def forced(*args, **kwargs):
+        return original(seed)
+
+    sites = []
+    for name, mod in list(sys.modules.items()):
+        if mod is None or not name.startswith("synthcity"):
+            continue
+        try:
+            if getattr(mod, "enable_reproducible_results", None) is original:
+                sites.append(mod)
+        except Exception:
+            continue
+    for mod in sites:
+        mod.enable_reproducible_results = forced
+    try:
+        yield [m.__name__ for m in sites]
+    finally:
+        for name, mod in list(sys.modules.items()):
+            if mod is None or not name.startswith("synthcity"):
+                continue
+            try:
+                if getattr(mod, "enable_reproducible_results", None) is forced:
+                    mod.enable_reproducible_results = original
+            except Exception:
+                continue
+
+
 # -- Synthcity-TAPAS generator wrapper -----------------------------------
 
 class SynthcityGenerator(Generator):
@@ -209,16 +256,31 @@ class SynthcityGenerator(Generator):
     `generate()` deliberately does NOT pass random_state: synthcity reseeds there
     only when one is given, so sampling continues from the post-fit RNG state and
     inherits the per-fit variation.
+
+    seed_fix (default False, which leaves every line above exactly as it was).
+    A 3-fit diagnostic (diagnostics/check_dpgan_seed.py) logged that DPGAN uses the
+    per-fit random_state only in the first two enable_reproducible_results calls
+    (plugin.py:97, :224); the later ones (mlp.py:146, gan.py:231) use seed 0, so
+    weight init, Opacus noise and batch order do not depend on it. With
+    seed_fix=True, fit() and generate() each run inside forced_synthcity_seed(s),
+    where s is this fit's seed (seed_base + _fit_counter, read before the counter
+    moves), so every reseed uses s; and generate() passes random_state=s to the
+    plugin so sampling starts from a state set by s too. Opacus's
+    get_noise_multiplier is not touched. The flag is stored on the object, so it
+    travels in the pickled threat model, and run_dpgan_eps_sweep.py records it in
+    the audit configuration that decides whether a cache may be resumed.
     """
     def __init__(self, method: str, description: DataDescription,
                  epsilon: float = FORMAL_EPSILON, plugin_kwargs: dict = None,
-                 seed_base: int = TAPAS_GENERATOR_SEED_BASE):
+                 seed_base: int = TAPAS_GENERATOR_SEED_BASE, seed_fix: bool = False):
         super().__init__()
         self.method = method
         self.description = description
         self.epsilon = epsilon
         self.plugin_kwargs = plugin_kwargs or {}
         self.seed_base = seed_base
+        self.seed_fix = seed_fix
+        self._last_fit_seed = None
         self._fit_counter = 0
         self._plugin = None
 
@@ -240,14 +302,29 @@ class SynthcityGenerator(Generator):
         df[CATEGORICAL_COLS] = df[CATEGORICAL_COLS].astype("category")
 
         loader = GenericDataLoader(df, target_column=TARGET_COL)
-        self._plugin = Plugins().get(self.method, **self._plugin_args())
-        self._plugin.fit(loader)
+        args = self._plugin_args()
+        # Pickles from before seed_fix existed have no attribute: they are seed_fix=False.
+        if getattr(self, "seed_fix", False):
+            with forced_synthcity_seed(args["random_state"]):
+                self._plugin = Plugins().get(self.method, **args)
+                self._plugin.fit(loader)
+            self._last_fit_seed = args["random_state"]
+        else:
+            self._plugin = Plugins().get(self.method, **args)
+            self._plugin.fit(loader)
         self._fit_counter += 1
         self.trained = True
 
     def generate(self, num_samples, random_state=None):
         assert self.trained, "Generator must be fit before generate()."
-        synth_df = self._plugin.generate(count=num_samples).dataframe()
+        if getattr(self, "seed_fix", False):
+            # The seed of the fit that just ran (fit() has already moved the counter).
+            seed = self._last_fit_seed
+            with forced_synthcity_seed(seed):
+                synth_df = self._plugin.generate(count=num_samples,
+                                                 random_state=seed).dataframe()
+        else:
+            synth_df = self._plugin.generate(count=num_samples).dataframe()
         synth_df[CATEGORICAL_COLS] = synth_df[CATEGORICAL_COLS].astype(str)
         synth_df = synth_df[list(self.description.columns)].reset_index(drop=True)
         return TabularDataset(synth_df, self.description)
@@ -329,7 +406,7 @@ def build_or_load_threat_model(cache_dir: Path, method: str, background_dataset,
                                target_record, alternate_record, description,
                                epsilon: float = FORMAL_EPSILON, plugin_kwargs: dict = None,
                                seed_base: int = TAPAS_GENERATOR_SEED_BASE,
-                               audit_config: dict = None):
+                               audit_config: dict = None, seed_fix: bool = False):
     """Load cached threat model if present (with any memoised simulations),
     otherwise build fresh. Run scripts must call threat_model.save() again after
     each attack to persist newly-generated simulations.
@@ -339,7 +416,9 @@ def build_or_load_threat_model(cache_dir: Path, method: str, background_dataset,
     threat model keeps the generator (and seed_base, fit counter) it was pickled
     with, so callers that vary it must check what they loaded. audit_config, if
     given, is attached to a fresh build before its first save so the pickle
-    records how it was made; a loaded one is returned as is."""
+    records how it was made; a loaded one is returned as is. seed_fix, like
+    seed_base, only applies to a fresh build: a loaded threat model keeps the
+    generator it was pickled with, so callers must compare what they loaded."""
     cache_path = cache_dir / "threat_model"
     if (cache_dir / "threat_model.pkl").exists():
         log.info(f"Loading cached threat model from {cache_path}.pkl")
@@ -347,7 +426,7 @@ def build_or_load_threat_model(cache_dir: Path, method: str, background_dataset,
 
     log.info(f"Building new threat model for {method} (no cache found)")
     generator = SynthcityGenerator(method, description, epsilon, plugin_kwargs,
-                                   seed_base=seed_base)
+                                   seed_base=seed_base, seed_fix=seed_fix)
     threat_model = SwapTargetedMIA(
         attacker_knowledge_data=tm.ExactDataKnowledge(background_dataset),
         target_record=target_record,

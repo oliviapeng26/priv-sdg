@@ -95,6 +95,15 @@ TAGGED RUNS -- VARYING THE PAIR, THE BACKGROUND OR THE SEEDS AT A FIXED EPS
     treated as the default configuration, corrected by what the pickle itself still
     shows (eps, seed base, n_iter, the background and the t/t' records).
 
+    --seed-fix switches on SynthcityGenerator(seed_fix=True): every reseed inside a
+    fit and its generate uses that fit's seed (seed_base + i), and generate() passes
+    it to the plugin (see common.forced_synthcity_seed). It changes the mechanism's
+    randomness, so like the options above it requires --tag. The flag is recorded as
+    "seed_fix" in the configuration (meta.json and the pickled threat model), and a
+    cache is resumed only if its configuration AND its generator agree with it, so a
+    seed-fix run never loads a non-seed-fix cache or the reverse. Pickles from before
+    the flag existed count as seed_fix=False.
+
     --dry-run prints the resolved configuration and every path the run would write,
     marking the ones that already exist, and exits without generating anything.
 
@@ -116,6 +125,7 @@ Run from the repo root, venv active:
   python benchmark_tapas/audits/run_dpgan_eps_sweep.py --epsilons 0.1 --allow-degenerate
   python benchmark_tapas/audits/run_dpgan_eps_sweep.py --epsilons 1.0 --seed-base 10000 --tag seedbase10000
   python benchmark_tapas/audits/run_dpgan_eps_sweep.py --epsilons 1.0 --tag seedbase10000 --seed-base 10000 --dry-run
+  python benchmark_tapas/audits/run_dpgan_eps_sweep.py --epsilons 0.5 1 10 --tag seedfix --seed-fix
 
 Resumable: the pools are saved every --chunk fits (default 100, the same chunked
 growth run_full_audit_placebo.py uses), and finished attacks are cached, so a
@@ -196,7 +206,7 @@ def eps_slug(eps: float) -> str:
 # (and run_eps_nudge.py / run_full_audit_placebo.py, which call run_one_epsilon with
 # no options) ever gets.
 RUN_OPTIONS = ("tag", "seed_base", "background_seed", "target_seed",
-               "target_index", "alternate_index")
+               "target_index", "alternate_index", "seed_fix")
 TAG_PATTERN = re.compile(r"[A-Za-z0-9-]+")
 
 # Captured at import, before any caller can rebind it (run_full_audit_placebo.py
@@ -288,6 +298,7 @@ def build_config(epsilon: float, options: dict, background_idx, target, alternat
         "attack_seed": SCORE_ATTACK_SEED,
         "n_iter": METHOD_CONFIG[METHOD]["plugin_kwargs"].get("n_iter"),
         "tag": options.get("tag"),
+        "seed_fix": bool(options.get("seed_fix")),
     }
 
 
@@ -298,7 +309,8 @@ def stored_config(threat_model, current: dict) -> dict:
     and the background and t/t' records it actually holds."""
     stored = getattr(threat_model, "audit_config", None)
     if stored is not None:
-        return stored
+        # Recorded before seed_fix existed: that run was seed_fix=False.
+        return {"seed_fix": False, **stored}
     selection, target_seed = _default_target_selection()
     legacy = dict(current, num_train=NUM_TRAIN, num_test=NUM_TEST,
                   background_seed=BACKGROUND_SEED, target_selection=selection,
@@ -307,6 +319,7 @@ def stored_config(threat_model, current: dict) -> dict:
     legacy["formal_epsilon"] = float(gen.epsilon)
     legacy["seed_base"] = getattr(gen, "seed_base", TAPAS_GENERATOR_SEED_BASE)
     legacy["n_iter"] = gen.plugin_kwargs.get("n_iter")
+    legacy["seed_fix"] = bool(getattr(gen, "seed_fix", False))
     background = threat_model.atk_know_data.attacker_knowledge.training_dataset
     legacy["background_sha256"] = background_fingerprint(background.data.index)
     legacy["target_index"] = int(threat_model.target_record.id)
@@ -552,6 +565,7 @@ def run_one_epsilon(epsilon: float, device_kwargs: dict, allow_degenerate: bool,
         target_record=target, alternate_record=alternate, description=description,
         epsilon=epsilon, plugin_kwargs=plugin_kwargs,
         seed_base=config["seed_base"], audit_config=config,
+        seed_fix=config["seed_fix"],
     )
     if resuming:
         # Before any directory is created or any fit run: a cache made under another
@@ -570,6 +584,16 @@ def run_one_epsilon(epsilon: float, device_kwargs: dict, allow_degenerate: bool,
         raise RuntimeError(
             f"{label}: cached threat model at {cache_dir} was built with "
             f"epsilon={cached_eps}, not {epsilon}. Delete that directory and re-run.")
+    # check_config compares the recorded configuration; this compares the generator that
+    # will actually do the fits, so the flag cannot be wrong in the record and right
+    # in the pickle, or the reverse.
+    gen_seed_fix = bool(getattr(gen, "seed_fix", False))
+    if gen_seed_fix != config["seed_fix"]:
+        raise ConfigMismatch(
+            f"{label}: cached generator has seed_fix={gen_seed_fix}, this run has "
+            f"seed_fix={config['seed_fix']}. Use a different --tag, or delete "
+            f"{cache_dir} if it is yours to discard.")
+    log.info(f"    seed_fix={gen_seed_fix}")
     log.info(f"    resuming at fit {getattr(gen, '_fit_counter', 0)} "
              f"(next seed {gen.seed_base + gen._fit_counter}), generator eps={cached_eps}")
 
@@ -638,6 +662,7 @@ def run_one_epsilon(epsilon: float, device_kwargs: dict, allow_degenerate: bool,
         "new_fits_this_run": n_after - n_before,
         "distinct_fractions": fractions,
         "degenerate_pool": degenerate,
+        "seed_fix": config["seed_fix"],
         "attacks_without_raw_scores": no_scores,
         # On a RESUMED run the pools already exist, so pool_wall_clock_s covers only
         # the fits done in this invocation -- read it together with new_fits_this_run
@@ -745,6 +770,12 @@ def main() -> int:
                         help="explicit train-set index of the target t (with --alternate-index)")
     parser.add_argument("--alternate-index", type=int, default=None,
                         help="explicit train-set index of the replacement t' (with --target-index)")
+    parser.add_argument("--seed-fix", dest="seed_fix", action="store_const", const=True,
+                        default=None,
+                        help="every reseed inside a fit and its generate uses that fit's "
+                             "seed, and generate() passes it to the plugin (default: off, "
+                             "the old behaviour). Changes the mechanism's randomness, so "
+                             "it requires --tag")
     parser.add_argument("--dry-run", action="store_true",
                         help="print the resolved configuration and every output path, "
                              "then exit without generating or writing anything")
