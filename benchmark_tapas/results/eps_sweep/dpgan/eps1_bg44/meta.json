@@ -1,0 +1,40 @@
+{
+  "formal_epsilon": 1.0,
+  "replacement_epsilon": 2.0,
+  "method": "dpgan",
+  "num_train": 1000,
+  "num_test": 2500,
+  "plugin_kwargs": {
+    "n_iter": "50",
+    "device": "cuda"
+  },
+  "pool_wall_clock_s": 36412.9,
+  "attack_wall_clock_s": 1094.69,
+  "total_wall_clock_s": 37507.590000000004,
+  "new_fits_this_run": 3500,
+  "distinct_fractions": {
+    "train/D+": 1.0,
+    "train/D-": 1.0,
+    "test/D+": 1.0,
+    "test/D-": 1.0
+  },
+  "degenerate_pool": false,
+  "attacks_without_raw_scores": [],
+  "note": "pool_wall_clock_s and total_wall_clock_s cover this invocation only; see new_fits_this_run to tell a fresh arm from a resumed one",
+  "config": {
+    "method": "dpgan",
+    "formal_epsilon": 1.0,
+    "num_train": 1000,
+    "num_test": 2500,
+    "seed_base": 1000,
+    "background_seed": 44,
+    "background_sha256": "c662f1e76457ab195f3ace1902eb8761ce44440c0ca0569dc3f4939ecabb0c15",
+    "target_selection": "explicit",
+    "target_seed": null,
+    "target_index": 12435,
+    "alternate_index": 1204,
+    "attack_seed": 45,
+    "n_iter": 50,
+    "tag": "bg44"
+  }
+}

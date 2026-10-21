@@ -1,0 +1,72 @@
+2026-10-17 04:59:01,502 INFO Sampled fixed background of 499 records (seed=44)
+2026-10-17 04:59:01,502 INFO Using fixed target t at index 12435, alternate t' at index 1204
+2026-10-17 04:59:02,139 INFO === eps sweep privacy: eps=[1.0] at 1000/2500, device=cuda (torch.cuda.is_available()=True) ===
+2026-10-17 04:59:02,139 INFO     projected ~4.3 h per eps at 4.4 s/fit x 3500 fits -> ~4.3 h total
+2026-10-17 04:59:02,139 INFO === dpgan eps=1 tag=bg44 (num_train=1000, num_test=2500, plugin_kwargs={'n_iter': 50, 'device': 'cuda'}) ===
+2026-10-17 04:59:02,139 INFO     cache benchmark_tapas/cache/dpgan_eps1_bg44   total fits = 3500
+2026-10-17 04:59:02,177 INFO Sampled fixed background of 499 records (seed=44)
+2026-10-17 04:59:02,177 INFO Using fixed target t at index 12435, alternate t' at index 1204
+2026-10-17 04:59:02,177 INFO     config {"method": "dpgan", "formal_epsilon": 1.0, "num_train": 1000, "num_test": 2500, "seed_base": 1000, "background_seed": 44, "background_sha256": "c662f1e76457ab195f3ace1902eb8761ce44440c0ca0569dc3f4939ecabb0c15", "target_selection": "explicit", "target_seed": null, "target_index": 12435, "alternate_index": 1204, "attack_seed": 45, "n_iter": 50, "tag": "bg44"}
+2026-10-17 04:59:02,177 INFO Building new threat model for dpgan (no cache found)
+2026-10-17 04:59:02,178 INFO     resuming at fit 0 (next seed 1000), generator eps=1.0
+2026-10-17 04:59:04,809 INFO JAX version 0.6.2 available.
+2026-10-17 05:16:12,722 INFO     train pool 100/1000 saved  (100 fits in 17 min, 10.3 s/fit, 3400 fits left, ~9.7 h)
+2026-10-17 05:33:23,491 INFO     train pool 200/1000 saved  (200 fits in 34 min, 10.3 s/fit, 3300 fits left, ~9.4 h)
+2026-10-17 05:50:55,299 INFO     train pool 300/1000 saved  (300 fits in 52 min, 10.4 s/fit, 3200 fits left, ~9.2 h)
+2026-10-17 06:08:06,117 INFO     train pool 400/1000 saved  (400 fits in 69 min, 10.4 s/fit, 3100 fits left, ~8.9 h)
+2026-10-17 06:25:30,173 INFO     train pool 500/1000 saved  (500 fits in 86 min, 10.4 s/fit, 3000 fits left, ~8.6 h)
+2026-10-17 06:42:48,923 INFO     train pool 600/1000 saved  (600 fits in 104 min, 10.4 s/fit, 2900 fits left, ~8.4 h)
+2026-10-17 07:00:04,800 INFO     train pool 700/1000 saved  (700 fits in 121 min, 10.4 s/fit, 2800 fits left, ~8.1 h)
+2026-10-17 07:17:22,267 INFO     train pool 800/1000 saved  (800 fits in 138 min, 10.4 s/fit, 2700 fits left, ~7.8 h)
+2026-10-17 07:34:35,775 INFO     train pool 900/1000 saved  (900 fits in 156 min, 10.4 s/fit, 2600 fits left, ~7.5 h)
+2026-10-17 07:51:56,701 INFO     train pool 1000/1000 saved  (1000 fits in 173 min, 10.4 s/fit, 2500 fits left, ~7.2 h)
+2026-10-17 08:09:28,068 INFO     test pool 100/2500 saved  (1100 fits in 190 min, 10.4 s/fit, 2400 fits left, ~6.9 h)
+2026-10-17 08:26:51,400 INFO     test pool 200/2500 saved  (1200 fits in 208 min, 10.4 s/fit, 2300 fits left, ~6.6 h)
+2026-10-17 08:44:13,734 INFO     test pool 300/2500 saved  (1300 fits in 225 min, 10.4 s/fit, 2200 fits left, ~6.4 h)
+2026-10-17 09:01:28,990 INFO     test pool 400/2500 saved  (1400 fits in 242 min, 10.4 s/fit, 2100 fits left, ~6.1 h)
+2026-10-17 09:18:54,219 INFO     test pool 500/2500 saved  (1500 fits in 260 min, 10.4 s/fit, 2000 fits left, ~5.8 h)
+2026-10-17 09:36:26,194 INFO     test pool 600/2500 saved  (1600 fits in 277 min, 10.4 s/fit, 1900 fits left, ~5.5 h)
+2026-10-17 09:53:48,740 INFO     test pool 700/2500 saved  (1700 fits in 295 min, 10.4 s/fit, 1800 fits left, ~5.2 h)
+2026-10-17 10:11:13,874 INFO     test pool 800/2500 saved  (1800 fits in 312 min, 10.4 s/fit, 1700 fits left, ~4.9 h)
+2026-10-17 10:28:42,360 INFO     test pool 900/2500 saved  (1900 fits in 330 min, 10.4 s/fit, 1600 fits left, ~4.6 h)
+2026-10-17 10:46:03,403 INFO     test pool 1000/2500 saved  (2000 fits in 347 min, 10.4 s/fit, 1500 fits left, ~4.3 h)
+2026-10-17 11:03:25,655 INFO     test pool 1100/2500 saved  (2100 fits in 364 min, 10.4 s/fit, 1400 fits left, ~4.0 h)
+2026-10-17 11:20:46,959 INFO     test pool 1200/2500 saved  (2200 fits in 382 min, 10.4 s/fit, 1300 fits left, ~3.8 h)
+2026-10-17 11:38:14,416 INFO     test pool 1300/2500 saved  (2300 fits in 399 min, 10.4 s/fit, 1200 fits left, ~3.5 h)
+2026-10-17 11:55:50,573 INFO     test pool 1400/2500 saved  (2400 fits in 417 min, 10.4 s/fit, 1100 fits left, ~3.2 h)
+2026-10-17 12:13:18,126 INFO     test pool 1500/2500 saved  (2500 fits in 434 min, 10.4 s/fit, 1000 fits left, ~2.9 h)
+2026-10-17 12:30:40,167 INFO     test pool 1600/2500 saved  (2600 fits in 452 min, 10.4 s/fit, 900 fits left, ~2.6 h)
+2026-10-17 12:48:01,278 INFO     test pool 1700/2500 saved  (2700 fits in 469 min, 10.4 s/fit, 800 fits left, ~2.3 h)
+2026-10-17 13:05:24,468 INFO     test pool 1800/2500 saved  (2800 fits in 486 min, 10.4 s/fit, 700 fits left, ~2.0 h)
+2026-10-17 13:22:57,236 INFO     test pool 1900/2500 saved  (2900 fits in 504 min, 10.4 s/fit, 600 fits left, ~1.7 h)
+2026-10-17 13:39:37,392 INFO     test pool 2000/2500 saved  (3000 fits in 521 min, 10.4 s/fit, 500 fits left, ~1.4 h)
+2026-10-17 13:56:25,196 INFO     test pool 2100/2500 saved  (3100 fits in 537 min, 10.4 s/fit, 400 fits left, ~1.2 h)
+2026-10-17 14:13:38,199 INFO     test pool 2200/2500 saved  (3200 fits in 555 min, 10.4 s/fit, 300 fits left, ~0.9 h)
+2026-10-17 14:31:07,695 INFO     test pool 2300/2500 saved  (3300 fits in 572 min, 10.4 s/fit, 200 fits left, ~0.6 h)
+2026-10-17 14:48:26,886 INFO     test pool 2400/2500 saved  (3400 fits in 589 min, 10.4 s/fit, 100 fits left, ~0.3 h)
+2026-10-17 15:05:55,094 INFO     test pool 2500/2500 saved  (3500 fits in 607 min, 10.4 s/fit, 0 fits left, ~0.0 h)
+2026-10-17 15:05:55,094 INFO     pools: 1000 train / 2500 test  (+3500 new fits, 36413s)
+2026-10-17 15:05:55,796 INFO     guard train/D+: 500/500 distinct (100.0%)
+2026-10-17 15:05:56,391 INFO     guard train/D-: 500/500 distinct (100.0%)
+2026-10-17 15:05:57,597 INFO     guard test/D+: 1250/1250 distinct (100.0%)
+2026-10-17 15:05:58,596 INFO     guard test/D-: 1250/1250 distinct (100.0%)
+2026-10-17 15:06:03,831 INFO     exported 1000 train datasets (500,000 rows) -> synthetic_train.csv.gz [22.8 MB]
+2026-10-17 15:06:16,113 INFO     exported 2500 test datasets (1,250,000 rows) -> synthetic_test.csv.gz [56.8 MB]
+2026-10-17 15:06:16,133 INFO   [Groundhog] training on 1000 simulated datasets...
+2026-10-17 15:06:23,362 INFO   [Groundhog] testing on 2500 simulated datasets...
+2026-10-17 15:06:56,371 INFO   [Groundhog] done -- eps_low_95=2.773  auc=0.950  (39.61s, 1128.3 MB)
+2026-10-17 15:06:56,953 INFO   [ShadowModelling(RandomQueries)] training on 1000 simulated datasets...
+2026-10-17 15:09:42,234 INFO   [ShadowModelling(RandomQueries)] testing on 2500 simulated datasets...
+2026-10-17 15:23:41,308 INFO   [ShadowModelling(RandomQueries)] done -- eps_low_95=0.936  auc=0.714  (1004.07s, 22.36 MB)
+2026-10-17 15:23:41,857 INFO   [LocalNeighbourhood(L_2, 0.34518131876504865, accuracy)] training on 1000 simulated datasets...
+2026-10-17 15:23:46,427 INFO   [LocalNeighbourhood(L_2, 0.34518131876504865, accuracy)] testing on 2500 simulated datasets...
+2026-10-17 15:24:01,877 INFO   [LocalNeighbourhood(L_2, 0.34518131876504865, accuracy)] done -- eps_low_95=0.000  auc=0.500  (20.01s, 1.17 MB)
+2026-10-17 15:24:02,193 INFO   [ProbabilityEstimation(KernelDensity())] training on 1000 simulated datasets...
+2026-10-17 15:24:03,969 INFO   [ProbabilityEstimation(KernelDensity())] testing on 2500 simulated datasets...
+2026-10-17 15:24:14,412 INFO   [ProbabilityEstimation(KernelDensity())] done -- eps_low_95=0.000  auc=0.472  (11.03s, 1.02 MB)
+2026-10-17 15:24:15,716 INFO   [ClosestDistance(L_2, accuracy)] training on 1000 simulated datasets...
+2026-10-17 15:24:19,900 INFO   [ClosestDistance(L_2, accuracy)] testing on 2500 simulated datasets...
+2026-10-17 15:24:36,868 INFO   [ClosestDistance(L_2, accuracy)] done -- eps_low_95=0.000  auc=0.477  (19.97s, 1.16 MB)
+2026-10-17 15:24:38,192 INFO     wrote 12500 raw scores -> raw_scores_dpgan_eps1_bg44.csv
+2026-10-17 15:24:38,193 INFO === eps=1 tag=bg44 done: worst-case eps_low_95=2.773 [2.773, 3.676] via Groundhog (10.42 h) ===
+2026-10-17 15:24:38,193 INFO === all done in 10.43 h ===
