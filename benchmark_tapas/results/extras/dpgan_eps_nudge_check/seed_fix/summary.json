@@ -1,0 +1,335 @@
+{
+  "mode": "seed_fix",
+  "device": "cpu",
+  "seed_base": 1,
+  "seed_fix": true,
+  "epsilons": [
+    0.999,
+    1.0,
+    1.001
+  ],
+  "fits": [
+    {
+      "epsilon_requested": 0.999,
+      "make_private_with_epsilon": [
+        {
+          "target_epsilon": 0.999,
+          "target_delta": 0.0025906735751295338,
+          "epochs": 50,
+          "noise_multiplier": 11.71875
+        }
+      ],
+      "get_noise_multiplier": [
+        11.71875
+      ],
+      "reseed_seeds": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "reseed_log": [
+        [
+          "reseed",
+          1,
+          "synthcity/plugins/core/plugin.py:97",
+          "8509a2d383",
+          "d482b3c129"
+        ],
+        [
+          "reseed",
+          1,
+          "synthcity/plugins/core/plugin.py:224",
+          "8509a2d383",
+          "d482b3c129"
+        ],
+        [
+          "reseed",
+          1,
+          "synthcity/plugins/core/models/mlp.py:146",
+          "8509a2d383",
+          "d482b3c129"
+        ],
+        [
+          "reseed",
+          1,
+          "synthcity/plugins/core/models/mlp.py:146",
+          "8509a2d383",
+          "d482b3c129"
+        ],
+        [
+          "reseed",
+          1,
+          "synthcity/plugins/core/models/gan.py:231",
+          "8509a2d383",
+          "d482b3c129"
+        ],
+        [
+          "train_start",
+          null,
+          "GAN._train_epoch (first call)",
+          "8509a2d383",
+          "d482b3c129"
+        ],
+        [
+          "reseed",
+          1,
+          "synthcity/plugins/core/models/mlp.py:146",
+          "8509a2d383",
+          "d482b3c129"
+        ],
+        [
+          "reseed",
+          1,
+          "synthcity/plugins/core/models/mlp.py:146",
+          "8509a2d383",
+          "d482b3c129"
+        ],
+        [
+          "reseed",
+          1,
+          "synthcity/plugins/core/models/mlp.py:146",
+          "8509a2d383",
+          "d482b3c129"
+        ],
+        [
+          "reseed",
+          1,
+          "synthcity/plugins/core/plugin.py:331",
+          "8509a2d383",
+          "d482b3c129"
+        ]
+      ]
+    },
+    {
+      "epsilon_requested": 1.0,
+      "make_private_with_epsilon": [
+        {
+          "target_epsilon": 1.0,
+          "target_delta": 0.0025906735751295338,
+          "epochs": 50,
+          "noise_multiplier": 11.71875
+        }
+      ],
+      "get_noise_multiplier": [
+        11.71875
+      ],
+      "reseed_seeds": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "reseed_log": [
+        [
+          "reseed",
+          1,
+          "synthcity/plugins/core/plugin.py:97",
+          "8509a2d383",
+          "d482b3c129"
+        ],
+        [
+          "reseed",
+          1,
+          "synthcity/plugins/core/plugin.py:224",
+          "8509a2d383",
+          "d482b3c129"
+        ],
+        [
+          "reseed",
+          1,
+          "synthcity/plugins/core/models/mlp.py:146",
+          "8509a2d383",
+          "d482b3c129"
+        ],
+        [
+          "reseed",
+          1,
+          "synthcity/plugins/core/models/mlp.py:146",
+          "8509a2d383",
+          "d482b3c129"
+        ],
+        [
+          "reseed",
+          1,
+          "synthcity/plugins/core/models/gan.py:231",
+          "8509a2d383",
+          "d482b3c129"
+        ],
+        [
+          "train_start",
+          null,
+          "GAN._train_epoch (first call)",
+          "8509a2d383",
+          "d482b3c129"
+        ],
+        [
+          "reseed",
+          1,
+          "synthcity/plugins/core/plugin.py:331",
+          "8509a2d383",
+          "d482b3c129"
+        ]
+      ]
+    },
+    {
+      "epsilon_requested": 1.001,
+      "make_private_with_epsilon": [
+        {
+          "target_epsilon": 1.001,
+          "target_delta": 0.0025906735751295338,
+          "epochs": 50,
+          "noise_multiplier": 11.71875
+        }
+      ],
+      "get_noise_multiplier": [
+        11.71875
+      ],
+      "reseed_seeds": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "reseed_log": [
+        [
+          "reseed",
+          1,
+          "synthcity/plugins/core/plugin.py:97",
+          "8509a2d383",
+          "d482b3c129"
+        ],
+        [
+          "reseed",
+          1,
+          "synthcity/plugins/core/plugin.py:224",
+          "8509a2d383",
+          "d482b3c129"
+        ],
+        [
+          "reseed",
+          1,
+          "synthcity/plugins/core/models/mlp.py:146",
+          "8509a2d383",
+          "d482b3c129"
+        ],
+        [
+          "reseed",
+          1,
+          "synthcity/plugins/core/models/mlp.py:146",
+          "8509a2d383",
+          "d482b3c129"
+        ],
+        [
+          "reseed",
+          1,
+          "synthcity/plugins/core/models/gan.py:231",
+          "8509a2d383",
+          "d482b3c129"
+        ],
+        [
+          "train_start",
+          null,
+          "GAN._train_epoch (first call)",
+          "8509a2d383",
+          "d482b3c129"
+        ],
+        [
+          "reseed",
+          1,
+          "synthcity/plugins/core/plugin.py:331",
+          "8509a2d383",
+          "d482b3c129"
+        ]
+      ]
+    }
+  ],
+  "sigma_identical": {
+    "get_noise_multiplier": true,
+    "make_private_with_epsilon": true
+  },
+  "comparisons": {
+    "eps0.999_vs_eps1.0": {
+      "exactly_equal": true,
+      "shapes": [
+        [
+          500,
+          13
+        ],
+        [
+          500,
+          13
+        ]
+      ],
+      "rows_matching_fraction": 1.0,
+      "columns": {}
+    },
+    "eps1.0_vs_eps1.001": {
+      "exactly_equal": true,
+      "shapes": [
+        [
+          500,
+          13
+        ],
+        [
+          500,
+          13
+        ]
+      ],
+      "rows_matching_fraction": 1.0,
+      "columns": {}
+    },
+    "eps0.999_vs_eps1.001": {
+      "exactly_equal": true,
+      "shapes": [
+        [
+          500,
+          13
+        ],
+        [
+          500,
+          13
+        ]
+      ],
+      "rows_matching_fraction": 1.0,
+      "columns": {}
+    }
+  },
+  "train_start_hashes": [
+    [
+      "8509a2d383",
+      "d482b3c129"
+    ],
+    [
+      "8509a2d383",
+      "d482b3c129"
+    ],
+    [
+      "8509a2d383",
+      "d482b3c129"
+    ]
+  ],
+  "train_start_hash_match": {
+    "fit1_vs_fit2": {
+      "torch": true,
+      "numpy": true
+    },
+    "fit2_vs_fit3": {
+      "torch": true,
+      "numpy": true
+    },
+    "fit1_vs_fit3": {
+      "torch": true,
+      "numpy": true
+    }
+  }
+}

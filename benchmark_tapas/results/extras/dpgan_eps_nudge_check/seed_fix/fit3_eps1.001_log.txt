@@ -1,0 +1,10 @@
+mode=seed_fix  fit 3  epsilon=1.001  random_state=1  (reseed calls 1..5 during fit, 6.. during generate)
+make_private_with_epsilon: {'target_epsilon': 1.001, 'target_delta': 0.0025906735751295338, 'epochs': 50, 'noise_multiplier': 11.71875}
+get_noise_multiplier returns: 11.71875
+  1  seed=1  torch=8509a2d383 numpy=d482b3c129  synthcity/plugins/core/plugin.py:97
+  2  seed=1  torch=8509a2d383 numpy=d482b3c129  synthcity/plugins/core/plugin.py:224
+  3  seed=1  torch=8509a2d383 numpy=d482b3c129  synthcity/plugins/core/models/mlp.py:146
+  4  seed=1  torch=8509a2d383 numpy=d482b3c129  synthcity/plugins/core/models/mlp.py:146
+  5  seed=1  torch=8509a2d383 numpy=d482b3c129  synthcity/plugins/core/models/gan.py:231
+     -- training loop starts: torch=8509a2d383 numpy=d482b3c129  (GAN._train_epoch (first call))
+  6  seed=1  torch=8509a2d383 numpy=d482b3c129  synthcity/plugins/core/plugin.py:331

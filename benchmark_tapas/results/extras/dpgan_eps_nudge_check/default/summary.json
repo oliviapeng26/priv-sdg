@@ -1,0 +1,353 @@
+{
+  "mode": "default",
+  "device": "cpu",
+  "seed_base": 1,
+  "seed_fix": false,
+  "epsilons": [
+    0.999,
+    1.0,
+    1.001
+  ],
+  "fits": [
+    {
+      "epsilon_requested": 0.999,
+      "make_private_with_epsilon": [
+        {
+          "target_epsilon": 0.999,
+          "target_delta": 0.0025906735751295338,
+          "epochs": 50,
+          "noise_multiplier": 11.71875
+        }
+      ],
+      "get_noise_multiplier": [
+        11.71875
+      ],
+      "reseed_seeds": [
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "reseed_log": [
+        [
+          "reseed",
+          1,
+          "synthcity/plugins/core/plugin.py:97",
+          "8509a2d383",
+          "d482b3c129"
+        ],
+        [
+          "reseed",
+          1,
+          "synthcity/plugins/core/plugin.py:224",
+          "8509a2d383",
+          "d482b3c129"
+        ],
+        [
+          "reseed",
+          0,
+          "synthcity/plugins/core/models/mlp.py:146",
+          "50996bb5fa",
+          "fdae030722"
+        ],
+        [
+          "reseed",
+          0,
+          "synthcity/plugins/core/models/mlp.py:146",
+          "50996bb5fa",
+          "fdae030722"
+        ],
+        [
+          "reseed",
+          0,
+          "synthcity/plugins/core/models/gan.py:231",
+          "50996bb5fa",
+          "fdae030722"
+        ],
+        [
+          "train_start",
+          null,
+          "GAN._train_epoch (first call)",
+          "50996bb5fa",
+          "fdae030722"
+        ],
+        [
+          "reseed",
+          0,
+          "synthcity/plugins/core/models/mlp.py:146",
+          "50996bb5fa",
+          "fdae030722"
+        ],
+        [
+          "reseed",
+          0,
+          "synthcity/plugins/core/models/mlp.py:146",
+          "50996bb5fa",
+          "fdae030722"
+        ],
+        [
+          "reseed",
+          0,
+          "synthcity/plugins/core/models/mlp.py:146",
+          "50996bb5fa",
+          "fdae030722"
+        ]
+      ]
+    },
+    {
+      "epsilon_requested": 1.0,
+      "make_private_with_epsilon": [
+        {
+          "target_epsilon": 1.0,
+          "target_delta": 0.0025906735751295338,
+          "epochs": 50,
+          "noise_multiplier": 11.71875
+        }
+      ],
+      "get_noise_multiplier": [
+        11.71875
+      ],
+      "reseed_seeds": [
+        1,
+        1,
+        0,
+        0,
+        0
+      ],
+      "reseed_log": [
+        [
+          "reseed",
+          1,
+          "synthcity/plugins/core/plugin.py:97",
+          "8509a2d383",
+          "d482b3c129"
+        ],
+        [
+          "reseed",
+          1,
+          "synthcity/plugins/core/plugin.py:224",
+          "8509a2d383",
+          "d482b3c129"
+        ],
+        [
+          "reseed",
+          0,
+          "synthcity/plugins/core/models/mlp.py:146",
+          "50996bb5fa",
+          "fdae030722"
+        ],
+        [
+          "reseed",
+          0,
+          "synthcity/plugins/core/models/mlp.py:146",
+          "50996bb5fa",
+          "fdae030722"
+        ],
+        [
+          "reseed",
+          0,
+          "synthcity/plugins/core/models/gan.py:231",
+          "50996bb5fa",
+          "fdae030722"
+        ],
+        [
+          "train_start",
+          null,
+          "GAN._train_epoch (first call)",
+          "50996bb5fa",
+          "fdae030722"
+        ]
+      ]
+    },
+    {
+      "epsilon_requested": 1.001,
+      "make_private_with_epsilon": [
+        {
+          "target_epsilon": 1.001,
+          "target_delta": 0.0025906735751295338,
+          "epochs": 50,
+          "noise_multiplier": 11.71875
+        }
+      ],
+      "get_noise_multiplier": [
+        11.71875
+      ],
+      "reseed_seeds": [
+        1,
+        1,
+        0,
+        0,
+        0
+      ],
+      "reseed_log": [
+        [
+          "reseed",
+          1,
+          "synthcity/plugins/core/plugin.py:97",
+          "8509a2d383",
+          "d482b3c129"
+        ],
+        [
+          "reseed",
+          1,
+          "synthcity/plugins/core/plugin.py:224",
+          "8509a2d383",
+          "d482b3c129"
+        ],
+        [
+          "reseed",
+          0,
+          "synthcity/plugins/core/models/mlp.py:146",
+          "50996bb5fa",
+          "fdae030722"
+        ],
+        [
+          "reseed",
+          0,
+          "synthcity/plugins/core/models/mlp.py:146",
+          "50996bb5fa",
+          "fdae030722"
+        ],
+        [
+          "reseed",
+          0,
+          "synthcity/plugins/core/models/gan.py:231",
+          "50996bb5fa",
+          "fdae030722"
+        ],
+        [
+          "train_start",
+          null,
+          "GAN._train_epoch (first call)",
+          "50996bb5fa",
+          "fdae030722"
+        ]
+      ]
+    }
+  ],
+  "sigma_identical": {
+    "get_noise_multiplier": true,
+    "make_private_with_epsilon": true
+  },
+  "comparisons": {
+    "eps0.999_vs_eps1.0": {
+      "exactly_equal": false,
+      "shapes": [
+        [
+          500,
+          13
+        ],
+        [
+          500,
+          13
+        ]
+      ],
+      "rows_matching_fraction": 0.0,
+      "columns": {
+        "age": {
+          "mean_diff": 0.0011511603877723542,
+          "std_diff": 0.0005224824739865075
+        },
+        "education_num": {
+          "mean_diff": 0.003205042818259729,
+          "std_diff": -0.012107992046348798
+        },
+        "capital_gain": {
+          "mean_diff": 0.0012945116827305925,
+          "std_diff": 0.009901497438423251
+        },
+        "capital_loss": {
+          "mean_diff": 0.004755169040114526,
+          "std_diff": -0.008476476435588048
+        },
+        "hours_per_week": {
+          "mean_diff": 0.002895844369028122,
+          "std_diff": -0.010892584602606947
+        }
+      }
+    },
+    "eps1.0_vs_eps1.001": {
+      "exactly_equal": true,
+      "shapes": [
+        [
+          500,
+          13
+        ],
+        [
+          500,
+          13
+        ]
+      ],
+      "rows_matching_fraction": 1.0,
+      "columns": {}
+    },
+    "eps0.999_vs_eps1.001": {
+      "exactly_equal": false,
+      "shapes": [
+        [
+          500,
+          13
+        ],
+        [
+          500,
+          13
+        ]
+      ],
+      "rows_matching_fraction": 0.0,
+      "columns": {
+        "age": {
+          "mean_diff": 0.0011511603877723542,
+          "std_diff": 0.0005224824739865075
+        },
+        "education_num": {
+          "mean_diff": 0.003205042818259729,
+          "std_diff": -0.012107992046348798
+        },
+        "capital_gain": {
+          "mean_diff": 0.0012945116827305925,
+          "std_diff": 0.009901497438423251
+        },
+        "capital_loss": {
+          "mean_diff": 0.004755169040114526,
+          "std_diff": -0.008476476435588048
+        },
+        "hours_per_week": {
+          "mean_diff": 0.002895844369028122,
+          "std_diff": -0.010892584602606947
+        }
+      }
+    }
+  },
+  "train_start_hashes": [
+    [
+      "50996bb5fa",
+      "fdae030722"
+    ],
+    [
+      "50996bb5fa",
+      "fdae030722"
+    ],
+    [
+      "50996bb5fa",
+      "fdae030722"
+    ]
+  ],
+  "train_start_hash_match": {
+    "fit1_vs_fit2": {
+      "torch": true,
+      "numpy": true
+    },
+    "fit2_vs_fit3": {
+      "torch": true,
+      "numpy": true
+    },
+    "fit1_vs_fit3": {
+      "torch": true,
+      "numpy": true
+    }
+  }
+}

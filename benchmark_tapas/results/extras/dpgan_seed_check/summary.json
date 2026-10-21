@@ -1,0 +1,72 @@
+{
+  "seeds": [
+    1,
+    2,
+    1
+  ],
+  "sigma": [
+    [
+      11.71875
+    ],
+    [
+      11.71875
+    ],
+    [
+      11.71875
+    ]
+  ],
+  "comparisons": {
+    "fit1_vs_fit2": {
+      "exactly_equal": false,
+      "rows_matching_fraction": 0.0,
+      "columns": {
+        "age": {
+          "mean_diff": -0.0809268434130625,
+          "std_diff": -0.016282756431080556
+        },
+        "education_num": {
+          "mean_diff": -0.14746766085206853,
+          "std_diff": -0.006247654508829234
+        },
+        "capital_gain": {
+          "mean_diff": -0.2984439560956539,
+          "std_diff": 0.2277423473837475
+        },
+        "capital_loss": {
+          "mean_diff": 0.030583079338023192,
+          "std_diff": 0.017713416115473994
+        },
+        "hours_per_week": {
+          "mean_diff": -0.014068955611518663,
+          "std_diff": 0.03220889609251394
+        }
+      }
+    },
+    "fit1_vs_fit3": {
+      "exactly_equal": false,
+      "rows_matching_fraction": 0.0,
+      "columns": {
+        "age": {
+          "mean_diff": -0.0006758396674608202,
+          "std_diff": 0.0031254789184018833
+        },
+        "education_num": {
+          "mean_diff": 0.0023474485043050164,
+          "std_diff": 0.002291587959795713
+        },
+        "capital_gain": {
+          "mean_diff": 0.033191697468471726,
+          "std_diff": 0.0039660525555149095
+        },
+        "capital_loss": {
+          "mean_diff": -0.002999306634450666,
+          "std_diff": -0.015049007436139059
+        },
+        "hours_per_week": {
+          "mean_diff": -4.345928599708282e-05,
+          "std_diff": -0.004724866171513464
+        }
+      }
+    }
+  }
+}

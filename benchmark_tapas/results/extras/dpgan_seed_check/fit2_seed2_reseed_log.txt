@@ -1,0 +1,9 @@
+fit 2  random_state=2  (calls 1..8 during fit, 9.. during generate)
+  1  seed=2  synthcity/plugins/core/plugin.py:97
+  2  seed=2  synthcity/plugins/core/plugin.py:224
+  3  seed=0  synthcity/plugins/core/models/mlp.py:146
+  4  seed=0  synthcity/plugins/core/models/mlp.py:146
+  5  seed=0  synthcity/plugins/core/models/gan.py:231
+  6  seed=0  synthcity/plugins/core/models/mlp.py:146
+  7  seed=0  synthcity/plugins/core/models/mlp.py:146
+  8  seed=0  synthcity/plugins/core/models/mlp.py:146

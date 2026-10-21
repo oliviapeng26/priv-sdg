@@ -1,0 +1,83 @@
+{
+  "mode": "seed_fix",
+  "device": "cuda",
+  "seeds": [
+    1,
+    2,
+    1
+  ],
+  "sigma": [
+    [
+      11.71875
+    ],
+    [
+      11.71875
+    ],
+    [
+      11.71875
+    ]
+  ],
+  "last_reseed_before_training": [
+    [
+      1,
+      "synthcity/plugins/core/models/gan.py:231",
+      "8509a2d383",
+      "d482b3c129"
+    ],
+    [
+      2,
+      "synthcity/plugins/core/models/gan.py:231",
+      "37b5648cf8",
+      "f5c3c35490"
+    ],
+    [
+      1,
+      "synthcity/plugins/core/models/gan.py:231",
+      "8509a2d383",
+      "d482b3c129"
+    ]
+  ],
+  "hash_match": {
+    "fit1_vs_fit2": {
+      "torch": false,
+      "numpy": false
+    },
+    "fit1_vs_fit3": {
+      "torch": true,
+      "numpy": true
+    }
+  },
+  "comparisons": {
+    "fit1_vs_fit2": {
+      "exactly_equal": false,
+      "rows_matching_fraction": 0.0,
+      "columns": {
+        "age": {
+          "mean_diff": 0.09290689316634004,
+          "std_diff": -0.01383633668637306
+        },
+        "education_num": {
+          "mean_diff": -0.19446543609923234,
+          "std_diff": -0.009131152797996575
+        },
+        "capital_gain": {
+          "mean_diff": 0.12364982046554891,
+          "std_diff": -0.0014920502556015
+        },
+        "capital_loss": {
+          "mean_diff": -0.025880280539612638,
+          "std_diff": 0.0181132857064114
+        },
+        "hours_per_week": {
+          "mean_diff": -0.3675542325676361,
+          "std_diff": -0.028766217556858376
+        }
+      }
+    },
+    "fit1_vs_fit3": {
+      "exactly_equal": true,
+      "rows_matching_fraction": 1.0,
+      "columns": {}
+    }
+  }
+}

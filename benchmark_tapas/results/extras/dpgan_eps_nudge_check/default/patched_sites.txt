@@ -1,0 +1,23 @@
+enable_reproducible_results:
+  synthcity.utils.reproducibility
+  synthcity.plugins.core.models.convnet
+  synthcity.plugins.core.models.mlp
+  synthcity.plugins.core.models.survival_analysis.surv_deephit
+  synthcity.plugins.core.models.survival_analysis.surv_xgb
+  synthcity.plugins.core.models.ts_model
+  synthcity.plugins.core.models.time_series_survival.ts_surv_dynamic_deephit
+  synthcity.plugins.core.models.time_series_survival.ts_surv_coxph
+  synthcity.plugins.core.models.time_series_survival.ts_surv_xgb
+  synthcity.plugins.core.plugin
+  synthcity.plugins.core.models.gan
+  synthcity.plugins.privacy.plugin_privbayes
+  synthcity.plugins.core.models.time_to_event.tte_date
+  synthcity.plugins.core.models.time_to_event.tte_tenn
+  synthcity.plugins.core.models.ts_gan
+  synthcity.plugins.domain_adaptation.plugin_radialgan
+  synthcity.plugins.core.models.image_gan
+get_noise_multiplier:
+  opacus.accountants.utils
+  opacus.privacy_engine
+make_private_with_epsilon:
+  opacus.PrivacyEngine.make_private_with_epsilon
