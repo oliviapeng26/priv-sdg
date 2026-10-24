@@ -57,6 +57,12 @@ WHAT IS FIXED, AND ON WHOSE AUTHORITY
     In particular sigma stays at 5, batch_size at 500, max_per_sample_grad_norm at
     1.0, pac at 1.
 
+    The exception is the reviewer-response tuning arms, which move ONE of these per
+    arm and say so in their tag: batch_size (250, 100), or sigma calibrated to spend
+    eps over all 300 epochs (calibrate=True). They exist to show the benchmark's
+    conclusions do not hinge on the defaults, not to find a better setting. At the
+    defaults this class fits exactly what every committed result was produced under.
+
 THE SCALING ROUND TRIP, AND WHY preprocessor_eps IS ZERO
     TAPAS min-max scales the continuous columns to [0,1] against the training split.
     DP-CTGAN needs its own transformer, and with preprocessor_eps = 0 it cannot spend
@@ -98,6 +104,60 @@ BATCH_SIZE = 500
 MAX_PER_SAMPLE_GRAD_NORM = 1.0
 
 
+# -- The accountant, reproduced (tuning arms only) ------------------------
+#
+# snsynth 1.0.8 DPCTGAN.train builds an opacus 0.14 PrivacyEngine with
+# sample_rate = batch_size / n, the alphas below, and delta = 1/(n*sqrt(n)), and
+# calls optimizerD.step() TWICE per iteration (once after the fake batch, once after
+# the real one). The engine counts every step(), so one epoch is 2 * (n // batch_size)
+# privacy steps, not n // batch_size. Checked 2026-10-25 against every logged spend:
+# 2 steps per iteration reproduces 0.99996 / 1.4735 / 10.066 (500 rows) and 1.00379 /
+# 3.98199 (21,523 rows) bit-for-bit; 1 step per iteration matches none of them.
+#
+# Needs opacus 0.14 (opacus.privacy_analysis) -- the same env DP-CTGAN itself needs.
+# MUST MATCH sdg/generate_smartnoise.py's copy, which is duplicated rather than
+# imported because importing this module from sdg/ would pull in TAPAS.
+ACCOUNTANT_ALPHAS = [1 + x / 10.0 for x in range(1, 100)] + list(range(12, 64))
+
+
+def accountant_epsilon(n: int, batch_size: int, sigma: float, epochs: int) -> float:
+    """What the snsynth accountant reports after `epochs` completed epochs."""
+    from opacus import privacy_analysis
+    steps = 2 * epochs * max(n // batch_size, 1)
+    rdp = np.asarray(privacy_analysis.compute_rdp(
+        batch_size / n, sigma, 1, ACCOUNTANT_ALPHAS)) * steps
+    return float(privacy_analysis.get_privacy_spent(
+        ACCOUNTANT_ALPHAS, rdp, 1 / (n * np.sqrt(n)))[0])
+
+
+def calibrate_sigma(n: int, batch_size: int, epochs: int, epsilon: float) -> float:
+    """The smallest sigma whose spend after ALL `epochs` epochs is <= epsilon.
+
+    This turns eps from a stopping rule into a calibrated budget, as synthcity does
+    for DPGAN. The library still checks the accountant at the top of each epoch, but
+    epoch e's check sees the cost of e < epochs epochs, which is below the full
+    spend and so below epsilon: the break never fires and every epoch trains.
+    Bisection on a monotone function; returns the upper bracket, so the result
+    never overspends.
+    """
+    hi = float(SIGMA)
+    while accountant_epsilon(n, batch_size, hi, epochs) > epsilon:
+        hi *= 2
+        if hi > 1e4:
+            raise ValueError(f"no sigma reaches eps={epsilon} at n={n}: the accountant's "
+                             f"zero-step floor at delta=1/(n*sqrt(n)) is above it")
+    lo = hi / 2
+    while accountant_epsilon(n, batch_size, lo, epochs) <= epsilon:
+        hi, lo = lo, lo / 2
+    for _ in range(60):
+        mid = (lo + hi) / 2
+        if accountant_epsilon(n, batch_size, mid, epochs) <= epsilon:
+            hi = mid
+        else:
+            lo = mid
+    return hi
+
+
 class DPCTGANGenerator(Generator):
     """SmartNoise DP-CTGAN as a TAPAS Generator.
 
@@ -107,23 +167,42 @@ class DPCTGANGenerator(Generator):
     """
 
     def __init__(self, description, scalers: dict, epsilon: float = EPSILON,
-                 cuda: bool = True, epochs: int = EPOCHS):
+                 cuda: bool = True, epochs: int = EPOCHS, batch_size: int = BATCH_SIZE,
+                 sigma: float = SIGMA, calibrate: bool = False):
         super().__init__()
+        if batch_size % 2:
+            raise ValueError(f"batch_size={batch_size}: snsynth asserts an even batch size")
         self.description = description
         self.scalers = scalers          # {column: (min, max)} from common._fit_scalers
         self.epsilon = epsilon
         self.cuda = cuda
         # The epoch CAP, not a schedule. Which of the two binds -- the cap or the
         # budget -- is the question the epoch_cap sweep exists to answer, and
-        # last_epochs_run below is the answer for any single fit. Everything else
-        # stays at the SmartNoise default; this is the only knob.
+        # last_epochs_run below is the answer for any single fit.
         self.epochs = epochs
+        # The reviewer-response tuning knobs, one per arm (see run_dpctgan_audit.py's
+        # TUNING ARMS). At their defaults the fit is exactly the committed one.
+        # calibrate=True ignores `sigma` and solves for it per training size n, so
+        # that eps is spent over all `epochs` rather than used as a stopping rule.
+        self.batch_size = batch_size
+        self.sigma = sigma
+        self.calibrate = calibrate
+        self._calibrated_sigma = {}     # n -> sigma; the audit has one n (500)
         self._synth = None
         self._fit_counter = 0
         # Diagnostics from the most recent fit, read by --probe: how many epochs
         # survived the budget, and what the accountant said was spent.
+        # last_epochs_run is len(epsilon_list), which counts the epoch that triggered
+        # an early break as well, so it is one too high whenever the budget binds.
+        # Kept as is because committed logs and meta.json files report it;
+        # last_epochs_trained is the corrected count. last_epsilon_spent_final is
+        # the spend after the last trained epoch -- the last epsilon_list entry on an
+        # early break, but one epoch more than it when every epoch trained.
         self.last_epochs_run = None
         self.last_epsilon_spent = None
+        self.last_epochs_trained = None
+        self.last_epsilon_spent_final = None
+        self.last_sigma = None
 
     # -- scaling round trip ----------------------------------------------
 
@@ -175,12 +254,21 @@ class DPCTGANGenerator(Generator):
 
         raw = self._unscale(dataset.data)
         cols = list(raw.columns)
+        n = len(raw)
+        # Pools pickled before the tuning knobs existed were grown at the defaults.
+        batch_size = getattr(self, "batch_size", BATCH_SIZE)
+        sigma = getattr(self, "sigma", SIGMA)
+        if getattr(self, "calibrate", False):
+            if n not in self._calibrated_sigma:
+                self._calibrated_sigma[n] = calibrate_sigma(n, batch_size, self.epochs,
+                                                            self.epsilon)
+            sigma = self._calibrated_sigma[n]
 
         synth = DPCTGAN(
             epsilon=self.epsilon,
-            sigma=SIGMA,
+            sigma=sigma,
             epochs=self.epochs,
-            batch_size=BATCH_SIZE,
+            batch_size=batch_size,
             max_per_sample_grad_norm=MAX_PER_SAMPLE_GRAD_NORM,
             cuda=self.cuda,
             verbose=False,          # logging only; the default spams across 3500 fits
@@ -193,9 +281,17 @@ class DPCTGANGenerator(Generator):
         # actually got so a barely-trained generator cannot pass unnoticed.
         spent = getattr(synth, "epsilon_list", None) or getattr(
             getattr(synth, "gan", None), "epsilon_list", None)
+        self.last_sigma = float(sigma)
         if spent:
             self.last_epochs_run = len(spent)
             self.last_epsilon_spent = float(spent[-1])
+            if float(spent[-1]) > self.epsilon:      # broke early: last epoch untrained
+                self.last_epochs_trained = len(spent) - 1
+                self.last_epsilon_spent_final = float(spent[-1])
+            else:                                    # every epoch trained
+                self.last_epochs_trained = len(spent)
+                self.last_epsilon_spent_final = accountant_epsilon(
+                    n, batch_size, sigma, len(spent))
 
         self._synth = synth
         self._fit_counter += 1

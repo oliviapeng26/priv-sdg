@@ -114,6 +114,13 @@ RUNS_DIR = REPO_ROOT / "synthetic_data" / "runs"
 RESULTS_DIR = REPO_ROOT / "evaluation" / "results"
 COST_CSV = RESULTS_DIR / "computational_cost.csv"
 
+# Tuning arms (reviewer response, 2026-10): --batch-size on a GAN, named by --tag.
+# Own trees, so a tuning run can never overwrite a committed run or cost row; the
+# eval scripts read them with the same --tag. Must match the layout
+# sdg/generate_smartnoise.py uses for its dpctgan arms.
+TUNING_SYNTH_ROOT = REPO_ROOT / "synthetic_data" / "tuning"
+TUNING_COST_CSV = RESULTS_DIR / "tuning" / "generation_cost_synthcity.csv"
+
 EXPECTED_TRAIN_N = 21_523
 
 RESULTS_DIR.mkdir(exist_ok=True)
@@ -151,7 +158,7 @@ def device_for(method: str) -> str:
 
 
 def generate_synthcity(method: str, train_data: pd.DataFrame, seed: int,
-                       device: str) -> pd.DataFrame:
+                       device: str, batch_size: int = None) -> pd.DataFrame:
     """Fit + sample one Synthcity plugin at a fixed seed.
 
     Hyperparameters are untouched from the legacy notebooks: plugin defaults
@@ -160,6 +167,9 @@ def generate_synthcity(method: str, train_data: pd.DataFrame, seed: int,
     configured. It is consumed by Plugin.fit and passed again to
     Plugin.generate; both route through enable_reproducible_results, which
     seeds numpy, torch and random.
+
+    batch_size is a tuning arm's one moved knob; None leaves the plugin default
+    (200 for synthcity's ctgan and dpgan), i.e. the committed fit.
     """
     from synthcity.plugins import Plugins
     from synthcity.plugins.core.dataloader import GenericDataLoader
@@ -174,6 +184,8 @@ def generate_synthcity(method: str, train_data: pd.DataFrame, seed: int,
     if method in NEURAL_METHODS:
         kwargs["device"] = device
         kwargs["n_iter"] = GAN_N_ITER
+    if batch_size is not None:
+        kwargs["batch_size"] = batch_size
 
     log.info(f"  plugin={METHOD_SPEC[method]}, kwargs={kwargs}")
     plugin = Plugins().get(METHOD_SPEC[method], **kwargs)
@@ -186,25 +198,39 @@ def record_cost(row: dict) -> None:
 
     Keyed on stage as well as method+seed -- the eval scripts write fidelity and
     utility rows into this same file, so matching on method+seed alone would
-    delete their rows every time a generation run was repeated.
+    delete their rows every time a generation run was repeated. A tuning row (it
+    carries a tag) goes to TUNING_COST_CSV instead, keyed on tag as well.
     """
+    tuned = bool(row.get("tag"))
+    cost_csv = TUNING_COST_CSV if tuned else COST_CSV
+    keys = ["method", "seed", "stage"] + (["tag"] if tuned else [])
+    cost_csv.parent.mkdir(parents=True, exist_ok=True)
     df = pd.DataFrame([row])
-    if COST_CSV.exists():
-        existing = pd.read_csv(COST_CSV)
-        if {"method", "seed", "stage"}.issubset(existing.columns):
-            mask = ~((existing["method"] == row["method"])
-                     & (existing["seed"] == row["seed"])
-                     & (existing["stage"] == row["stage"]))
-            existing = existing[mask]
+    if cost_csv.exists():
+        existing = pd.read_csv(cost_csv)
+        if set(keys).issubset(existing.columns):
+            mask = pd.Series(True, index=existing.index)
+            for key in keys:
+                mask &= existing[key] == row[key]
+            existing = existing[~mask]
         df = pd.concat([existing, df], ignore_index=True)
-    df.to_csv(COST_CSV, index=False)
+    df.to_csv(cost_csv, index=False)
 
 
 def generate_one(method: str, train_data: pd.DataFrame, seed: int,
-                 regenerate: bool) -> bool:
-    """Generate (or reuse) one run. Returns True if a fit actually happened."""
-    RUNS_DIR.mkdir(parents=True, exist_ok=True)
-    path = RUNS_DIR / f"{method}_seed{seed}.csv"
+                 regenerate: bool, arm: dict = None) -> bool:
+    """Generate (or reuse) one run. Returns True if a fit actually happened.
+
+    arm, if given, is a tuning arm {"tag", "batch_size"}: the run goes to
+    synthetic_data/tuning/{method}/{tag}/seed{seed}.csv instead.
+    """
+    if arm:
+        out_dir = TUNING_SYNTH_ROOT / method / arm["tag"]
+        out_dir.mkdir(parents=True, exist_ok=True)
+        path = out_dir / f"seed{seed}.csv"
+    else:
+        RUNS_DIR.mkdir(parents=True, exist_ok=True)
+        path = RUNS_DIR / f"{method}_seed{seed}.csv"
 
     if path.exists() and not regenerate:
         log.info(f"  cached at {path.relative_to(REPO_ROOT)}, skipping "
@@ -219,7 +245,8 @@ def generate_one(method: str, train_data: pd.DataFrame, seed: int,
     # sdg/computational_overhead_LEGACY.csv.
     tracemalloc.start()
     t0 = time.perf_counter()
-    synthetic = generate_synthcity(method, train_data, seed, device)
+    synthetic = generate_synthcity(method, train_data, seed, device,
+                                   batch_size=arm["batch_size"] if arm else None)
     wall_clock_s = round(time.perf_counter() - t0, 2)
     _, peak_bytes = tracemalloc.get_traced_memory()
     tracemalloc.stop()
@@ -235,6 +262,7 @@ def generate_one(method: str, train_data: pd.DataFrame, seed: int,
         "method": method, "seed": seed, "stage": "generation",
         "wall_clock_s": wall_clock_s, "peak_memory_mb": peak_memory_mb,
         "device": device,
+        **({"tag": arm["tag"], "batch_size": arm["batch_size"]} if arm else {}),
     })
     log.info(f"  {len(synthetic)} rows | {wall_clock_s}s | {peak_memory_mb} MB peak "
              f"| device={device} -> {path.relative_to(REPO_ROOT)}")
@@ -249,15 +277,29 @@ def main() -> int:
                         help=f"how many of the {NUM_RUNS} run seeds to use (default: all)")
     parser.add_argument("--regenerate", action="store_true",
                         help="re-fit even when a cached run CSV exists")
+    parser.add_argument("--batch-size", type=int, default=None,
+                        help="tuning arm: GAN batch size (default: the plugin's own, "
+                             "200). Needs --tag; GAN methods only")
+    parser.add_argument("--tag", default="",
+                        help="names the tuning arm; runs go to "
+                             "synthetic_data/tuning/{method}/{tag}/")
     args = parser.parse_args()
 
     methods = args.methods or ALL_METHODS
     unknown = set(methods) - set(ALL_METHODS)
     if unknown:
         parser.error(f"unknown method(s): {sorted(unknown)}. Known: {ALL_METHODS}")
+    arm = None
+    if args.batch_size is not None or args.tag:
+        if args.batch_size is None or not args.tag:
+            parser.error("--batch-size and --tag go together: a tuning arm needs both")
+        if not set(methods) <= NEURAL_METHODS:
+            parser.error(f"--batch-size applies to {sorted(NEURAL_METHODS)} only")
+        arm = {"tag": args.tag, "batch_size": args.batch_size}
     run_seeds = RUN_SEEDS[:args.runs]
 
-    log.info(f"=== generate_runs: methods={methods}, seeds={run_seeds} ===")
+    log.info(f"=== generate_runs: methods={methods}, seeds={run_seeds}"
+             f"{', tuning arm ' + str(arm) if arm else ''} ===")
     log.info("devices: " + ", ".join(f"{m}={device_for(m)}" for m in methods))
 
     train_df = load_train_df()
@@ -282,7 +324,7 @@ def main() -> int:
         for run_idx, seed in enumerate(run_seeds):
             log.info(f"  run {run_idx}/{len(run_seeds) - 1}, seed {seed}")
             try:
-                fitted += generate_one(method, train_df, seed, args.regenerate)
+                fitted += generate_one(method, train_df, seed, args.regenerate, arm)
             except Exception:
                 log.error(f"  {method} seed {seed} FAILED:\n{traceback.format_exc()}")
 

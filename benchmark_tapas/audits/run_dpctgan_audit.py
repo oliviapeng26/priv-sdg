@@ -29,6 +29,24 @@ THE TWO EXPERIMENTS THIS SCRIPT RUNS
                     Answers: at a budget loose enough that the cap binds instead of
                     the accountant, does more training leak more?
 
+    tuning arms     eps=1.0, num_train/num_test=1000/2500, ONE knob moved per arm
+                    (reviewer response, 2026-10):
+                      --batch-size 250 --tag bs250
+                      --batch-size 100 --tag bs100
+                      --calibrate-sigma --tag sigmacal   (B=500, 300 epochs)
+                    Compared against the default eps=1.0 1000/2500 stage. They show
+                    whether the conclusions hinge on the defaults; they are not a
+                    search for a better setting. --tag is required whenever a knob
+                    moves, and a tagged arm gets its own pool and its own results
+                    under results/tuning/dp_ctgan/{tag}/.
+
+                    --calibrate-sigma solves for the sigma that spends exactly
+                    (at most) eps over ALL epoch_cap epochs, using the library's own
+                    accountant (dpctgan_generator.calibrate_sigma), so eps becomes a
+                    calibrated budget instead of a stopping rule. That also means
+                    every epoch trains: the arm changes "how eps is enforced", and
+                    longer training is the consequence, not a second knob.
+
     eps=100 is the right budget for the epoch sweep precisely because it is loose.
     At eps=1.0 the accountant stops training long before 300 epochs, so raising the
     cap to 500 would change nothing and the sweep would measure noise. Confirm with
@@ -112,6 +130,7 @@ OUTPUTS
       eps=1.0, cap 300      results/sample_size_sweep/dp_ctgan/{nt}_{nte}/
       other eps, cap 300    results/eps_sweep/dp_ctgan/eps{e}/{nt}_{nte}/
       cap != 300            results/extras/dp_ctgan_epoch_cap/eps{e}_ep{cap}/{nt}_{nte}/
+      --tag (tuning arm)    results/tuning/dp_ctgan/{tag}/{nt}_{nte}/
 
 RUN IT IN THE RESTART LOOP, NOT DIRECTLY
     The script builds at most MAX_NEW_FITS per process and exits EXIT_INCOMPLETE
@@ -172,7 +191,7 @@ sys.path.insert(0, str(REPO_ROOT))
 import tapas.threat_models as tm                                      # noqa: E402
 import common                                                         # noqa: E402
 from dpctgan_generator import (DPCTGANGenerator, EPSILON, SIGMA,      # noqa: E402
-                               EPOCHS, BATCH_SIZE)
+                               EPOCHS, BATCH_SIZE, calibrate_sigma)
 from config import CACHE_DIR, RESULTS_DIR, TRAIN_CSV, NUM_SYNTHETIC   # noqa: E402
 from seeds import SCORE_ATTACK_SEED                                   # noqa: E402
 
@@ -196,11 +215,15 @@ EXIT_INCOMPLETE = 3       # "pools not finished, restart me" -- not an error
 DPCTGAN_DIR = RESULTS_DIR / "sample_size_sweep" / "dp_ctgan"   # eps=1.0 stages + the shared log
 DPCTGAN_EPS_DIR = RESULTS_DIR / "eps_sweep" / "dp_ctgan"       # one eps{e}/ arm per other budget
 DPCTGAN_EPOCH_DIR = RESULTS_DIR / "extras" / "dp_ctgan_epoch_cap"
+DPCTGAN_TUNING_DIR = RESULTS_DIR / "tuning" / "dp_ctgan"       # one {tag}/ per tuning arm
 DPCTGAN_DIR.mkdir(parents=True, exist_ok=True)
 
 # Set by set_paths() once --epsilon and --epoch-cap are known. Module-level so the
 # helpers can read them at call time without threading them through every signature.
 CACHE_ROOT = RESULTS_ROOT = None
+# The tuning knobs for this process, set in main(). At these defaults the generator
+# is exactly the committed one.
+ARM = {"batch_size": BATCH_SIZE, "sigma": SIGMA, "calibrate": False, "tag": ""}
 
 logging.basicConfig(
     level=logging.INFO,
@@ -216,17 +239,22 @@ def eps_slug(eps: float) -> str:
     return f"eps{eps:g}"
 
 
-def set_paths(epsilon: float, epoch_cap: int, cache_tag: str = "") -> None:
+def set_paths(epsilon: float, epoch_cap: int, cache_tag: str = "", tag: str = "") -> None:
     """Point the pool cache and the results tree at this arm's own directories.
 
     epoch_cap == EPOCHS (300, the SmartNoise default) keeps the original pool cache,
     because that is where the 3500-fit pool already is -- see the pool notes in the
     module docstring. Any other cap is a different generator and gets its own pool
-    and its own results tree.
+    and its own results tree. A tuning arm (tag) gets both of its own as well, so it
+    can never load or overwrite a committed pool or result.
     """
     global CACHE_ROOT, RESULTS_ROOT
     suffix = f"_{cache_tag}" if cache_tag else ""
-    if epoch_cap == EPOCHS:
+    if tag:
+        cap = "" if epoch_cap == EPOCHS else f"_ep{epoch_cap}"
+        CACHE_ROOT = CACHE_DIR / f"dpctgan_{eps_slug(epsilon)}{cap}_{tag}{suffix}"
+        RESULTS_ROOT = DPCTGAN_TUNING_DIR / tag
+    elif epoch_cap == EPOCHS:
         CACHE_ROOT = CACHE_DIR / f"dpctgan_{eps_slug(epsilon)}{suffix}"
         RESULTS_ROOT = (DPCTGAN_DIR if epsilon == EPSILON
                         else DPCTGAN_EPS_DIR / eps_slug(epsilon))
@@ -301,8 +329,9 @@ def assert_distinct(threat_model) -> dict:
     if failures:
         raise DegeneratePool(
             f"DP-CTGAN simulations are not independent draws -- {'; '.join(failures)}.\n"
-            f"  Most likely the budget is exhausted almost immediately (sigma={SIGMA}, "
-            f"batch_size={BATCH_SIZE} on a 500-row background means sample rate 1.0), "
+            f"  Most likely the budget is exhausted almost immediately (sigma="
+            f"{'calibrated' if ARM['calibrate'] else ARM['sigma']}, batch_size="
+            f"{ARM['batch_size']} on a 500-row background; at 500 the sample rate is 1.0), "
             f"leaving an untrained generator that emits a near-constant table.\n"
             f"  Run --probe to see how many epochs survive, then decide whether to "
             f"record this as a finding about the library.\n"
@@ -366,6 +395,13 @@ def assert_generator_matches(threat_model, epsilon: float, epoch_cap: int) -> No
     effective_epochs = EPOCHS if got_epochs is None else got_epochs
     if int(effective_epochs) != int(epoch_cap):
         mismatches.append(f"epoch_cap: cache has {effective_epochs}, requested {epoch_cap}")
+    # Same reasoning for the tuning knobs: a pool pickled before they existed was
+    # grown at the defaults.
+    for knob, default in (("batch_size", BATCH_SIZE), ("sigma", SIGMA),
+                          ("calibrate", False)):
+        got = getattr(generator, knob, default)
+        if got != ARM[knob]:
+            mismatches.append(f"{knob}: cache has {got}, requested {ARM[knob]}")
     if mismatches:
         raise CacheMismatch(
             f"{CACHE_ROOT} was grown by a different generator -- {'; '.join(mismatches)}.\n"
@@ -420,7 +456,9 @@ def build_world(cuda: bool, epsilon: float, epoch_cap: int):
     target, alternate = common.select_random_target(train_dataset, background_idx)
     scalers = common._fit_scalers(pd.read_csv(TRAIN_CSV))
     generator = DPCTGANGenerator(description, scalers, epsilon=epsilon,
-                                 cuda=cuda, epochs=epoch_cap)
+                                 cuda=cuda, epochs=epoch_cap,
+                                 batch_size=ARM["batch_size"], sigma=ARM["sigma"],
+                                 calibrate=ARM["calibrate"])
     return description, background, target, alternate, generator
 
 
@@ -497,10 +535,17 @@ def probe(n_fits: int, cuda: bool, epsilon: float, epoch_cap: int) -> int:
     _, background, target, _, generator = build_world(cuda, epsilon, epoch_cap)
     member = background.copy()
     member.add_records(target, in_place=True)
-    log.info(f"=== probe: {n_fits} fits on {len(member.data)} rows, eps={epsilon:g}, "
-             f"sigma={SIGMA}, batch_size={BATCH_SIZE}, epoch cap={epoch_cap} ===")
-    log.info(f"    sample rate = batch_size / n = {BATCH_SIZE}/{len(member.data)} "
-             f"= {BATCH_SIZE / len(member.data):.2f}  (1.0 means no subsampling "
+    n, batch = len(member.data), ARM["batch_size"]
+    if ARM["calibrate"]:
+        sigma_desc = (f"calibrated {calibrate_sigma(n, batch, epoch_cap, epsilon):.4f} "
+                      f"(spends eps over all {epoch_cap} epochs at n={n})")
+    else:
+        sigma_desc = f"{ARM['sigma']}"
+    log.info(f"=== probe: {n_fits} fits on {n} rows, eps={epsilon:g}, "
+             f"sigma={sigma_desc}, batch_size={batch}, epoch cap={epoch_cap}"
+             f"{', tag ' + ARM['tag'] if ARM['tag'] else ''} ===")
+    log.info(f"    sample rate = batch_size / n = {batch}/{n} "
+             f"= {batch / n:.2f}  (1.0 means no subsampling "
              f"amplification)")
 
     times = []
@@ -513,7 +558,10 @@ def probe(n_fits: int, cuda: bool, epsilon: float, epoch_cap: int) -> int:
         uniq = len(synthetic.data.drop_duplicates())
         log.info(f"  fit {i}: {dt:.1f}s | epochs run "
                  f"{generator.last_epochs_run}/{epoch_cap} | eps spent "
-                 f"{generator.last_epsilon_spent} | {uniq}/{NUM_SYNTHETIC} unique rows")
+                 f"{generator.last_epsilon_spent} | trained "
+                 f"{generator.last_epochs_trained} epochs, final spend "
+                 f"{generator.last_epsilon_spent_final:.4f} | "
+                 f"{uniq}/{NUM_SYNTHETIC} unique rows")
 
     mean = float(np.mean(times))
     log.info(f"=== mean {mean:.1f}s/fit ===")
@@ -538,9 +586,11 @@ def probe(n_fits: int, cuda: bool, epsilon: float, epoch_cap: int) -> int:
 
 def run_audit(num_train: int, num_test: int, cuda: bool,
               epsilon: float, epoch_cap: int) -> int:
+    sigma_label = "calibrated" if ARM["calibrate"] else ARM["sigma"]
     log.info(f"=== TAPAS privacy audit: {METHOD} (SmartNoise) eps={epsilon:g}, "
-             f"sigma={SIGMA}, epoch_cap={epoch_cap}, batch={BATCH_SIZE}, "
-             f"num_train={num_train}, num_test={num_test} ===")
+             f"sigma={sigma_label}, epoch_cap={epoch_cap}, batch={ARM['batch_size']}, "
+             f"num_train={num_train}, num_test={num_test}"
+             f"{', tag ' + ARM['tag'] if ARM['tag'] else ''} ===")
     log.info(f"    cache {CACHE_ROOT.relative_to(REPO_ROOT)}   "
              f"results {RESULTS_ROOT.relative_to(REPO_ROOT)}   "
              f"total fits = {num_train + num_test}")
@@ -585,9 +635,9 @@ def run_audit(num_train: int, num_test: int, cuda: bool,
         )
         result.update(method=METHOD, dp=DPCTGAN_CONFIG["dp"], kind=DPCTGAN_CONFIG["kind"],
                       num_train=num_train, num_test=num_test,
-                      formal_epsilon=epsilon, sigma=SIGMA,
-                      epochs_cap=epoch_cap, batch_size=BATCH_SIZE,
-                      library="smartnoise")
+                      formal_epsilon=epsilon, sigma=sigma_label,
+                      epochs_cap=epoch_cap, batch_size=ARM["batch_size"],
+                      library="smartnoise", tag=ARM["tag"])
         # TAPAS's MIAttackSummary exposes the positive rates only.
         result["tn"] = 1.0 - result["fp"]
         result["fn"] = 1.0 - result["tp"]
@@ -609,17 +659,22 @@ def run_audit(num_train: int, num_test: int, cuda: bool,
                     f"JSON cache, which stores aggregates only. Delete those JSONs to "
                     f"recompute (cheap: the fits are memoised).")
 
+    fitted = threat_model.atk_know_gen.generator
     meta = {
         "method": METHOD, "library": "smartnoise", "formal_epsilon": epsilon,
-        "sigma": SIGMA, "epochs_cap": epoch_cap, "batch_size": BATCH_SIZE,
+        "sigma": sigma_label, "epochs_cap": epoch_cap, "batch_size": ARM["batch_size"],
+        "tag": ARM["tag"],
         "num_train": num_train, "num_test": num_test, "num_synthetic": NUM_SYNTHETIC,
         # Read off the THREAT MODEL's generator, not the local one: on a resumed
         # process the pool is already complete, so the local object never fits and
         # its diagnostics stay None. The pickled one carries the last fit's values.
-        "last_epochs_run": getattr(threat_model.atk_know_gen.generator,
-                                   "last_epochs_run", None),
-        "last_epsilon_spent": getattr(threat_model.atk_know_gen.generator,
-                                      "last_epsilon_spent", None),
+        "last_epochs_run": getattr(fitted, "last_epochs_run", None),
+        "last_epsilon_spent": getattr(fitted, "last_epsilon_spent", None),
+        # The corrected epoch count and the true final spend (see DPCTGANGenerator),
+        # and the sigma actually used -- the solved one on a calibrated arm.
+        "last_epochs_trained": getattr(fitted, "last_epochs_trained", None),
+        "last_epsilon_spent_final": getattr(fitted, "last_epsilon_spent_final", None),
+        "last_sigma": getattr(fitted, "last_sigma", None),
         "pool_wall_clock_s": pool_s, "new_fits_this_run": n_after - n_before,
         "attack_wall_clock_s": float(out["wall_time_s"].sum()),
         "distinct_fractions": fractions,
@@ -667,17 +722,41 @@ def main() -> int:
     ap.add_argument("--max-new-fits", type=int, default=MAX_NEW_FITS,
                     help=f"fits per process before exiting {EXIT_INCOMPLETE} for a "
                          f"fresh one (default {MAX_NEW_FITS}; see grow_pools)")
+    tuning = ap.add_argument_group("tuning arms (see TUNING ARMS above; each needs --tag)")
+    tuning.add_argument("--batch-size", type=int, default=BATCH_SIZE,
+                        help=f"DP-CTGAN batch size (default {BATCH_SIZE}); must be even")
+    knob = tuning.add_mutually_exclusive_group()
+    knob.add_argument("--sigma", type=float, default=SIGMA,
+                      help=f"fixed noise multiplier (default {SIGMA})")
+    knob.add_argument("--calibrate-sigma", action="store_true",
+                      help="solve sigma so eps is spent over all --epoch-cap epochs")
+    tuning.add_argument("--tag", default="",
+                        help="names the arm: its own pool cache and results under "
+                             "results/tuning/dp_ctgan/{tag}/")
     args = ap.parse_args()
+
+    moved = [f for f, on in (("--batch-size", args.batch_size != BATCH_SIZE),
+                             ("--sigma", args.sigma != SIGMA),
+                             ("--calibrate-sigma", args.calibrate_sigma)) if on]
+    if moved and not args.tag:
+        ap.error(f"{', '.join(moved)} needs --tag, so the arm cannot share a pool or a "
+                 f"results directory with the committed defaults")
+    if args.batch_size % 2:
+        ap.error(f"--batch-size {args.batch_size}: snsynth asserts an even batch size")
+    ARM.update(batch_size=args.batch_size, sigma=args.sigma,
+               calibrate=args.calibrate_sigma, tag=args.tag)
 
     MAX_NEW_FITS = args.max_new_fits
     CHECKPOINT_EVERY = min(CHECKPOINT_EVERY, MAX_NEW_FITS)
-    set_paths(args.epsilon, args.epoch_cap, args.cache_tag)
+    set_paths(args.epsilon, args.epoch_cap, args.cache_tag, args.tag)
 
     import torch
     cuda = torch.cuda.is_available()
     log.info(f"device: {'cuda' if cuda else 'cpu'} "
              f"(torch.cuda.is_available()={cuda}) | eps={args.epsilon:g} | "
-             f"epoch_cap={args.epoch_cap} | cache {CACHE_ROOT.name} | "
+             f"epoch_cap={args.epoch_cap} | batch_size={ARM['batch_size']} | sigma="
+             f"{'calibrated' if ARM['calibrate'] else ARM['sigma']} | "
+             f"cache {CACHE_ROOT.name} | "
              f"results {RESULTS_ROOT.relative_to(REPO_ROOT)}")
 
     if args.probe:

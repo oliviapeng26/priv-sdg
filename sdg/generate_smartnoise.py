@@ -115,6 +115,15 @@ Run from the repo root, env active:
   python sdg/generate_smartnoise.py --runs 2 --regenerate
   python sdg/generate_smartnoise.py aim --epsilon 10 --seeds 102   # one specific seed
 
+Tuning arms (reviewer response, 2026-10), dpctgan only, eps=1.0, one knob per arm:
+  python sdg/generate_smartnoise.py dpctgan --batch-size 250 --tag bs250
+  python sdg/generate_smartnoise.py dpctgan --batch-size 100 --tag bs100
+  python sdg/generate_smartnoise.py dpctgan --calibrate-sigma --tag sigmacal
+  python sdg/generate_smartnoise.py dpctgan --calibrate-sigma --tag sigmacal --probe 300
+These write synthetic_data/tuning/dpctgan/{tag}/seed{s}.csv and cost rows to
+evaluation/results/tuning/generation_cost_smartnoise.csv; score them with the eval
+scripts' --tag. epsilon_spent_final in that table is the spend to report.
+
 --seeds exists so a slow fit (AIM at large eps) can be split across parallel processes,
 one seed each. They are independent: each writes its own CSV, and the shared cost table
 is updated under a file lock. Pin them to different cores so they do not fight, e.g.
@@ -178,6 +187,57 @@ TRAIN_CSV = DATA_DIR / "adult_train.csv"
 SYNTH_ROOT = REPO_ROOT / "synthetic_data" / "smartnoise"
 RESULTS_DIR = REPO_ROOT / "evaluation" / "results" / "smartnoise"
 COST_CSV = RESULTS_DIR / "generation_cost.csv"
+
+# Tuning arms (reviewer response, 2026-10): one DP-CTGAN knob moved per arm, named by
+# --tag. Kept in their own trees so a tuning run can never overwrite a committed
+# run, cost row or score. The eval scripts read them with the same --tag.
+TUNING_SYNTH_ROOT = REPO_ROOT / "synthetic_data" / "tuning"
+TUNING_RESULTS_DIR = REPO_ROOT / "evaluation" / "results" / "tuning"
+TUNING_COST_CSV = TUNING_RESULTS_DIR / "generation_cost_smartnoise.csv"
+
+# The snsynth accountant, reproduced, for --calibrate-sigma and for the true final
+# spend of a run where every epoch trained. MUST MATCH
+# benchmark_tapas/tapas_wrappers/dpctgan_generator.py, which documents the
+# derivation (two privacy steps per iteration, delta = 1/(n*sqrt(n))) and the check
+# against every logged spend. Duplicated rather than imported: sdg/ does not import
+# the privacy experiment.
+ACCOUNTANT_ALPHAS = [1 + x / 10.0 for x in range(1, 100)] + list(range(12, 64))
+
+
+def accountant_epsilon(n: int, batch_size: int, sigma: float, epochs: int) -> float:
+    """What the snsynth accountant reports after `epochs` completed epochs."""
+    import numpy as np
+    from opacus import privacy_analysis
+    steps = 2 * epochs * max(n // batch_size, 1)
+    rdp = np.asarray(privacy_analysis.compute_rdp(
+        batch_size / n, sigma, 1, ACCOUNTANT_ALPHAS)) * steps
+    return float(privacy_analysis.get_privacy_spent(
+        ACCOUNTANT_ALPHAS, rdp, 1 / (n * np.sqrt(n)))[0])
+
+
+def calibrate_sigma(n: int, batch_size: int, epochs: int, epsilon: float) -> float:
+    """The smallest sigma whose spend after ALL `epochs` epochs is <= epsilon.
+
+    Bisection on a monotone function, returning the upper bracket so the result
+    never overspends. See the copy in dpctgan_generator.py for why the library's
+    per-epoch check then never breaks.
+    """
+    hi = float(DPCTGAN_SIGMA)
+    while accountant_epsilon(n, batch_size, hi, epochs) > epsilon:
+        hi *= 2
+        if hi > 1e4:
+            raise ValueError(f"no sigma reaches eps={epsilon} at n={n}: the accountant's "
+                             f"zero-step floor at delta=1/(n*sqrt(n)) is above it")
+    lo = hi / 2
+    while accountant_epsilon(n, batch_size, lo, epochs) <= epsilon:
+        hi, lo = lo, lo / 2
+    for _ in range(60):
+        mid = (lo + hi) / 2
+        if accountant_epsilon(n, batch_size, mid, epochs) <= epsilon:
+            hi = mid
+        else:
+            lo = mid
+    return hi
 
 EXPECTED_TRAIN_N = 21_523
 
@@ -276,7 +336,9 @@ def dpctgan_transformer(columns):
 
 
 def generate_dpctgan(train_data: pd.DataFrame, seed: int, epsilon: float,
-                     device: str, epochs: int = DPCTGAN_EPOCH_CAP):
+                     device: str, epochs: int = DPCTGAN_EPOCH_CAP,
+                     batch_size: int = DPCTGAN_BATCH_SIZE, sigma: float = DPCTGAN_SIGMA,
+                     calibrate: bool = False):
     """Fit + sample DP-CTGAN at one (seed, epsilon).
 
     Returns (synthetic, diagnostics). The diagnostics are not decoration: epsilon is
@@ -292,18 +354,26 @@ def generate_dpctgan(train_data: pd.DataFrame, seed: int, epsilon: float,
     When the CAP binds instead and all 300 epochs train, that last entry is the cost
     of the first 299: the accountant is never queried again, so epsilon_spent then
     understates the final spend by one epoch rather than overstating it. Which case
-    a run is in is legible from epochs_run.
+    a run is in is legible from epochs_run. epsilon_spent_final closes that gap: it
+    is the last entry on an early break and the accountant's spend after all
+    epochs otherwise.
+
+    batch_size, sigma and calibrate are the tuning-arm knobs; at their defaults this
+    is exactly the committed fit. calibrate=True ignores sigma and solves for the one
+    that spends epsilon over all `epochs` (see calibrate_sigma).
     """
     from snsynth.pytorch.nn import DPCTGAN
 
     raw = train_data.copy()
     cols = list(raw.columns)
+    if calibrate:
+        sigma = calibrate_sigma(len(raw), batch_size, epochs, epsilon)
 
     synth = DPCTGAN(
         epsilon=epsilon,
-        sigma=DPCTGAN_SIGMA,
+        sigma=sigma,
         epochs=epochs,
-        batch_size=DPCTGAN_BATCH_SIZE,
+        batch_size=batch_size,
         max_per_sample_grad_norm=DPCTGAN_MAX_PER_SAMPLE_GRAD_NORM,
         cuda=(device == "cuda"),
         verbose=False,          # logging only; the default prints every epoch
@@ -317,8 +387,12 @@ def generate_dpctgan(train_data: pd.DataFrame, seed: int, epsilon: float,
     diagnostics = {}
     if spent:
         broke_early = float(spent[-1]) > epsilon
-        diagnostics = {"epochs_run": len(spent) - 1 if broke_early else len(spent),
-                       "epsilon_spent": float(spent[-1])}
+        epochs_run = len(spent) - 1 if broke_early else len(spent)
+        diagnostics = {"epochs_run": epochs_run,
+                       "epsilon_spent": float(spent[-1]),
+                       "epsilon_spent_final": float(spent[-1]) if broke_early else
+                       accountant_epsilon(len(raw), batch_size, sigma, epochs_run),
+                       "batch_size": batch_size, "sigma": float(sigma)}
 
     sampled = synth.sample(len(train_data))
     synthetic = sampled[train_data.columns.tolist()].copy()
@@ -339,6 +413,11 @@ def generate_dpctgan(train_data: pd.DataFrame, seed: int, epsilon: float,
 # was scored last. Generation, the expensive half, is the one that needed the split.
 COST_COLUMNS = ["method", "formal_epsilon", "seed", "stage", "wall_clock_s",
                 "peak_memory_mb", "device", "epochs_run", "epsilon_spent"]
+# The tuning table carries the arm and its knobs too; keyed on tag as well, so two
+# arms at the same eps never overwrite each other's rows.
+TUNING_COST_COLUMNS = ["method", "tag", "formal_epsilon", "seed", "stage",
+                       "wall_clock_s", "peak_memory_mb", "device", "batch_size",
+                       "sigma", "epochs_run", "epsilon_spent", "epsilon_spent_final"]
 
 
 def record_cost(row: dict) -> None:
@@ -350,26 +429,39 @@ def record_cost(row: dict) -> None:
     generate_runs.py arm. Same reasoning as eps_sweep_generate.record_cost.
     """
     df = pd.DataFrame([row])
+    # A tuning row (it carries a tag) goes to the tuning table, never the main one.
+    tuned = bool(row.get("tag"))
+    cost_csv = TUNING_COST_CSV if tuned else COST_CSV
+    columns = TUNING_COST_COLUMNS if tuned else COST_COLUMNS
+    keys = ["method", "formal_epsilon", "seed", "stage"] + (["tag"] if tuned else [])
+    cost_csv.parent.mkdir(parents=True, exist_ok=True)
     # Read-modify-write, so parallel --seeds processes take an exclusive lock or one
     # would overwrite the other's row.
-    with open(RESULTS_DIR / ".generation_cost.lock", "w") as lock:
+    with open(cost_csv.parent / f".{cost_csv.stem}.lock", "w") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX)
-        if COST_CSV.exists():
-            existing = pd.read_csv(COST_CSV)
-            if {"method", "formal_epsilon", "seed", "stage"}.issubset(existing.columns):
-                mask = ~((existing["method"] == row["method"])
-                         & (existing["formal_epsilon"] == row["formal_epsilon"])
-                         & (existing["seed"] == row["seed"])
-                         & (existing["stage"] == row["stage"]))
-                existing = existing[mask]
+        if cost_csv.exists():
+            existing = pd.read_csv(cost_csv)
+            if set(keys).issubset(existing.columns):
+                mask = pd.Series(True, index=existing.index)
+                for key in keys:
+                    mask &= existing[key] == row[key]
+                existing = existing[~mask]
             df = pd.concat([existing, df], ignore_index=True)
-        df.reindex(columns=COST_COLUMNS).to_csv(COST_CSV, index=False)
+        df.reindex(columns=columns).to_csv(cost_csv, index=False)
 
 
 def generate_one(generator: str, train_data: pd.DataFrame, epsilon: float,
-                 seed: int, device: str, regenerate: bool) -> bool:
-    """Generate (or reuse) one (generator, eps, seed) run. True if a fit happened."""
-    out_dir = SYNTH_ROOT / generator / eps_slug(epsilon)
+                 seed: int, device: str, regenerate: bool, arm: dict = None) -> bool:
+    """Generate (or reuse) one (generator, eps, seed) run. True if a fit happened.
+
+    arm, if given, is a tuning arm: {"tag", "batch_size", "sigma", "calibrate"}. Its
+    runs go to synthetic_data/tuning/{generator}/{tag}/ and its cost rows to the
+    tuning table.
+    """
+    if arm:
+        out_dir = TUNING_SYNTH_ROOT / generator / arm["tag"]
+    else:
+        out_dir = SYNTH_ROOT / generator / eps_slug(epsilon)
     out_dir.mkdir(parents=True, exist_ok=True)
     path = out_dir / f"seed{seed}.csv"
 
@@ -386,6 +478,10 @@ def generate_one(generator: str, train_data: pd.DataFrame, epsilon: float,
     t0 = time.perf_counter()
     if generator == "aim":
         synthetic, diagnostics = generate_aim(train_data, seed, epsilon)
+    elif arm:
+        synthetic, diagnostics = generate_dpctgan(
+            train_data, seed, epsilon, device, batch_size=arm["batch_size"],
+            sigma=arm["sigma"], calibrate=arm["calibrate"])
     else:
         synthetic, diagnostics = generate_dpctgan(train_data, seed, epsilon, device)
     wall_clock_s = round(time.perf_counter() - t0, 2)
@@ -403,15 +499,20 @@ def generate_one(generator: str, train_data: pd.DataFrame, epsilon: float,
 
     record_cost({"method": generator, "formal_epsilon": float(epsilon), "seed": seed,
                  "stage": "generation", "wall_clock_s": wall_clock_s,
-                 "peak_memory_mb": peak_memory_mb, "device": device, **diagnostics})
+                 "peak_memory_mb": peak_memory_mb, "device": device, **diagnostics,
+                 **({"tag": arm["tag"]} if arm else {})})
     extra = (f" | epochs_run={diagnostics['epochs_run']}/{DPCTGAN_EPOCH_CAP}, "
-             f"eps_spent={diagnostics['epsilon_spent']:.3f}" if diagnostics else "")
+             f"eps_spent={diagnostics['epsilon_spent']:.3f}, "
+             f"final={diagnostics['epsilon_spent_final']:.3f}, "
+             f"batch={diagnostics['batch_size']}, sigma={diagnostics['sigma']:.4f}"
+             if diagnostics else "")
     log.info(f"  {len(synthetic)} rows | {wall_clock_s}s | {peak_memory_mb} MB peak "
              f"| device={device}{extra} -> {path.relative_to(REPO_ROOT)}")
     return True
 
 
-def probe(train_data: pd.DataFrame, epsilon: float, device: str, epochs: int) -> int:
+def probe(train_data: pd.DataFrame, epsilon: float, device: str, epochs: int,
+          arm: dict = None) -> int:
     """Fit DP-CTGAN once at a low epoch cap and report what the budget bought.
 
     Cheap insurance against the silent break: if a full-cap run would stop after a
@@ -419,10 +520,14 @@ def probe(train_data: pd.DataFrame, epsilon: float, device: str, epochs: int) ->
     DP-CTGAN (see the ENVIRONMENT NOTE), this says so in a minute rather than
     partway through five 300-epoch fits. Writes nothing.
     """
-    log.info(f"--- probe: dpctgan, eps={epsilon:g}, epochs={epochs}, device={device} ---")
+    log.info(f"--- probe: dpctgan, eps={epsilon:g}, epochs={epochs}, device={device}"
+             f"{', arm ' + str(arm) if arm else ''} ---")
     set_all_seeds(RUN_SEEDS[0])
     t0 = time.perf_counter()
-    _, diagnostics = generate_dpctgan(train_data, RUN_SEEDS[0], epsilon, device, epochs)
+    knobs = ({"batch_size": arm["batch_size"], "sigma": arm["sigma"],
+              "calibrate": arm["calibrate"]} if arm else {})
+    _, diagnostics = generate_dpctgan(train_data, RUN_SEEDS[0], epsilon, device, epochs,
+                                      **knobs)
     log.info(f"  fit+sample in {time.perf_counter() - t0:.1f}s; diagnostics={diagnostics}")
     if not diagnostics:
         log.warning("  no epsilon_list on the fitted synthesiser -- the accountant "
@@ -451,12 +556,38 @@ def main() -> int:
     parser.add_argument("--probe", type=int, metavar="EPOCHS", default=None,
                         help="fit dpctgan once at EPOCHS and report epochs_run / "
                              "epsilon_spent, then exit. Writes nothing.")
+    tuning = parser.add_argument_group(
+        "dpctgan tuning arms (reviewer response; each needs --tag, one knob per arm)")
+    tuning.add_argument("--batch-size", type=int, default=DPCTGAN_BATCH_SIZE,
+                        help=f"default {DPCTGAN_BATCH_SIZE}; must be even")
+    knob = tuning.add_mutually_exclusive_group()
+    knob.add_argument("--sigma", type=float, default=DPCTGAN_SIGMA,
+                      help=f"fixed noise multiplier (default {DPCTGAN_SIGMA})")
+    knob.add_argument("--calibrate-sigma", action="store_true",
+                      help=f"solve sigma so eps is spent over all {DPCTGAN_EPOCH_CAP} "
+                           f"epochs instead of used as a stopping rule")
+    tuning.add_argument("--tag", default="",
+                        help="names the arm; runs go to synthetic_data/tuning/dpctgan/{tag}/")
     args = parser.parse_args()
 
     generators = args.generators or ALL_GENERATORS
     unknown = set(generators) - set(ALL_GENERATORS)
     if unknown:
         parser.error(f"unknown generator(s): {sorted(unknown)}. Known: {ALL_GENERATORS}")
+    moved = [f for f, on in (("--batch-size", args.batch_size != DPCTGAN_BATCH_SIZE),
+                             ("--sigma", args.sigma != DPCTGAN_SIGMA),
+                             ("--calibrate-sigma", args.calibrate_sigma)) if on]
+    arm = None
+    if moved or args.tag:
+        if not args.tag:
+            parser.error(f"{', '.join(moved)} needs --tag, so the arm cannot overwrite "
+                         f"the committed runs")
+        if generators != ["dpctgan"]:
+            parser.error("the tuning flags apply to dpctgan only; name it alone")
+        if args.batch_size % 2:
+            parser.error(f"--batch-size {args.batch_size}: snsynth asserts an even batch size")
+        arm = {"tag": args.tag, "batch_size": args.batch_size, "sigma": args.sigma,
+               "calibrate": args.calibrate_sigma}
     if args.seeds:
         bad = set(args.seeds) - set(RUN_SEEDS)
         if bad:
@@ -469,11 +600,12 @@ def main() -> int:
     log.info(f"Loaded training split: {train_df.shape}")
 
     if args.probe is not None:
-        return probe(train_df, args.epsilon, device_for("dpctgan"), args.probe)
+        return probe(train_df, args.epsilon, device_for("dpctgan"), args.probe, arm)
 
     devices = {g: device_for(g) for g in generators}
     log.info(f"=== generate_smartnoise: generators={generators}, "
-             f"eps={args.epsilon:g}, seeds={run_seeds} ===")
+             f"eps={args.epsilon:g}, seeds={run_seeds}"
+             f"{', tuning arm ' + str(arm) if arm else ''} ===")
     log.info("devices: " + ", ".join(f"{g}={d}" for g, d in devices.items()))
 
     # Warm up the heavy imports BEFORE any timed region. Without this the first run
@@ -495,7 +627,7 @@ def main() -> int:
             log.info(f"  run {run_idx}/{len(run_seeds) - 1}, seed {seed}")
             try:
                 fitted += generate_one(gen, train_df, args.epsilon, seed,
-                                       devices[gen], args.regenerate)
+                                       devices[gen], args.regenerate, arm)
             except Exception:
                 log.error(f"  {gen} eps={args.epsilon:g} seed={seed} FAILED:\n"
                           f"{traceback.format_exc()}")

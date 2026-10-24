@@ -67,6 +67,11 @@ PER_RUN_CSV = RESULTS_DIR / "fidelity_per_run.csv"
 SUMMARY_CSV = RESULTS_DIR / "fidelity_summary.csv"
 COST_CSV = RESULTS_DIR / "computational_cost.csv"   # shared with sdg/generate_runs.py
 
+# Tuning arms (--tag): read from synthetic_data/tuning/{method}/{tag}/, scored into
+# their own files, never into PER_RUN_CSV / SUMMARY_CSV / COST_CSV.
+TUNING_SYNTH_ROOT = REPO_ROOT / "synthetic_data" / "tuning"
+TUNING_RESULTS_DIR = RESULTS_DIR / "tuning"
+
 EXPECTED_TRAIN_N = 21_523
 FIDELITY_METRICS = ["KSComplement", "TVComplement",
                     "CorrelationSimilarity", "ContingencySimilarity"]
@@ -98,16 +103,19 @@ def eps_slug(eps: float) -> str:
     return f"eps{eps:g}"
 
 
-def run_path(method: str, seed: int, epsilon: float) -> Path:
-    """Where this run's CSV lives, per the method's generator script."""
+def run_path(method: str, seed: int, epsilon: float, tag: str = "") -> Path:
+    """Where this run's CSV lives, per the method's generator script. A tuning arm
+    (tag) lives where sdg/generate_runs.py / generate_smartnoise.py put it."""
+    if tag:
+        return TUNING_SYNTH_ROOT / method / tag / f"seed{seed}.csv"
     if method in SMARTNOISE_METHODS:
         return SMARTNOISE_DIR / method / eps_slug(epsilon) / f"seed{seed}.csv"
     return RUNS_DIR / f"{method}_seed{seed}.csv"
 
 
-def load_run(method: str, seed: int, epsilon: float = DEFAULT_EPSILON):
+def load_run(method: str, seed: int, epsilon: float = DEFAULT_EPSILON, tag: str = ""):
     """The synthetic CSV for one run, or None if it hasn't been generated."""
-    path = run_path(method, seed, epsilon)
+    path = run_path(method, seed, epsilon, tag)
     if not path.exists():
         return None
     df = pd.read_csv(path)
@@ -180,8 +188,13 @@ def main() -> int:
                         help=f"which epsilon arm of the SmartNoise methods "
                              f"({sorted(SMARTNOISE_METHODS)}) to score "
                              f"(default: {DEFAULT_EPSILON}); ignored for the rest")
+    parser.add_argument("--tag", default="",
+                        help="score a tuning arm from synthetic_data/tuning/{method}/{tag}/ "
+                             "into evaluation/results/tuning/; name its method explicitly")
     args = parser.parse_args()
 
+    if args.tag and not args.methods:
+        parser.error("--tag needs the method(s) named, e.g. `ctgan --tag bs100`")
     methods = args.methods or ALL_METHODS
     unknown = set(methods) - set(ALL_METHODS)
     if unknown:
@@ -189,7 +202,8 @@ def main() -> int:
     run_seeds = RUN_SEEDS[:args.runs]
 
     log.info(f"=== eval_fidelity: methods={methods}, seeds={run_seeds}, "
-             f"eps={args.epsilon:g} (SmartNoise methods only) ===")
+             f"eps={args.epsilon:g} (SmartNoise methods only)"
+             f"{', tuning arm ' + args.tag if args.tag else ''} ===")
     train_df = load_train_df()
     log.info(f"Scoring against training data {train_df.shape}")
 
@@ -201,9 +215,9 @@ def main() -> int:
     for method in methods:
         log.info(f"--- {method} ---")
         for run_idx, seed in enumerate(run_seeds):
-            synthetic = load_run(method, seed, args.epsilon)
+            synthetic = load_run(method, seed, args.epsilon, args.tag)
             if synthetic is None:
-                missing.append(str(run_path(method, seed, args.epsilon)
+                missing.append(str(run_path(method, seed, args.epsilon, args.tag)
                                    .relative_to(REPO_ROOT)))
                 continue
             try:
@@ -215,10 +229,11 @@ def main() -> int:
                 tracemalloc.stop()
 
                 rows.append({"method": method, "run_idx": run_idx, "seed": seed, **fidelity})
-                record_cost({"method": method, "seed": seed, "stage": "fidelity",
-                             "wall_clock_s": wall_clock_s,
-                             "peak_memory_mb": round(peak_bytes / 1e6, 2),
-                             "device": "cpu"})   # SDMetrics is numpy/pandas, CPU only
+                if not args.tag:   # COST_CSV has no tag key; an arm would overwrite a row
+                    record_cost({"method": method, "seed": seed, "stage": "fidelity",
+                                 "wall_clock_s": wall_clock_s,
+                                 "peak_memory_mb": round(peak_bytes / 1e6, 2),
+                                 "device": "cpu"})   # SDMetrics is numpy/pandas, CPU only
                 log.info(f"  seed {seed}: " +
                          ", ".join(f"{k}={v:.4f}" for k, v in fidelity.items()) +
                          f"  ({wall_clock_s}s)")
@@ -238,12 +253,25 @@ def main() -> int:
     per_run = per_run.sort_values(
         ["method", "run_idx"], key=lambda s: s.map(order) if s.name == "method" else s
     ).reset_index(drop=True)
-    per_run.to_csv(PER_RUN_CSV, index=False)
-
     summary = summarise(per_run)
-    summary.to_csv(SUMMARY_CSV, index=False)
-    log.info(f"Wrote {PER_RUN_CSV.relative_to(REPO_ROOT)} ({len(per_run)} rows) and "
-             f"{SUMMARY_CSV.relative_to(REPO_ROOT)}")
+    if args.tag:
+        # One pair of files per (method, tag), so an arm never rewrites the main
+        # tables or another arm's numbers.
+        TUNING_RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+        per_run.insert(1, "tag", args.tag)
+        summary.insert(1, "tag", args.tag)
+        for method in per_run["method"].unique():
+            per_run_csv = TUNING_RESULTS_DIR / f"fidelity_per_run_{method}_{args.tag}.csv"
+            summary_csv = TUNING_RESULTS_DIR / f"fidelity_summary_{method}_{args.tag}.csv"
+            per_run[per_run["method"] == method].to_csv(per_run_csv, index=False)
+            summary[summary["method"] == method].to_csv(summary_csv, index=False)
+            log.info(f"Wrote {per_run_csv.relative_to(REPO_ROOT)} and "
+                     f"{summary_csv.relative_to(REPO_ROOT)}")
+    else:
+        per_run.to_csv(PER_RUN_CSV, index=False)
+        summary.to_csv(SUMMARY_CSV, index=False)
+        log.info(f"Wrote {PER_RUN_CSV.relative_to(REPO_ROOT)} ({len(per_run)} rows) and "
+                 f"{SUMMARY_CSV.relative_to(REPO_ROOT)}")
 
     print("\n=== fidelity summary (mean over runs) ===")
     show = ["method", "n_runs"] + [f"{m}_mean" for m in FIDELITY_METRICS]

@@ -90,6 +90,11 @@ COST_CSV = RESULTS_DIR / "computational_cost.csv"   # shared with sdg/generate_r
 
 SWEEP_DIR = RESULTS_DIR / "smartnoise"   # eps-keyed outputs for --epsilon != DEFAULT_EPSILON
 
+# Tuning arms (--tag): read from synthetic_data/tuning/{method}/{tag}/, scored into
+# their own files, never into PER_RUN_CSV / SUMMARY_CSV / COST_CSV.
+TUNING_SYNTH_ROOT = REPO_ROOT / "synthetic_data" / "tuning"
+TUNING_RESULTS_DIR = RESULTS_DIR / "tuning"
+
 EXPECTED_TRAIN_N = 21_523
 EXPECTED_TEST_N = 5_381
 UTILITY_MODELS = ["xgboost", "logistic_regression"]
@@ -151,16 +156,19 @@ def eps_slug(eps: float) -> str:
     return f"eps{eps:g}"
 
 
-def run_path(method: str, seed: int, epsilon: float) -> Path:
-    """Where this run's CSV lives, per the method's generator script."""
+def run_path(method: str, seed: int, epsilon: float, tag: str = "") -> Path:
+    """Where this run's CSV lives, per the method's generator script. A tuning arm
+    (tag) lives where sdg/generate_runs.py / generate_smartnoise.py put it."""
+    if tag:
+        return TUNING_SYNTH_ROOT / method / tag / f"seed{seed}.csv"
     if method in SMARTNOISE_METHODS:
         return SMARTNOISE_DIR / method / eps_slug(epsilon) / f"seed{seed}.csv"
     return RUNS_DIR / f"{method}_seed{seed}.csv"
 
 
-def load_run(method: str, seed: int, epsilon: float = DEFAULT_EPSILON):
+def load_run(method: str, seed: int, epsilon: float = DEFAULT_EPSILON, tag: str = ""):
     """The synthetic CSV for one run, or None if it hasn't been generated."""
-    path = run_path(method, seed, epsilon)
+    path = run_path(method, seed, epsilon, tag)
     if not path.exists():
         return None
     df = pd.read_csv(path)
@@ -327,8 +335,15 @@ def main() -> int:
                         help=f"which epsilon arm of the SmartNoise methods "
                              f"({sorted(SMARTNOISE_METHODS)}) to score "
                              f"(default: {DEFAULT_EPSILON}); ignored for the rest")
+    parser.add_argument("--tag", default="",
+                        help="score a tuning arm from synthetic_data/tuning/{method}/{tag}/ "
+                             "into evaluation/results/tuning/; name its method explicitly")
     args = parser.parse_args()
 
+    if args.tag and not (args.methods or args.generator):
+        parser.error("--tag needs the method(s) named, e.g. `ctgan --tag bs100`")
+    if args.tag and args.epsilon != DEFAULT_EPSILON:
+        parser.error("--tag arms are all eps=1.0; drop --epsilon")
     if args.generator:
         if args.methods:
             parser.error("give the generator(s) either positionally or via --generator, not both")
@@ -351,7 +366,8 @@ def main() -> int:
     run_seeds = RUN_SEEDS[:args.runs]
 
     log.info(f"=== eval_utility: methods={methods}, seeds={run_seeds}, "
-             f"eps={args.epsilon:g} (SmartNoise methods only) ===")
+             f"eps={args.epsilon:g} (SmartNoise methods only)"
+             f"{', tuning arm ' + args.tag if args.tag else ''} ===")
     train_df, test_df = load_and_split()
     spec = build_feature_spec(train_df, test_df)
     log.info(f"Feature layout: {len(spec['columns'])} columns "
@@ -378,9 +394,9 @@ def main() -> int:
     for method in methods:
         log.info(f"--- {method} ---")
         for run_idx, seed in enumerate(run_seeds):
-            synthetic = load_run(method, seed, args.epsilon)
+            synthetic = load_run(method, seed, args.epsilon, args.tag)
             if synthetic is None:
-                missing.append(str(run_path(method, seed, args.epsilon)
+                missing.append(str(run_path(method, seed, args.epsilon, args.tag)
                                    .relative_to(REPO_ROOT)))
                 continue
             try:
@@ -397,7 +413,8 @@ def main() -> int:
                 # is not per-method, so charging it to a method would double-count.
                 # Skipped off the default arm: computational_cost.csv has no eps key,
                 # so a sweep row would overwrite the eps=1 row for the same seed.
-                if not is_sweep:
+                # Same for a tuning arm, which has no tag key there either.
+                if not (is_sweep or args.tag):
                     record_cost({"method": method, "seed": seed, "stage": "utility",
                                  "wall_clock_s": wall_clock_s,
                                  "peak_memory_mb": round(peak_bytes / 1e6, 2),
@@ -429,7 +446,20 @@ def main() -> int:
         ["method", "run_idx"], key=lambda s: s.map(order) if s.name == "method" else s
     ).reset_index(drop=True)
     summary = summarise(per_run)
-    if is_sweep:
+    if args.tag:
+        # One pair of files per (method, tag), so an arm never rewrites the main
+        # tables or another arm's numbers.
+        TUNING_RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+        per_run.insert(1, "tag", args.tag)
+        summary.insert(1, "tag", args.tag)
+        for method in per_run["method"].unique():
+            per_run_csv = TUNING_RESULTS_DIR / f"utility_per_run_{method}_{args.tag}.csv"
+            summary_csv = TUNING_RESULTS_DIR / f"utility_summary_{method}_{args.tag}.csv"
+            per_run[per_run["method"] == method].to_csv(per_run_csv, index=False)
+            summary[summary["method"] == method].to_csv(summary_csv, index=False)
+            log.info(f"Wrote {per_run_csv.relative_to(REPO_ROOT)} and "
+                     f"{summary_csv.relative_to(REPO_ROOT)}")
+    elif is_sweep:
         # One pair of files per (generator, eps), so scoring one generator never
         # rewrites another's numbers.
         SWEEP_DIR.mkdir(parents=True, exist_ok=True)

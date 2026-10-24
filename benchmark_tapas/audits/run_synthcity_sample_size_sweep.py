@@ -61,6 +61,14 @@ Run from the repo root, venv active:
   python benchmark_tapas/audits/run_synthcity_sample_size_sweep.py --methods bayesian_network ctgan dpgan
   python benchmark_tapas/audits/run_synthcity_sample_size_sweep.py --methods privbayes
   python benchmark_tapas/audits/run_synthcity_sample_size_sweep.py --methods ctgan --max-counts 500 1000
+
+Tuning arms (reviewer response, 2026-10): CTGAN batch size, smaller only, one knob.
+Each walks the same four stages on its own fresh pool, so its 1000/2500 stage is
+directly comparable to the committed ctgan one:
+  python benchmark_tapas/audits/run_synthcity_sample_size_sweep.py --methods ctgan --batch-size 100 --tag bs100
+  python benchmark_tapas/audits/run_synthcity_sample_size_sweep.py --methods ctgan --batch-size 50 --tag bs50
+Seeding is left exactly as the committed ctgan audit ran it (seed_fix=False), so the
+batch size is the only thing that differs.
 """
 
 import argparse
@@ -88,6 +96,7 @@ STAGES = [(50, 100), (200, 500), (500, 1000), (1000, 2500)]
 
 SWEEP_DIR = RESULTS_DIR / "sample_size_sweep"
 SWEEP_DIR.mkdir(parents=True, exist_ok=True)
+TUNING_DIR = RESULTS_DIR / "tuning"      # one {method}/{tag}/ per tuning arm
 
 logging.basicConfig(
     level=logging.INFO,
@@ -175,13 +184,19 @@ def export_pools(threat_model, cache_dir: Path) -> None:
                  f"[{path.stat().st_size / 1e6:.1f} MB]")
 
 
-def run_method_sweep(method: str, stages: list, extra_plugin_kwargs: dict = None) -> None:
+def run_method_sweep(method: str, stages: list, extra_plugin_kwargs: dict = None,
+                     tag: str = "") -> None:
+    """tag names a tuning arm (its knob is already in extra_plugin_kwargs): the arm
+    gets its own pool at cache/{method}_{tag}/ and its results under
+    results/tuning/{method}/{tag}/, so it never touches the committed sweep."""
     cfg = METHOD_CONFIG[method]
     plugin_kwargs = {**cfg["plugin_kwargs"], **(extra_plugin_kwargs or {})}
-    cache_dir = CACHE_DIR / method
+    cache_dir = CACHE_DIR / (f"{method}_{tag}" if tag else method)
+    results_root = TUNING_DIR / method / tag if tag else SWEEP_DIR / method
     cache_dir.mkdir(parents=True, exist_ok=True)
 
-    log.info(f"=== {method} (dp={cfg['dp']}, plugin_kwargs={plugin_kwargs}) ===")
+    log.info(f"=== {method} (dp={cfg['dp']}, plugin_kwargs={plugin_kwargs}"
+             f"{', tag ' + tag if tag else ''}) ===")
     log.info(f"    stages: {stages}   total fits = {stages[-1][0] + stages[-1][1]}")
 
     train_dataset, _, description = common.load_adult_datasets()
@@ -196,6 +211,14 @@ def run_method_sweep(method: str, stages: list, extra_plugin_kwargs: dict = None
     gen = threat_model.atk_know_gen.generator
     log.info(f"    resuming at fit {getattr(gen, '_fit_counter', 0)} "
              f"(next seed {gen.seed_base + gen._fit_counter})")
+    # A loaded threat model fits with the plugin_kwargs it was PICKLED with, not the
+    # ones asked for here, so a mis-pointed cache would grow one arm's pool under
+    # another's label. The cache directory is keyed by tag; this is the check.
+    got = getattr(gen, "plugin_kwargs", {}).get("batch_size")
+    want = plugin_kwargs.get("batch_size")
+    if got != want:
+        raise RuntimeError(f"{cache_dir} was grown with batch_size={got}, but this run "
+                           f"asks for {want}. Point at the right cache or delete this one.")
 
     # Same seed before build_attacks for every method and every stage, so all
     # generators are probed by the same forests and the same 1500 random queries and
@@ -209,7 +232,7 @@ def run_method_sweep(method: str, stages: list, extra_plugin_kwargs: dict = None
         log.info(f"  -- stage {num_train}/{num_test} --")
 
         stage_cache = cache_dir / f"sweep_{stage}"
-        stage_results = SWEEP_DIR / method / stage
+        stage_results = results_root / stage
         stage_cache.mkdir(parents=True, exist_ok=True)
         stage_results.mkdir(parents=True, exist_ok=True)
 
@@ -236,7 +259,9 @@ def run_method_sweep(method: str, stages: list, extra_plugin_kwargs: dict = None
             )
             result.update(method=method, dp=cfg["dp"], kind=cfg["kind"],
                           num_train=num_train, num_test=num_test,
-                          formal_epsilon=FORMAL_EPSILON if cfg["dp"] else None)
+                          formal_epsilon=FORMAL_EPSILON if cfg["dp"] else None,
+                          **({"tag": tag, "batch_size": plugin_kwargs.get("batch_size")}
+                             if tag else {}))
             rows.append(result)
             if summary is not None:
                 score_rows.extend(common._score_rows(method, attack, summary))
@@ -246,7 +271,7 @@ def run_method_sweep(method: str, stages: list, extra_plugin_kwargs: dict = None
 
         pd.DataFrame(rows).to_csv(stage_results / f"effeps_{method}_{stage}.csv", index=False)
         if score_rows:
-            path = SWEEP_DIR / f"raw_scores_{method}_{stage}.csv"
+            path = (stage_results if tag else SWEEP_DIR) / f"raw_scores_{method}_{stage}.csv"
             pd.DataFrame(score_rows).to_csv(path, index=False)
             log.info(f"    wrote {len(score_rows)} raw scores -> {path.name}")
         if no_scores:
@@ -264,7 +289,18 @@ def main() -> int:
                         help="generators to sweep (default: all four)")
     parser.add_argument("--max-counts", nargs=2, type=int, metavar=("NUM_TRAIN", "NUM_TEST"),
                         default=None, help="stop after this stage (default: 1000 2500)")
+    parser.add_argument("--batch-size", type=int, default=None,
+                        help="tuning arm: GAN batch size (default: the plugin's own, "
+                             "200). Needs --tag; ctgan/dpgan only")
+    parser.add_argument("--tag", default="",
+                        help="names the tuning arm: own pool cache/{method}_{tag}/, "
+                             "results under results/tuning/{method}/{tag}/")
     args = parser.parse_args()
+    if args.batch_size is not None or args.tag:
+        if args.batch_size is None or not args.tag:
+            parser.error("--batch-size and --tag go together: a tuning arm needs both")
+        if not set(args.methods) <= {"ctgan", "dpgan"}:
+            parser.error("--batch-size applies to ctgan/dpgan only")
 
     stages = STAGES
     if args.max_counts:
@@ -286,7 +322,9 @@ def main() -> int:
     t0 = time.time()
     for method in args.methods:
         extra = device_kwargs if method in ("ctgan", "dpgan") else None
-        run_method_sweep(method, stages, extra)
+        if args.tag:
+            extra = {**extra, "batch_size": args.batch_size}
+        run_method_sweep(method, stages, extra, args.tag)
     log.info(f"=== all done in {(time.time() - t0) / 3600:.2f} h ===")
     return 0
 
