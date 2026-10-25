@@ -1,0 +1,28 @@
+{
+  "method": "dpctgan",
+  "library": "smartnoise",
+  "formal_epsilon": 1.0,
+  "sigma": "calibrated",
+  "epochs_cap": 300,
+  "batch_size": 500,
+  "tag": "sigmacal",
+  "num_train": 1000,
+  "num_test": 2500,
+  "num_synthetic": 500,
+  "last_epochs_run": 300,
+  "last_epsilon_spent": 0.9981331926102615,
+  "last_epochs_trained": 300,
+  "last_epsilon_spent_final": 0.9999999999999998,
+  "last_sigma": 86.5992761945598,
+  "pool_wall_clock_s": 1648.6,
+  "new_fits_this_run": 300,
+  "attack_wall_clock_s": 2025.8300000000002,
+  "distinct_fractions": {
+    "train/D+": 1.0,
+    "train/D-": 1.0,
+    "test/D+": 1.0,
+    "test/D-": 1.0
+  },
+  "attacks_without_raw_scores": [],
+  "note": "epsilon is a STOPPING RULE in SmartNoise (fixed sigma, break when the accountant says the budget is spent), not a noise calibration as in synthcity. delta is derived internally as 1/(n*sqrt(n)). epochs_cap is a cap, not a schedule -- compare it against last_epochs_run to see which of the two actually bound. See dpctgan_generator.py."
+}

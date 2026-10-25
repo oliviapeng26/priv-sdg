@@ -1,0 +1,11 @@
+method,seed,stage,wall_clock_s,peak_memory_mb,device,tag,batch_size
+ctgan,100,generation,280.24,65.56,cuda,bs100,100
+ctgan,101,generation,274.71,64.5,cuda,bs100,100
+ctgan,102,generation,286.33,64.47,cuda,bs100,100
+ctgan,103,generation,288.88,64.47,cuda,bs100,100
+ctgan,104,generation,284.19,64.46,cuda,bs100,100
+ctgan,100,generation,510.06,65.6,cuda,bs50,50
+ctgan,101,generation,522.93,64.5,cuda,bs50,50
+ctgan,102,generation,515.78,64.47,cuda,bs50,50
+ctgan,103,generation,511.52,64.46,cuda,bs50,50
+ctgan,104,generation,528.5,64.46,cuda,bs50,50

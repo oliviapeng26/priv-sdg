@@ -1,0 +1,2 @@
+method,tag,n_runs,KSComplement_mean,KSComplement_std,TVComplement_mean,TVComplement_std,CorrelationSimilarity_mean,CorrelationSimilarity_std,ContingencySimilarity_mean,ContingencySimilarity_std
+ctgan,bs100,5,0.7162254332574454,0.05848137592327983,0.8485863959485203,0.035682154183340274,0.9808430308706578,0.0029846511627179945,0.7309383317514154,0.06081912148939682
