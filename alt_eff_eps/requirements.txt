@@ -1,0 +1,6 @@
+# Separate venv: jax_privacy pulls in jax/jaxlib/optax/chex, which the main env must not get.
+#   python3 -m venv alt_eff_eps/.venv
+#   alt_eff_eps/.venv/bin/pip install -r alt_eff_eps/requirements.txt
+jax_privacy==2.0.0
+privacy-estimates==0.1.0.post1
+pandas
