@@ -1,44 +1,49 @@
+# --- OS files ---
 .DS_Store
+
+# --- Data (not tracked; the repo holds code and results only) ---
 /data
 /synthetic_data
 
-# virtualenvs (the GPU workstation uses venv/ rather than conda)
+# --- Python environments (the GPU workstation uses venv/ rather than conda) ---
 venv/
 .venv/
 env/
+__pycache__/
 
-# synthcity's internal cache for plugins (regenerable; never commit)
+# --- Regenerable caches ---
+# tapas attack caches: memoised shadow datasets + pickled threat models (large)
+cache/
+cache_*/
+# synthcity's internal plugin cache
 sdg/workspace/
 workspace/
 workspace_*/
 **/workspace_*/
 
-# tapas attack caches (memoised shadow datasets + pickled threat models; large
-# and fully regenerable)
-cache/
-cache_*/
-__pycache__/
-
-# aim bin-count sweep (archived): per-setting synthetic CSVs
+# --- Archived outputs ---
+# aim bin-count sweep: per-setting synthetic CSVs
 archive/aim_tuning/synthetic/
 
-# per-run script logs. Rewritten on every invocation and carrying nothing the
-# result CSVs don't already record, so they only ever show up as noise in
-# git status.
+# --- Run logs (rewritten on every run; the result CSVs already record what matters) ---
 sdg/generate_runs_log.txt
 sdg/generate_great_log.txt
-sdg/.great_scratch*/
 sdg/generate_dp2stage_log.txt
 sdg/dp2stage_probe_log.txt
-sdg/.dp2stage_probe/
-sdg/.dp2stage_fit_*/
-sdg/.dp2stage_stage1_*/
 evaluation/eval_fidelity_log.txt
 evaluation/eval_utility_log.txt
 evaluation/results/smartnoise/generate_smartnoise_log.txt
 benchmark_tapas/results/convergence/convergence_check_tstr_log.txt
 # 98 MB of repeated pgmpy warnings from the Aug 2026 sweep; appended to on every re-run,
-# so tracking it would eventually exceed GitHub's 100 MB limit.
+# so tracking it would eventually exceed GitHub's 100 MB limit
 benchmark_tapas/results/sample_size_sweep/counts_sweep_log.txt
+# raw logs copied from the GPU server for the tuning arms (~25 MB, mostly tqdm progress bars)
+tuning_logs/
+
+# --- Scratch directories and lock files ---
+sdg/.great_scratch*/
+sdg/.dp2stage_probe/
+sdg/.dp2stage_fit_*/
+sdg/.dp2stage_stage1_*/
 # empty fcntl lock created by sdg/generate_smartnoise.py on every cost write
 evaluation/results/smartnoise/.generation_cost.lock
